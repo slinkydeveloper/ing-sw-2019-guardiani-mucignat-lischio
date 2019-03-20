@@ -1,9 +1,7 @@
-# ing-sw-2019-guardiani-mucignat-lischio-mlmlmlm
-
-Software Engineering Final exam Guardiani, Mucignat, Lischio
+# Software Engineering 2019 Final exam Guardiani, Mucignat, Lischio
 
 
-#####MAVEN USEFUL GOALS & PHASES
+## MAVEN USEFUL GOALS & PHASES
 
 * `mvn sonar:sonar`
     * used to analyze Maven project with Sonar
