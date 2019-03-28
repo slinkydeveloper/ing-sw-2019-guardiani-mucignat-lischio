@@ -14,22 +14,28 @@ public class PlayerDashboard {
     private int points;
     private boolean firstPlayer;
 
-    public void addAmmmo(AmmoColor ammo) throws IllegalStateException{
-        int countAmmo= 0;
-        for(AmmoColor a : ammos){
-            if(a.equals(ammo)){
+    public PlayerDashboard(boolean firstPlayer, PowerUpCard powerUpCard) {
+        firstPlayer = false;
+        powerUpCard = null;
+    }
+
+    public void addAmmmo(AmmoColor ammo) throws IllegalStateException {
+        int countAmmo = 0;
+        for (AmmoColor a : ammos) {
+            if (a.equals(ammo)) {
                 countAmmo++;
             }
         }
-        if(countAmmo > 3){
+        if (countAmmo > 3) {
             throw new IllegalStateException("i have plus than 3 ammos of the same colors");
-        }else{
+        } else {
             ammos.add(ammo);
         }
     }
-    public void removeAmmos(List<AmmoColor> ammos){
-        for(AmmoColor a : this.ammos){
-            if(a.equals(ammos)){
+
+    public void removeAmmos(List<AmmoColor> ammos) {
+        for (AmmoColor a : this.ammos) {
+            if (a.equals(ammos)) {
                 this.ammos.remove(ammos);
             }
         }
@@ -39,43 +45,43 @@ public class PlayerDashboard {
         return ammos;
     }
 
-    public void addDamages(List<PlayerColor> damages){
+    public void addDamages(List<PlayerColor> damages) {
         this.damages.addAll(damages);
     }
 
-    public void removeAllDamages(){
+    public void removeAllDamages() {
         this.damages.clear();
     }
 
-   public List<PlayerColor> getDamages() {
+    public List<PlayerColor> getDamages() {
         return damages;
     }
 
-    public Optional<PlayerColor> getFirstDamage(){
+    public Optional<PlayerColor> getFirstDamage() {
         if (damages.size() >= 1)
-        return Optional.of(damages.get(0));
+            return Optional.of(damages.get(0));
         else return Optional.empty();
     }
 
-    public Optional<PlayerColor> getKillDamage(){
+    public Optional<PlayerColor> getKillDamage() {
         if (damages.size() >= 1)
             return Optional.of(damages.get(10));
         else return Optional.empty();
     }
 
-    public Optional<PlayerColor> getCruelDamage(){
+    public Optional<PlayerColor> getCruelDamage() {
         if (damages.size() >= 1)
             return Optional.of(damages.get(11));
         else return Optional.empty();
     }
 
-    public void addMarks(List<PlayerColor> marks){
+    public void addMarks(List<PlayerColor> marks) {
         this.marks.addAll(marks);
     }
 
-    public void removeMarks(List<PlayerColor> marks){
-        for(PlayerColor a : this.marks){
-            if(a.equals(marks)){
+    public void removeMarks(List<PlayerColor> marks) {
+        for (PlayerColor a : this.marks) {
+            if (a.equals(marks)) {
                 this.marks.remove(marks);
             }
         }
@@ -85,46 +91,48 @@ public class PlayerDashboard {
         return marks;
     }
 
-    public void addLoadedGun(Gun loadedGun){
+    public void addLoadedGun(Gun loadedGun) {
         loadedGuns.add(loadedGun);
     }
 
-    public void removeLoadedGun(Gun loadedGun){
+    public void removeLoadedGun(Gun loadedGun) {
         loadedGuns.remove(loadedGun);
     }
-    public List<Gun> getLoadedGuns(){
+
+    public List<Gun> getLoadedGuns() {
         return loadedGuns;
     }
 
-    public void removeUnloadedGun(Gun loadedGun){
+    public void removeUnloadedGun(Gun loadedGun) {
         unloadedGuns.remove(loadedGun);
     }
 
-    public List<Gun> getUnloadedGuns(){
+    public List<Gun> getUnloadedGuns() {
         return unloadedGuns;
     }
 
-    public void addPowerUpCard(PowerUpCard powerUp){
+    public void addPowerUpCard(PowerUpCard powerUp) {
         powerUpCards.add(powerUp);
     }
 
-    public void removePowerUpCard(PowerUpCard powerUp){
+    public void removePowerUpCard(PowerUpCard powerUp) {
         powerUpCards.remove(powerUp);
     }
 
-    public List<PowerUpCard> getPowerUpCards(){
+    public List<PowerUpCard> getPowerUpCards() {
         return powerUpCards;
     }
 
-    public void incrementSkullsNumber(){
+    public void incrementSkullsNumber() {
         skullsNumber++;
     }
 
-    public int getSkullsNumber(){
+    public int getSkullsNumber() {
         return skullsNumber;
     }
-    public void addPoints(int points){
-        this.points+=points;
+
+    public void addPoints(int points) {
+        this.points += points;
     }
 
     public int getPoints() {
