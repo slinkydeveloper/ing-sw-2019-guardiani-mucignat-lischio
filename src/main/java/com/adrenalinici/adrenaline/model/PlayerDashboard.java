@@ -1,4 +1,4 @@
-package com.adreanalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,6 +62,7 @@ public class PlayerDashboard {
             return Optional.of(damages.get(10));
         else return Optional.empty();
     }
+
     public Optional<PlayerColor> getCruelDamage(){
         if (damages.size() >= 1)
             return Optional.of(damages.get(11));

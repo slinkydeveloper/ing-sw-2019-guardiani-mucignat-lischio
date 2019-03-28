@@ -1,4 +1,4 @@
-package com.adreanalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model;
 
 public class PowerUpCard {
     private AmmoColor ammoColor;

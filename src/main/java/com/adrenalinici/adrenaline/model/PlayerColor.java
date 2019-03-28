@@ -1,4 +1,4 @@
-package com.adreanalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model;
 
 public enum PlayerColor {
     GRAY,
