@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +15,16 @@ public class PlayerDashboard {
     private int points;
     private boolean firstPlayer;
 
-    public PlayerDashboard(boolean firstPlayer, PowerUpCard powerUpCard) {
-        firstPlayer = false;
-        powerUpCard = null;
+    public PlayerDashboard(boolean firstPlayer, List<PowerUpCard> powerUpCards) {
+        this.firstPlayer = firstPlayer;
+        this.powerUpCards = new ArrayList<>(powerUpCards);
+        this.ammos = new ArrayList<>();
+        this.damages = new ArrayList<>();
+        this.marks = new ArrayList<>();
+        this.loadedGuns = new ArrayList<>();
+        this.unloadedGuns = new ArrayList<>();
+        this.skullsNumber = 0;
+        this.points = 0;
     }
 
     public void addAmmmo(AmmoColor ammo) throws IllegalStateException {
