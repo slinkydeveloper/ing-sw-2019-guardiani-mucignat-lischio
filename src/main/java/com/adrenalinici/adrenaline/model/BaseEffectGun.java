@@ -12,8 +12,13 @@ public class BaseEffectGun extends BaseGun {
     private Optional<Effect> secondExtraEffect;
     private Optional<List<AmmoColor>> secondExtraEffectCost;
 
-    public BaseEffectGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, Optional<String> note) {
+    public BaseEffectGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, Optional<String> note, Effect baseEffect, Optional<Effect> firstExtraEffect, Optional<List<AmmoColor>> firstExtraEffectCost, Optional<Effect> secondExtraEffect, Optional<List<AmmoColor>> secondExtraEffectCost) {
         super(firstAmmo, extraAmmo, name, note);
+        this.baseEffect = baseEffect;
+        this.firstExtraEffect = firstExtraEffect;
+        this.firstExtraEffectCost = firstExtraEffectCost;
+        this.secondExtraEffect = secondExtraEffect;
+        this.secondExtraEffectCost = secondExtraEffectCost;
     }
 
     public Effect getBaseEffect() {
