@@ -25,6 +25,9 @@ public class PlayerDashboard {
         this.unloadedGuns = new ArrayList<>();
         this.skullsNumber = 0;
         this.points = 0;
+        addAmmmo(AmmoColor.RED);
+        addAmmmo(AmmoColor.BLUE);
+        addAmmmo(AmmoColor.YELLOW);
     }
 
     public void addAmmmo(AmmoColor ammo) throws IllegalStateException {
@@ -34,8 +37,8 @@ public class PlayerDashboard {
                 countAmmo++;
             }
         }
-        if (countAmmo > 3) {
-            throw new IllegalStateException("i have plus than 3 ammos of the same colors");
+        if (countAmmo == 3) {
+            throw new IllegalStateException("I have plus than 3 ammos of the same colors");
         } else {
             ammos.add(ammo);
         }
