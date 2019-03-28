@@ -8,6 +8,11 @@ public class Effect {
         return name;
     }
 
+    public Effect(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public String getDescription() {
         return description;
     }

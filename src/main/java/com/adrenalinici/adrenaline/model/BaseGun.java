@@ -13,6 +13,12 @@ public abstract class BaseGun implements Gun {
     private String name;
     private Optional<String> note;
 
+    public BaseGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, Optional<String> note) {
+        this.firstAmmo = firstAmmo;
+        this.extraAmmo = extraAmmo;
+        this.name = name;
+        this.note = note;
+    }
 
     @Override
     public List<AmmoColor> getRequiredAmmoToPickup() {
