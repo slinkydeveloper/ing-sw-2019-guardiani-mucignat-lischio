@@ -1,8 +1,8 @@
 @startuml
 
 enum AmmoColor {
-    RED,
-    YELLOW,
+    RED
+    YELLOW
     BLUE
 }
 
@@ -11,6 +11,8 @@ interface Gun {
     +List<AmmoColor> getRequiredAmmoToReload();
     +void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun)
 }
+
+BaseGun "1..n"-- AmmoColor: cost
 
 abstract class BaseGun implements Gun {
     -firstAmmo: AmmoColor
@@ -28,6 +30,10 @@ class AlternativeEffectGun extends BaseGun {
     +Effect getSecondEffect()
     +List<AmmoColor> getSecondEffectCost()
 }
+
+AlternativeEffectGun "0..n"-- AmmoColor: "second effect cost"
+AlternativeEffectGun "2..n"-- Effect
+
 class BaseEffectGun extends BaseGun {
     -baseEffect: Effect
     -firstExtraEffect: Optional<Effect>
@@ -42,28 +48,37 @@ class BaseEffectGun extends BaseGun {
     +Optional<List<AmmoColor>> getSecondExtraEffectCost()
 }
 
-class PowerUpCard{
+BaseEffectGun "1"-- Effect: "first effect"
+BaseEffectGun "0..2"-- Effect: "extra effects"
+BaseEffectGun "0..n"-- AmmoColor: "first extra effect cost"
+BaseEffectGun "0..n"-- AmmoColor: "second extra effect cost"
+
+class PowerUpCard {
     -ammoColor: AmmoColor
     -powerUpType: PowerUpType
     +AmmoColor getAmmoColor()
     +PowerUpType getPowerUpType()
 }
 
-enum PowerUpType{
+PowerUpCard "1..n"-- AmmoColor
+
+enum PowerUpType {
     VENOM_GRANADE
     SCOPE
     TELEPORT
     KINETIC_RAY
 }
 
-class Effect{
+PowerUpCard "1"-- PowerUpType
+
+class Effect {
     -name : String
     -description: String
     +String getName()
     +String getDescription()
 }
 
-enum PlayerColor{
+enum PlayerColor {
     GRAY
     YELLOW
     GREEN
@@ -71,7 +86,7 @@ enum PlayerColor{
     CYAN
 }
 
-class PlayerDashboard{
+class PlayerDashboard {
     -ammos: List<AmmoColor>
     -damages: List<PlayerColor>
     -marks: List<PlayerColor>
@@ -110,7 +125,13 @@ class PlayerDashboard{
     +boolean getFirstPlayer()
 }
 
-class AmmoCard{
+PlayerDashboard "0..9"-- AmmoColor
+PlayerDashboard "0..12"-- PlayerColor: "damages"
+PlayerDashboard "0..n"-- PlayerColor: "marks"
+PlayerDashboard "0..3"-- PlayerColor: "guns"
+PlayerDashboard "0..n"-- PowerUpCard: "power up cards"
+
+class AmmoCard {
     -ammoColor: List<AmmoColor>
     -powerUpCard: Optional<PowerUpCard>
     
@@ -118,19 +139,24 @@ class AmmoCard{
     +Optional<PowerUpCard> getPowerUpCard()
 }
 
-enum Action{
+AmmoCard "2..3"-- AmmoColor
+AmmoCard "0..1"-- PowerUpCard
+
+enum Action {
     MOVE
     SHOOT
     PICKUP
     RELOAD
 }
 
-class CompositeAction{
+class CompositeAction {
     -compositeAction: List<Action>
     +Action getCompositeAction()
 }
 
-class GameStatus{
+CompositeAction "1..4"-- Action
+
+class GameStatus {
     -killScore: List<Map.Entry<PlayerColor, Boolean>>
     -remainingSkulls: int
     -doubleKillScore: List<PlayerColor>
@@ -146,12 +172,16 @@ class GameStatus{
     +PlayerColor getRoundPlayer()
 }
 
+note left: killScore is a list of tuples\nwhere PlayerColor is the color of the\nkiller and the Boolean represents cruel kill
 
-class Dashboard{
+GameStatus "0..8"-- PlayerColor: "assassins"
+GameStatus "0..n"-- PlayerColor: "double kills"
+GameStatus "1"-- PlayerColor: "round of player"
+
+class Dashboard {
     -dashboardCells: List<DashboardCell>
 
     +List<DashboardCell> getDashboardCells()
-
 }
 
 enum DashboardCellBoundType{
@@ -160,7 +190,7 @@ enum DashboardCellBoundType{
     DOOR
 }
 
-interface DashboardCell{
+interface DashboardCell {
     +List<PlayerColor> getPlayersInCell()
     +Optional<DashboardCellBoundType> getNorthDashboardCellBoundType()
     +Optional<DashboardCellBoundType> getSouthDashboardCellBoundType()
@@ -172,7 +202,10 @@ interface DashboardCell{
     +Optional<DashboardCell> getEastDashboardCell()
     +void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell)
 }
-abstract class BaseDashboardCell implements DashboardCell{
+
+DashboardCell --*"0..1" Dashboard
+
+abstract class BaseDashboardCell implements DashboardCell {
     -playerInCell: List<PlayerColor>
     -northDashboardCellBoundType: DashboardCellBoundType
     -southDashboardCellBoundType: DashboardCellBoundType
@@ -185,18 +218,26 @@ abstract class BaseDashboardCell implements DashboardCell{
 
 }
 
-class RespawnDashboardCell extends BaseDashboardCell{
+
+BaseDashboardCell "0..4"-- BaseDashboardCell
+BaseDashboardCell "0..4"-- DashboardCellBoundType
+
+class RespawnDashboardCell extends BaseDashboardCell {
     -availableGuns: List<Gun>
     +List<Gun> getAvailableGuns()
     +void removeAvailableGun(Gun gunToRemove)
     +void addAvailableGun(Gunt gunToAdd)
 }
 
-class PickupDashboardCell extends BaseDashboardCell{
+RespawnDashboardCell "0..3"-- Gun
+
+class PickupDashboardCell extends BaseDashboardCell {
     -ammoCard: Optional<AmmoCard>
     +AmmoCard getAmmoCard()
     +void setAmmoCard(AmmoCard ammoCard)
     +void removeAmmoCard()
 }
+
+PickupDashboardCell "0..1"-- AmmoCard
 
 @enduml
