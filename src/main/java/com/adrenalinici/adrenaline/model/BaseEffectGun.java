@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -46,5 +47,22 @@ public class BaseEffectGun extends BaseGun {
         if (visitBaseEffectGun != null) {
             visitBaseEffectGun.accept(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseEffectGun that = (BaseEffectGun) o;
+        return baseEffect.equals(that.baseEffect) &&
+                firstExtraEffect.equals(that.firstExtraEffect) &&
+                firstExtraEffectCost.equals(that.firstExtraEffectCost) &&
+                secondExtraEffect.equals(that.secondExtraEffect) &&
+                secondExtraEffectCost.equals(that.secondExtraEffectCost);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(baseEffect, firstExtraEffect, firstExtraEffectCost, secondExtraEffect, secondExtraEffectCost);
     }
 }
