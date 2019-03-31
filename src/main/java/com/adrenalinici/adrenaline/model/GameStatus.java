@@ -1,19 +1,21 @@
 package com.adrenalinici.adrenaline.model;
 
-import java.util.AbstractMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.util.Map.*;
 
 public class GameStatus {
-    // TODO ci devo pure fare i testtttt
     private List<Map.Entry<PlayerColor, Boolean>> killScore;
-    private int remainingSkulls = 8;
+    private int remainingSkulls;
     private List<PlayerColor> doubleKillScore;
     private PlayerColor roundPlayer;
-    private Object Entry;
+
+    public GameStatus(int remainingSkulls, PlayerColor roundPlayer) {
+        this.remainingSkulls = remainingSkulls;
+        this.roundPlayer = roundPlayer;
+        this.killScore = new ArrayList<>();
+        this.doubleKillScore = new ArrayList<>();
+    }
 
     public int getRemainingSkulls() {
         return remainingSkulls;
@@ -45,6 +47,7 @@ public class GameStatus {
 
     // +void addKillScore(PlayerColor playerColor, boolean cruelKill)
     public void addKillScore(PlayerColor playerColor, boolean cruelKill) {
+        // gli passo il giocatore che esegue il colpo NON QUELLO CHE LO RICEVE
         Entry<PlayerColor, Boolean> e = new AbstractMap.SimpleImmutableEntry<>(playerColor, cruelKill);
         killScore.add(e);
     }
