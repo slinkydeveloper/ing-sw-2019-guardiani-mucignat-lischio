@@ -1,0 +1,29 @@
+package com.adrenalinici.adrenaline.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+public class RespawnDashboardCell extends BaseDashboardCell {
+
+    private List<Gun> availableGuns;
+
+    public RespawnDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int x, int y, Dashboard dashboard) {
+        super(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, x, y, dashboard);
+        this.availableGuns = new ArrayList<>();
+    }
+
+    public List<Gun> getAvailableGuns() {
+        return availableGuns;
+    }
+    public void removeAvailableGun(Gun gunToRemove) {
+        availableGuns.remove(gunToRemove);
+    }
+
+    @Override
+    public void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell) {
+        if (visitRespawnDashboardCell != null) {
+            visitRespawnDashboardCell.accept(this);
+        }
+    }
+}

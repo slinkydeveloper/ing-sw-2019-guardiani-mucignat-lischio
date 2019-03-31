@@ -2,11 +2,23 @@ package com.adrenalinici.adrenaline.model;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class MyAssertions {
+
+    public static <T> void assertAbsent(Optional<T> optional) {
+        assertFalse(optional.isPresent());
+    }
+
+    public static <T> void assertPresent(Optional<T> optional) {
+        assertTrue(optional.isPresent());
+    }
+
+    public static void assertInstanceOf(Class<?> expected, Object actual) {
+        assertEquals(expected, actual.getClass());
+    }
 
     public static <T> void assertListEqualsWithoutOrdering(List<T> expected, List<T> actual) {
         assertEquals(new HashSet<>(expected), new HashSet<>(actual));
