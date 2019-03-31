@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model;
 
+import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,7 +10,7 @@ import static java.util.Map.*;
 public class GameStatus {
     // TODO ci devo pure fare i testtttt
     private List<Map.Entry<PlayerColor, Boolean>> killScore;
-    private int remainingSkulls;
+    private int remainingSkulls = 8;
     private List<PlayerColor> doubleKillScore;
     private PlayerColor roundPlayer;
     private Object Entry;
@@ -44,10 +45,7 @@ public class GameStatus {
 
     // +void addKillScore(PlayerColor playerColor, boolean cruelKill)
     public void addKillScore(PlayerColor playerColor, boolean cruelKill) {
-        if (killScore.contains(playerColor)) {
-            Set<Map.Entry<PlayerColor, Boolean>> entrySet = new Set<Map.Entry<PlayerColor, Boolean>>[];
-            // TODO
-
-        } else killScore.add(Map.Entry < playerColor, cruelKill >);
+        Entry<PlayerColor, Boolean> e = new AbstractMap.SimpleImmutableEntry<>(playerColor, cruelKill);
+        killScore.add(e);
     }
 }
