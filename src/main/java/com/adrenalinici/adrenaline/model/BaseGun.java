@@ -1,9 +1,6 @@
 package com.adrenalinici.adrenaline.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 
 public abstract class BaseGun implements Gun {
@@ -11,9 +8,9 @@ public abstract class BaseGun implements Gun {
     private AmmoColor firstAmmo;
     private List<AmmoColor> extraAmmo;
     private String name;
-    private Optional<String> note;
+    private String note;
 
-    public BaseGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, Optional<String> note) {
+    public BaseGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, String note) {
         this.firstAmmo = firstAmmo;
         this.extraAmmo = extraAmmo;
         this.name = name;
@@ -31,5 +28,28 @@ public abstract class BaseGun implements Gun {
         requiredAmmoToReload.add(firstAmmo);
         requiredAmmoToReload.addAll(extraAmmo);
         return requiredAmmoToReload;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Optional<String> getNote() {
+        return Optional.ofNullable(note);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseGun baseGun = (BaseGun) o;
+        return name.equals(baseGun.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

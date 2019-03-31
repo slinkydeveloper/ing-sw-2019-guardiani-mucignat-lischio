@@ -1,11 +1,16 @@
 package com.adrenalinici.adrenaline.model;
 
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class MyAssertions {
+
+    public static <T> void assertListEqualsWithoutOrdering(List<T> expected, List<T> actual) {
+        assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    }
 
     public static <T> void assertContainsExactly(T expectedColor, int numberOfOccourences, List<T> colors) {
         long count = colors.stream().filter(expectedColor::equals).count();

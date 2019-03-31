@@ -10,7 +10,7 @@ public class AlternativeEffectGun extends BaseGun {
     private Effect secondEffect;
     private List<AmmoColor> secondEffectCost;
 
-    public AlternativeEffectGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, Optional<String> note, Effect firstEffect, Effect secondEffect, List<AmmoColor> secondEffectCost) {
+    public AlternativeEffectGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, String note, Effect firstEffect, Effect secondEffect, List<AmmoColor> secondEffectCost) {
         super(firstAmmo, extraAmmo, name, note);
         this.firstEffect = firstEffect;
         this.secondEffect = secondEffect;
@@ -34,20 +34,5 @@ public class AlternativeEffectGun extends BaseGun {
         if (visitAlternativeEffectGun != null) {
             visitAlternativeEffectGun.accept(this);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AlternativeEffectGun that = (AlternativeEffectGun) o;
-        return firstEffect.equals(that.firstEffect) &&
-                secondEffect.equals(that.secondEffect) &&
-                secondEffectCost.equals(that.secondEffectCost);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstEffect, secondEffect, secondEffectCost);
     }
 }
