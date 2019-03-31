@@ -1,6 +1,5 @@
 package com.adrenalinici.adrenaline.model;
 
-import javax.swing.*;
 import java.util.List;
 
 public final class CompositeAction {

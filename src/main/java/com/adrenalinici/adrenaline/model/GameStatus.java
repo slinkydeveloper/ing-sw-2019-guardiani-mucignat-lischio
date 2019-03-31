@@ -44,10 +44,7 @@ public class GameStatus {
     public void addDoubleKillScore(PlayerColor playerColor) {
         doubleKillScore.add(playerColor);
     }
-
-    // +void addKillScore(PlayerColor playerColor, boolean cruelKill)
     public void addKillScore(PlayerColor playerColor, boolean cruelKill) {
-        // gli passo il giocatore che esegue il colpo NON QUELLO CHE LO RICEVE
         Entry<PlayerColor, Boolean> e = new AbstractMap.SimpleImmutableEntry<>(playerColor, cruelKill);
         killScore.add(e);
     }
