@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -9,7 +10,7 @@ public class AlternativeEffectGun extends BaseGun {
     private Effect secondEffect;
     private List<AmmoColor> secondEffectCost;
 
-    public AlternativeEffectGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, Optional<String> note, Effect firstEffect, Effect secondEffect, List<AmmoColor> secondEffectCost) {
+    public AlternativeEffectGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, String note, Effect firstEffect, Effect secondEffect, List<AmmoColor> secondEffectCost) {
         super(firstAmmo, extraAmmo, name, note);
         this.firstEffect = firstEffect;
         this.secondEffect = secondEffect;

@@ -1,5 +1,7 @@
 package com.adrenalinici.adrenaline.model;
 
+import java.util.Objects;
+
 public class PowerUpCard {
     private AmmoColor ammoColor;
     private PowerUpType powerUpType;
@@ -15,5 +17,19 @@ public class PowerUpCard {
 
     public PowerUpType getPowerUpType() {
         return powerUpType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PowerUpCard that = (PowerUpCard) o;
+        return ammoColor == that.ammoColor &&
+                powerUpType == that.powerUpType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ammoColor, powerUpType);
     }
 }
