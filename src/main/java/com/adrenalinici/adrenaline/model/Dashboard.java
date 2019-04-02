@@ -50,6 +50,12 @@ public class Dashboard {
       return this;
     }
 
+    public Builder newEmptyCell() {
+      actualCellNumber++;
+      actualLine.add(null);
+      return this;
+    }
+
     public Builder newSouthLine() {
       this.lines.add(actualLine);
       this.actualLine = new ArrayList<>();
@@ -68,7 +74,8 @@ public class Dashboard {
       DashboardCell[][] cells = new DashboardCell[this.lines.size()][width];
       for (int i = 0; i < this.lines.size(); i++) {
         for (int j = 0; j < this.actualLine.size(); j++) {
-          cells[i][j] = this.lines.get(i).get(j).build(dashboard);
+          DashboardCell.Builder b = this.lines.get(i).get(j);
+          cells[i][j] = b != null ? b.build(dashboard) : null;
         }
       }
       dashboard.setDashboardCells(cells);
