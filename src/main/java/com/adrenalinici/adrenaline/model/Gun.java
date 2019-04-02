@@ -6,10 +6,13 @@ import java.util.function.Consumer;
 
 public interface Gun {
 
-    List<AmmoColor> getRequiredAmmoToPickup();
-    List<AmmoColor> getRequiredAmmoToReload();
-    String getName();
-    Optional<String> getNote();
+  List<AmmoColor> getRequiredAmmoToPickup();
 
-    void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun);
+  List<AmmoColor> getRequiredAmmoToReload();
+
+  String getName();
+
+  Optional<String> getNote();
+
+  void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun);
 }

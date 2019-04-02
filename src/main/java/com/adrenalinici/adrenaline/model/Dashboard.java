@@ -6,13 +6,13 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * Class representing game dashboard <br/>
+ * Class representing game dashboard <br>
  * Each cell is determined by a tuple (line, cell), for example:
  * <table>
  * <tr>
- * <td>0, 0</th>
- * <td>0, 1</th>
- * <td>0, 2</th>
+ * <td>0, 0</td>
+ * <td>0, 1</td>
+ * <td>0, 2</td>
  * </tr>
  * <tr>
  * <td>1, 0</td>
@@ -29,11 +29,11 @@ import java.util.function.Consumer;
 public class Dashboard {
 
   /**
-   * This builder helps the construction of the cell. It builds in this direction: <br/>
+   * This builder helps the construction of the cell. It builds in this direction: <br>
    * <p>
-   * 1 -> 2 -> 3<br/>
+   * 1 | 2 | 3<br>
    * <p>
-   * 4 -> 5 -> 6<br/>
+   * 4 | 5 | 6<br>
    */
   public static class Builder {
     List<List<DashboardCell.Builder>> lines = new ArrayList<>();

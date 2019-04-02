@@ -14,3 +14,6 @@
 * `mvn compile`
     * compile the source code of the project
     
+* `mvn javadoc:javadoc`
+    * generate javadoc
+    
