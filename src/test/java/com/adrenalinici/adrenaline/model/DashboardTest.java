@@ -16,11 +16,13 @@ public class DashboardTest {
       .newSouthLine()
       .newEastCell(c ->
         c.setWestType(DashboardCellBoundType.DOOR).newRespawnCell()
-      ).build();
+      ).newSouthLine()
+      .newEmptyCell().build();
     assertDashboardContainsCell(d, 0, 0, PickupDashboardCell.class);
     assertDashboardContainsCell(d, 1, 0, RespawnDashboardCell.class);
     assertAbsent(d.getDashboardCell(0, 1));
     assertAbsent(d.getDashboardCell(1, 1));
+    assertAbsent(d.getDashboardCell(2, 0));
   }
 
   @Test
