@@ -45,6 +45,7 @@ public class PlayerDashboardTest {
       PlayerColor.PURPLE,
       PlayerColor.GREEN
     );
+    playerDashboard.addMarks(playerColors);
     playerDashboard.removeMarks(playerColors);
     assertListEqualsWithoutOrdering(Collections.emptyList(), playerDashboard.getMarks());
   }

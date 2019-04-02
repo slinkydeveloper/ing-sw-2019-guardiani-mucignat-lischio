@@ -1,5 +1,7 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.ListUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,9 +47,7 @@ public class PlayerDashboard {
     }
 
     public void removeAmmos(List<AmmoColor> ammos) {
-      for (AmmoColor a : ammos) {
-        this.ammos.remove(a);
-      }
+      ListUtils.difference(this.ammos, ammos);
     }
 
     public List<AmmoColor> getAmmos() {
@@ -89,11 +89,7 @@ public class PlayerDashboard {
     }
 
     public void removeMarks(List<PlayerColor> marks) {
-        for (PlayerColor a : this.marks) {
-            if (a.equals(marks)) {
-                this.marks.remove(marks);
-            }
-        }
+      ListUtils.difference(this.marks, marks);
     }
 
     public List<PlayerColor> getMarks() {
