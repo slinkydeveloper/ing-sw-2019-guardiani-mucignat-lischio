@@ -11,15 +11,13 @@ public interface DashboardCell {
         private DashboardCellBoundType southDashboardCellBoundType = DashboardCellBoundType.WALL;
         private DashboardCellBoundType eastDashboardCellBoundType = DashboardCellBoundType.WALL;
         private DashboardCellBoundType westDashboardCellBoundType = DashboardCellBoundType.WALL;
-        private final int x;
-        private final int y;
-        private final Dashboard.Builder dashboardBuilder;
+      private final int cell;
+      private final int line;
         private DashboardCellFactory cellFactory;
 
-        public Builder(int x, int y, Dashboard.Builder dashboardBuilder) {
-            this.x = x;
-            this.y = y;
-            this.dashboardBuilder = dashboardBuilder;
+      public Builder(int line, int cell) {
+        this.cell = cell;
+        this.line = line;
         }
 
         public Builder setNorthType(DashboardCellBoundType northDashboardCellBoundType) {
@@ -42,18 +40,16 @@ public interface DashboardCell {
             return this;
         }
 
-        public Dashboard.Builder newPickupCell() {
+      public void newPickupCell() {
             cellFactory = PickupDashboardCell::new;
-            return this.dashboardBuilder;
         }
 
-        public Dashboard.Builder newRespawnCell() {
+      public void newRespawnCell() {
             cellFactory = RespawnDashboardCell::new;
-            return this.dashboardBuilder;
         }
 
         protected DashboardCell build(Dashboard dashboardInstance) {
-            return cellFactory.create(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, x, y, dashboardInstance);
+          return cellFactory.create(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboardInstance);
         }
 
 
@@ -61,10 +57,13 @@ public interface DashboardCell {
 
     List<PlayerColor> getPlayersInCell();
 
-    Optional<DashboardCellBoundType> getNorthDashboardCellBoundType();
-    Optional<DashboardCellBoundType> getSouthDashboardCellBoundType();
-    Optional<DashboardCellBoundType> getEastDashboardCellBoundType();
-    Optional<DashboardCellBoundType> getWestDashboardCellBoundType();
+  DashboardCellBoundType getNorthDashboardCellBoundType();
+
+  DashboardCellBoundType getSouthDashboardCellBoundType();
+
+  DashboardCellBoundType getEastDashboardCellBoundType();
+
+  DashboardCellBoundType getWestDashboardCellBoundType();
 
     Optional<DashboardCell> getNorthDashboardCell();
     Optional<DashboardCell> getSouthDashboardCell();

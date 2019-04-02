@@ -10,18 +10,18 @@ public abstract class BaseDashboardCell implements DashboardCell {
     private final DashboardCellBoundType southDashboardCellBoundType;
     private final DashboardCellBoundType eastDashboardCellBoundType;
     private final DashboardCellBoundType westDashboardCellBoundType;
-    private final int x;
-    private final int y;
+  private final int line;
+  private final int cell;
     private final Dashboard dashboard;
 
-    public BaseDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int x, int y, Dashboard dashboard) {
+  public BaseDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell, Dashboard dashboard) {
         this.playersInCell = new ArrayList<>();
         this.northDashboardCellBoundType = northDashboardCellBoundType;
         this.southDashboardCellBoundType = southDashboardCellBoundType;
         this.eastDashboardCellBoundType = eastDashboardCellBoundType;
         this.westDashboardCellBoundType = westDashboardCellBoundType;
-        this.x = x;
-        this.y = y;
+    this.line = line;
+    this.cell = cell;
         this.dashboard = dashboard;
     }
 
@@ -30,43 +30,43 @@ public abstract class BaseDashboardCell implements DashboardCell {
         return playersInCell;
     }
 
-    @Override
-    public Optional<DashboardCellBoundType> getNorthDashboardCellBoundType() {
-        return Optional.ofNullable(northDashboardCellBoundType);
-    }
+  @Override
+  public DashboardCellBoundType getNorthDashboardCellBoundType() {
+    return northDashboardCellBoundType;
+  }
 
-    @Override
-    public Optional<DashboardCellBoundType> getSouthDashboardCellBoundType() {
-        return Optional.ofNullable(southDashboardCellBoundType);
-    }
+  @Override
+  public DashboardCellBoundType getSouthDashboardCellBoundType() {
+    return southDashboardCellBoundType;
+  }
 
-    @Override
-    public Optional<DashboardCellBoundType> getEastDashboardCellBoundType() {
-        return Optional.ofNullable(eastDashboardCellBoundType);
-    }
+  @Override
+  public DashboardCellBoundType getEastDashboardCellBoundType() {
+    return eastDashboardCellBoundType;
+  }
 
-    @Override
-    public Optional<DashboardCellBoundType> getWestDashboardCellBoundType() {
-        return Optional.ofNullable(westDashboardCellBoundType);
-    }
+  @Override
+  public DashboardCellBoundType getWestDashboardCellBoundType() {
+    return westDashboardCellBoundType;
+  }
 
-    @Override
+  @Override
     public Optional<DashboardCell> getNorthDashboardCell() {
-        return dashboard.getDashboardCell(x, y + 1);
+    return dashboard.getDashboardCell(line - 1, cell);
     }
 
     @Override
     public Optional<DashboardCell> getSouthDashboardCell() {
-        return dashboard.getDashboardCell(x, y - 1);
+      return dashboard.getDashboardCell(line + 1, cell);
     }
 
     @Override
     public Optional<DashboardCell> getEastDashboardCell() {
-        return dashboard.getDashboardCell(x + 1, y);
+      return dashboard.getDashboardCell(line, cell + 1);
     }
 
     @Override
     public Optional<DashboardCell> getWestDashboardCell() {
-        return dashboard.getDashboardCell(x - 1, y);
+      return dashboard.getDashboardCell(line, cell - 1);
     }
 }

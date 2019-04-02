@@ -39,4 +39,33 @@ public class MyAssertions {
         fail("Exception of type " + exceptionType.getName() + " must be thrown");
     }
 
+
+  public static void assertDashboardContainsCell(Dashboard dashboard, int line, int cell, Class<?> type) {
+    Optional<DashboardCell> dashboardCell = dashboard.getDashboardCell(line, cell);
+    assertPresent(dashboardCell);
+    assertInstanceOf(type, dashboardCell);
+  }
+
+  public static void assertDashboardContainsCell(Dashboard dashboard, int line, int cell, Class<?> type, DashboardCellBoundType north, DashboardCellBoundType east, DashboardCellBoundType south, DashboardCellBoundType west) {
+    Optional<DashboardCell> dashboardCell = dashboard.getDashboardCell(line, cell);
+    assertPresent(dashboardCell);
+    assertInstanceOf(type, dashboardCell.get());
+    assertDashboardCellWalls(dashboardCell.get(), north, east, south, west);
+  }
+
+  public static void assertDashboardContainsRespawnCell(Dashboard dashboard, int line, int cell, DashboardCellBoundType north, DashboardCellBoundType east, DashboardCellBoundType south, DashboardCellBoundType west) {
+    assertDashboardContainsCell(dashboard, line, cell, RespawnDashboardCell.class, north, east, south, west);
+  }
+
+  public static void assertDashboardContainsPickupCell(Dashboard dashboard, int line, int cell, DashboardCellBoundType north, DashboardCellBoundType east, DashboardCellBoundType south, DashboardCellBoundType west) {
+    assertDashboardContainsCell(dashboard, line, cell, PickupDashboardCell.class, north, east, south, west);
+  }
+
+  public static void assertDashboardCellWalls(DashboardCell cell, DashboardCellBoundType north, DashboardCellBoundType east, DashboardCellBoundType south, DashboardCellBoundType west) {
+    assertEquals(north, cell.getNorthDashboardCellBoundType());
+    assertEquals(east, cell.getEastDashboardCellBoundType());
+    assertEquals(south, cell.getSouthDashboardCellBoundType());
+    assertEquals(west, cell.getWestDashboardCellBoundType());
+  }
+
 }
