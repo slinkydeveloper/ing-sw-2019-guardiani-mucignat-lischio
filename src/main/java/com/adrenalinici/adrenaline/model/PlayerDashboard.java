@@ -1,5 +1,7 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.ListUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +27,12 @@ public class PlayerDashboard {
         this.unloadedGuns = new ArrayList<>();
         this.skullsNumber = 0;
         this.points = 0;
-        addAmmmo(AmmoColor.RED);
-        addAmmmo(AmmoColor.BLUE);
-        addAmmmo(AmmoColor.YELLOW);
+      addAmmo(AmmoColor.RED);
+      addAmmo(AmmoColor.BLUE);
+      addAmmo(AmmoColor.YELLOW);
     }
 
-    public void addAmmmo(AmmoColor ammo) throws IllegalStateException {
+  public void addAmmo(AmmoColor ammo) throws IllegalStateException {
         int countAmmo = 0;
         for (AmmoColor a : ammos) {
             if (a.equals(ammo)) {
@@ -45,11 +47,7 @@ public class PlayerDashboard {
     }
 
     public void removeAmmos(List<AmmoColor> ammos) {
-        for (AmmoColor a : this.ammos) {
-            if (a.equals(ammos)) {
-                this.ammos.remove(ammos);
-            }
-        }
+      ListUtils.difference(this.ammos, ammos);
     }
 
     public List<AmmoColor> getAmmos() {
@@ -75,13 +73,13 @@ public class PlayerDashboard {
     }
 
     public Optional<PlayerColor> getKillDamage() {
-        if (damages.size() >= 1)
+        if (damages.size() >= 11)
             return Optional.of(damages.get(10));
         else return Optional.empty();
     }
 
     public Optional<PlayerColor> getCruelDamage() {
-        if (damages.size() >= 1)
+        if (damages.size() >= 12)
             return Optional.of(damages.get(11));
         else return Optional.empty();
     }
@@ -91,11 +89,7 @@ public class PlayerDashboard {
     }
 
     public void removeMarks(List<PlayerColor> marks) {
-        for (PlayerColor a : this.marks) {
-            if (a.equals(marks)) {
-                this.marks.remove(marks);
-            }
-        }
+      ListUtils.difference(this.marks, marks);
     }
 
     public List<PlayerColor> getMarks() {
