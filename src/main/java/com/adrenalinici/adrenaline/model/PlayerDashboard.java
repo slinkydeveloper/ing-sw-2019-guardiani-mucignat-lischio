@@ -75,13 +75,13 @@ public class PlayerDashboard {
     }
 
     public Optional<PlayerColor> getKillDamage() {
-        if (damages.size() >= 1)
+        if (damages.size() >= 11)
             return Optional.of(damages.get(10));
         else return Optional.empty();
     }
 
     public Optional<PlayerColor> getCruelDamage() {
-        if (damages.size() >= 1)
+        if (damages.size() >= 12)
             return Optional.of(damages.get(11));
         else return Optional.empty();
     }
