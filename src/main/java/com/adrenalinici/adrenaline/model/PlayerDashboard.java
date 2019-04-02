@@ -25,12 +25,12 @@ public class PlayerDashboard {
         this.unloadedGuns = new ArrayList<>();
         this.skullsNumber = 0;
         this.points = 0;
-        addAmmmo(AmmoColor.RED);
-        addAmmmo(AmmoColor.BLUE);
-        addAmmmo(AmmoColor.YELLOW);
+      addAmmo(AmmoColor.RED);
+      addAmmo(AmmoColor.BLUE);
+      addAmmo(AmmoColor.YELLOW);
     }
 
-    public void addAmmmo(AmmoColor ammo) throws IllegalStateException {
+  public void addAmmo(AmmoColor ammo) throws IllegalStateException {
         int countAmmo = 0;
         for (AmmoColor a : ammos) {
             if (a.equals(ammo)) {
@@ -45,11 +45,9 @@ public class PlayerDashboard {
     }
 
     public void removeAmmos(List<AmmoColor> ammos) {
-        for (AmmoColor a : this.ammos) {
-            if (a.equals(ammos)) {
-                this.ammos.remove(ammos);
-            }
-        }
+      for (AmmoColor a : ammos) {
+        this.ammos.remove(a);
+      }
     }
 
     public List<AmmoColor> getAmmos() {

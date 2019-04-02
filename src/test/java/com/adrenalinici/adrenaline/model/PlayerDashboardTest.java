@@ -1,8 +1,8 @@
 package com.adrenalinici.adrenaline.model;
 
 import org.junit.Test;
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -13,7 +13,7 @@ public class PlayerDashboardTest {
     @Test
     public void addAmmoTest() {
         PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
-        playerDashboard.addAmmmo(AmmoColor.RED);
+      playerDashboard.addAmmo(AmmoColor.RED);
         assertEquals(4, playerDashboard.getAmmos().size());
         assertContainsExactly(AmmoColor.RED, 2, playerDashboard.getAmmos());
     }
@@ -30,19 +30,31 @@ public class PlayerDashboardTest {
     @Test
     public void addAmmoMustThrowExceptionTest() {
         PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
-        playerDashboard.addAmmmo(AmmoColor.RED);
-        playerDashboard.addAmmmo(AmmoColor.RED);
+      playerDashboard.addAmmo(AmmoColor.RED);
+      playerDashboard.addAmmo(AmmoColor.RED);
         assertContainsExactly(AmmoColor.RED, 3, playerDashboard.getAmmos());
-        assertThatCodeThrowsExceptionOfType(() -> playerDashboard.addAmmmo(AmmoColor.RED), IllegalStateException.class);
+      assertThatCodeThrowsExceptionOfType(() -> playerDashboard.addAmmo(AmmoColor.RED), IllegalStateException.class);
         assertContainsExactly(AmmoColor.RED, 3, playerDashboard.getAmmos());
     }
 
+  @Test
+  public void removeMarksTest() {
+    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    List<PlayerColor> playerColors = Arrays.asList(
+      PlayerColor.PURPLE,
+      PlayerColor.PURPLE,
+      PlayerColor.GREEN
+    );
+    playerDashboard.removeMarks(playerColors);
+    assertListEqualsWithoutOrdering(Collections.emptyList(), playerDashboard.getMarks());
+  }
+
     @Test
     public void removeAmmosTest() {
-        List<PowerUpCard> powerUpCardList = new ArrayList<>();
-        PlayerDashboard playerDashboard = new PlayerDashboard(false, powerUpCardList);
+      PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+      playerDashboard.addAmmo(AmmoColor.RED);
         playerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.BLUE));
-        assertEquals(Arrays.asList(AmmoColor.YELLOW), playerDashboard.getAmmos());
+      assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.YELLOW, AmmoColor.RED), playerDashboard.getAmmos());
     }
 
     @Test
