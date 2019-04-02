@@ -5,8 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.Assert.*;
-import static com.adrenalinici.adrenaline.model.MyAssertions.*;
+import static com.adrenalinici.adrenaline.model.MyAssertions.assertListEqualsWithoutOrdering;
 
 public class GunTest {
 
@@ -21,21 +20,7 @@ public class GunTest {
                 null, Collections.emptyList(), null, Collections.emptyList()
         );
         assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.BLUE, AmmoColor.RED), g.getRequiredAmmoToReload());
-        assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.BLUE), g.getRequiredAmmoToPickup());
-    }
-
-    @Test
-    public void test() {
-        Gun g = new BaseEffectGun(
-                AmmoColor.BLUE,
-                Arrays.asList(AmmoColor.RED),
-                "Card 1",
-                null,
-                new Effect("", ""),
-                null, Collections.emptyList(), null, Collections.emptyList()
-        );
-        assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.BLUE, AmmoColor.RED), g.getRequiredAmmoToReload());
-        assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.BLUE), g.getRequiredAmmoToPickup());
+      assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.RED), g.getRequiredAmmoToPickup());
     }
 
 }

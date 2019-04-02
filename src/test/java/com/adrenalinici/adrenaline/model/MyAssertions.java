@@ -1,6 +1,5 @@
 package com.adrenalinici.adrenaline.model;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +20,8 @@ public class MyAssertions {
     }
 
     public static <T> void assertListEqualsWithoutOrdering(List<T> expected, List<T> actual) {
-        assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+      assertTrue(expected.containsAll(actual));
+      assertTrue(actual.containsAll(expected));
     }
 
     public static <T> void assertContainsExactly(T expectedColor, int numberOfOccourences, List<T> colors) {
@@ -43,7 +43,7 @@ public class MyAssertions {
   public static void assertDashboardContainsCell(Dashboard dashboard, int line, int cell, Class<?> type) {
     Optional<DashboardCell> dashboardCell = dashboard.getDashboardCell(line, cell);
     assertPresent(dashboardCell);
-    assertInstanceOf(type, dashboardCell);
+    assertInstanceOf(type, dashboardCell.get());
   }
 
   public static void assertDashboardContainsCell(Dashboard dashboard, int line, int cell, Class<?> type, DashboardCellBoundType north, DashboardCellBoundType east, DashboardCellBoundType south, DashboardCellBoundType west) {
