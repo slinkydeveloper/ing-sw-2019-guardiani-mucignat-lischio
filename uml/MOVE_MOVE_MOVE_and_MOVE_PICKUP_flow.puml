@@ -1,0 +1,55 @@
+@startuml
+title MOVE_MOVE_MOVE & MOVE_PICKUP
+
+== Started turn ==
+
+View -> Controller: NewTurnEvent
+Controller -> Controller: set remainingActions = 2
+
+== MOVE_MOVE_MOVE ==
+
+Controller -> View: showAvailableActions()
+View -> Controller: ActionChosenEvent(MOVE_MOVE_MOVE)
+Controller -> Controller: ExpectingMoveState(null)
+Controller -> View: showAvailableMovements()
+View -> Controller: MovementChosenEvent(movementCoordinates)
+Controller -> Model: mutate dashboard model
+Model -> View: DashboardCellUpdated(dashboard, startingCell)
+Model -> View: DashboardCellUpdated(dashboard, endingCell)
+Controller -> Controller: remove actual state, decrement remainingActions
+
+== MOVE_PICKUP ==
+
+Controller -> View: showAvailableActions()
+View -> Controller: ActionChosenEvent(MOVE_PICKUP)
+Controller -> Controller: ExpectingMoveState(expectingPickupStateFactory)
+Controller -> View: showAvailableMovements()
+View -> Controller: MovementChosenEvent(movementCoordinates)
+Controller -> Model: mutate dashboard model
+Model -> View: DashboardCellUpdated(dashboard, startingCell)
+Model -> View: DashboardCellUpdated(dashboard, endingCell)
+Controller -> Controller: ExpectingPickupState(null)
+Controller -> Model: mutate dashboard/player dashboard model
+Model -> View: DashboardCellUpdated(dashboard, cell)
+Model -> View: PlayerDashboardUpdated(playerDashboard)
+Controller -> Controller: remove actual state, remainingActions = 0
+
+== Reload phase ==
+
+Controller -> View: showReloadableGuns()
+View -> Controller: ReloadGunsEvent(gunsToReload)
+Controller -> Model: mutate player dashboard model
+Model -> View: PlayerDashboardUpdated(playerDashboard)
+
+== Respawn phase ==
+
+loop killed player
+
+
+== Refill Dashboard ==
+
+Controller -> Model: refill dashboard cells
+Model -> View: DashboardCellUpdated(dashboard, cell1)
+Model -> View: DashboardCellUpdated(dashboard, cell2)
+
+@enduml
