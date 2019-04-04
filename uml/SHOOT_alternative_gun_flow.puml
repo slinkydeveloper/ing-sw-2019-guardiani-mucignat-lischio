@@ -19,20 +19,25 @@ Controller -> View: showLoadedGuns()
 View -> Controller: GunChosenEvent(gun)
 Controller -> DecoratedGun: decoratedGun.executeShootFlow()
 Controller -> Controller: ExecutingGunFlowState(decoratedGun, null)
-DecoratedGun -> View: showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
+DecoratedGun -> View: showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect, int numberOfAvailableScopePowerUp)
 View -> DecoratedGun: ChosenEffectConfigurationEvent(configuration)
 DecoratedGun -> Model: mutate whole model
-Model -> View: various DashboardCellUpdated, various PlayersDashboardUpdated
+Model -> View: various DashboardCellUpdatedEvent(dashboard, dashboardCell), various PlayerDashboardUpdatedEvent(playerDashboard)
 
 loop playerHit
-  TODO
+  Controller -> View: showAvailableVenomGranades()
+  View -> Controller: VenomGranadeChosenEvent(List<PowerUpCard>)
+  alt player uses VenomGranade
+  Controller -> Model: add marks to shooter PlayerDashboard, remove VenomGranade powerUps from playerHit PlayerDashboard
+  Model -> View: various PlayerDashboardUpdatedEvent(playerDashboard)
+  end
 end
 
 DecoratedGun -> Controller: endGunFlowCallBack()
 
 loop playerKilled
   Controller -> Model: update model
-  Model -> View: various DashboardCellUpdated, various PlayersDashboardUpdated, GameStatusUpdated,
+  Model -> View: various DashboardCellUpdatedEvent(dashboard, dashboardCell), various PlayerDashboardUpdatedEvent(playerDashboard), GameStatusUpdatedEvent(killerColor, cruelKill)
 
 end
 
@@ -42,11 +47,11 @@ Controller -> Controller: ShootCompletedState(killedPlayersToProcess)
 
 loop playerKilled
   Controller -> Model: add PowerUpCard To PlayerDashboard
-  Model -> View: PlayersDashboardUpdated
+  Model -> View: PlayerDashboardUpdatedEvent
   Controller -> View: showAvailableRespawnLocations()
-  View -> Controller: RespawnLocationChosenEvent()
+  View -> Controller: ChosenRespawnLocationEvent(respawnCell)
   Controller -> Model: update DashboardCell, PlayerDashboard
-  Model -> View: DashboardCellUpdated, PlayerDashboardUpdated
+  Model -> View: DashboardCellUpdatedEvent, PlayerDashboardUpdatedEvent
 
 end
 

@@ -275,11 +275,80 @@ package com.adrenalinici.adrenaline.events {
     +Integer[] getMovement()
   }
 
-  interface ModelEvent
+  class GunChosenEvent implements ViewEvent {
+    -gun: Gun
+    +Gun getChosenGun()
+  }
+
+  class ChosenEffectConfigurationEvent implements ViewEvent {
+    -playersToHit: List<PlayerColor>
+    -effectToApply: Effect
+    -numberOfScopePowerUpUsed: int
+    +List<PlayerColor> getPlayersToHit()
+    +Effect getEffectToApply()
+    +int getNumberOfScopePowerUpUsed()
+  }
+
+  class ChosenRespawnLocationEvent implements ViewEvent {
+    -respawnCell: Integer[]
+    +Integer[] getRespawnCell()
+  }
+
+  class ReloadGunsEvent implements ViewEvent {
+    -gunsToReload: List<Gun>
+    +List<Gun> getGunsToReload()
+  }
+
+  class ChosenBaseEffectConfigurationEvent implements ViewEvent {
+    -baseEffectPlayersToHit: List<PlayerColor>
+    -extraEffectOnePlayersToHit: PlayerColor
+    -extraEffectTwoPlayersToHit: PlayerColor
+    -numberOfScopePowerUpUsed: int
+    +List<PlayerColor> getBaseEffectPlayersToHit()
+    +PlayerColor getExtraEffectOnePlayersToHit()
+    +PlayerColor getExtraEffectTwoPlayersToHit()
+    +int getNumberOfScopePowerUpUsed()
+  }
+
+  class VenomGranadeChosenEvent implements ViewEvent{
+    -chosenVenomGranades: List<PowerUpCard>
+    +List<PowerUpCard> getChosenVenomGranades()
+  }
+
+  class EnemyChosenEvent implements ViewEvent{
+    -chosenEnemy: PlayerColor
+    +PlayerColor getChosenEnemy()
+  }
+
+  class EnemyMovementChosenEvent implements ViewEvent{
+    -chosenEnemyMovement: Integer[]
+    +Integer[] getChosenEnemyMovement()
+  }
+
+  interface ModelEvent{
+    +GameModel getGameModel()
+  }
 
   class BoardMovementEvent implements ModelEvent {
     -movement: Integer[]
     -playerColor: PlayerColor
+  }
+
+  class DashboardCellUpdatedEvent implements ModelEvent{
+    -dashboard: Dashboard
+    -dashboardCell: DashboardCell
+    +Dashboard getDashboard()
+    +DashboardCell getDashboardCell()
+  }
+
+  class PlayerDashboardUpdatedEvent implements ModelEvent{
+    -playerDashboard: PlayerDashboard
+    +PlayerDashboard getPlayerDashboard()
+  }
+
+  class GameStatusUpdatedEvent implements ModelEvent{
+    -killerColor: PlayerColor
+    -cruelKill: Boolean
   }
 }
 
@@ -318,6 +387,34 @@ package com.adrenalinici.adrenaline.controller.states {
     +void acceptEvent(TODO)
     +List<Supplier<ControllerState>> getNextStatesFactories()
   }
+
+  class ControllerStateFactory {
+    +ControllerState getControllerState(Supplier<ControllerState>)
+  }
+
+  class ExpectingMoveState implements ControllerState{
+
+  }
+
+  class ExpectingPickupState implements ControllerState{
+
+  }
+
+  class ExpectingShootState implements ControllerState{
+
+  }
+
+  class ExecutingGunFlowState implements ControllerState{
+
+  }
+
+  class ShootCompletedState implements ControllerState{
+
+  }
+
+
+
+
 }
 
 
@@ -329,10 +426,18 @@ package com.adrenalinici.adrenaline.view {
     +void showReloadableGuns(List<Gun> reloadableGuns)
     +void showLoadedGuns(List<Gun> reloadableGuns)
     +void showBaseGunExtraEffects(List<Effect> effects)
+    +void showAvailableRespawnLocations(List<AmmoColor> respawnLocations)
+    +void showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
+    +void showApplicableEffects(Map<PlayerColor, Optional<Integer[]>> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
+    +void showAvailableVenomGranades(PlayerColor player)
+    +void showAvailablePowerUpCards(PlayerColor player)
+    +void showAvailableEnemyMovements(List<Integer[]> availableEnemyMovements)
   }
 
   com.adrenalinici.adrenaline.observer.Observable <|-- GameView: "T::ViewEvent"
   com.adrenalinici.adrenaline.observer.Observer <|.. GameView: "T::ModelEvent"
+
+  note bottom: the two different showApplicableEffects methods are called from AlternativeEffectGun (first one) and from BaseEffectGun (second one)
 }
 
 package com.adrenalinici.adrenaline.observer {
