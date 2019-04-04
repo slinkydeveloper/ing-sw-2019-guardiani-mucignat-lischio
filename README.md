@@ -1,7 +1,7 @@
 # Software Engineering 2019 Final exam Guardiani, Mucignat, Lischio
 
 
-## MAVEN USEFUL GOALS & PHASES
+## Maven
 
 * `mvn sonar:sonar`
     * used to analyze Maven project with Sonar
@@ -17,3 +17,8 @@
 * `mvn javadoc:javadoc`
     * generate javadoc
     
+## PlantUml
+
+Plantuml can be downloaded and builded using script `plantuml_download.sh`
+
+You can create a new deliverable png using `plantuml_run.sh`

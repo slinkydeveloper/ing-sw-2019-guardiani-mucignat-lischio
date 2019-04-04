@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+command -v git >/dev/null 2>&1 || { echo >&2 "I require git but it's not installed. Aborting."; exit 1; }
+command -v mvn >/dev/null 2>&1 || { echo >&2 "I require mvn but it's not installed. Aborting."; exit 1; }
+
 rm -rf plantuml_repo
 git clone git@github.com:plantuml/plantuml.git plantuml_repo
 cd plantuml_repo
