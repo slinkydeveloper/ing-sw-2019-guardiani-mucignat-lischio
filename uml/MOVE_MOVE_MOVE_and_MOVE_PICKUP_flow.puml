@@ -1,0 +1,69 @@
+@startuml
+title MOVE_MOVE_MOVE & MOVE_PICKUP
+
+== Started turn ==
+
+View -> Controller: NewTurnEvent
+Controller -> Controller: set remainingActions = 2
+
+== MOVE_MOVE_MOVE ==
+
+Controller -> View: showAvailablePowerUpCards()
+View -> Controller: powerUpCardChosenEvent(powerUpCards)
+loop all chosen powerUpCards
+  alt kinetic ray chosen
+    View -> Controller: EnemyChosenEvent(PlayerColor)
+    Controller -> View: showAvailableEnemyMovements()
+    View -> Controller: EnemyMovementChosenEvent(movementCoordinates)
+    Controller -> Model: mutate dashboard model, mutate dashboardPlayer model
+    Model -> View: various DashboardCellUpdatedEvent(dashboard, dashboardCell), various PlayerDashboardUpdatedEvent(playerDashboard)
+  else teleport chosen
+    Controller -> View: showAvailableMovements()
+    View -> Controller: MovementChosenEvent(movementCoordinates)
+    Controller -> Model: mutate dashboard model
+    Model -> View: various DashboardCellUpdatedEvent(dashboard, dashboardCell)
+  end
+end
+
+
+Controller -> View: showAvailableActions()
+View -> Controller: ActionChosenEvent(MOVE_MOVE_MOVE)
+Controller -> Controller: ExpectingMoveState(null)
+Controller -> View: showAvailableMovements()
+View -> Controller: MovementChosenEvent(movementCoordinates)
+Controller -> Model: mutate dashboard model
+Model -> View: DashboardCellUpdatedEvent(dashboard, startingCell)
+Model -> View: DashboardCellUpdatedEvent(dashboard, endingCell)
+Controller -> Controller: remove actual state, decrement remainingActions
+
+== MOVE_PICKUP ==
+
+Controller -> View: showAvailableActions()
+View -> Controller: ActionChosenEvent(MOVE_PICKUP)
+Controller -> Controller: ExpectingMoveState(expectingPickupStateFactory)
+Controller -> View: showAvailableMovements()
+View -> Controller: MovementChosenEvent(movementCoordinates)
+Controller -> Model: mutate dashboard model
+Model -> View: DashboardCellUpdatedEvent(dashboard, startingCell)
+Model -> View: DashboardCellUpdatedEvent(dashboard, endingCell)
+Controller -> Controller: ExpectingPickupState(null)
+Controller -> Model: mutate dashboard/player dashboard model
+Model -> View: DashboardCellUpdatedEvent(dashboard, cell)
+Model -> View: PlayerDashboardUpdatedEvent(playerDashboard)
+Controller -> Controller: remove actual state, remainingActions = 0
+
+== Reload phase ==
+
+Controller -> View: showReloadableGuns()
+View -> Controller: ReloadGunsEvent(gunsToReload)
+Controller -> Model: mutate player dashboard model
+Model -> View: PlayerDashboardUpdatedEvent(playerDashboard)
+
+
+== Refill Dashboard ==
+
+Controller -> Model: refill dashboard cells
+Model -> View: DashboardCellUpdated(dashboard, cell1)
+Model -> View: DashboardCellUpdated(dashboard, cell2)
+
+@enduml

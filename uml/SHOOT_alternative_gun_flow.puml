@@ -1,0 +1,72 @@
+@startuml
+title SHOOT Alternative Effect
+
+participant View
+participant Controller
+participant DecoratedGun
+participant Model
+== Started turn ==
+
+View -> Controller: NewTurnEvent
+Controller -> Controller: set remainingActions = 2
+
+== SHOOT ==
+
+Controller -> View: showAvailableActions()
+View -> Controller: ActionChosenEvent(SHOOT)
+Controller -> Controller: ExpectingShootState(null)
+Controller -> View: showLoadedGuns()
+View -> Controller: GunChosenEvent(gun)
+Controller -> DecoratedGun: decoratedGun.executeShootFlow()
+Controller -> Controller: ExecutingGunFlowState(decoratedGun, null)
+DecoratedGun -> View: showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect, int numberOfAvailableScopePowerUp)
+View -> DecoratedGun: ChosenEffectConfigurationEvent(configuration)
+DecoratedGun -> Model: mutate whole model
+Model -> View: various DashboardCellUpdatedEvent(dashboard, dashboardCell), various PlayerDashboardUpdatedEvent(playerDashboard)
+
+loop playerHit
+  Controller -> View: showAvailableVenomGranades()
+  View -> Controller: VenomGranadeChosenEvent(List<PowerUpCard>)
+  alt player uses VenomGranade
+  Controller -> Model: add marks to shooter PlayerDashboard, remove VenomGranade powerUps from playerHit PlayerDashboard
+  Model -> View: various PlayerDashboardUpdatedEvent(playerDashboard)
+  end
+end
+
+DecoratedGun -> Controller: endGunFlowCallBack()
+
+loop playerKilled
+  Controller -> Model: update model
+  Model -> View: various DashboardCellUpdatedEvent(dashboard, dashboardCell), various PlayerDashboardUpdatedEvent(playerDashboard), GameStatusUpdatedEvent(killerColor, cruelKill)
+
+end
+
+Controller -> Controller: ShootCompletedState(killedPlayersToProcess)
+
+== Respawn phase ==
+
+loop playerKilled
+  Controller -> Model: add PowerUpCard To PlayerDashboard
+  Model -> View: PlayerDashboardUpdatedEvent
+  Controller -> View: showAvailableRespawnLocations()
+  View -> Controller: ChosenRespawnLocationEvent(respawnCell)
+  Controller -> Model: update DashboardCell, PlayerDashboard
+  Model -> View: DashboardCellUpdatedEvent, PlayerDashboardUpdatedEvent
+
+end
+
+== Reload phase ==
+
+Controller -> View: showReloadableGuns()
+View -> Controller: ReloadGunsEvent(gunsToReload)
+Controller -> Model: mutate player dashboard model
+Model -> View: PlayerDashboardUpdated(playerDashboard)
+
+
+== Refill Dashboard ==
+
+Controller -> Model: refill dashboard cells
+Model -> View: DashboardCellUpdated(dashboard, cell1)
+Model -> View: DashboardCellUpdated(dashboard, celln)
+
+@enduml

@@ -1,243 +1,444 @@
 @startuml
 
-enum AmmoColor {
-    RED
-    YELLOW
-    BLUE
+package com.adrenalinici.adrenaline.model {
+  enum AmmoColor {
+      RED
+      YELLOW
+      BLUE
+  }
+
+  interface Gun {
+      +List<AmmoColor> getRequiredAmmoToPickup();
+      +List<AmmoColor> getRequiredAmmoToReload();
+      +void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun)
+  }
+
+  BaseGun "1..n"-- AmmoColor: cost
+
+  abstract class BaseGun implements Gun {
+      -firstAmmo: AmmoColor
+      -extraAmmo: List<AmmoColor>
+      -name: String
+      -note: Optional<String>
+  }
+
+  class AlternativeEffectGun extends BaseGun {
+      -firstEffect: Effect
+      -secondEffect: Effect
+      -secondEffectCost: List<AmmoColor>
+
+      +Effect getFirstEffect()
+      +Effect getSecondEffect()
+      +List<AmmoColor> getSecondEffectCost()
+  }
+
+  AlternativeEffectGun "0..n"-- AmmoColor: "second effect cost"
+  AlternativeEffectGun "2..n"-- Effect
+
+  class BaseEffectGun extends BaseGun {
+      -baseEffect: Effect
+      -firstExtraEffect: Optional<Effect>
+      -firstExtraEffectCost: Optional<List<AmmoColor>>
+      -secondExtraEffect: Optional<Effect>
+      -secondExtraEffectCost: Optional<List<AmmoColor>>
+
+      +Effect getBaseEffect()
+      +Optional<Effect> getFirstExtraEffect()
+      +Optional<List<AmmoColor>> getFirstExtraEffectCost()
+      +Optional<Effect> getSecondExtraEffect()
+      +Optional<List<AmmoColor>> getSecondExtraEffectCost()
+  }
+
+  BaseEffectGun "1"-- Effect: "first effect"
+  BaseEffectGun "0..2"-- Effect: "extra effects"
+  BaseEffectGun "0..n"-- AmmoColor: "first extra effect cost"
+  BaseEffectGun "0..n"-- AmmoColor: "second extra effect cost"
+
+  class PowerUpCard {
+      -ammoColor: AmmoColor
+      -powerUpType: PowerUpType
+      +AmmoColor getAmmoColor()
+      +PowerUpType getPowerUpType()
+  }
+
+  PowerUpCard "1..n"-- AmmoColor
+
+  enum PowerUpType {
+      VENOM_GRANADE
+      SCOPE
+      TELEPORT
+      KINETIC_RAY
+  }
+
+  PowerUpCard "1"-- PowerUpType
+
+  class Effect {
+      -name : String
+      -description: String
+      -configFn: Function<GameController, EffectAvailableConfig>
+      -applyFn: BiConsumer<EffectAvailableConfig, GameController>
+      +String getName()
+      +String getDescription()
+
+      +EffectAvailableConfig generateConfig(GameController controller)
+      +void applyEffect(EffectAvailableConfig config, GameController controller)
+  }
+
+  class EffectAvailableConfig {
+    -hittablePlayers: List<PlayerColor>
+    -possiblePreThisPlayerMoves: List<Integer[]>
+    -possiblePostThisPlayerMoves: List<Integer[]>
+    -possibleEnemiesMovements: Map<PlayerColor, List<PlayerColor>>
+  }
+
+  enum PlayerColor {
+      GRAY
+      YELLOW
+      GREEN
+      PURPLE
+      CYAN
+  }
+
+  class PlayerDashboard {
+      -ammos: List<AmmoColor>
+      -damages: List<PlayerColor>
+      -marks: List<PlayerColor>
+      -loadedGuns: List<Gun>
+      -unloadedGuns: List<Gun>
+      -powerUpCards: List<PowerUpCard>
+      -skullsNumber: int
+      -points: int
+      -firstPlayer: boolean
+
+      +void addAmmo(AmmoColor ammo)
+      +void removeAmmos(List<AmmoColor> ammos)
+      +List<AmmoColor> getAmmos()
+      +void addDamages(List<PlayerColor> damages)
+      +void removeAllDamages()
+      +List<PlayerColor> getDamages()
+      +Optional<PlayerColor> getFirstDamage()
+      +Optional<PlayerColor> getKillDamage()
+      +Optional<PlayerColor> getCruelDamage()
+      +void addMarks(List<PlayerColor> marks)
+      +void removeMarks(List<PlayerColor> marks)
+      +List<PlayerColor> getMarks()
+      +void addLoadedGun(Gun loadedGun)
+      +void removeLoadedGun(Gun loadedGun)
+      +List<Gun> getLoadedGuns()
+      +void addUnloadedGun(Gun unloadedGun)
+      +void removeUnloadedGun(Gun loadedGun)
+      +List<Gun> getUnloadedGuns()
+      +void addPowerUpCard(PowerUpCard powerUp)
+      +void removePowerUpCard(PowerUpCard powerUp)
+      +List<PowerUpCard> getPowerUpCards()
+      +void incrementSkullsNumber()
+      +int getSkullsNumber()
+      +void addPoints(int points)
+      +int getPoints()
+      +boolean getFirstPlayer()
+  }
+
+  PlayerDashboard "0..9"-- AmmoColor
+  PlayerDashboard "0..12"-- PlayerColor: "damages"
+  PlayerDashboard "0..n"-- PlayerColor: "marks"
+  PlayerDashboard "0..3"-- PlayerColor: "guns"
+  PlayerDashboard "0..n"-- PowerUpCard: "power up cards"
+
+  class AmmoCard {
+      -ammoColor: List<AmmoColor>
+      -powerUpCard: Optional<PowerUpCard>
+
+      +List<AmmoColor> getAmmoColor()
+      +Optional<PowerUpCard> getPowerUpCard()
+  }
+
+  AmmoCard "2..3"-- AmmoColor
+  AmmoCard "0..1"-- PowerUpCard
+
+  enum Action {
+      MOVE_MOVE_MOVE
+      MOVE_PICKUP
+      SHOOT
+      MOVE_MOVE_PICKUP
+      MOVE_SHOOT
+      MOVE_RELOAD_SHOOT
+      MOVE_MOVE_MOVE_MOVE
+      MOVE_MOVE_RELOAD_SHOOT
+      MOVE_MOVE_MOVE_PICKUP
+  }
+
+  class GameStatus {
+      -killScore: List<Map.Entry<PlayerColor, Boolean>>
+      -remainingSkulls: int
+      -doubleKillScore: List<PlayerColor>
+      -roundPlayer: PlayerColor
+      -dashboard: Dashboard
+      -playerDashboards: List<PlayerDashboard>
+
+      +void addKillScore(PlayerColor playerColor, boolean cruelKill)
+      +List<Map.Entry<PlayerColor, Boolean>> getKillScore()
+      +int decrementSkulls()
+      +int getRemainingSkulls()
+      +void addDoubleKillScore(PlayerColor playerColor)
+      +List<PlayerColor> getDoubleKillScore()
+      +void setRoundPlayer(PlayerColor playerColor)
+      +PlayerColor getRoundPlayer()
+  }
+
+  com.adrenalinici.adrenaline.observer.Observable <|-- GameStatus: "T::ModelEvent"
+
+  note left: killScore is a list of tuples\nwhere PlayerColor is the color of the\nkiller and the Boolean represents cruel kill
+
+  GameStatus "0..8"-- PlayerColor: "assassins"
+  GameStatus "0..n"-- PlayerColor: "double kills"
+  GameStatus "1"-- PlayerColor: "round of player"
+
+  class Dashboard {
+      -dashboardCells: List<DashboardCell>
+
+      +List<DashboardCell> getDashboardCells()
+  }
+
+  enum DashboardCellBoundType{
+      OPEN
+      WALL
+      DOOR
+  }
+
+  interface DashboardCell {
+      +List<PlayerColor> getPlayersInCell()
+      +Optional<DashboardCellBoundType> getNorthDashboardCellBoundType()
+      +Optional<DashboardCellBoundType> getSouthDashboardCellBoundType()
+      +Optional<DashboardCellBoundType> getWestDashboardCellBoundType()
+      +Optional<DashboardCellBoundType> getEastDashboardCellBoundType()
+      +Optional<DashboardCell> getNorthDashboardCell()
+      +Optional<DashboardCell> getSouthDashboardCell()
+      +Optional<DashboardCell> getWestDashboardCell()
+      +Optional<DashboardCell> getEastDashboardCell()
+      +void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell)
+  }
+
+  DashboardCell --*"0..n" Dashboard
+
+  abstract class BaseDashboardCell implements DashboardCell {
+      -playerInCell: List<PlayerColor>
+      -northDashboardCellBoundType: DashboardCellBoundType
+      -southDashboardCellBoundType: DashboardCellBoundType
+      -westDashboardCellBoundType: DashboardCellBoundType
+      -eastDashboardCellBoundType: DashboardCellBoundType
+  }
+
+  BaseDashboardCell "4"-- DashboardCellBoundType
+
+  class RespawnDashboardCell extends BaseDashboardCell {
+      -availableGuns: List<Gun>
+      +List<Gun> getAvailableGuns()
+      +void removeAvailableGun(Gun gunToRemove)
+      +void addAvailableGun(Gun gunToAdd)
+  }
+
+  RespawnDashboardCell "0..3"-- Gun
+
+  class PickupDashboardCell extends BaseDashboardCell {
+      -ammoCard: Optional<AmmoCard>
+      +AmmoCard getAmmoCard()
+      +void setAmmoCard(AmmoCard ammoCard)
+      +void removeAmmoCard()
+  }
+
+  PickupDashboardCell "0..1"-- AmmoCard
+
 }
 
-interface Gun {
-    +List<AmmoColor> getRequiredAmmoToPickup();
-    +List<AmmoColor> getRequiredAmmoToReload();
-    +void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun)
+package com.adrenalinici.adrenaline.events {
+  interface ViewEvent {
+    +GameView getGameView()
+  }
+
+  class FirstTurnEvent implements ViewEvent {
+    -player: PlayerColor
+    +PlayerColor getPlayer()
+  }
+
+  class NewTurnEvent implements ViewEvent {
+    -player: PlayerColor
+    +PlayerColor getPlayer()
+  }
+
+  class ActionChosenEvent implements ViewEvent {
+    -action: Action
+    +Action getAction()
+  }
+
+  class MovementChosenEvent implements ViewEvent {
+    -movement: Integer[]
+    +Integer[] getMovement()
+  }
+
+  class GunChosenEvent implements ViewEvent {
+    -gun: Gun
+    +Gun getChosenGun()
+  }
+
+  class ChosenEffectConfigurationEvent implements ViewEvent {
+    -playersToHit: List<PlayerColor>
+    -effectToApply: Effect
+    -numberOfScopePowerUpUsed: int
+    +List<PlayerColor> getPlayersToHit()
+    +Effect getEffectToApply()
+    +int getNumberOfScopePowerUpUsed()
+  }
+
+  class ChosenRespawnLocationEvent implements ViewEvent {
+    -respawnCell: Integer[]
+    +Integer[] getRespawnCell()
+  }
+
+  class ReloadGunsEvent implements ViewEvent {
+    -gunsToReload: List<Gun>
+    +List<Gun> getGunsToReload()
+  }
+
+  class ChosenBaseEffectConfigurationEvent implements ViewEvent {
+    -baseEffectPlayersToHit: List<PlayerColor>
+    -extraEffectOnePlayersToHit: List<PlayerColor>
+    -extraEffectTwoPlayersToHit: List<PlayerColor>
+    -numberOfScopePowerUpUsed: int
+    +List<PlayerColor> getBaseEffectPlayersToHit()
+    +PlayerColor getExtraEffectOnePlayersToHit()
+    +PlayerColor getExtraEffectTwoPlayersToHit()
+    +int getNumberOfScopePowerUpUsed()
+  }
+
+  class VenomGranadeChosenEvent implements ViewEvent{
+    -chosenVenomGranades: List<PowerUpCard>
+    +List<PowerUpCard> getChosenVenomGranades()
+  }
+
+  class EnemyChosenEvent implements ViewEvent{
+    -chosenEnemy: PlayerColor
+    +PlayerColor getChosenEnemy()
+  }
+
+  class EnemyMovementChosenEvent implements ViewEvent{
+    -chosenEnemyMovement: Integer[]
+    +Integer[] getChosenEnemyMovement()
+  }
+
+  interface ModelEvent{
+    +GameModel getGameModel()
+  }
+
+  class BoardMovementEvent implements ModelEvent {
+    -movement: Integer[]
+    -playerColor: PlayerColor
+  }
+
+  class DashboardCellUpdatedEvent implements ModelEvent{
+    -dashboard: Dashboard
+    -dashboardCell: DashboardCell
+    +Dashboard getDashboard()
+    +DashboardCell getDashboardCell()
+  }
+
+  class PlayerDashboardUpdatedEvent implements ModelEvent{
+    -playerDashboard: PlayerDashboard
+    +PlayerDashboard getPlayerDashboard()
+  }
+
+  class GameStatusUpdatedEvent implements ModelEvent{
+    -killerColor: PlayerColor
+    -cruelKill: Boolean
+  }
 }
 
-BaseGun "1..n"-- AmmoColor: cost
+package com.adrenalinici.adrenaline.controller {
 
-abstract class BaseGun implements Gun {
-    -firstAmmo: AmmoColor
-    -extraAmmo: List<AmmoColor>
-    -name: String
-    -note: Optional<String>
+  class CardDeck<T> {
+    -List<T> cards
+
+    +void shuffle()
+    +T extract()
+    +void add(T newCard)
+  }
+
+  class GameController {
+    -gameStatus: GameStatus
+    -remainingActions: int
+
+    -void doFirstTurn(PlayerColor player)
+    -void doTurn(PlayerColor player)
+  }
+
+  com.adrenalinici.adrenaline.observer.Observer <|.. GameController: "T::ViewEvent"
+
+  interface DecoratedGun extends com.adrenalinici.adrenaline.model.Gun {
+    +void acceptEvent(ViewEvent viewEventToAccept)
+  }
+
+  class DecoratedAlternativeEffectGun extends com.adrenalinici.adrenaline.model.AlternativeEffectGun implements DecoratedGun
+
+  class DecoratedBaseEffectGun extends com.adrenalinici.adrenaline.model.BaseEffectGun implements DecoratedGun
+
 }
 
-class AlternativeEffectGun extends BaseGun {
-    -firstEffect: Effect
-    -secondEffect: Effect
-    -secondEffectCost: List<AmmoColor>
+package com.adrenalinici.adrenaline.controller.states {
+  interface ControllerState {
+    +void acceptEvent(ViewEvent viewEventToAccept)
+    +List<Supplier<ControllerState>> getNextStatesFactories()
+  }
 
-    +Effect getFirstEffect()
-    +Effect getSecondEffect()
-    +List<AmmoColor> getSecondEffectCost()
-}
+  class ExpectingMoveState implements ControllerState{
 
-AlternativeEffectGun "0..n"-- AmmoColor: "second effect cost"
-AlternativeEffectGun "2..n"-- Effect
+  }
 
-class BaseEffectGun extends BaseGun {
-    -baseEffect: Effect
-    -firstExtraEffect: Optional<Effect>
-    -firstExtraEffectCost: Optional<List<AmmoColor>>
-    -secondExtraEffect: Optional<Effect>
-    -secondExtraEffectCost: Optional<List<AmmoColor>>
+  class ExpectingPickupState implements ControllerState{
 
-    +Effect getBaseEffect()
-    +Optional<Effect> getFirstExtraEffect()
-    +Optional<List<AmmoColor>> getFirstExtraEffectCost()
-    +Optional<Effect> getSecondExtraEffect()
-    +Optional<List<AmmoColor>> getSecondExtraEffectCost()
-}
+  }
 
-BaseEffectGun "1"-- Effect: "first effect"
-BaseEffectGun "0..2"-- Effect: "extra effects"
-BaseEffectGun "0..n"-- AmmoColor: "first extra effect cost"
-BaseEffectGun "0..n"-- AmmoColor: "second extra effect cost"
+  class ExpectingShootState implements ControllerState{
 
-class PowerUpCard {
-    -ammoColor: AmmoColor
-    -powerUpType: PowerUpType
-    +AmmoColor getAmmoColor()
-    +PowerUpType getPowerUpType()
-}
+  }
 
-PowerUpCard "1..n"-- AmmoColor
+  class ExecutingGunFlowState implements ControllerState{
 
-enum PowerUpType {
-    VENOM_GRANADE
-    SCOPE
-    TELEPORT
-    KINETIC_RAY
-}
+  }
 
-PowerUpCard "1"-- PowerUpType
+  class ShootCompletedState implements ControllerState{
 
-class Effect {
-    -name : String
-    -description: String
-    +String getName()
-    +String getDescription()
-}
+  }
 
-enum PlayerColor {
-    GRAY
-    YELLOW
-    GREEN
-    PURPLE
-    CYAN
-}
 
-class PlayerDashboard {
-    -ammos: List<AmmoColor>
-    -damages: List<PlayerColor>
-    -marks: List<PlayerColor>
-    -loadedGuns: List<Gun>
-    -unloadedGuns: List<Gun>
-    -powerUpCards: List<PowerUpCard>
-    -skullsNumber: int
-    -points: int
-    -firstPlayer: boolean
 
-    +void addAmmo(AmmoColor ammo)
-    +void removeAmmos(List<AmmoColor> ammos)
-    +List<AmmoColor> getAmmos()
-    +void addDamages(List<PlayerColor> damages)
-    +void removeAllDamages()
-    +List<PlayerColor> getDamages()
-    +Optional<PlayerColor> getFirstDamage()
-    +Optional<PlayerColor> getKillDamage()
-    +Optional<PlayerColor> getCruelDamage()
-    +void addMarks(List<PlayerColor> marks)
-    +void removeMarks(List<PlayerColor> marks)
-    +List<PlayerColor> getMarks()
-    +void addLoadedGun(Gun loadedGun)
-    +void removeLoadedGun(Gun loadedGun)
-    +List<Gun> getLoadedGuns()
-    +void addUnloadedGun(Gun unloadedGun)
-    +void removeUnloadedGun(Gun loadedGun)
-    +List<Gun> getUnloadedGuns()
-    +void addPowerUpCard(PowerUpCard powerUp)
-    +void removePowerUpCard(PowerUpCard powerUp)
-    +List<PowerUpCard> getPowerUpCards()
-    +void incrementSkullsNumber()
-    +int getSkullsNumber()
-    +void addPoints(int points)
-    +int getPoints()
-    +boolean getFirstPlayer()
-}
-
-PlayerDashboard "0..9"-- AmmoColor
-PlayerDashboard "0..12"-- PlayerColor: "damages"
-PlayerDashboard "0..n"-- PlayerColor: "marks"
-PlayerDashboard "0..3"-- PlayerColor: "guns"
-PlayerDashboard "0..n"-- PowerUpCard: "power up cards"
-
-class AmmoCard {
-    -ammoColor: List<AmmoColor>
-    -powerUpCard: Optional<PowerUpCard>
-    
-    +List<AmmoColor> getAmmoColor()
-    +Optional<PowerUpCard> getPowerUpCard()
-}
-
-AmmoCard "2..3"-- AmmoColor
-AmmoCard "0..1"-- PowerUpCard
-
-enum Action {
-    MOVE
-    SHOOT
-    PICKUP
-    RELOAD
-}
-
-class CompositeAction {
-    -compositeAction: List<Action>
-    +Action getCompositeAction()
-}
-
-CompositeAction "1..4"-- Action
-
-class GameStatus {
-    -killScore: List<Map.Entry<PlayerColor, Boolean>>
-    -remainingSkulls: int
-    -doubleKillScore: List<PlayerColor>
-    -roundPlayer: PlayerColor
-
-    +void addKillScore(PlayerColor playerColor, boolean cruelKill)
-    +List<Map.Entry<PlayerColor, Boolean>> getKillScore()
-    +int decrementSkulls()
-    +int getRemainingSkulls()
-    +void addDoubleKillScore(PlayerColor playerColor)
-    +List<PlayerColor> getDoubleKillScore()
-    +void setRoundPlayer(PlayerColor playerColor)
-    +PlayerColor getRoundPlayer()
-}
-
-note left: killScore is a list of tuples\nwhere PlayerColor is the color of the\nkiller and the Boolean represents cruel kill
-
-GameStatus "0..8"-- PlayerColor: "assassins"
-GameStatus "0..n"-- PlayerColor: "double kills"
-GameStatus "1"-- PlayerColor: "round of player"
-
-class Dashboard {
-    -dashboardCells: List<DashboardCell>
-
-    +List<DashboardCell> getDashboardCells()
-}
-
-enum DashboardCellBoundType{
-    OPEN
-    WALL
-    DOOR
-}
-
-interface DashboardCell {
-    +List<PlayerColor> getPlayersInCell()
-    +Optional<DashboardCellBoundType> getNorthDashboardCellBoundType()
-    +Optional<DashboardCellBoundType> getSouthDashboardCellBoundType()
-    +Optional<DashboardCellBoundType> getWestDashboardCellBoundType()
-    +Optional<DashboardCellBoundType> getEastDashboardCellBoundType()
-    +Optional<DashboardCell> getNorthDashboardCell()
-    +Optional<DashboardCell> getSouthDashboardCell()
-    +Optional<DashboardCell> getWestDashboardCell()
-    +Optional<DashboardCell> getEastDashboardCell()
-    +void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell)
-}
-
-DashboardCell --*"0..1" Dashboard
-
-abstract class BaseDashboardCell implements DashboardCell {
-    -playerInCell: List<PlayerColor>
-    -northDashboardCellBoundType: DashboardCellBoundType
-    -southDashboardCellBoundType: DashboardCellBoundType
-    -westDashboardCellBoundType: DashboardCellBoundType
-    -eastDashboardCellBoundType: DashboardCellBoundType
-    -northDashboardCell: DashboardCell
-    -southDashboardCell: DashboardCell
-    -westDashboardCell: DashboardCell
-    -eastDashboardCell: DashboardCell
 
 }
 
 
-BaseDashboardCell "0..4"-- BaseDashboardCell
-BaseDashboardCell "0..4"-- DashboardCellBoundType
 
-class RespawnDashboardCell extends BaseDashboardCell {
-    -availableGuns: List<Gun>
-    +List<Gun> getAvailableGuns()
-    +void removeAvailableGun(Gun gunToRemove)
-    +void addAvailableGun(Gunt gunToAdd)
+package com.adrenalinici.adrenaline.view {
+  class GameView {
+    +void showAvailableActions(List<CompositeAction> actions)
+    +void showAvailableMovements(List<Integer[]> availableMovements)
+    +void showReloadableGuns(List<Gun> reloadableGuns)
+    +void showLoadedGuns(List<Gun> reloadableGuns)
+    +void showBaseGunExtraEffects(List<Effect> effects)
+    +void showAvailableRespawnLocations(List<AmmoColor> respawnLocations)
+    +void showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
+    +void showApplicableEffects(Map<PlayerColor, Optional<Integer[]>> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
+    +void showAvailableVenomGranades(PlayerColor player)
+    +void showAvailablePowerUpCards(PlayerColor player)
+    +void showAvailableEnemyMovements(List<Integer[]> availableEnemyMovements)
+  }
+
+  com.adrenalinici.adrenaline.observer.Observable <|-- GameView: "T::ViewEvent"
+  com.adrenalinici.adrenaline.observer.Observer <|.. GameView: "T::ModelEvent"
+
+  note bottom: the two different showApplicableEffects methods are called from AlternativeEffectGun (first one) and from BaseEffectGun (second one)
 }
 
-RespawnDashboardCell "0..3"-- Gun
-
-class PickupDashboardCell extends BaseDashboardCell {
-    -ammoCard: Optional<AmmoCard>
-    +AmmoCard getAmmoCard()
-    +void setAmmoCard(AmmoCard ammoCard)
-    +void removeAmmoCard()
+package com.adrenalinici.adrenaline.observer {
+   interface Observer<T>
+   class Observable<T>
 }
-
-PickupDashboardCell "0..1"-- AmmoCard
 
 @enduml
