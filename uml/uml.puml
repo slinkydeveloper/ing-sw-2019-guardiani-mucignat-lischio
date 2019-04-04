@@ -301,8 +301,8 @@ package com.adrenalinici.adrenaline.events {
 
   class ChosenBaseEffectConfigurationEvent implements ViewEvent {
     -baseEffectPlayersToHit: List<PlayerColor>
-    -extraEffectOnePlayersToHit: PlayerColor
-    -extraEffectTwoPlayersToHit: PlayerColor
+    -extraEffectOnePlayersToHit: List<PlayerColor>
+    -extraEffectTwoPlayersToHit: List<PlayerColor>
     -numberOfScopePowerUpUsed: int
     +List<PlayerColor> getBaseEffectPlayersToHit()
     +PlayerColor getExtraEffectOnePlayersToHit()
@@ -373,7 +373,7 @@ package com.adrenalinici.adrenaline.controller {
   com.adrenalinici.adrenaline.observer.Observer <|.. GameController: "T::ViewEvent"
 
   interface DecoratedGun extends com.adrenalinici.adrenaline.model.Gun {
-    +void acceptEvent(TODO)
+    +void acceptEvent(ViewEvent viewEventToAccept)
   }
 
   class DecoratedAlternativeEffectGun extends com.adrenalinici.adrenaline.model.AlternativeEffectGun implements DecoratedGun
@@ -384,12 +384,8 @@ package com.adrenalinici.adrenaline.controller {
 
 package com.adrenalinici.adrenaline.controller.states {
   interface ControllerState {
-    +void acceptEvent(TODO)
+    +void acceptEvent(ViewEvent viewEventToAccept)
     +List<Supplier<ControllerState>> getNextStatesFactories()
-  }
-
-  class ControllerStateFactory {
-    +ControllerState getControllerState(Supplier<ControllerState>)
   }
 
   class ExpectingMoveState implements ControllerState{
