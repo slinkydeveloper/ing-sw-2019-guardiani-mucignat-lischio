@@ -1,6 +1,14 @@
 @startuml
 
 package com.adrenalinici.adrenaline.model {
+  class Position {
+    -line: int
+    -cell: int
+
+    +int cell()
+    +int line()
+  }
+
   enum AmmoColor {
       RED
       YELLOW
@@ -271,8 +279,8 @@ package com.adrenalinici.adrenaline.events {
   }
 
   class MovementChosenEvent implements ViewEvent {
-    -movement: Integer[]
-    +Integer[] getMovement()
+    -movement: Position
+    +Position getMovement()
   }
 
   class GunChosenEvent implements ViewEvent {
@@ -290,8 +298,8 @@ package com.adrenalinici.adrenaline.events {
   }
 
   class ChosenRespawnLocationEvent implements ViewEvent {
-    -respawnCell: Integer[]
-    +Integer[] getRespawnCell()
+    -respawnCell: Position
+    +Position getRespawnCell()
   }
 
   class ReloadGunsEvent implements ViewEvent {
@@ -321,17 +329,12 @@ package com.adrenalinici.adrenaline.events {
   }
 
   class EnemyMovementChosenEvent implements ViewEvent{
-    -chosenEnemyMovement: Integer[]
-    +Integer[] getChosenEnemyMovement()
+    -chosenEnemyMovement: Position
+    +Position getChosenEnemyMovement()
   }
 
   interface ModelEvent{
-    +GameModel getGameModel()
-  }
-
-  class BoardMovementEvent implements ModelEvent {
-    -movement: Integer[]
-    -playerColor: PlayerColor
+    +GameStatus getGameStatus()
   }
 
   class DashboardCellUpdatedEvent implements ModelEvent{
@@ -418,16 +421,16 @@ package com.adrenalinici.adrenaline.controller.states {
 package com.adrenalinici.adrenaline.view {
   class GameView {
     +void showAvailableActions(List<CompositeAction> actions)
-    +void showAvailableMovements(List<Integer[]> availableMovements)
+    +void showAvailableMovements(List<Position> availableMovements)
     +void showReloadableGuns(List<Gun> reloadableGuns)
     +void showLoadedGuns(List<Gun> reloadableGuns)
     +void showBaseGunExtraEffects(List<Effect> effects)
     +void showAvailableRespawnLocations(List<AmmoColor> respawnLocations)
-    +void showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
-    +void showApplicableEffects(Map<PlayerColor, Optional<Integer[]>> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
+    +void showApplicableEffects(Optional<Map<PlayerColor, Optional<Position>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Position>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
+    +void showApplicableEffects(Map<PlayerColor, Optional<Position>> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<Map<PlayerColor, Optional<Position>>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<Map<PlayerColor, Optional<Position>>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
     +void showAvailableVenomGranades(PlayerColor player)
     +void showAvailablePowerUpCards(PlayerColor player)
-    +void showAvailableEnemyMovements(List<Integer[]> availableEnemyMovements)
+    +void showAvailableEnemyMovements(List<Position> availableEnemyMovements)
   }
 
   com.adrenalinici.adrenaline.observer.Observable <|-- GameView: "T::ViewEvent"
