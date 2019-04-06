@@ -16,9 +16,9 @@ command -v convert >/dev/null 2>&1 || { echo >&2 "I require convert (from ImageM
 
 java -jar plantuml.jar -tsvg uml/uml.puml
 mkdir -p deliveries/$1
-convert uml/uml.svg deliveries/$1/uml.png
-mv uml/uml.svg deliveries/$1/uml.svg
-git add deliveries/$1/uml.png
-git add deliveries/$1/uml.svg
+convert uml/uml.svg deliveries/$1/uml/uml.png
+mv uml/uml.svg deliveries/$1/uml/uml.svg
+git add deliveries/$1/uml/uml.png
+git add deliveries/$1/uml/uml.svg
 
 echo "Completed!"

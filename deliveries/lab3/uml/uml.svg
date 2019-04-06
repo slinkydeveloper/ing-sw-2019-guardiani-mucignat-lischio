@@ -1,0 +1,2309 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" contentScriptType="application/ecmascript" contentStyleType="text/css"
+     height="2533px" preserveAspectRatio="none" style="width:9801px;height:2533px;" version="1.1"
+     viewBox="0 0 9801 2533" width="9801px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f1lscr7nve3fsr" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2.0"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g><!--cluster com.adrenalinici.adrenaline.model-->
+    <polygon fill="#FFFFFF" filter="url(#f1lscr7nve3fsr)"
+             points="14,16,289,16,296,38.2969,1945,38.2969,1945,2521,14,2521,14,16"
+             style="stroke: #000000; stroke-width: 1.5;"/>
+    <line style="stroke: #000000; stroke-width: 1.5;" x1="14" x2="296" y1="38.2969" y2="38.2969"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs"
+          textLength="269" x="18" y="30.9951">com.adrenalinici.adrenaline.model
+    </text><!--cluster com.adrenalinici.adrenaline.observer-->
+    <polygon fill="#FFFFFF" filter="url(#f1lscr7nve3fsr)"
+             points="2629,80,2928,80,2935,102.2969,2938,102.2969,2938,163,2629,163,2629,80"
+             style="stroke: #000000; stroke-width: 1.5;"/>
+    <line style="stroke: #000000; stroke-width: 1.5;" x1="2629" x2="2935" y1="102.2969" y2="102.2969"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs"
+          textLength="293" x="2633" y="94.9951">com.adrenalinici.adrenaline.observer
+    </text><!--cluster com.adrenalinici.adrenaline.events-->
+    <polygon fill="#FFFFFF" filter="url(#f1lscr7nve3fsr)"
+             points="4881,73.5,5162,73.5,5169,95.7969,8763,95.7969,8763,709,4881,709,4881,73.5"
+             style="stroke: #000000; stroke-width: 1.5;"/>
+    <line style="stroke: #000000; stroke-width: 1.5;" x1="4881" x2="5169" y1="95.7969" y2="95.7969"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs"
+          textLength="275" x="4885" y="88.4951">com.adrenalinici.adrenaline.events
+    </text><!--cluster com.adrenalinici.adrenaline.controller-->
+    <polygon fill="#FFFFFF" filter="url(#f1lscr7nve3fsr)"
+             points="1953,319,2257,319,2264,341.2969,2711,341.2969,2711,818,1953,818,1953,319"
+             style="stroke: #000000; stroke-width: 1.5;"/>
+    <line style="stroke: #000000; stroke-width: 1.5;" x1="1953" x2="2264" y1="341.2969" y2="341.2969"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs"
+          textLength="298" x="1957" y="333.9951">com.adrenalinici.adrenaline.controller
+    </text><!--cluster com.adrenalinici.adrenaline.controller.states-->
+    <polygon fill="#FFFFFF" filter="url(#f1lscr7nve3fsr)"
+             points="8781,67,9139,67,9146,89.2969,9779,89.2969,9779,658,8781,658,8781,67"
+             style="stroke: #000000; stroke-width: 1.5;"/>
+    <line style="stroke: #000000; stroke-width: 1.5;" x1="8781" x2="9146" y1="89.2969" y2="89.2969"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs"
+          textLength="352" x="8785" y="81.9951">com.adrenalinici.adrenaline.controller.states
+    </text><!--cluster com.adrenalinici.adrenaline.view-->
+    <polygon fill="#FFFFFF" filter="url(#f1lscr7nve3fsr)"
+             points="2801,274,3065,274,3072,296.2969,4873,296.2969,4873,806.5,2801,806.5,2801,274"
+             style="stroke: #000000; stroke-width: 1.5;"/>
+    <line style="stroke: #000000; stroke-width: 1.5;" x1="2801" x2="3072" y1="296.2969" y2="296.2969"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs"
+          textLength="258" x="2805" y="288.9951">com.adrenalinici.adrenaline.view
+    </text><!--class AmmoColor-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="86.4141" id="AmmoColor"
+          style="stroke: #A80036; stroke-width: 1.5;" width="102" x="916" y="2388.5"/>
+    <ellipse cx="931" cy="2404.5" fill="#EB937F" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M935.1094,2410.5 L927.3906,2410.5 L927.3906,2398.1094 L935.1094,2398.1094 L935.1094,2400.2656 L929.8438,2400.2656 L929.8438,2402.9375 L934.6094,2402.9375 L934.6094,2405.0938 L929.8438,2405.0938 L929.8438,2408.3438 L935.1094,2408.3438 L935.1094,2410.5 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70" x="945"
+          y="2408.6543">AmmoColor
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="917" x2="1017" y1="2420.5" y2="2420.5"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="22" x="922"
+          y="2434.7104">RED
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44" x="922"
+          y="2447.5151">YELLOW
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="29" x="922"
+          y="2460.3198">BLUE
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="917" x2="1017" y1="2466.9141" y2="2466.9141"/><!--class Gun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="86.4141" id="Gun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="698" x="62" y="1191"/>
+    <ellipse cx="394.25" cy="1207" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M390.1719,1202.7656 L390.1719,1200.6094 L397.5625,1200.6094 L397.5625,1202.7656 L395.0938,1202.7656 L395.0938,1210.8438 L397.5625,1210.8438 L397.5625,1213 L390.1719,1213 L390.1719,1210.8438 L392.6406,1210.8438 L392.6406,1202.7656 L390.1719,1202.7656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="25" x="414.75" y="1211.1543">Gun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="63" x2="759" y1="1223" y2="1223"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="63" x2="759" y1="1231" y2="1231"/>
+    <ellipse cx="73" cy="1242.9023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="274" x="82"
+          y="1245.2104">List&lt;AmmoColor&gt; getRequiredAmmoToPickup();
+    </text>
+    <ellipse cx="73" cy="1255.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="276" x="82"
+          y="1258.0151">List&lt;AmmoColor&gt; getRequiredAmmoToReload();
+    </text>
+    <ellipse cx="73" cy="1268.5117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="672" x="82"
+          y="1270.8198">void visit(Consumer&lt;AlternativeEffectGun&gt; visitAlternativeEffectGun, Consumer&lt;BaseEffectGun&gt;
+      visitBaseEffectGun)
+    </text><!--class BaseGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="BaseGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="203" x="327.5" y="1598.5"/>
+    <ellipse cx="397.25" cy="1614.5" fill="#A9DCDF" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M397.3594,1609.8438 L396.2031,1614.9219 L398.5313,1614.9219 L397.3594,1609.8438 Z M395.875,1607.6094 L398.8594,1607.6094 L402.2188,1620 L399.7656,1620 L399,1616.9375 L395.7188,1616.9375 L394.9688,1620 L392.5313,1620 L395.875,1607.6094 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="55" x="417.75" y="1618.6543">BaseGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="328.5" x2="529.5" y1="1630.5" y2="1630.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="335.5" y="1639.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="133"
+          x="347.5" y="1644.7104">firstAmmo: AmmoColor
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="335.5" y="1652.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="177"
+          x="347.5" y="1657.5151">extraAmmo: List&lt;AmmoColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="335.5" y="1665.0117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74"
+          x="347.5" y="1670.3198">name: String
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="335.5" y="1677.8164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="132"
+          x="347.5" y="1683.1245">note: Optional&lt;String&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="328.5" x2="529.5" y1="1689.7188"
+          y2="1689.7188"/><!--class AlternativeEffectGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="124.8281" id="AlternativeEffectGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="260" x="544" y="2060.5"/>
+    <ellipse cx="605.75" cy="2076.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M608.7188,2082.1406 Q608.1406,2082.4375 607.5,2082.5859 Q606.8594,2082.7344 606.1563,2082.7344 Q603.6563,2082.7344 602.3359,2081.0859 Q601.0156,2079.4375 601.0156,2076.3125 Q601.0156,2073.1875 602.3359,2071.5313 Q603.6563,2069.875 606.1563,2069.875 Q606.8594,2069.875 607.5078,2070.0313 Q608.1563,2070.1875 608.7188,2070.4844 L608.7188,2073.2031 Q608.0938,2072.625 607.5,2072.3516 Q606.9063,2072.0781 606.2813,2072.0781 Q604.9375,2072.0781 604.25,2073.1484 Q603.5625,2074.2188 603.5625,2076.3125 Q603.5625,2078.4063 604.25,2079.4766 Q604.9375,2080.5469 606.2813,2080.5469 Q606.9063,2080.5469 607.5,2080.2734 Q608.0938,2080 608.7188,2079.4219 L608.7188,2082.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="128"
+          x="626.25" y="2080.6543">AlternativeEffectGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="545" x2="803" y1="2092.5" y2="2092.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="552" y="2101.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="95" x="564"
+          y="2106.7104">firstEffect: Effect
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="552" y="2114.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="113"
+          x="564" y="2119.5151">secondEffect: Effect
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="552" y="2127.0117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="211"
+          x="564" y="2132.3198">secondEffectCost: List&lt;AmmoColor&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="545" x2="803" y1="2138.9141" y2="2138.9141"/>
+    <ellipse cx="555" cy="2150.8164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="119"
+          x="564" y="2153.1245">Effect getFirstEffect()
+    </text>
+    <ellipse cx="555" cy="2163.6211" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="136"
+          x="564" y="2165.9292">Effect getSecondEffect()
+    </text>
+    <ellipse cx="555" cy="2176.4258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="234"
+          x="564" y="2178.7339">List&lt;AmmoColor&gt; getSecondEffectCost()
+    </text><!--class Effect-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="163.2422" id="Effect"
+          style="stroke: #A80036; stroke-width: 1.5;" width="435" x="22.5" y="2350"/>
+    <ellipse cx="217.75" cy="2366" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M220.7188,2371.6406 Q220.1406,2371.9375 219.5,2372.0859 Q218.8594,2372.2344 218.1563,2372.2344 Q215.6563,2372.2344 214.3359,2370.5859 Q213.0156,2368.9375 213.0156,2365.8125 Q213.0156,2362.6875 214.3359,2361.0313 Q215.6563,2359.375 218.1563,2359.375 Q218.8594,2359.375 219.5078,2359.5313 Q220.1563,2359.6875 220.7188,2359.9844 L220.7188,2362.7031 Q220.0938,2362.125 219.5,2361.8516 Q218.9063,2361.5781 218.2813,2361.5781 Q216.9375,2361.5781 216.25,2362.6484 Q215.5625,2363.7188 215.5625,2365.8125 Q215.5625,2367.9063 216.25,2368.9766 Q216.9375,2370.0469 218.2813,2370.0469 Q218.9063,2370.0469 219.5,2369.7734 Q220.0938,2369.5 220.7188,2368.9219 L220.7188,2371.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="36"
+          x="238.25" y="2370.1543">Effect
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="23.5" x2="456.5" y1="2382" y2="2382"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="30.5" y="2390.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="78"
+          x="42.5" y="2396.2104">name : String
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="30.5" y="2403.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="105"
+          x="42.5" y="2409.0151">description: String
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="30.5" y="2416.5117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="336"
+          x="42.5" y="2421.8198">configFn: Function&lt;GameController, EffectAvailableConfig&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="30.5" y="2429.3164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="355"
+          x="42.5" y="2434.6245">applyFn: BiConsumer&lt;EffectAvailableConfig, GameController&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="23.5" x2="456.5" y1="2441.2188" y2="2441.2188"/>
+    <ellipse cx="33.5" cy="2453.1211" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="97"
+          x="42.5" y="2455.4292">String getName()
+    </text>
+    <ellipse cx="33.5" cy="2465.9258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="128"
+          x="42.5" y="2468.2339">String getDescription()
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="0" x="46.5"
+          y="2481.0386"/>
+    <ellipse cx="33.5" cy="2491.5352" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="365"
+          x="42.5" y="2493.8433">EffectAvailableConfig generateConfig(GameController controller)
+    </text>
+    <ellipse cx="33.5" cy="2504.3398" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="409"
+          x="42.5" y="2506.6479">void applyEffect(EffectAvailableConfig config, GameController controller)
+    </text><!--class BaseEffectGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="176.0469" id="BaseEffectGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="354" x="155" y="2035"/>
+    <ellipse cx="281.75" cy="2051" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M284.7188,2056.6406 Q284.1406,2056.9375 283.5,2057.0859 Q282.8594,2057.2344 282.1563,2057.2344 Q279.6563,2057.2344 278.3359,2055.5859 Q277.0156,2053.9375 277.0156,2050.8125 Q277.0156,2047.6875 278.3359,2046.0313 Q279.6563,2044.375 282.1563,2044.375 Q282.8594,2044.375 283.5078,2044.5313 Q284.1563,2044.6875 284.7188,2044.9844 L284.7188,2047.7031 Q284.0938,2047.125 283.5,2046.8516 Q282.9063,2046.5781 282.2813,2046.5781 Q280.9375,2046.5781 280.25,2047.6484 Q279.5625,2048.7188 279.5625,2050.8125 Q279.5625,2052.9063 280.25,2053.9766 Q280.9375,2055.0469 282.2813,2055.0469 Q282.9063,2055.0469 283.5,2054.7734 Q284.0938,2054.5 284.7188,2053.9219 L284.7188,2056.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="92"
+          x="302.25" y="2055.1543">BaseEffectGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="156" x2="508" y1="2067" y2="2067"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="163" y="2075.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="100"
+          x="175" y="2081.2104">baseEffect: Effect
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="163" y="2088.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="189"
+          x="175" y="2094.0151">firstExtraEffect: Optional&lt;Effect&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="163" y="2101.5117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="287"
+          x="175" y="2106.8198">firstExtraEffectCost: Optional&lt;List&lt;AmmoColor&gt;&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="163" y="2114.3164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="207"
+          x="175" y="2119.6245">secondExtraEffect: Optional&lt;Effect&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="163" y="2127.1211"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="305"
+          x="175" y="2132.4292">secondExtraEffectCost: Optional&lt;List&lt;AmmoColor&gt;&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="156" x2="508" y1="2139.0234" y2="2139.0234"/>
+    <ellipse cx="166" cy="2150.9258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="123"
+          x="175" y="2153.2339">Effect getBaseEffect()
+    </text>
+    <ellipse cx="166" cy="2163.7305" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="213"
+          x="175" y="2166.0386">Optional&lt;Effect&gt; getFirstExtraEffect()
+    </text>
+    <ellipse cx="166" cy="2176.5352" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="311"
+          x="175" y="2178.8433">Optional&lt;List&lt;AmmoColor&gt;&gt; getFirstExtraEffectCost()
+    </text>
+    <ellipse cx="166" cy="2189.3398" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="230"
+          x="175" y="2191.6479">Optional&lt;Effect&gt; getSecondExtraEffect()
+    </text>
+    <ellipse cx="166" cy="2202.1445" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="328"
+          x="175" y="2204.4526">Optional&lt;List&lt;AmmoColor&gt;&gt; getSecondExtraEffectCost()
+    </text><!--class PowerUpCard-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="PowerUpCard"
+          style="stroke: #A80036; stroke-width: 1.5;" width="210" x="1012" y="2073.5"/>
+    <ellipse cx="1070.75" cy="2089.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1073.7188,2095.1406 Q1073.1406,2095.4375 1072.5,2095.5859 Q1071.8594,2095.7344 1071.1563,2095.7344 Q1068.6563,2095.7344 1067.3359,2094.0859 Q1066.0156,2092.4375 1066.0156,2089.3125 Q1066.0156,2086.1875 1067.3359,2084.5313 Q1068.6563,2082.875 1071.1563,2082.875 Q1071.8594,2082.875 1072.5078,2083.0313 Q1073.1563,2083.1875 1073.7188,2083.4844 L1073.7188,2086.2031 Q1073.0938,2085.625 1072.5,2085.3516 Q1071.9063,2085.0781 1071.2813,2085.0781 Q1069.9375,2085.0781 1069.25,2086.1484 Q1068.5625,2087.2188 1068.5625,2089.3125 Q1068.5625,2091.4063 1069.25,2092.4766 Q1069.9375,2093.5469 1071.2813,2093.5469 Q1071.9063,2093.5469 1072.5,2093.2734 Q1073.0938,2093 1073.7188,2092.4219 L1073.7188,2095.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84"
+          x="1091.25" y="2093.6543">PowerUpCard
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1013" x2="1221" y1="2105.5" y2="2105.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1020" y="2114.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="140"
+          x="1032" y="2119.7104">ammoColor: AmmoColor
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1020" y="2127.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="162"
+          x="1032" y="2132.5151">powerUpType: PowerUpType
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1013" x2="1221" y1="2139.1094" y2="2139.1094"/>
+    <ellipse cx="1023" cy="2151.0117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="162"
+          x="1032" y="2153.3198">AmmoColor getAmmoColor()
+    </text>
+    <ellipse cx="1023" cy="2163.8164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="184"
+          x="1032" y="2166.1245">PowerUpType getPowerUpType()
+    </text><!--class PowerUpType-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="PowerUpType"
+          style="stroke: #A80036; stroke-width: 1.5;" width="116" x="1059" y="2382"/>
+    <ellipse cx="1074" cy="2398" fill="#EB937F" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1078.1094,2404 L1070.3906,2404 L1070.3906,2391.6094 L1078.1094,2391.6094 L1078.1094,2393.7656 L1072.8438,2393.7656 L1072.8438,2396.4375 L1077.6094,2396.4375 L1077.6094,2398.5938 L1072.8438,2398.5938 L1072.8438,2401.8438 L1078.1094,2401.8438 L1078.1094,2404 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84"
+          x="1088" y="2402.1543">PowerUpType
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1060" x2="1174" y1="2414" y2="2414"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="99"
+          x="1065" y="2428.2104">VENOM_GRANADE
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="39"
+          x="1065" y="2441.0151">SCOPE
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="57"
+          x="1065" y="2453.8198">TELEPORT
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="70"
+          x="1065" y="2466.6245">KINETIC_RAY
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1060" x2="1174" y1="2473.2188"
+          y2="2473.2188"/><!--class EffectAvailableConfig-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="EffectAvailableConfig"
+          style="stroke: #A80036; stroke-width: 1.5;" width="413" x="1523.5" y="81.5"/>
+    <ellipse cx="1660.75" cy="97.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1663.7188,103.1406 Q1663.1406,103.4375 1662.5,103.5859 Q1661.8594,103.7344 1661.1563,103.7344 Q1658.6563,103.7344 1657.3359,102.0859 Q1656.0156,100.4375 1656.0156,97.3125 Q1656.0156,94.1875 1657.3359,92.5313 Q1658.6563,90.875 1661.1563,90.875 Q1661.8594,90.875 1662.5078,91.0313 Q1663.1563,91.1875 1663.7188,91.4844 L1663.7188,94.2031 Q1663.0938,93.625 1662.5,93.3516 Q1661.9063,93.0781 1661.2813,93.0781 Q1659.9375,93.0781 1659.25,94.1484 Q1658.5625,95.2188 1658.5625,97.3125 Q1658.5625,99.4063 1659.25,100.4766 Q1659.9375,101.5469 1661.2813,101.5469 Q1661.9063,101.5469 1662.5,101.2734 Q1663.0938,101 1663.7188,100.4219 L1663.7188,103.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="130"
+          x="1681.25" y="101.6543">EffectAvailableConfig
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1524.5" x2="1935.5" y1="113.5" y2="113.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1531.5" y="122.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="195"
+          x="1543.5" y="127.7104">hittablePlayers: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1531.5" y="135.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="256"
+          x="1543.5" y="140.5151">possiblePreThisPlayerMoves: List&lt;Integer[]&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1531.5" y="148.0117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="262"
+          x="1543.5" y="153.3198">possiblePostThisPlayerMoves: List&lt;Integer[]&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1531.5" y="160.8164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="387"
+          x="1543.5" y="166.1245">possibleEnemiesMovements: Map&lt;PlayerColor, List&lt;PlayerColor&gt;&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1524.5" x2="1935.5" y1="172.7188"
+          y2="172.7188"/><!--class PlayerColor-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="112.0234" id="PlayerColor"
+          style="stroke: #A80036; stroke-width: 1.5;" width="102" x="1446" y="2067"/>
+    <ellipse cx="1461" cy="2083" fill="#EB937F" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1465.1094,2089 L1457.3906,2089 L1457.3906,2076.6094 L1465.1094,2076.6094 L1465.1094,2078.7656 L1459.8438,2078.7656 L1459.8438,2081.4375 L1464.6094,2081.4375 L1464.6094,2083.5938 L1459.8438,2083.5938 L1459.8438,2086.8438 L1465.1094,2086.8438 L1465.1094,2089 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+          x="1475" y="2087.1543">PlayerColor
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1447" x2="1547" y1="2099" y2="2099"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="30"
+          x="1452" y="2113.2104">GRAY
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44"
+          x="1452" y="2126.0151">YELLOW
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="38"
+          x="1452" y="2138.8198">GREEN
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="42"
+          x="1452" y="2151.6245">PURPLE
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="30"
+          x="1452" y="2164.4292">CYAN
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1447" x2="1547" y1="2171.0234"
+          y2="2171.0234"/><!--class PlayerDashboard-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="496.1641" id="PlayerDashboard"
+          style="stroke: #A80036; stroke-width: 1.5;" width="312" x="901" y="1400"/>
+    <ellipse cx="999.25" cy="1416" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1002.2188,1421.6406 Q1001.6406,1421.9375 1001,1422.0859 Q1000.3594,1422.2344 999.6563,1422.2344 Q997.1563,1422.2344 995.8359,1420.5859 Q994.5156,1418.9375 994.5156,1415.8125 Q994.5156,1412.6875 995.8359,1411.0313 Q997.1563,1409.375 999.6563,1409.375 Q1000.3594,1409.375 1001.0078,1409.5313 Q1001.6563,1409.6875 1002.2188,1409.9844 L1002.2188,1412.7031 Q1001.5938,1412.125 1001,1411.8516 Q1000.4063,1411.5781 999.7813,1411.5781 Q998.4375,1411.5781 997.75,1412.6484 Q997.0625,1413.7188 997.0625,1415.8125 Q997.0625,1417.9063 997.75,1418.9766 Q998.4375,1420.0469 999.7813,1420.0469 Q1000.4063,1420.0469 1001,1419.7734 Q1001.5938,1419.5 1002.2188,1418.9219 L1002.2188,1421.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="107"
+          x="1019.75" y="1420.1543">PlayerDashboard
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="902" x2="1212" y1="1432" y2="1432"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1440.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="155"
+          x="921" y="1446.2104">ammos: List&lt;AmmoColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1453.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="164"
+          x="921" y="1459.0151">damages: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1466.5117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="147"
+          x="921" y="1471.8198">marks: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1479.3164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="137"
+          x="921" y="1484.6245">loadedGuns: List&lt;Gun&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1492.1211"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="151"
+          x="921" y="1497.4292">unloadedGuns: List&lt;Gun&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1504.9258"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="207"
+          x="921" y="1510.2339">powerUpCards: List&lt;PowerUpCard&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1517.7305"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="100"
+          x="921" y="1523.0386">skullsNumber: int
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1530.5352"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="57" x="921"
+          y="1535.8433">points: int
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="909" y="1543.3398"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="111"
+          x="921" y="1548.6479">firstPlayer: boolean
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="902" x2="1212" y1="1555.2422" y2="1555.2422"/>
+    <ellipse cx="912" cy="1567.1445" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="198"
+          x="921" y="1569.4526">void addAmmo(AmmoColor ammo)
+    </text>
+    <ellipse cx="912" cy="1579.9492" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="272"
+          x="921" y="1582.2573">void removeAmmos(List&lt;AmmoColor&gt; ammos)
+    </text>
+    <ellipse cx="912" cy="1592.7539" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="177"
+          x="921" y="1595.062">List&lt;AmmoColor&gt; getAmmos()
+    </text>
+    <ellipse cx="912" cy="1605.5586" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="270"
+          x="921" y="1607.8667">void addDamages(List&lt;PlayerColor&gt; damages)
+    </text>
+    <ellipse cx="912" cy="1618.3633" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="145"
+          x="921" y="1620.6714">void removeAllDamages()
+    </text>
+    <ellipse cx="912" cy="1631.168" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="187"
+          x="921" y="1633.4761">List&lt;PlayerColor&gt; getDamages()
+    </text>
+    <ellipse cx="912" cy="1643.9727" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="232"
+          x="921" y="1646.2808">Optional&lt;PlayerColor&gt; getFirstDamage()
+    </text>
+    <ellipse cx="912" cy="1656.7773" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="223"
+          x="921" y="1659.0854">Optional&lt;PlayerColor&gt; getKillDamage()
+    </text>
+    <ellipse cx="912" cy="1669.582" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="237"
+          x="921" y="1671.8901">Optional&lt;PlayerColor&gt; getCruelDamage()
+    </text>
+    <ellipse cx="912" cy="1682.3867" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="233"
+          x="921" y="1684.6948">void addMarks(List&lt;PlayerColor&gt; marks)
+    </text>
+    <ellipse cx="912" cy="1695.1914" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="255"
+          x="921" y="1697.4995">void removeMarks(List&lt;PlayerColor&gt; marks)
+    </text>
+    <ellipse cx="912" cy="1707.9961" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="167"
+          x="921" y="1710.3042">List&lt;PlayerColor&gt; getMarks()
+    </text>
+    <ellipse cx="912" cy="1720.8008" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="208"
+          x="921" y="1723.1089">void addLoadedGun(Gun loadedGun)
+    </text>
+    <ellipse cx="912" cy="1733.6055" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="230"
+          x="921" y="1735.9136">void removeLoadedGun(Gun loadedGun)
+    </text>
+    <ellipse cx="912" cy="1746.4102" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="162"
+          x="921" y="1748.7183">List&lt;Gun&gt; getLoadedGuns()
+    </text>
+    <ellipse cx="912" cy="1759.2148" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="234"
+          x="921" y="1761.5229">void addUnloadedGun(Gun unloadedGun)
+    </text>
+    <ellipse cx="912" cy="1772.0195" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="242"
+          x="921" y="1774.3276">void removeUnloadedGun(Gun loadedGun)
+    </text>
+    <ellipse cx="912" cy="1784.8242" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="174"
+          x="921" y="1787.1323">List&lt;Gun&gt; getUnloadedGuns()
+    </text>
+    <ellipse cx="912" cy="1797.6289" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="264"
+          x="921" y="1799.937">void addPowerUpCard(PowerUpCard powerUp)
+    </text>
+    <ellipse cx="912" cy="1810.4336" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="286"
+          x="921" y="1812.7417">void removePowerUpCard(PowerUpCard powerUp)
+    </text>
+    <ellipse cx="912" cy="1823.2383" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="229"
+          x="921" y="1825.5464">List&lt;PowerUpCard&gt; getPowerUpCards()
+    </text>
+    <ellipse cx="912" cy="1836.043" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="171"
+          x="921" y="1838.3511">void incrementSkullsNumber()
+    </text>
+    <ellipse cx="912" cy="1848.8477" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="123"
+          x="921" y="1851.1558">int getSkullsNumber()
+    </text>
+    <ellipse cx="912" cy="1861.6523" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="144"
+          x="921" y="1863.9604">void addPoints(int points)
+    </text>
+    <ellipse cx="912" cy="1874.457" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="79" x="921"
+          y="1876.7651">int getPoints()
+    </text>
+    <ellipse cx="912" cy="1887.2617" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="135"
+          x="921" y="1889.5698">boolean getFirstPlayer()
+    </text><!--class AmmoCard-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="AmmoCard"
+          style="stroke: #A80036; stroke-width: 1.5;" width="275" x="590.5" y="1598.5"/>
+    <ellipse cx="690.25" cy="1614.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M693.2188,1620.1406 Q692.6406,1620.4375 692,1620.5859 Q691.3594,1620.7344 690.6563,1620.7344 Q688.1563,1620.7344 686.8359,1619.0859 Q685.5156,1617.4375 685.5156,1614.3125 Q685.5156,1611.1875 686.8359,1609.5313 Q688.1563,1607.875 690.6563,1607.875 Q691.3594,1607.875 692.0078,1608.0313 Q692.6563,1608.1875 693.2188,1608.4844 L693.2188,1611.2031 Q692.5938,1610.625 692,1610.3516 Q691.4063,1610.0781 690.7813,1610.0781 Q689.4375,1610.0781 688.75,1611.1484 Q688.0625,1612.2188 688.0625,1614.3125 Q688.0625,1616.4063 688.75,1617.4766 Q689.4375,1618.5469 690.7813,1618.5469 Q691.4063,1618.5469 692,1618.2734 Q692.5938,1618 693.2188,1617.4219 L693.2188,1620.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="67"
+          x="710.75" y="1618.6543">AmmoCard
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="591.5" x2="864.5" y1="1630.5" y2="1630.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="598.5" y="1639.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="178"
+          x="610.5" y="1644.7104">ammoColor: List&lt;AmmoColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="598.5" y="1652.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="227"
+          x="610.5" y="1657.5151">powerUpCard: Optional&lt;PowerUpCard&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="591.5" x2="864.5" y1="1664.1094" y2="1664.1094"/>
+    <ellipse cx="601.5" cy="1676.0117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="200"
+          x="610.5" y="1678.3198">List&lt;AmmoColor&gt; getAmmoColor()
+    </text>
+    <ellipse cx="601.5" cy="1688.8164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="249"
+          x="610.5" y="1691.1245">Optional&lt;PowerUpCard&gt; getPowerUpCard()
+    </text><!--class Action-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="163.2422" id="Action"
+          style="stroke: #A80036; stroke-width: 1.5;" width="179" x="1309.5" y="49.5"/>
+    <ellipse cx="1375.25" cy="65.5" fill="#EB937F" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1379.3594,71.5 L1371.6406,71.5 L1371.6406,59.1094 L1379.3594,59.1094 L1379.3594,61.2656 L1374.0938,61.2656 L1374.0938,63.9375 L1378.8594,63.9375 L1378.8594,66.0938 L1374.0938,66.0938 L1374.0938,69.3438 L1379.3594,69.3438 L1379.3594,71.5 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="39"
+          x="1395.75" y="69.6543">Action
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1310.5" x2="1487.5" y1="81.5" y2="81.5"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="108"
+          x="1315.5" y="95.7104">MOVE_MOVE_MOVE
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="78"
+          x="1315.5" y="108.5151">MOVE_PICKUP
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="41"
+          x="1315.5" y="121.3198">SHOOT
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="116"
+          x="1315.5" y="134.1245">MOVE_MOVE_PICKUP
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="79"
+          x="1315.5" y="146.9292">MOVE_SHOOT
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="129"
+          x="1315.5" y="159.7339">MOVE_RELOAD_SHOOT
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="146"
+          x="1315.5" y="172.5386">MOVE_MOVE_MOVE_MOVE
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="167"
+          x="1315.5" y="185.3433">MOVE_MOVE_RELOAD_SHOOT
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="154"
+          x="1315.5" y="198.1479">MOVE_MOVE_MOVE_PICKUP
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1310.5" x2="1487.5" y1="204.7422"
+          y2="204.7422"/><!--class GameStatus-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="227.2656" id="GameStatus"
+          style="stroke: #A80036; stroke-width: 1.5;" width="366" x="1571" y="1534.5"/>
+    <ellipse cx="1711.25" cy="1550.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1714.2188,1556.1406 Q1713.6406,1556.4375 1713,1556.5859 Q1712.3594,1556.7344 1711.6563,1556.7344 Q1709.1563,1556.7344 1707.8359,1555.0859 Q1706.5156,1553.4375 1706.5156,1550.3125 Q1706.5156,1547.1875 1707.8359,1545.5313 Q1709.1563,1543.875 1711.6563,1543.875 Q1712.3594,1543.875 1713.0078,1544.0313 Q1713.6563,1544.1875 1714.2188,1544.4844 L1714.2188,1547.2031 Q1713.5938,1546.625 1713,1546.3516 Q1712.4063,1546.0781 1711.7813,1546.0781 Q1710.4375,1546.0781 1709.75,1547.1484 Q1709.0625,1548.2188 1709.0625,1550.3125 Q1709.0625,1552.4063 1709.75,1553.4766 Q1710.4375,1554.5469 1711.7813,1554.5469 Q1712.4063,1554.5469 1713,1554.2734 Q1713.5938,1554 1714.2188,1553.4219 L1714.2188,1556.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="77"
+          x="1731.75" y="1554.6543">GameStatus
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1572" x2="1936" y1="1566.5" y2="1566.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1579" y="1575.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="287"
+          x="1591" y="1580.7104">killScore: List&lt;Map.Entry&lt;PlayerColor, Boolean&gt;&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1579" y="1588.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="113"
+          x="1591" y="1593.5151">remainingSkulls: int
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1579" y="1601.0117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="198"
+          x="1591" y="1606.3198">doubleKillScore: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1579" y="1613.8164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="141"
+          x="1591" y="1619.1245">roundPlayer: PlayerColor
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1579" y="1626.6211"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="131"
+          x="1591" y="1631.9292">dashboard: Dashboard
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="1579" y="1639.4258"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="247"
+          x="1591" y="1644.7339">playerDashboards: List&lt;PlayerDashboard&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1572" x2="1936" y1="1651.3281" y2="1651.3281"/>
+    <ellipse cx="1582" cy="1663.2305" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="340"
+          x="1591" y="1665.5386">void addKillScore(PlayerColor playerColor, boolean cruelKill)
+    </text>
+    <ellipse cx="1582" cy="1676.0352" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="310"
+          x="1591" y="1678.3433">List&lt;Map.Entry&lt;PlayerColor, Boolean&gt;&gt; getKillScore()
+    </text>
+    <ellipse cx="1582" cy="1688.8398" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="121"
+          x="1591" y="1691.1479">int decrementSkulls()
+    </text>
+    <ellipse cx="1582" cy="1701.6445" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="137"
+          x="1591" y="1703.9526">int getRemainingSkulls()
+    </text>
+    <ellipse cx="1582" cy="1714.4492" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="278"
+          x="1591" y="1716.7573">void addDoubleKillScore(PlayerColor playerColor)
+    </text>
+    <ellipse cx="1582" cy="1727.2539" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="221"
+          x="1591" y="1729.562">List&lt;PlayerColor&gt; getDoubleKillScore()
+    </text>
+    <ellipse cx="1582" cy="1740.0586" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="257"
+          x="1591" y="1742.3667">void setRoundPlayer(PlayerColor playerColor)
+    </text>
+    <ellipse cx="1582" cy="1752.8633" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="165"
+          x="1591" y="1755.1714">PlayerColor getRoundPlayer()
+    </text>
+    <path
+      d="M1248.5,1620.5 L1248.5,1675.8984 A0,0 0 0 0 1248.5,1675.8984 L1535.5,1675.8984 A0,0 0 0 0 1535.5,1675.8984 L1535.5,1652 L1570.9438,1648 L1535.5,1644 L1535.5,1630.5 L1525.5,1620.5 L1248.5,1620.5 A0,0 0 0 0 1248.5,1620.5 "
+      fill="#FBFB77" filter="url(#f1lscr7nve3fsr)" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path d="M1525.5,1620.5 L1525.5,1630.5 L1535.5,1630.5 L1525.5,1620.5 " fill="#FBFB77"
+          style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="160"
+          x="1254.5" y="1637.5669">killScore is a list of tuples
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="229"
+          x="1254.5" y="1652.6997">where PlayerColor is the color of the
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="266"
+          x="1254.5" y="1667.8325">killer and the Boolean represents cruel kill
+    </text><!--class Dashboard-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="Dashboard"
+          style="stroke: #A80036; stroke-width: 1.5;" width="267" x="81.5" y="589"/>
+    <ellipse cx="176.25" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M179.2188,610.6406 Q178.6406,610.9375 178,611.0859 Q177.3594,611.2344 176.6563,611.2344 Q174.1563,611.2344 172.8359,609.5859 Q171.5156,607.9375 171.5156,604.8125 Q171.5156,601.6875 172.8359,600.0313 Q174.1563,598.375 176.6563,598.375 Q177.3594,598.375 178.0078,598.5313 Q178.6563,598.6875 179.2188,598.9844 L179.2188,601.7031 Q178.5938,601.125 178,600.8516 Q177.4063,600.5781 176.7813,600.5781 Q175.4375,600.5781 174.75,601.6484 Q174.0625,602.7188 174.0625,604.8125 Q174.0625,606.9063 174.75,607.9766 Q175.4375,609.0469 176.7813,609.0469 Q177.4063,609.0469 178,608.7734 Q178.5938,608.5 179.2188,607.9219 L179.2188,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="69"
+          x="196.75" y="609.1543">Dashboard
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="82.5" x2="347.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="89.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="218"
+          x="101.5" y="635.2104">dashboardCells: List&lt;DashboardCell&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="82.5" x2="347.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="92.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="241"
+          x="101.5" y="656.0151">List&lt;DashboardCell&gt; getDashboardCells()
+    </text><!--class DashboardCellBoundType-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="86.4141" id="DashboardCellBoundType"
+          style="stroke: #A80036; stroke-width: 1.5;" width="192" x="194" y="877.5"/>
+    <ellipse cx="209" cy="893.5" fill="#EB937F" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M213.1094,899.5 L205.3906,899.5 L205.3906,887.1094 L213.1094,887.1094 L213.1094,889.2656 L207.8438,889.2656 L207.8438,891.9375 L212.6094,891.9375 L212.6094,894.0938 L207.8438,894.0938 L207.8438,897.3438 L213.1094,897.3438 L213.1094,899.5 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="160"
+          x="223" y="897.6543">DashboardCellBoundType
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="195" x2="385" y1="909.5" y2="909.5"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="200"
+          y="923.7104">OPEN
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="28" x="200"
+          y="936.5151">WALL
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="33" x="200"
+          y="949.3198">DOOR
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="195" x2="385" y1="955.9141"
+          y2="955.9141"/><!--class DashboardCell-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="176.0469" id="DashboardCell"
+          style="stroke: #A80036; stroke-width: 1.5;" width="806" x="22" y="43"/>
+    <ellipse cx="375.75" cy="59" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M371.6719,54.7656 L371.6719,52.6094 L379.0625,52.6094 L379.0625,54.7656 L376.5938,54.7656 L376.5938,62.8438 L379.0625,62.8438 L379.0625,65 L371.6719,65 L371.6719,62.8438 L374.1406,62.8438 L374.1406,54.7656 L371.6719,54.7656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="90" x="396.25" y="63.1543">DashboardCell
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="23" x2="827" y1="75" y2="75"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="23" x2="827" y1="83" y2="83"/>
+    <ellipse cx="33" cy="94.9023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="206" x="42"
+          y="97.2104">List&lt;PlayerColor&gt; getPlayersInCell()
+    </text>
+    <ellipse cx="33" cy="107.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="418" x="42"
+          y="110.0151">Optional&lt;DashboardCellBoundType&gt; getNorthDashboardCellBoundType()
+    </text>
+    <ellipse cx="33" cy="120.5117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="420" x="42"
+          y="122.8198">Optional&lt;DashboardCellBoundType&gt; getSouthDashboardCellBoundType()
+    </text>
+    <ellipse cx="33" cy="133.3164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="414" x="42"
+          y="135.6245">Optional&lt;DashboardCellBoundType&gt; getWestDashboardCellBoundType()
+    </text>
+    <ellipse cx="33" cy="146.1211" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="412" x="42"
+          y="148.4292">Optional&lt;DashboardCellBoundType&gt; getEastDashboardCellBoundType()
+    </text>
+    <ellipse cx="33" cy="158.9258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="292" x="42"
+          y="161.2339">Optional&lt;DashboardCell&gt; getNorthDashboardCell()
+    </text>
+    <ellipse cx="33" cy="171.7305" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="294" x="42"
+          y="174.0386">Optional&lt;DashboardCell&gt; getSouthDashboardCell()
+    </text>
+    <ellipse cx="33" cy="184.5352" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="288" x="42"
+          y="186.8433">Optional&lt;DashboardCell&gt; getWestDashboardCell()
+    </text>
+    <ellipse cx="33" cy="197.3398" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="286" x="42"
+          y="199.6479">Optional&lt;DashboardCell&gt; getEastDashboardCell()
+    </text>
+    <ellipse cx="33" cy="210.1445" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="780" x="42"
+          y="212.4526">void visit(Consumer&lt;RespawnDashboardCell&gt; visitRespawnDashboardCell, Consumer&lt;PickupDashboardCell&gt;
+      visitPickupDashboardCell)
+    </text><!--class BaseDashboardCell-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="112.0234" id="BaseDashboardCell"
+          style="stroke: #A80036; stroke-width: 1.5;" width="358" x="384" y="570"/>
+    <ellipse cx="498.75" cy="586" fill="#A9DCDF" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M498.8594,581.3438 L497.7031,586.4219 L500.0313,586.4219 L498.8594,581.3438 Z M497.375,579.1094 L500.3594,579.1094 L503.7188,591.5 L501.2656,591.5 L500.5,588.4375 L497.2188,588.4375 L496.4688,591.5 L494.0313,591.5 L497.375,579.1094 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="120" x="519.25" y="590.1543">BaseDashboardCell
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="385" x2="741" y1="602" y2="602"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="392" y="610.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="177"
+          x="404" y="616.2104">playerInCell: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="392" y="623.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="330"
+          x="404" y="629.0151">northDashboardCellBoundType: DashboardCellBoundType
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="392" y="636.5117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="332"
+          x="404" y="641.8198">southDashboardCellBoundType: DashboardCellBoundType
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="392" y="649.3164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="327"
+          x="404" y="654.6245">westDashboardCellBoundType: DashboardCellBoundType
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="392" y="662.1211"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="325"
+          x="404" y="667.4292">eastDashboardCellBoundType: DashboardCellBoundType
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="385" x2="741" y1="674.0234"
+          y2="674.0234"/><!--class RespawnDashboardCell-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="RespawnDashboardCell"
+          style="stroke: #A80036; stroke-width: 1.5;" width="284" x="421" y="871"/>
+    <ellipse cx="485.25" cy="887" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M488.2188,892.6406 Q487.6406,892.9375 487,893.0859 Q486.3594,893.2344 485.6563,893.2344 Q483.1563,893.2344 481.8359,891.5859 Q480.5156,889.9375 480.5156,886.8125 Q480.5156,883.6875 481.8359,882.0313 Q483.1563,880.375 485.6563,880.375 Q486.3594,880.375 487.0078,880.5313 Q487.6563,880.6875 488.2188,880.9844 L488.2188,883.7031 Q487.5938,883.125 487,882.8516 Q486.4063,882.5781 485.7813,882.5781 Q484.4375,882.5781 483.75,883.6484 Q483.0625,884.7188 483.0625,886.8125 Q483.0625,888.9063 483.75,889.9766 Q484.4375,891.0469 485.7813,891.0469 Q486.4063,891.0469 487,890.7734 Q487.5938,890.5 488.2188,889.9219 L488.2188,892.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="147"
+          x="505.75" y="891.1543">RespawnDashboardCell
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="422" x2="704" y1="903" y2="903"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="429" y="911.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="149"
+          x="441" y="917.2104">availableGuns: List&lt;Gun&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="422" x2="704" y1="923.8047" y2="923.8047"/>
+    <ellipse cx="432" cy="935.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="171"
+          x="441" y="938.0151">List&lt;Gun&gt; getAvailableGuns()
+    </text>
+    <ellipse cx="432" cy="948.5117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="258"
+          x="441" y="950.8198">void removeAvailableGun(Gun gunToRemove)
+    </text>
+    <ellipse cx="432" cy="961.3164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="212"
+          x="441" y="963.6245">void addAvailableGun(Gun gunToAdd)
+    </text><!--class PickupDashboardCell-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="PickupDashboardCell"
+          style="stroke: #A80036; stroke-width: 1.5;" width="272" x="657" y="1000"/>
+    <ellipse cx="722.75" cy="1016" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M725.7188,1021.6406 Q725.1406,1021.9375 724.5,1022.0859 Q723.8594,1022.2344 723.1563,1022.2344 Q720.6563,1022.2344 719.3359,1020.5859 Q718.0156,1018.9375 718.0156,1015.8125 Q718.0156,1012.6875 719.3359,1011.0313 Q720.6563,1009.375 723.1563,1009.375 Q723.8594,1009.375 724.5078,1009.5313 Q725.1563,1009.6875 725.7188,1009.9844 L725.7188,1012.7031 Q725.0938,1012.125 724.5,1011.8516 Q723.9063,1011.5781 723.2813,1011.5781 Q721.9375,1011.5781 721.25,1012.6484 Q720.5625,1013.7188 720.5625,1015.8125 Q720.5625,1017.9063 721.25,1018.9766 Q721.9375,1020.0469 723.2813,1020.0469 Q723.9063,1020.0469 724.5,1019.7734 Q725.0938,1019.5 725.7188,1018.9219 L725.7188,1021.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="132"
+          x="743.25" y="1020.1543">PickupDashboardCell
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="658" x2="928" y1="1032" y2="1032"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="665" y="1040.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="199"
+          x="677" y="1046.2104">ammoCard: Optional&lt;AmmoCard&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="658" x2="928" y1="1052.8047" y2="1052.8047"/>
+    <ellipse cx="668" cy="1064.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="156"
+          x="677" y="1067.0151">AmmoCard getAmmoCard()
+    </text>
+    <ellipse cx="668" cy="1077.5117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="246"
+          x="677" y="1079.8198">void setAmmoCard(AmmoCard ammoCard)
+    </text>
+    <ellipse cx="668" cy="1090.3164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="141"
+          x="677" y="1092.6245">void removeAmmoCard()
+    </text><!--class com.adrenalinici.adrenaline.model.Gun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="com.adrenalinici.adrenaline.model.Gun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="57" x="1217.5" y="107"/>
+    <ellipse cx="1232.5" cy="123" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1228.4219,118.7656 L1228.4219,116.6094 L1235.8125,116.6094 L1235.8125,118.7656 L1233.3438,118.7656 L1233.3438,126.8438 L1235.8125,126.8438 L1235.8125,129 L1228.4219,129 L1228.4219,126.8438 L1230.8906,126.8438 L1230.8906,118.7656 L1228.4219,118.7656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="25" x="1246.5" y="127.1543">Gun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1218.5" x2="1273.5" y1="139" y2="139"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1218.5" x2="1273.5" y1="147"
+          y2="147"/><!--class com.adrenalinici.adrenaline.model.AlternativeEffectGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48"
+          id="com.adrenalinici.adrenaline.model.AlternativeEffectGun" style="stroke: #A80036; stroke-width: 1.5;"
+          width="160" x="863" y="107"/>
+    <ellipse cx="878" cy="123" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M880.9688,128.6406 Q880.3906,128.9375 879.75,129.0859 Q879.1094,129.2344 878.4063,129.2344 Q875.9063,129.2344 874.5859,127.5859 Q873.2656,125.9375 873.2656,122.8125 Q873.2656,119.6875 874.5859,118.0313 Q875.9063,116.375 878.4063,116.375 Q879.1094,116.375 879.7578,116.5313 Q880.4063,116.6875 880.9688,116.9844 L880.9688,119.7031 Q880.3438,119.125 879.75,118.8516 Q879.1563,118.5781 878.5313,118.5781 Q877.1875,118.5781 876.5,119.6484 Q875.8125,120.7188 875.8125,122.8125 Q875.8125,124.9063 876.5,125.9766 Q877.1875,127.0469 878.5313,127.0469 Q879.1563,127.0469 879.75,126.7734 Q880.3438,126.5 880.9688,125.9219 L880.9688,128.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="128"
+          x="892" y="127.1543">AlternativeEffectGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="864" x2="1022" y1="139" y2="139"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="864" x2="1022" y1="147"
+          y2="147"/><!--class com.adrenalinici.adrenaline.model.BaseEffectGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="com.adrenalinici.adrenaline.model.BaseEffectGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="124" x="1058" y="107"/>
+    <ellipse cx="1073" cy="123" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1075.9688,128.6406 Q1075.3906,128.9375 1074.75,129.0859 Q1074.1094,129.2344 1073.4063,129.2344 Q1070.9063,129.2344 1069.5859,127.5859 Q1068.2656,125.9375 1068.2656,122.8125 Q1068.2656,119.6875 1069.5859,118.0313 Q1070.9063,116.375 1073.4063,116.375 Q1074.1094,116.375 1074.7578,116.5313 Q1075.4063,116.6875 1075.9688,116.9844 L1075.9688,119.7031 Q1075.3438,119.125 1074.75,118.8516 Q1074.1563,118.5781 1073.5313,118.5781 Q1072.1875,118.5781 1071.5,119.6484 Q1070.8125,120.7188 1070.8125,122.8125 Q1070.8125,124.9063 1071.5,125.9766 Q1072.1875,127.0469 1073.5313,127.0469 Q1074.1563,127.0469 1074.75,126.7734 Q1075.3438,126.5 1075.9688,125.9219 L1075.9688,128.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="92"
+          x="1087" y="127.1543">BaseEffectGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1059" x2="1181" y1="139" y2="139"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1059" x2="1181" y1="147"
+          y2="147"/><!--class com.adrenalinici.adrenaline.observer.Observable-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="com.adrenalinici.adrenaline.observer.Observable"
+          style="stroke: #A80036; stroke-width: 1.5;" width="113" x="2793.5" y="107"/>
+    <ellipse cx="2808.5" cy="123" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M2811.4688,128.6406 Q2810.8906,128.9375 2810.25,129.0859 Q2809.6094,129.2344 2808.9063,129.2344 Q2806.4063,129.2344 2805.0859,127.5859 Q2803.7656,125.9375 2803.7656,122.8125 Q2803.7656,119.6875 2805.0859,118.0313 Q2806.4063,116.375 2808.9063,116.375 Q2809.6094,116.375 2810.2578,116.5313 Q2810.9063,116.6875 2811.4688,116.9844 L2811.4688,119.7031 Q2810.8438,119.125 2810.25,118.8516 Q2809.6563,118.5781 2809.0313,118.5781 Q2807.6875,118.5781 2807,119.6484 Q2806.3125,120.7188 2806.3125,122.8125 Q2806.3125,124.9063 2807,125.9766 Q2807.6875,127.0469 2809.0313,127.0469 Q2809.6563,127.0469 2810.25,126.7734 Q2810.8438,126.5 2811.4688,125.9219 L2811.4688,128.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="70"
+          x="2822.5" y="127.1543">Observable
+    </text>
+    <rect fill="#FFFFFF" height="15.9688" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;"
+          width="9" x="2900.5" y="104"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="7" x="2901.5" y="116.1387">T
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2794.5" x2="2905.5" y1="139" y2="139"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2794.5" x2="2905.5" y1="147"
+          y2="147"/><!--class com.adrenalinici.adrenaline.observer.Observer-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="com.adrenalinici.adrenaline.observer.Observer"
+          style="stroke: #A80036; stroke-width: 1.5;" width="97" x="2649.5" y="107"/>
+    <ellipse cx="2664.5" cy="123" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M2660.4219,118.7656 L2660.4219,116.6094 L2667.8125,116.6094 L2667.8125,118.7656 L2665.3438,118.7656 L2665.3438,126.8438 L2667.8125,126.8438 L2667.8125,129 L2660.4219,129 L2660.4219,126.8438 L2662.8906,126.8438 L2662.8906,118.7656 L2660.4219,118.7656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="54" x="2678.5" y="127.1543">Observer
+    </text>
+    <rect fill="#FFFFFF" height="15.9688" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;"
+          width="9" x="2740.5" y="104"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="7" x="2741.5" y="116.1387">T
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2650.5" x2="2745.5" y1="139" y2="139"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2650.5" x2="2745.5" y1="147" y2="147"/><!--class ViewEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="60.8047" id="ViewEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="176" x="7331" y="100.5"/>
+    <ellipse cx="7382.75" cy="116.5" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M7378.6719,112.2656 L7378.6719,110.1094 L7386.0625,110.1094 L7386.0625,112.2656 L7383.5938,112.2656 L7383.5938,120.3438 L7386.0625,120.3438 L7386.0625,122.5 L7378.6719,122.5 L7378.6719,120.3438 L7381.1406,120.3438 L7381.1406,112.2656 L7378.6719,112.2656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="64" x="7403.25" y="120.6543">ViewEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7332" x2="7506" y1="132.5" y2="132.5"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7332" x2="7506" y1="140.5" y2="140.5"/>
+    <ellipse cx="7342" cy="152.4023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="150"
+          x="7351" y="154.7104">GameView getGameView()
+    </text><!--class FirstTurnEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="FirstTurnEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="156" x="7055" y="589"/>
+    <ellipse cx="7085.3" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M7088.2688,610.6406 Q7087.6906,610.9375 7087.05,611.0859 Q7086.4094,611.2344 7085.7063,611.2344 Q7083.2063,611.2344 7081.8859,609.5859 Q7080.5656,607.9375 7080.5656,604.8125 Q7080.5656,601.6875 7081.8859,600.0313 Q7083.2063,598.375 7085.7063,598.375 Q7086.4094,598.375 7087.0578,598.5313 Q7087.7063,598.6875 7088.2688,598.9844 L7088.2688,601.7031 Q7087.6438,601.125 7087.05,600.8516 Q7086.4563,600.5781 7085.8313,600.5781 Q7084.4875,600.5781 7083.8,601.6484 Q7083.1125,602.7188 7083.1125,604.8125 Q7083.1125,606.9063 7083.8,607.9766 Q7084.4875,609.0469 7085.8313,609.0469 Q7086.4563,609.0469 7087.05,608.7734 Q7087.6438,608.5 7088.2688,607.9219 L7088.2688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="90"
+          x="7102.7" y="609.1543">FirstTurnEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7056" x2="7210" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="7063" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="108"
+          x="7075" y="635.2104">player: PlayerColor
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7056" x2="7210" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="7066" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="130"
+          x="7075" y="656.0151">PlayerColor getPlayer()
+    </text><!--class NewTurnEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="NewTurnEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="156" x="7246" y="589"/>
+    <ellipse cx="7276.75" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M7279.7188,610.6406 Q7279.1406,610.9375 7278.5,611.0859 Q7277.8594,611.2344 7277.1563,611.2344 Q7274.6563,611.2344 7273.3359,609.5859 Q7272.0156,607.9375 7272.0156,604.8125 Q7272.0156,601.6875 7273.3359,600.0313 Q7274.6563,598.375 7277.1563,598.375 Q7277.8594,598.375 7278.5078,598.5313 Q7279.1563,598.6875 7279.7188,598.9844 L7279.7188,601.7031 Q7279.0938,601.125 7278.5,600.8516 Q7277.9063,600.5781 7277.2813,600.5781 Q7275.9375,600.5781 7275.25,601.6484 Q7274.5625,602.7188 7274.5625,604.8125 Q7274.5625,606.9063 7275.25,607.9766 Q7275.9375,609.0469 7277.2813,609.0469 Q7277.9063,609.0469 7278.5,608.7734 Q7279.0938,608.5 7279.7188,607.9219 L7279.7188,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="89"
+          x="7294.25" y="609.1543">NewTurnEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7247" x2="7401" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="7254" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="108"
+          x="7266" y="635.2104">player: PlayerColor
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7247" x2="7401" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="7257" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="130"
+          x="7266" y="656.0151">PlayerColor getPlayer()
+    </text><!--class ActionChosenEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="ActionChosenEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="153" x="7437.5" y="589"/>
+    <ellipse cx="7452.5" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M7455.4688,610.6406 Q7454.8906,610.9375 7454.25,611.0859 Q7453.6094,611.2344 7452.9063,611.2344 Q7450.4063,611.2344 7449.0859,609.5859 Q7447.7656,607.9375 7447.7656,604.8125 Q7447.7656,601.6875 7449.0859,600.0313 Q7450.4063,598.375 7452.9063,598.375 Q7453.6094,598.375 7454.2578,598.5313 Q7454.9063,598.6875 7455.4688,598.9844 L7455.4688,601.7031 Q7454.8438,601.125 7454.25,600.8516 Q7453.6563,600.5781 7453.0313,600.5781 Q7451.6875,600.5781 7451,601.6484 Q7450.3125,602.7188 7450.3125,604.8125 Q7450.3125,606.9063 7451,607.9766 Q7451.6875,609.0469 7453.0313,609.0469 Q7453.6563,609.0469 7454.25,608.7734 Q7454.8438,608.5 7455.4688,607.9219 L7455.4688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="121"
+          x="7466.5" y="609.1543">ActionChosenEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7438.5" x2="7589.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="7445.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="76"
+          x="7457.5" y="635.2104">action: Action
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7438.5" x2="7589.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="7448.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="98"
+          x="7457.5" y="656.0151">Action getAction()
+    </text><!--class MovementChosenEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="MovementChosenEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="178" x="7626" y="589"/>
+    <ellipse cx="7641" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M7643.9688,610.6406 Q7643.3906,610.9375 7642.75,611.0859 Q7642.1094,611.2344 7641.4063,611.2344 Q7638.9063,611.2344 7637.5859,609.5859 Q7636.2656,607.9375 7636.2656,604.8125 Q7636.2656,601.6875 7637.5859,600.0313 Q7638.9063,598.375 7641.4063,598.375 Q7642.1094,598.375 7642.7578,598.5313 Q7643.4063,598.6875 7643.9688,598.9844 L7643.9688,601.7031 Q7643.3438,601.125 7642.75,600.8516 Q7642.1563,600.5781 7641.5313,600.5781 Q7640.1875,600.5781 7639.5,601.6484 Q7638.8125,602.7188 7638.8125,604.8125 Q7638.8125,606.9063 7639.5,607.9766 Q7640.1875,609.0469 7641.5313,609.0469 Q7642.1563,609.0469 7642.75,608.7734 Q7643.3438,608.5 7643.9688,607.9219 L7643.9688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="146"
+          x="7655" y="609.1543">MovementChosenEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7627" x2="7803" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="7634" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="116"
+          x="7646" y="635.2104">movement: Integer[]
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7627" x2="7803" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="7637" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="136"
+          x="7646" y="656.0151">Integer[] getMovement()
+    </text><!--class GunChosenEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="GunChosenEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="145" x="7839.5" y="589"/>
+    <ellipse cx="7857.2" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M7860.1688,610.6406 Q7859.5906,610.9375 7858.95,611.0859 Q7858.3094,611.2344 7857.6063,611.2344 Q7855.1063,611.2344 7853.7859,609.5859 Q7852.4656,607.9375 7852.4656,604.8125 Q7852.4656,601.6875 7853.7859,600.0313 Q7855.1063,598.375 7857.6063,598.375 Q7858.3094,598.375 7858.9578,598.5313 Q7859.6063,598.6875 7860.1688,598.9844 L7860.1688,601.7031 Q7859.5438,601.125 7858.95,600.8516 Q7858.3563,600.5781 7857.7313,600.5781 Q7856.3875,600.5781 7855.7,601.6484 Q7855.0125,602.7188 7855.0125,604.8125 Q7855.0125,606.9063 7855.7,607.9766 Q7856.3875,609.0469 7857.7313,609.0469 Q7858.3563,609.0469 7858.95,608.7734 Q7859.5438,608.5 7860.1688,607.9219 L7860.1688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="107"
+          x="7871.8" y="609.1543">GunChosenEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7840.5" x2="7983.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="7847.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="52"
+          x="7859.5" y="635.2104">gun: Gun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="7840.5" x2="7983.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="7850.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="119"
+          x="7859.5" y="656.0151">Gun getChosenGun()
+    </text><!--class ChosenEffectConfigurationEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="124.8281" id="ChosenEffectConfigurationEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="242" x="8020" y="563.5"/>
+    <ellipse cx="8038.6" cy="579.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M8041.5688,585.1406 Q8040.9906,585.4375 8040.35,585.5859 Q8039.7094,585.7344 8039.0063,585.7344 Q8036.5063,585.7344 8035.1859,584.0859 Q8033.8656,582.4375 8033.8656,579.3125 Q8033.8656,576.1875 8035.1859,574.5313 Q8036.5063,572.875 8039.0063,572.875 Q8039.7094,572.875 8040.3578,573.0313 Q8041.0063,573.1875 8041.5688,573.4844 L8041.5688,576.2031 Q8040.9438,575.625 8040.35,575.3516 Q8039.7563,575.0781 8039.1313,575.0781 Q8037.7875,575.0781 8037.1,576.1484 Q8036.4125,577.2188 8036.4125,579.3125 Q8036.4125,581.4063 8037.1,582.4766 Q8037.7875,583.5469 8039.1313,583.5469 Q8039.7563,583.5469 8040.35,583.2734 Q8040.9438,583 8041.5688,582.4219 L8041.5688,585.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="202"
+          x="8053.4" y="583.6543">ChosenEffectConfigurationEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8021" x2="8261" y1="595.5" y2="595.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="8028" y="604.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="182"
+          x="8040" y="609.7104">playersToHit: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="8028" y="617.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="116"
+          x="8040" y="622.5151">effectToApply: Effect
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="8028" y="630.0117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="193"
+          x="8040" y="635.3198">numberOfScopePowerUpUsed: int
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8021" x2="8261" y1="641.9141" y2="641.9141"/>
+    <ellipse cx="8031" cy="653.8164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="204"
+          x="8040" y="656.1245">List&lt;PlayerColor&gt; getPlayersToHit()
+    </text>
+    <ellipse cx="8031" cy="666.6211" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="138"
+          x="8040" y="668.9292">Effect getEffectToApply()
+    </text>
+    <ellipse cx="8031" cy="679.4258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="216"
+          x="8040" y="681.7339">int getNumberOfScopePowerUpUsed()
+    </text><!--class ChosenRespawnLocationEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="ChosenRespawnLocationEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="223" x="8297.5" y="589"/>
+    <ellipse cx="8312.5" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M8315.4688,610.6406 Q8314.8906,610.9375 8314.25,611.0859 Q8313.6094,611.2344 8312.9063,611.2344 Q8310.4063,611.2344 8309.0859,609.5859 Q8307.7656,607.9375 8307.7656,604.8125 Q8307.7656,601.6875 8309.0859,600.0313 Q8310.4063,598.375 8312.9063,598.375 Q8313.6094,598.375 8314.2578,598.5313 Q8314.9063,598.6875 8315.4688,598.9844 L8315.4688,601.7031 Q8314.8438,601.125 8314.25,600.8516 Q8313.6563,600.5781 8313.0313,600.5781 Q8311.6875,600.5781 8311,601.6484 Q8310.3125,602.7188 8310.3125,604.8125 Q8310.3125,606.9063 8311,607.9766 Q8311.6875,609.0469 8313.0313,609.0469 Q8313.6563,609.0469 8314.25,608.7734 Q8314.8438,608.5 8315.4688,607.9219 L8315.4688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="191"
+          x="8326.5" y="609.1543">ChosenRespawnLocationEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8298.5" x2="8519.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="8305.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="126"
+          x="8317.5" y="635.2104">respawnCell: Integer[]
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8298.5" x2="8519.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="8308.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="150"
+          x="8317.5" y="656.0151">Integer[] getRespawnCell()
+    </text><!--class ReloadGunsEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="ReloadGunsEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="199" x="8555.5" y="589"/>
+    <ellipse cx="8596.15" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M8599.1188,610.6406 Q8598.5406,610.9375 8597.9,611.0859 Q8597.2594,611.2344 8596.5563,611.2344 Q8594.0563,611.2344 8592.7359,609.5859 Q8591.4156,607.9375 8591.4156,604.8125 Q8591.4156,601.6875 8592.7359,600.0313 Q8594.0563,598.375 8596.5563,598.375 Q8597.2594,598.375 8597.9078,598.5313 Q8598.5563,598.6875 8599.1188,598.9844 L8599.1188,601.7031 Q8598.4938,601.125 8597.9,600.8516 Q8597.3063,600.5781 8596.6813,600.5781 Q8595.3375,600.5781 8594.65,601.6484 Q8593.9625,602.7188 8593.9625,604.8125 Q8593.9625,606.9063 8594.65,607.9766 Q8595.3375,609.0469 8596.6813,609.0469 Q8597.3063,609.0469 8597.9,608.7734 Q8598.4938,608.5 8599.1188,607.9219 L8599.1188,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="110"
+          x="8615.85" y="609.1543">ReloadGunsEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8556.5" x2="8753.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="8563.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="149"
+          x="8575.5" y="635.2104">gunsToReload: List&lt;Gun&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8556.5" x2="8753.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="8566.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="173"
+          x="8575.5" y="656.0151">List&lt;Gun&gt; getGunsToReload()
+    </text><!--class ChosenBaseEffectConfigurationEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="150.4375" id="ChosenBaseEffectConfigurationEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="292" x="5867" y="551"/>
+    <ellipse cx="5894.15" cy="567" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M5897.1188,572.6406 Q5896.5406,572.9375 5895.9,573.0859 Q5895.2594,573.2344 5894.5563,573.2344 Q5892.0563,573.2344 5890.7359,571.5859 Q5889.4156,569.9375 5889.4156,566.8125 Q5889.4156,563.6875 5890.7359,562.0313 Q5892.0563,560.375 5894.5563,560.375 Q5895.2594,560.375 5895.9078,560.5313 Q5896.5563,560.6875 5897.1188,560.9844 L5897.1188,563.7031 Q5896.4938,563.125 5895.9,562.8516 Q5895.3063,562.5781 5894.6813,562.5781 Q5893.3375,562.5781 5892.65,563.6484 Q5891.9625,564.7188 5891.9625,566.8125 Q5891.9625,568.9063 5892.65,569.9766 Q5893.3375,571.0469 5894.6813,571.0469 Q5895.3063,571.0469 5895.9,570.7734 Q5896.4938,570.5 5897.1188,569.9219 L5897.1188,572.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="233"
+          x="5910.85" y="571.1543">ChosenBaseEffectConfigurationEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5868" x2="6158" y1="583" y2="583"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5875" y="591.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="242"
+          x="5887" y="597.2104">baseEffectPlayersToHit: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5875" y="604.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="266"
+          x="5887" y="610.0151">extraEffectOnePlayersToHit: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5875" y="617.5117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="266"
+          x="5887" y="622.8198">extraEffectTwoPlayersToHit: List&lt;PlayerColor&gt;
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5875" y="630.3164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="193"
+          x="5887" y="635.6245">numberOfScopePowerUpUsed: int
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5868" x2="6158" y1="642.2188" y2="642.2188"/>
+    <ellipse cx="5878" cy="654.1211" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="265"
+          x="5887" y="656.4292">List&lt;PlayerColor&gt; getBaseEffectPlayersToHit()
+    </text>
+    <ellipse cx="5878" cy="666.9258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="250"
+          x="5887" y="669.2339">PlayerColor getExtraEffectOnePlayersToHit()
+    </text>
+    <ellipse cx="5878" cy="679.7305" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="250"
+          x="5887" y="682.0386">PlayerColor getExtraEffectTwoPlayersToHit()
+    </text>
+    <ellipse cx="5878" cy="692.5352" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="216"
+          x="5887" y="694.8433">int getNumberOfScopePowerUpUsed()
+    </text><!--class VenomGranadeChosenEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="VenomGranadeChosenEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="309" x="6194.5" y="589"/>
+    <ellipse cx="6255.25" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M6258.2188,610.6406 Q6257.6406,610.9375 6257,611.0859 Q6256.3594,611.2344 6255.6563,611.2344 Q6253.1563,611.2344 6251.8359,609.5859 Q6250.5156,607.9375 6250.5156,604.8125 Q6250.5156,601.6875 6251.8359,600.0313 Q6253.1563,598.375 6255.6563,598.375 Q6256.3594,598.375 6257.0078,598.5313 Q6257.6563,598.6875 6258.2188,598.9844 L6258.2188,601.7031 Q6257.5938,601.125 6257,600.8516 Q6256.4063,600.5781 6255.7813,600.5781 Q6254.4375,600.5781 6253.75,601.6484 Q6253.0625,602.7188 6253.0625,604.8125 Q6253.0625,606.9063 6253.75,607.9766 Q6254.4375,609.0469 6255.7813,609.0469 Q6256.4063,609.0469 6257,608.7734 Q6257.5938,608.5 6258.2188,607.9219 L6258.2188,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="179"
+          x="6275.75" y="609.1543">VenomGranadeChosenEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="6195.5" x2="6502.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="6202.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="259"
+          x="6214.5" y="635.2104">chosenVenomGranades: List&lt;PowerUpCard&gt;
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="6195.5" x2="6502.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="6205.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="283"
+          x="6214.5" y="656.0151">List&lt;PowerUpCard&gt; getChosenVenomGranades()
+    </text><!--class EnemyChosenEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="EnemyChosenEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="202" x="6539" y="589"/>
+    <ellipse cx="6575.15" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M6578.1188,610.6406 Q6577.5406,610.9375 6576.9,611.0859 Q6576.2594,611.2344 6575.5563,611.2344 Q6573.0563,611.2344 6571.7359,609.5859 Q6570.4156,607.9375 6570.4156,604.8125 Q6570.4156,601.6875 6571.7359,600.0313 Q6573.0563,598.375 6575.5563,598.375 Q6576.2594,598.375 6576.9078,598.5313 Q6577.5563,598.6875 6578.1188,598.9844 L6578.1188,601.7031 Q6577.4938,601.125 6576.9,600.8516 Q6576.3063,600.5781 6575.6813,600.5781 Q6574.3375,600.5781 6573.65,601.6484 Q6572.9625,602.7188 6572.9625,604.8125 Q6572.9625,606.9063 6573.65,607.9766 Q6574.3375,609.0469 6575.6813,609.0469 Q6576.3063,609.0469 6576.9,608.7734 Q6577.4938,608.5 6578.1188,607.9219 L6578.1188,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="123"
+          x="6593.85" y="609.1543">EnemyChosenEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="6540" x2="6740" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="6547" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="152"
+          x="6559" y="635.2104">chosenEnemy: PlayerColor
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="6540" x2="6740" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="6550" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="176"
+          x="6559" y="656.0151">PlayerColor getChosenEnemy()
+    </text><!--class EnemyMovementChosenEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="EnemyMovementChosenEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="243" x="6776.5" y="589"/>
+    <ellipse cx="6802.3" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M6805.2688,610.6406 Q6804.6906,610.9375 6804.05,611.0859 Q6803.4094,611.2344 6802.7063,611.2344 Q6800.2063,611.2344 6798.8859,609.5859 Q6797.5656,607.9375 6797.5656,604.8125 Q6797.5656,601.6875 6798.8859,600.0313 Q6800.2063,598.375 6802.7063,598.375 Q6803.4094,598.375 6804.0578,598.5313 Q6804.7063,598.6875 6805.2688,598.9844 L6805.2688,601.7031 Q6804.6438,601.125 6804.05,600.8516 Q6803.4563,600.5781 6802.8313,600.5781 Q6801.4875,600.5781 6800.8,601.6484 Q6800.1125,602.7188 6800.1125,604.8125 Q6800.1125,606.9063 6800.8,607.9766 Q6801.4875,609.0469 6802.8313,609.0469 Q6803.4563,609.0469 6804.05,608.7734 Q6804.6438,608.5 6805.2688,607.9219 L6805.2688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="187"
+          x="6818.7" y="609.1543">EnemyMovementChosenEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="6777.5" x2="7018.5" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="6784.5" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="193"
+          x="6796.5" y="635.2104">chosenEnemyMovement: Integer[]
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="6777.5" x2="7018.5" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="6787.5" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="217"
+          x="6796.5" y="656.0151">Integer[] getChosenEnemyMovement()
+    </text><!--class ModelEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="60.8047" id="ModelEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="190" x="5214" y="100.5"/>
+    <ellipse cx="5268.75" cy="116.5" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M5264.6719,112.2656 L5264.6719,110.1094 L5272.0625,110.1094 L5272.0625,112.2656 L5269.5938,112.2656 L5269.5938,120.3438 L5272.0625,120.3438 L5272.0625,122.5 L5264.6719,122.5 L5264.6719,120.3438 L5267.1406,120.3438 L5267.1406,112.2656 L5264.6719,112.2656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="72" x="5289.25" y="120.6543">ModelEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5215" x2="5403" y1="132.5" y2="132.5"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5215" x2="5403" y1="140.5" y2="140.5"/>
+    <ellipse cx="5225" cy="152.4023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="164"
+          x="5234" y="154.7104">GameModel getGameModel()
+    </text><!--class BoardMovementEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="BoardMovementEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="168" x="4889" y="589"/>
+    <ellipse cx="4904" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M4906.9688,610.6406 Q4906.3906,610.9375 4905.75,611.0859 Q4905.1094,611.2344 4904.4063,611.2344 Q4901.9063,611.2344 4900.5859,609.5859 Q4899.2656,607.9375 4899.2656,604.8125 Q4899.2656,601.6875 4900.5859,600.0313 Q4901.9063,598.375 4904.4063,598.375 Q4905.1094,598.375 4905.7578,598.5313 Q4906.4063,598.6875 4906.9688,598.9844 L4906.9688,601.7031 Q4906.3438,601.125 4905.75,600.8516 Q4905.1563,600.5781 4904.5313,600.5781 Q4903.1875,600.5781 4902.5,601.6484 Q4901.8125,602.7188 4901.8125,604.8125 Q4901.8125,606.9063 4902.5,607.9766 Q4903.1875,609.0469 4904.5313,609.0469 Q4905.1563,609.0469 4905.75,608.7734 Q4906.3438,608.5 4906.9688,607.9219 L4906.9688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="136"
+          x="4918" y="609.1543">BoardMovementEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="4890" x2="5056" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="4897" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="116"
+          x="4909" y="635.2104">movement: Integer[]
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="4897" y="642.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="138"
+          x="4909" y="648.0151">playerColor: PlayerColor
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="4890" x2="5056" y1="654.6094"
+          y2="654.6094"/><!--class DashboardCellUpdatedEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="DashboardCellUpdatedEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="222" x="5092" y="576.5"/>
+    <ellipse cx="5111.5" cy="592.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M5114.4688,598.1406 Q5113.8906,598.4375 5113.25,598.5859 Q5112.6094,598.7344 5111.9063,598.7344 Q5109.4063,598.7344 5108.0859,597.0859 Q5106.7656,595.4375 5106.7656,592.3125 Q5106.7656,589.1875 5108.0859,587.5313 Q5109.4063,585.875 5111.9063,585.875 Q5112.6094,585.875 5113.2578,586.0313 Q5113.9063,586.1875 5114.4688,586.4844 L5114.4688,589.2031 Q5113.8438,588.625 5113.25,588.3516 Q5112.6563,588.0781 5112.0313,588.0781 Q5110.6875,588.0781 5110,589.1484 Q5109.3125,590.2188 5109.3125,592.3125 Q5109.3125,594.4063 5110,595.4766 Q5110.6875,596.5469 5112.0313,596.5469 Q5112.6563,596.5469 5113.25,596.2734 Q5113.8438,596 5114.4688,595.4219 L5114.4688,598.1406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="180"
+          x="5126.5" y="596.6543">DashboardCellUpdatedEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5093" x2="5313" y1="608.5" y2="608.5"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5100" y="617.4023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="131"
+          x="5112" y="622.7104">dashboard: Dashboard
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5100" y="630.207"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="173"
+          x="5112" y="635.5151">dashboardCell: DashboardCell
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5093" x2="5313" y1="642.1094" y2="642.1094"/>
+    <ellipse cx="5103" cy="654.0117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="154"
+          x="5112" y="656.3198">Dashboard getDashboard()
+    </text>
+    <ellipse cx="5103" cy="666.8164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="196"
+          x="5112" y="669.1245">DashboardCell getDashboardCell()
+    </text><!--class PlayerDashboardUpdatedEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="PlayerDashboardUpdatedEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="250" x="5349" y="589"/>
+    <ellipse cx="5373.9" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M5376.8688,610.6406 Q5376.2906,610.9375 5375.65,611.0859 Q5375.0094,611.2344 5374.3063,611.2344 Q5371.8063,611.2344 5370.4859,609.5859 Q5369.1656,607.9375 5369.1656,604.8125 Q5369.1656,601.6875 5370.4859,600.0313 Q5371.8063,598.375 5374.3063,598.375 Q5375.0094,598.375 5375.6578,598.5313 Q5376.3063,598.6875 5376.8688,598.9844 L5376.8688,601.7031 Q5376.2438,601.125 5375.65,600.8516 Q5375.0563,600.5781 5374.4313,600.5781 Q5373.0875,600.5781 5372.4,601.6484 Q5371.7125,602.7188 5371.7125,604.8125 Q5371.7125,606.9063 5372.4,607.9766 Q5373.0875,609.0469 5374.4313,609.0469 Q5375.0563,609.0469 5375.65,608.7734 Q5376.2438,608.5 5376.8688,607.9219 L5376.8688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="196"
+          x="5390.1" y="609.1543">PlayerDashboardUpdatedEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5350" x2="5598" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5357" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="202"
+          x="5369" y="635.2104">playerDashboard: PlayerDashboard
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5350" x2="5598" y1="641.8047" y2="641.8047"/>
+    <ellipse cx="5360" cy="653.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="224"
+          x="5369" y="656.0151">PlayerDashboard getPlayerDashboard()
+    </text><!--class GameStatusUpdatedEvent-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="GameStatusUpdatedEvent"
+          style="stroke: #A80036; stroke-width: 1.5;" width="198" x="5634" y="589"/>
+    <ellipse cx="5649" cy="605" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M5651.9688,610.6406 Q5651.3906,610.9375 5650.75,611.0859 Q5650.1094,611.2344 5649.4063,611.2344 Q5646.9063,611.2344 5645.5859,609.5859 Q5644.2656,607.9375 5644.2656,604.8125 Q5644.2656,601.6875 5645.5859,600.0313 Q5646.9063,598.375 5649.4063,598.375 Q5650.1094,598.375 5650.7578,598.5313 Q5651.4063,598.6875 5651.9688,598.9844 L5651.9688,601.7031 Q5651.3438,601.125 5650.75,600.8516 Q5650.1563,600.5781 5649.5313,600.5781 Q5648.1875,600.5781 5647.5,601.6484 Q5646.8125,602.7188 5646.8125,604.8125 Q5646.8125,606.9063 5647.5,607.9766 Q5648.1875,609.0469 5649.5313,609.0469 Q5650.1563,609.0469 5650.75,608.7734 Q5651.3438,608.5 5651.9688,607.9219 L5651.9688,610.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="166"
+          x="5663" y="609.1543">GameStatusUpdatedEvent
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5635" x2="5831" y1="621" y2="621"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5642" y="629.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="130"
+          x="5654" y="635.2104">killerColor: PlayerColor
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="5642" y="642.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="98"
+          x="5654" y="648.0151">cruelKill: Boolean
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="5635" x2="5831" y1="654.6094"
+          y2="654.6094"/><!--class CardDeck-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="CardDeck"
+          style="stroke: #A80036; stroke-width: 1.5;" width="143" x="2559.5" y="346"/>
+    <ellipse cx="2592.5" cy="362" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M2595.4688,367.6406 Q2594.8906,367.9375 2594.25,368.0859 Q2593.6094,368.2344 2592.9063,368.2344 Q2590.4063,368.2344 2589.0859,366.5859 Q2587.7656,364.9375 2587.7656,361.8125 Q2587.7656,358.6875 2589.0859,357.0313 Q2590.4063,355.375 2592.9063,355.375 Q2593.6094,355.375 2594.2578,355.5313 Q2594.9063,355.6875 2595.4688,355.9844 L2595.4688,358.7031 Q2594.8438,358.125 2594.25,357.8516 Q2593.6563,357.5781 2593.0313,357.5781 Q2591.6875,357.5781 2591,358.6484 Q2590.3125,359.7188 2590.3125,361.8125 Q2590.3125,363.9063 2591,364.9766 Q2591.6875,366.0469 2593.0313,366.0469 Q2593.6563,366.0469 2594.25,365.7734 Q2594.8438,365.5 2595.4688,364.9219 L2595.4688,367.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="60"
+          x="2610.5" y="366.1543">CardDeck
+    </text>
+    <rect fill="#FFFFFF" height="15.9688" style="stroke: #000000; stroke-width: 1.0; stroke-dasharray: 2.0,2.0;"
+          width="9" x="2696.5" y="343"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="7" x="2697.5" y="355.1387">T
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2560.5" x2="2701.5" y1="378" y2="378"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2567.5" y="386.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="81"
+          x="2579.5" y="392.2104">List&lt;T&gt; cards
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2560.5" x2="2701.5" y1="398.8047" y2="398.8047"/>
+    <ellipse cx="2570.5" cy="410.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74"
+          x="2579.5" y="413.0151">void shuffle()
+    </text>
+    <ellipse cx="2570.5" cy="423.5117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="58"
+          x="2579.5" y="425.8198">T extract()
+    </text>
+    <ellipse cx="2570.5" cy="436.3164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="117"
+          x="2579.5" y="438.6245">void add(T newCard)
+    </text><!--class GameController-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="99.2188" id="GameController"
+          style="stroke: #A80036; stroke-width: 1.5;" width="230" x="2294" y="346"/>
+    <ellipse cx="2356.25" cy="362" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M2359.2188,367.6406 Q2358.6406,367.9375 2358,368.0859 Q2357.3594,368.2344 2356.6563,368.2344 Q2354.1563,368.2344 2352.8359,366.5859 Q2351.5156,364.9375 2351.5156,361.8125 Q2351.5156,358.6875 2352.8359,357.0313 Q2354.1563,355.375 2356.6563,355.375 Q2357.3594,355.375 2358.0078,355.5313 Q2358.6563,355.6875 2359.2188,355.9844 L2359.2188,358.7031 Q2358.5938,358.125 2358,357.8516 Q2357.4063,357.5781 2356.7813,357.5781 Q2355.4375,357.5781 2354.75,358.6484 Q2354.0625,359.7188 2354.0625,361.8125 Q2354.0625,363.9063 2354.75,364.9766 Q2355.4375,366.0469 2356.7813,366.0469 Q2357.4063,366.0469 2358,365.7734 Q2358.5938,365.5 2359.2188,364.9219 L2359.2188,367.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="97"
+          x="2376.75" y="366.1543">GameController
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2295" x2="2523" y1="378" y2="378"/>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2302" y="386.9023"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="148"
+          x="2314" y="392.2104">gameStatus: GameStatus
+    </text>
+    <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2302" y="399.707"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="120"
+          x="2314" y="405.0151">remainingActions: int
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2295" x2="2523" y1="411.6094" y2="411.6094"/>
+    <rect fill="#F24D5C" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2302" y="420.5117"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="204"
+          x="2314" y="425.8198">void doFirstTurn(PlayerColor player)
+    </text>
+    <rect fill="#F24D5C" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2302" y="433.3164"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="179"
+          x="2314" y="438.6245">void doTurn(PlayerColor player)
+    </text><!--class DecoratedGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="60.8047" id="DecoratedGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="297" x="1961.5" y="365"/>
+    <ellipse cx="2060.25" cy="381" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M2056.1719,376.7656 L2056.1719,374.6094 L2063.5625,374.6094 L2063.5625,376.7656 L2061.0938,376.7656 L2061.0938,384.8438 L2063.5625,384.8438 L2063.5625,387 L2056.1719,387 L2056.1719,384.8438 L2058.6406,384.8438 L2058.6406,376.7656 L2056.1719,376.7656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="91" x="2080.75" y="385.1543">DecoratedGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1962.5" x2="2257.5" y1="397" y2="397"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1962.5" x2="2257.5" y1="405" y2="405"/>
+    <ellipse cx="1972.5" cy="416.9023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="271"
+          x="1981.5" y="419.2104">void acceptEvent(ViewEvent viewEventToAccept)
+    </text><!--class DecoratedAlternativeEffectGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="DecoratedAlternativeEffectGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="226" x="1961" y="762"/>
+    <ellipse cx="1976" cy="778" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M1978.9688,783.6406 Q1978.3906,783.9375 1977.75,784.0859 Q1977.1094,784.2344 1976.4063,784.2344 Q1973.9063,784.2344 1972.5859,782.5859 Q1971.2656,780.9375 1971.2656,777.8125 Q1971.2656,774.6875 1972.5859,773.0313 Q1973.9063,771.375 1976.4063,771.375 Q1977.1094,771.375 1977.7578,771.5313 Q1978.4063,771.6875 1978.9688,771.9844 L1978.9688,774.7031 Q1978.3438,774.125 1977.75,773.8516 Q1977.1563,773.5781 1976.5313,773.5781 Q1975.1875,773.5781 1974.5,774.6484 Q1973.8125,775.7188 1973.8125,777.8125 Q1973.8125,779.9063 1974.5,780.9766 Q1975.1875,782.0469 1976.5313,782.0469 Q1977.1563,782.0469 1977.75,781.7734 Q1978.3438,781.5 1978.9688,780.9219 L1978.9688,783.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="194"
+          x="1990" y="782.1543">DecoratedAlternativeEffectGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1962" x2="2186" y1="794" y2="794"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="1962" x2="2186" y1="802"
+          y2="802"/><!--class DecoratedBaseEffectGun-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="DecoratedBaseEffectGun"
+          style="stroke: #A80036; stroke-width: 1.5;" width="190" x="2222" y="762"/>
+    <ellipse cx="2237" cy="778" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M2239.9688,783.6406 Q2239.3906,783.9375 2238.75,784.0859 Q2238.1094,784.2344 2237.4063,784.2344 Q2234.9063,784.2344 2233.5859,782.5859 Q2232.2656,780.9375 2232.2656,777.8125 Q2232.2656,774.6875 2233.5859,773.0313 Q2234.9063,771.375 2237.4063,771.375 Q2238.1094,771.375 2238.7578,771.5313 Q2239.4063,771.6875 2239.9688,771.9844 L2239.9688,774.7031 Q2239.3438,774.125 2238.75,773.8516 Q2238.1563,773.5781 2237.5313,773.5781 Q2236.1875,773.5781 2235.5,774.6484 Q2234.8125,775.7188 2234.8125,777.8125 Q2234.8125,779.9063 2235.5,780.9766 Q2236.1875,782.0469 2237.5313,782.0469 Q2238.1563,782.0469 2238.75,781.7734 Q2239.3438,781.5 2239.9688,780.9219 L2239.9688,783.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="158"
+          x="2251" y="782.1543">DecoratedBaseEffectGun
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2223" x2="2411" y1="794" y2="794"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2223" x2="2411" y1="802"
+          y2="802"/><!--class ControllerState-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="73.6094" id="ControllerState"
+          style="stroke: #A80036; stroke-width: 1.5;" width="359" x="9089.5" y="94"/>
+    <ellipse cx="9217.25" cy="110" fill="#B4A7E5" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M9213.1719,105.7656 L9213.1719,103.6094 L9220.5625,103.6094 L9220.5625,105.7656 L9218.0938,105.7656 L9218.0938,113.8438 L9220.5625,113.8438 L9220.5625,116 L9213.1719,116 L9213.1719,113.8438 L9215.6406,113.8438 L9215.6406,105.7656 L9213.1719,105.7656 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs"
+          textLength="95" x="9237.75" y="114.1543">ControllerState
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9090.5" x2="9447.5" y1="126" y2="126"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9090.5" x2="9447.5" y1="134" y2="134"/>
+    <ellipse cx="9100.5" cy="145.9023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="271"
+          x="9109.5" y="148.2104">void acceptEvent(ViewEvent viewEventToAccept)
+    </text>
+    <ellipse cx="9100.5" cy="158.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="333"
+          x="9109.5" y="161.0151">List&lt;Supplier&lt;ControllerState&gt;&gt; getNextStatesFactories()
+    </text><!--class ExpectingMoveState-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="ExpectingMoveState"
+          style="stroke: #A80036; stroke-width: 1.5;" width="159" x="8789.5" y="602"/>
+    <ellipse cx="8804.5" cy="618" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M8807.4688,623.6406 Q8806.8906,623.9375 8806.25,624.0859 Q8805.6094,624.2344 8804.9063,624.2344 Q8802.4063,624.2344 8801.0859,622.5859 Q8799.7656,620.9375 8799.7656,617.8125 Q8799.7656,614.6875 8801.0859,613.0313 Q8802.4063,611.375 8804.9063,611.375 Q8805.6094,611.375 8806.2578,611.5313 Q8806.9063,611.6875 8807.4688,611.9844 L8807.4688,614.7031 Q8806.8438,614.125 8806.25,613.8516 Q8805.6563,613.5781 8805.0313,613.5781 Q8803.6875,613.5781 8803,614.6484 Q8802.3125,615.7188 8802.3125,617.8125 Q8802.3125,619.9063 8803,620.9766 Q8803.6875,622.0469 8805.0313,622.0469 Q8805.6563,622.0469 8806.25,621.7734 Q8806.8438,621.5 8807.4688,620.9219 L8807.4688,623.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="127"
+          x="8818.5" y="622.1543">ExpectingMoveState
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8790.5" x2="8947.5" y1="634" y2="634"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8790.5" x2="8947.5" y1="642"
+          y2="642"/><!--class ExpectingPickupState-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="ExpectingPickupState"
+          style="stroke: #A80036; stroke-width: 1.5;" width="168" x="8984" y="602"/>
+    <ellipse cx="8999" cy="618" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M9001.9688,623.6406 Q9001.3906,623.9375 9000.75,624.0859 Q9000.1094,624.2344 8999.4063,624.2344 Q8996.9063,624.2344 8995.5859,622.5859 Q8994.2656,620.9375 8994.2656,617.8125 Q8994.2656,614.6875 8995.5859,613.0313 Q8996.9063,611.375 8999.4063,611.375 Q9000.1094,611.375 9000.7578,611.5313 Q9001.4063,611.6875 9001.9688,611.9844 L9001.9688,614.7031 Q9001.3438,614.125 9000.75,613.8516 Q9000.1563,613.5781 8999.5313,613.5781 Q8998.1875,613.5781 8997.5,614.6484 Q8996.8125,615.7188 8996.8125,617.8125 Q8996.8125,619.9063 8997.5,620.9766 Q8998.1875,622.0469 8999.5313,622.0469 Q9000.1563,622.0469 9000.75,621.7734 Q9001.3438,621.5 9001.9688,620.9219 L9001.9688,623.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="136"
+          x="9013" y="622.1543">ExpectingPickupState
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8985" x2="9151" y1="634" y2="634"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="8985" x2="9151" y1="642"
+          y2="642"/><!--class ExpectingShootState-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="ExpectingShootState"
+          style="stroke: #A80036; stroke-width: 1.5;" width="164" x="9187" y="602"/>
+    <ellipse cx="9202" cy="618" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M9204.9688,623.6406 Q9204.3906,623.9375 9203.75,624.0859 Q9203.1094,624.2344 9202.4063,624.2344 Q9199.9063,624.2344 9198.5859,622.5859 Q9197.2656,620.9375 9197.2656,617.8125 Q9197.2656,614.6875 9198.5859,613.0313 Q9199.9063,611.375 9202.4063,611.375 Q9203.1094,611.375 9203.7578,611.5313 Q9204.4063,611.6875 9204.9688,611.9844 L9204.9688,614.7031 Q9204.3438,614.125 9203.75,613.8516 Q9203.1563,613.5781 9202.5313,613.5781 Q9201.1875,613.5781 9200.5,614.6484 Q9199.8125,615.7188 9199.8125,617.8125 Q9199.8125,619.9063 9200.5,620.9766 Q9201.1875,622.0469 9202.5313,622.0469 Q9203.1563,622.0469 9203.75,621.7734 Q9204.3438,621.5 9204.9688,620.9219 L9204.9688,623.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="132"
+          x="9216" y="622.1543">ExpectingShootState
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9188" x2="9350" y1="634" y2="634"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9188" x2="9350" y1="642"
+          y2="642"/><!--class ExecutingGunFlowState-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="ExecutingGunFlowState"
+          style="stroke: #A80036; stroke-width: 1.5;" width="179" x="9386.5" y="602"/>
+    <ellipse cx="9401.5" cy="618" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M9404.4688,623.6406 Q9403.8906,623.9375 9403.25,624.0859 Q9402.6094,624.2344 9401.9063,624.2344 Q9399.4063,624.2344 9398.0859,622.5859 Q9396.7656,620.9375 9396.7656,617.8125 Q9396.7656,614.6875 9398.0859,613.0313 Q9399.4063,611.375 9401.9063,611.375 Q9402.6094,611.375 9403.2578,611.5313 Q9403.9063,611.6875 9404.4688,611.9844 L9404.4688,614.7031 Q9403.8438,614.125 9403.25,613.8516 Q9402.6563,613.5781 9402.0313,613.5781 Q9400.6875,613.5781 9400,614.6484 Q9399.3125,615.7188 9399.3125,617.8125 Q9399.3125,619.9063 9400,620.9766 Q9400.6875,622.0469 9402.0313,622.0469 Q9402.6563,622.0469 9403.25,621.7734 Q9403.8438,621.5 9404.4688,620.9219 L9404.4688,623.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="147"
+          x="9415.5" y="622.1543">ExecutingGunFlowState
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9387.5" x2="9564.5" y1="634" y2="634"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9387.5" x2="9564.5" y1="642"
+          y2="642"/><!--class ShootCompletedState-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="ShootCompletedState"
+          style="stroke: #A80036; stroke-width: 1.5;" width="170" x="9601" y="602"/>
+    <ellipse cx="9616" cy="618" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M9618.9688,623.6406 Q9618.3906,623.9375 9617.75,624.0859 Q9617.1094,624.2344 9616.4063,624.2344 Q9613.9063,624.2344 9612.5859,622.5859 Q9611.2656,620.9375 9611.2656,617.8125 Q9611.2656,614.6875 9612.5859,613.0313 Q9613.9063,611.375 9616.4063,611.375 Q9617.1094,611.375 9617.7578,611.5313 Q9618.4063,611.6875 9618.9688,611.9844 L9618.9688,614.7031 Q9618.3438,614.125 9617.75,613.8516 Q9617.1563,613.5781 9616.5313,613.5781 Q9615.1875,613.5781 9614.5,614.6484 Q9613.8125,615.7188 9613.8125,617.8125 Q9613.8125,619.9063 9614.5,620.9766 Q9615.1875,622.0469 9616.5313,622.0469 Q9617.1563,622.0469 9617.75,621.7734 Q9618.3438,621.5 9618.9688,620.9219 L9618.9688,623.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="138"
+          x="9630" y="622.1543">ShootCompletedState
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9602" x2="9770" y1="634" y2="634"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="9602" x2="9770" y1="642" y2="642"/><!--class GameView-->
+    <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="188.8516" id="GameView"
+          style="stroke: #A80036; stroke-width: 1.5;" width="2056" x="2809" y="301"/>
+    <ellipse cx="3800.75" cy="317" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path
+      d="M3803.7188,322.6406 Q3803.1406,322.9375 3802.5,323.0859 Q3801.8594,323.2344 3801.1563,323.2344 Q3798.6563,323.2344 3797.3359,321.5859 Q3796.0156,319.9375 3796.0156,316.8125 Q3796.0156,313.6875 3797.3359,312.0313 Q3798.6563,310.375 3801.1563,310.375 Q3801.8594,310.375 3802.5078,310.5313 Q3803.1563,310.6875 3803.7188,310.9844 L3803.7188,313.7031 Q3803.0938,313.125 3802.5,312.8516 Q3801.9063,312.5781 3801.2813,312.5781 Q3799.9375,312.5781 3799.25,313.6484 Q3798.5625,314.7188 3798.5625,316.8125 Q3798.5625,318.9063 3799.25,319.9766 Q3799.9375,321.0469 3801.2813,321.0469 Q3801.9063,321.0469 3802.5,320.7734 Q3803.0938,320.5 3803.7188,319.9219 L3803.7188,322.6406 Z "/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="64"
+          x="3821.25" y="321.1543">GameView
+    </text>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2810" x2="4864" y1="333" y2="333"/>
+    <line style="stroke: #A80036; stroke-width: 1.5;" x1="2810" x2="4864" y1="341" y2="341"/>
+    <ellipse cx="2820" cy="352.9023" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="334"
+          x="2829" y="355.2104">void showAvailableActions(List&lt;CompositeAction&gt; actions)
+    </text>
+    <ellipse cx="2820" cy="365.707" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="385"
+          x="2829" y="368.0151">void showAvailableMovements(List&lt;Integer[]&gt; availableMovements)
+    </text>
+    <ellipse cx="2820" cy="378.5117" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="312"
+          x="2829" y="380.8198">void showReloadableGuns(List&lt;Gun&gt; reloadableGuns)
+    </text>
+    <ellipse cx="2820" cy="391.3164" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="291"
+          x="2829" y="393.6245">void showLoadedGuns(List&lt;Gun&gt; reloadableGuns)
+    </text>
+    <ellipse cx="2820" cy="404.1211" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="298"
+          x="2829" y="406.4292">void showBaseGunExtraEffects(List&lt;Effect&gt; effects)
+    </text>
+    <ellipse cx="2820" cy="416.9258" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="431"
+          x="2829" y="419.2339">void showAvailableRespawnLocations(List&lt;AmmoColor&gt; respawnLocations)
+    </text>
+    <ellipse cx="2820" cy="429.7305" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="1376"
+          x="2829" y="432.0386">void showApplicableEffects(Optional&lt;Map&lt;PlayerColor, Optional&lt;Integer[]&gt;&gt;&gt;
+      firstEffect, int numberOfChoosablePlayerFirstEffect, Optional&lt;Map&lt;PlayerColor, Optional&lt;Integer[]&gt;&gt;&gt;
+      secondEffect, int numberOfChoosablePlayerSecondEffect)
+    </text>
+    <ellipse cx="2820" cy="442.5352" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="2030"
+          x="2829" y="444.8433">void showApplicableEffects(Map&lt;PlayerColor, Optional&lt;Integer[]&gt;&gt; baseEffect,
+      int numberOfChoosablePlayerBaseEffect, Optional&lt;Map&lt;PlayerColor, Optional&lt;Integer[]&gt;&gt;&gt;
+      firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional&lt;Map&lt;PlayerColor, Optional&lt;Integer[]&gt;&gt;&gt;
+      secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
+    </text>
+    <ellipse cx="2820" cy="455.3398" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="314"
+          x="2829" y="457.6479">void showAvailableVenomGranades(PlayerColor player)
+    </text>
+    <ellipse cx="2820" cy="468.1445" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="303"
+          x="2829" y="470.4526">void showAvailablePowerUpCards(PlayerColor player)
+    </text>
+    <ellipse cx="2820" cy="480.9492" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="461"
+          x="2829" y="483.2573">void showAvailableEnemyMovements(List&lt;Integer[]&gt; availableEnemyMovements)
+    </text>
+    <path
+      d="M3397.5,773.5 L3397.5,798.6328 A0,0 0 0 0 3397.5,798.6328 L4276.5,798.6328 A0,0 0 0 0 4276.5,798.6328 L4276.5,783.5 L4266.5,773.5 L3841,773.5 L3837,490.0292 L3833,773.5 L3397.5,773.5 A0,0 0 0 0 3397.5,773.5 "
+      fill="#FBFB77" filter="url(#f1lscr7nve3fsr)" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <path d="M4266.5,773.5 L4266.5,783.5 L4276.5,783.5 L4266.5,773.5 " fill="#FBFB77"
+          style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="858"
+          x="3403.5" y="790.5669">the two different showApplicableEffects methods are called from AlternativeEffectGun
+      (first one) and from BaseEffectGun (second one)
+    </text><!--link BaseGun to AmmoColor-->
+    <path
+      d="M448.4642,1697.8802 C471.5695,1751.9939 514.4717,1838.3552 573,1896 C663.0229,1984.664 739.6661,1938.3034 821,2035 C874.3842,2098.4677 835.0439,2143.3373 883,2211 C908.0451,2246.3369 939.2963,2233.4291 959,2272 C968.9958,2291.5674 969.6807,2348.0468 968.7524,2388.2299 "
+      fill="none" id="BaseGun-AmmoColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="27" x="884"
+          y="2127.5669">cost
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="425.4672" y="1717.6518">1..n
+    </text><!--link Gun to BaseGun-->
+    <path d="M413.7503,1297.2575 C417.3433,1379.8955 423.5609,1522.9011 426.8369,1598.2488 " fill="none"
+          id="Gun-BaseGun" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="406.7508,1297.4189,412.8754,1277.1337,420.7376,1296.8107,406.7508,1297.4189"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link BaseGun to AlternativeEffectGun-->
+    <path d="M464.0214,1715.8986 C511.4925,1807.9344 595.6069,1971.0135 641.6535,2060.2874 " fill="none"
+          id="BaseGun-AlternativeEffectGun" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="457.7032,1718.9193,454.7562,1697.9355,470.1456,1712.5016,457.7032,1718.9193"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link AlternativeEffectGun to AmmoColor-->
+    <path d="M733.6461,2185.8014 C790.8702,2246.0528 875.7649,2335.4384 925.8315,2388.1537 " fill="none"
+          id="AlternativeEffectGun-AmmoColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="117"
+          x="833" y="2285.0669">second effect cost
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="714.8574" y="2205.5742">0..n
+    </text><!--link AlternativeEffectGun to Effect-->
+    <path
+      d="M711.5247,2185.5846 C726.2912,2219.0246 735.0722,2259.2982 713,2289 C680.8363,2332.2815 566.1416,2367.4259 457.7569,2391.9839 "
+      fill="none" id="AlternativeEffectGun-Effect" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="690.3165" y="2205.3337">2..n
+    </text><!--link BaseGun to BaseEffectGun-->
+    <path d="M414.7548,1717.7575 C397.5856,1801.8335 368.7164,1943.2031 350.0161,2034.7769 " fill="none"
+          id="BaseGun-BaseEffectGun" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="407.9425,1716.1305,418.8026,1697.9355,421.6594,1718.9317,407.9425,1716.1305"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link BaseEffectGun to Effect-->
+    <path
+      d="M263.7195,2211.1367 C252.2982,2230.2456 242.1675,2251.0402 236,2272 C228.7281,2296.713 227.2676,2324.5202 228.3558,2349.912 "
+      fill="none" id="BaseEffectGun-Effect" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="64" x="237"
+          y="2285.0669">first effect
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8"
+          x="249.7338" y="2231.1271">1
+    </text><!--link BaseEffectGun to Effect-->
+    <path
+      d="M188.2345,2211.0693 C169.5606,2228.8477 153.097,2249.1954 142,2272 C129.3436,2298.0093 137.3321,2325.2119 153.1406,2349.6345 "
+      fill="none" id="BaseEffectGun-Effect-1" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="80" x="143"
+          y="2285.0669">extra effects
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="151.3352" y="2231.0541">0..2
+    </text><!--link BaseEffectGun to AmmoColor-->
+    <path d="M509.305,2209.1395 C646.9077,2275.9906 828.4707,2364.1988 915.7832,2406.6175 " fill="none"
+          id="BaseEffectGun-AmmoColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="132"
+          x="675" y="2285.0669">first extra effect cost
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="517.2913" y="2209.5258">0..n
+    </text><!--link BaseEffectGun to AmmoColor-->
+    <path
+      d="M391.9791,2211.1972 C415.0357,2239.5147 443.4722,2268.7558 475,2289 C618.1108,2380.8926 821.986,2415.016 915.963,2426.3989 "
+      fill="none" id="BaseEffectGun-AmmoColor-1" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="154"
+          x="476" y="2285.0669">second extra effect cost
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="371.9524" y="2231.1926">0..n
+    </text><!--link PowerUpCard to AmmoColor-->
+    <path
+      d="M1104.7937,2172.5055 C1093.6292,2213.4338 1075.0405,2272.3525 1050,2320 C1037.3703,2344.032 1019.8121,2368.4749 1004.096,2388.3265 "
+      fill="none" id="PowerUpCard-AmmoColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="1077.2384" y="2192.9388">1..n
+    </text><!--link PowerUpCard to PowerUpType-->
+    <path d="M1117,2172.5659 C1117,2230.0502 1117,2324.261 1117,2381.8016 " fill="none" id="PowerUpCard-PowerUpType"
+          style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8"
+          x="1108.4375" y="2192.6516">1
+    </text><!--link PlayerDashboard to AmmoColor-->
+    <path
+      d="M1001.1511,1896.2483 C986.369,1994.4998 978.3753,2108.2962 994,2211 C998.2708,2239.0728 1008.7292,2243.9272 1013,2272 C1016.2086,2293.0907 1017.1471,2299.0736 1013,2320 C1008.3594,2343.4165 998.7299,2368.0885 989.4749,2388.2543 "
+      fill="none" id="PlayerDashboard-AmmoColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="975.1368" y="1915.9073">0..9
+    </text><!--link PlayerDashboard to PlayerColor-->
+    <path
+      d="M1213.0931,1882.1723 C1218.9187,1887.0368 1224.8887,1891.6611 1231,1896 C1270.9227,1924.3446 1294.5752,1901.5588 1337,1926 C1354.1578,1935.8847 1355.8088,1942.2321 1369,1957 C1400.274,1992.0121 1432.5316,2033.8896 1456.8404,2066.823 "
+      fill="none" id="PlayerDashboard-PlayerColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="60"
+          x="1385" y="1970.0669">damages
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32"
+          x="1220.8911" y="1889.5096">0..12
+    </text><!--link PlayerDashboard to PlayerColor-->
+    <path
+      d="M1179.7173,1896.1126 C1198.8412,1923.9992 1219.9865,1950.7079 1243,1974 C1302.1986,2033.9153 1390.3994,2078.4233 1445.7556,2102.5402 "
+      fill="none" id="PlayerDashboard-PlayerColor-1" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="40"
+          x="1244" y="1970.0669">marks
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="1159.3502" y="1916.5663">0..n
+    </text><!--link PlayerDashboard to PlayerColor-->
+    <path
+      d="M1213.0687,1875.5689 C1218.9992,1882.5559 1224.9837,1889.3855 1231,1896 C1298.5046,1970.2164 1389.6967,2043.2047 1445.8675,2085.6259 "
+      fill="none" id="PlayerDashboard-PlayerColor-2" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="31"
+          x="1310" y="1970.0669">guns
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="1221.2095" y="1899.0212">0..3
+    </text><!--link PlayerDashboard to PowerUpCard-->
+    <path
+      d="M1063.9933,1896.065 C1066.5061,1922.4678 1069.7726,1948.8495 1074,1974 C1079.6678,2007.7201 1090.2948,2044.6538 1099.5656,2073.3137 "
+      fill="none" id="PlayerDashboard-PowerUpCard" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="97"
+          x="1075" y="1970.0669">power up cards
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="1039.829" y="1916.5171">0..n
+    </text><!--link AmmoCard to AmmoColor-->
+    <path
+      d="M757.0666,1697.5736 C788.4325,1752.3033 838.6312,1843.5922 874,1926 C937.2307,2073.3248 954.6067,2113.1131 976,2272 C981.2739,2311.1689 977.8878,2356.1527 973.8487,2388.3413 "
+      fill="none" id="AmmoCard-AmmoColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="762.8416" y="1717.6604">2..3
+    </text><!--link AmmoCard to PowerUpCard-->
+    <path
+      d="M754.4383,1697.8777 C782.9675,1749.7038 831.3064,1832.0215 883,1896 C898.4291,1915.0958 1000.4263,2012.5744 1064.5643,2073.4191 "
+      fill="none" id="AmmoCard-PowerUpCard" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="732.3784" y="1717.6489">0..1
+    </text><!--link com.adrenalinici.adrenaline.observer.Observable to GameStatus-->
+    <path
+      d="M2825.2075,172.6186 C2797.3578,223.4014 2756,312.7468 2756,395.5 C2756,395.5 2756,395.5 2756,1338.5 C2756,1507.9369 2226.34,1594.5979 1937.1994,1629.2828 "
+      fill="none" id="com.adrenalinici.adrenaline.observer.Observable-GameStatus"
+      style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="2819.1597,169.0926,2835.1054,155.1378,2831.3424,175.9907,2819.1597,169.0926"
+             style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="89"
+          x="2757" y="925.0669">T::ModelEvent
+    </text><!--link GameStatus to PlayerColor-->
+    <path
+      d="M1741.3998,1761.773 C1730.0944,1827.6356 1708.8222,1909.9133 1669,1974 C1638.5568,2022.9929 1586.8938,2064.5664 1548.1166,2091.2481 "
+      fill="none" id="GameStatus-PlayerColor" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="62"
+          x="1679" y="1970.0669">assassins
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="1715.747" y="1781.9835">0..8
+    </text><!--link GameStatus to PlayerColor-->
+    <path
+      d="M1778.9661,1761.6839 C1787.3572,1827.9096 1786.7645,1910.5878 1750,1974 C1706.4075,2049.1893 1608.6566,2090.317 1548.2247,2109.4021 "
+      fill="none" id="GameStatus-PlayerColor-1" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="70"
+          x="1760" y="1970.0669">double kills
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="1755.8373" y="1781.8884">0..n
+    </text><!--link GameStatus to PlayerColor-->
+    <path
+      d="M1677.185,1761.5249 C1640.1823,1818.7713 1596.6524,1890.0946 1563,1957 C1545.0924,1992.6027 1528.5331,2034.2885 1516.4806,2066.9802 "
+      fill="none" id="GameStatus-PlayerColor-2" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="96"
+          x="1564" y="1970.0669">round of player
+    </text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8"
+          x="1663.7552" y="1781.7187">1
+    </text><!--link DashboardCell to Dashboard-->
+    <path d="M387.5773,219.2107 C343.3296,323.5089 271.244,493.4249 235.8908,576.7573 " fill="none"
+          id="DashboardCell-Dashboard" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="#A80036"
+             points="230.7454,588.8857,236.7711,584.9245,235.4321,577.8388,229.4064,581.8,230.7454,588.8857"
+             style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="207.4125" y="578.0523">0..n
+    </text><!--link DashboardCell to BaseDashboardCell-->
+    <path d="M454.9999,238.6083 C483.4036,340.4911 524.9358,489.4653 547.3172,569.7466 " fill="none"
+          id="DashboardCell-BaseDashboardCell" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="448.2202,240.3559,449.5921,219.2107,461.706,236.5962,448.2202,240.3559"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link BaseDashboardCell to DashboardCellBoundType-->
+    <path d="M511.0082,682.0864 C458.4088,738.8282 378.208,825.3452 330.2592,877.0703 " fill="none"
+          id="BaseDashboardCell-DashboardCellBoundType" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8"
+          x="496.1842" y="701.9096">4
+    </text><!--link BaseDashboardCell to RespawnDashboardCell-->
+    <path d="M563,702.3142 C563,755.4935 563,824.8917 563,870.9881 " fill="none"
+          id="BaseDashboardCell-RespawnDashboardCell" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="556.0001,702.0864,563,682.0864,570.0001,702.0864,556.0001,702.0864"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link RespawnDashboardCell to Gun-->
+    <path d="M538.9151,970.175 C509.449,1030.949 460.0389,1132.8573 432.0352,1190.615 " fill="none"
+          id="RespawnDashboardCell-Gun" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="509.8407" y="990.2761">0..3
+    </text><!--link BaseDashboardCell to PickupDashboardCell-->
+    <path
+      d="M615.7386,698.8889 C648.7672,746.4521 690.8237,810.6919 722,871 C743.7479,913.0697 763.2144,963.3889 776.239,999.8618 "
+      fill="none" id="BaseDashboardCell-PickupDashboardCell" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="609.9832,702.8734,604.2406,682.4767,621.4493,694.8404,609.9832,702.8734"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link PickupDashboardCell to AmmoCard-->
+    <path
+      d="M794.9169,1099.2223 C795.5049,1118.3725 796,1140.451 796,1160.5 C796,1160.5 796,1160.5 796,1338.5 C796,1432.0242 766.0134,1537.8196 745.8662,1598.3463 "
+      fill="none" id="PickupDashboardCell-AmmoCard" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
+          x="769.499" y="1119.33">0..1
+    </text><!--link ViewEvent to FirstTurnEvent-->
+    <path d="M7391.2692,178.9957 C7334.4211,277.3866 7205.7227,500.1338 7154.5603,588.684 " fill="none"
+          id="ViewEvent-FirstTurnEvent" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7385.2586,175.4063,7401.3253,161.5909,7397.3807,182.4102,7385.2586,175.4063"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to NewTurnEvent-->
+    <path d="M7409.3127,181.476 C7390.1964,281.0821 7348.0148,500.8701 7331.1616,588.684 " fill="none"
+          id="ViewEvent-NewTurnEvent" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7402.4848,179.9131,7413.129,161.5909,7416.2339,182.5518,7402.4848,179.9131"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to ActionChosenEvent-->
+    <path d="M7428.6873,181.476 C7447.8036,281.0821 7489.9852,500.8701 7506.8384,588.684 " fill="none"
+          id="ViewEvent-ActionChosenEvent" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7421.7661,182.5518,7424.871,161.5909,7435.5152,179.9131,7421.7661,182.5518"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to MovementChosenEvent-->
+    <path d="M7447.7005,178.9957 C7506.5363,277.3866 7639.7345,500.1338 7692.6858,588.684 " fill="none"
+          id="ViewEvent-MovementChosenEvent" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7441.5494,182.3486,7437.2927,161.5909,7453.565,175.1635,7441.5494,182.3486"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to GunChosenEvent-->
+    <path
+      d="M7469.2633,174.773 C7500.7524,202.6144 7541.8795,239.7485 7577,274 C7690.9978,385.1771 7819.0055,523.765 7878.3927,588.9056 "
+      fill="none" id="ViewEvent-GunChosenEvent" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7464.5905,179.9854,7454.2038,161.516,7473.8411,169.477,7464.5905,179.9854"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to ChosenEffectConfigurationEvent-->
+    <path
+      d="M7502.4694,170.4794 C7556.9304,197.3747 7628.8171,235.0532 7689,274 C7830.1171,365.3226 7981.9,489.4746 8068.7667,563.312 "
+      fill="none" id="ViewEvent-ChosenEffectConfigurationEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7499.2321,176.6884,7484.3457,161.6087,7505.3867,164.1138,7499.2321,176.6884"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to ChosenRespawnLocationEvent-->
+    <path
+      d="M7526.5222,159.9134 C7613.6372,185.0854 7738.4712,225.1606 7842,274 C8043.1954,368.9133 8261.5352,519.4566 8358.1304,588.7962 "
+      fill="none" id="ViewEvent-ChosenRespawnLocationEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7524.4637,166.6055,7507.1545,154.3829,7528.3079,153.1435,7524.4637,166.6055"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to ReloadGunsEvent-->
+    <path
+      d="M7527.2771,146.8564 C7652.4311,167.2851 7863.2188,208.2129 8035,274 C8273.3326,365.2743 8318.6713,420.5072 8538,551 C8558.1131,562.9666 8579.7819,576.6325 8598.9399,588.9919 "
+      fill="none" id="ViewEvent-ReloadGunsEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7525.8315,153.7141,7507.1928,143.6345,7528.0491,139.8908,7525.8315,153.7141"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to ChosenBaseEffectConfigurationEvent-->
+    <path
+      d="M7310.6649,140.0707 C7093.0374,159.4369 6610.6193,208.4604 6459,274 C6308.2444,339.1663 6164.9273,468.4643 6083.1436,550.9068 "
+      fill="none" id="ViewEvent-ChosenBaseEffectConfigurationEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7310.3418,133.0721,7330.879,138.2896,7311.5706,147.0181,7310.3418,133.0721"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to VenomGranadeChosenEvent-->
+    <path
+      d="M7310.8028,136.6532 C7172.1839,147.6406 6927.6654,179.8533 6742,274 C6583.1067,354.5711 6438.7999,515.9017 6378.6352,588.7661 "
+      fill="none" id="ViewEvent-VenomGranadeChosenEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7310.4127,129.6629,7330.8789,135.1523,7311.4565,143.6239,7310.4127,129.6629"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to EnemyChosenEvent-->
+    <path
+      d="M7311.2627,152.8091 C7221.6234,174.23 7093.1223,212.7399 6994,274 C6851.5241,362.0538 6722.4272,517.7535 6667.6998,588.7924 "
+      fill="none" id="ViewEvent-EnemyChosenEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7309.8387,145.9535,7330.9047,148.2396,7313.011,159.5894,7309.8387,145.9535"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ViewEvent to EnemyMovementChosenEvent-->
+    <path
+      d="M7347.2221,172.0169 C7303.709,198.4726 7248.2426,235.1131 7204,274 C7087.9854,375.9707 6974.9687,521.4114 6924.8935,588.9275 "
+      fill="none" id="ViewEvent-EnemyMovementChosenEvent"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="7343.7126,165.9593,7364.4662,161.6826,7350.9093,177.968,7343.7126,165.9593"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ModelEvent to BoardMovementEvent-->
+    <path d="M5276.8366,178.3836 C5210.2636,276.4599 5058.5614,499.9497 4998.3296,588.684 " fill="none"
+          id="ModelEvent-BoardMovementEvent" style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="5271.211,174.2074,5288.2353,161.5909,5282.7945,182.0702,5271.211,174.2074"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ModelEvent to DashboardCellUpdatedEvent-->
+    <path d="M5298.2568,181.1689 C5277.9039,276.213 5233.9508,481.4658 5213.6614,576.2135 " fill="none"
+          id="ModelEvent-DashboardCellUpdatedEvent"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="5291.4164,179.6818,5302.4492,161.5909,5305.1061,182.6133,5291.4164,179.6818"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ModelEvent to PlayerDashboardUpdatedEvent-->
+    <path d="M5325.617,180.8511 C5358.72,280.16 5432.2287,500.686 5461.5613,588.684 " fill="none"
+          id="ModelEvent-PlayerDashboardUpdatedEvent"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="5318.8808,182.7782,5319.197,161.5909,5332.1624,178.351,5318.8808,182.7782"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ModelEvent to GameStatusUpdatedEvent-->
+    <path d="M5348.2887,176.8677 C5431.607,274.1379 5624.6354,499.4894 5701.0364,588.684 " fill="none"
+          id="ModelEvent-GameStatusUpdatedEvent"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="5342.8976,181.3342,5335.2031,161.5909,5353.5303,172.2266,5342.8976,181.3342"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link com.adrenalinici.adrenaline.observer.Observer to GameController-->
+    <path d="M2656.7315,168.77 C2605.9247,215.2696 2519.4884,294.3782 2463.3259,345.7796 " fill="none"
+          id="com.adrenalinici.adrenaline.observer.Observer-GameController"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="2652.1073,163.513,2671.587,155.1738,2661.5594,173.8406,2652.1073,163.513"
+             style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="80"
+          x="2563" y="262.0669">T::ViewEvent
+    </text><!--link com.adrenalinici.adrenaline.model.Gun to DecoratedGun-->
+    <path
+      d="M1258.5258,174.2741 C1265.6095,190.9916 1276.2918,208.5716 1292,219 C1353.3994,259.7621 1884.3108,247.2936 1953,274 C2004.0759,293.8583 2052.2699,335.9184 2081.4589,364.941 "
+      fill="none" id="com.adrenalinici.adrenaline.model.Gun-DecoratedGun" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="1251.8435,176.3776,1251.6758,155.1886,1265.0205,171.6482,1251.8435,176.3776"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link com.adrenalinici.adrenaline.model.AlternativeEffectGun to DecoratedAlternativeEffectGun-->
+    <path
+      d="M957.1148,174.3866 C997.2443,289.7601 1124.0716,604.0374 1352,732 C1410.3013,764.7313 1886.6429,753.8074 1953,762 C1955.5506,762.3149 1958.1279,762.653 1960.7239,763.0115 "
+      fill="none" id="com.adrenalinici.adrenaline.model.AlternativeEffectGun-DecoratedAlternativeEffectGun"
+      style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="950.4186,176.437,950.6259,155.2483,963.6773,171.9415,950.4186,176.437"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link DecoratedGun to DecoratedAlternativeEffectGun-->
+    <path d="M2105.3143,446.3264 C2097.4809,531.2979 2082.0166,699.0417 2076.2435,761.6647 " fill="none"
+          id="DecoratedGun-DecoratedAlternativeEffectGun"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="2098.3686,445.4148,2107.1751,426.1419,2112.3095,446.7001,2098.3686,445.4148"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link com.adrenalinici.adrenaline.model.BaseEffectGun to DecoratedBaseEffectGun-->
+    <path
+      d="M1150.8801,170.9282 C1164.7294,187.1539 1181.9911,205.2712 1200,219 C1558.6599,492.4191 2069.2185,694.9297 2250.2312,761.9957 "
+      fill="none" id="com.adrenalinici.adrenaline.model.BaseEffectGun-DecoratedBaseEffectGun"
+      style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="1145.3054,175.1694,1138.0315,155.2674,1156.1289,166.2895,1145.3054,175.1694"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link DecoratedGun to DecoratedBaseEffectGun-->
+    <path d="M2135.6636,443.9137 C2180.2809,528.083 2270.5872,698.4434 2304.1001,761.6647 " fill="none"
+          id="DecoratedGun-DecoratedBaseEffectGun"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="2129.4253,447.0912,2126.2429,426.1419,2141.7949,440.5342,2129.4253,447.0912"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ControllerState to ExpectingMoveState-->
+    <path
+      d="M9208.7698,181.5481 C9179.0929,207.7577 9143.6286,241.1068 9115,274 C9015.6374,388.1639 8919.173,542.6084 8883.4896,601.6648 "
+      fill="none" id="ControllerState-ExpectingMoveState"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="9204.4608,176.0181,9224.1366,168.1527,9213.6602,186.5713,9204.4608,176.0181"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ControllerState to ExpectingPickupState-->
+    <path d="M9246.3478,186.7854 C9202.6428,294.4169 9108.2995,526.7549 9077.7562,601.9735 " fill="none"
+          id="ControllerState-ExpectingPickupState"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="9239.882,184.1024,9253.8923,168.2055,9252.8534,189.3696,9239.882,184.1024"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ControllerState to ExpectingShootState-->
+    <path d="M9269,188.4702 C9269,296.8229 9269,527.1451 9269,601.9735 " fill="none"
+          id="ControllerState-ExpectingShootState"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="9262.0001,188.2055,9269,168.2055,9276.0001,188.2054,9262.0001,188.2055"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ControllerState to ExecutingGunFlowState-->
+    <path d="M9292.3284,186.7854 C9337.338,294.4169 9434.4975,526.7549 9465.9526,601.9735 " fill="none"
+          id="ControllerState-ExecutingGunFlowState"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="9285.8168,189.3577,9284.5586,168.2055,9298.7329,183.9564,9285.8168,189.3577"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link ControllerState to ShootCompletedState-->
+    <path d="M9313.4831,183.8036 C9403.0002,290.065 9601.802,526.0527 9665.7595,601.9735 " fill="none"
+          id="ControllerState-ShootCompletedState"
+          style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="9307.8748,188.0113,9300.3428,168.2055,9318.5819,178.9913,9307.8748,188.0113"
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link com.adrenalinici.adrenaline.observer.Observable to GameView-->
+    <path
+      d="M2926.5905,147.0153 C3026.5582,168.316 3206.7216,208.0665 3359,249 C3417.7793,264.8003 3480.2231,282.937 3539.9134,300.9446 "
+      fill="none" id="com.adrenalinici.adrenaline.observer.Observable-GameView"
+      style="stroke: #A80036; stroke-width: 1.0;"/>
+    <polygon fill="none" points="2924.9221,153.8172,2906.8104,142.8187,2927.8278,140.122,2924.9221,153.8172"
+             style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="80"
+          x="3412" y="262.0669">T::ViewEvent
+    </text><!--link com.adrenalinici.adrenaline.observer.Observer to GameView-->
+    <path
+      d="M2724.5743,171.7928 C2737.9387,189.0532 2755.6339,207.7359 2776,219 C2832.7833,250.4057 2936.9348,277.7678 3058.5498,300.9671 "
+      fill="none" id="com.adrenalinici.adrenaline.observer.Observer-GameView"
+      style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
+    <polygon fill="none" points="2718.7277,175.6527,2712.715,155.334,2730.0862,167.4683,2718.7277,175.6527"
+             style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="89"
+          x="2898" y="262.0669">T::ModelEvent
+    </text><!--
+@startuml
+
+package com.adrenalinici.adrenaline.model {
+  enum AmmoColor {
+      RED
+      YELLOW
+      BLUE
+  }
+
+  interface Gun {
+      +List<AmmoColor> getRequiredAmmoToPickup();
+      +List<AmmoColor> getRequiredAmmoToReload();
+      +void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun)
+  }
+
+  BaseGun "1..n"- - AmmoColor: cost
+
+  abstract class BaseGun implements Gun {
+      -firstAmmo: AmmoColor
+      -extraAmmo: List<AmmoColor>
+      -name: String
+      -note: Optional<String>
+  }
+
+  class AlternativeEffectGun extends BaseGun {
+      -firstEffect: Effect
+      -secondEffect: Effect
+      -secondEffectCost: List<AmmoColor>
+
+      +Effect getFirstEffect()
+      +Effect getSecondEffect()
+      +List<AmmoColor> getSecondEffectCost()
+  }
+
+  AlternativeEffectGun "0..n"- - AmmoColor: "second effect cost"
+  AlternativeEffectGun "2..n"- - Effect
+
+  class BaseEffectGun extends BaseGun {
+      -baseEffect: Effect
+      -firstExtraEffect: Optional<Effect>
+      -firstExtraEffectCost: Optional<List<AmmoColor>>
+      -secondExtraEffect: Optional<Effect>
+      -secondExtraEffectCost: Optional<List<AmmoColor>>
+
+      +Effect getBaseEffect()
+      +Optional<Effect> getFirstExtraEffect()
+      +Optional<List<AmmoColor>> getFirstExtraEffectCost()
+      +Optional<Effect> getSecondExtraEffect()
+      +Optional<List<AmmoColor>> getSecondExtraEffectCost()
+  }
+
+  BaseEffectGun "1"- - Effect: "first effect"
+  BaseEffectGun "0..2"- - Effect: "extra effects"
+  BaseEffectGun "0..n"- - AmmoColor: "first extra effect cost"
+  BaseEffectGun "0..n"- - AmmoColor: "second extra effect cost"
+
+  class PowerUpCard {
+      -ammoColor: AmmoColor
+      -powerUpType: PowerUpType
+      +AmmoColor getAmmoColor()
+      +PowerUpType getPowerUpType()
+  }
+
+  PowerUpCard "1..n"- - AmmoColor
+
+  enum PowerUpType {
+      VENOM_GRANADE
+      SCOPE
+      TELEPORT
+      KINETIC_RAY
+  }
+
+  PowerUpCard "1"- - PowerUpType
+
+  class Effect {
+      -name : String
+      -description: String
+      -configFn: Function<GameController, EffectAvailableConfig>
+      -applyFn: BiConsumer<EffectAvailableConfig, GameController>
+      +String getName()
+      +String getDescription()
+
+      +EffectAvailableConfig generateConfig(GameController controller)
+      +void applyEffect(EffectAvailableConfig config, GameController controller)
+  }
+
+  class EffectAvailableConfig {
+    -hittablePlayers: List<PlayerColor>
+    -possiblePreThisPlayerMoves: List<Integer[]>
+    -possiblePostThisPlayerMoves: List<Integer[]>
+    -possibleEnemiesMovements: Map<PlayerColor, List<PlayerColor>>
+  }
+
+  enum PlayerColor {
+      GRAY
+      YELLOW
+      GREEN
+      PURPLE
+      CYAN
+  }
+
+  class PlayerDashboard {
+      -ammos: List<AmmoColor>
+      -damages: List<PlayerColor>
+      -marks: List<PlayerColor>
+      -loadedGuns: List<Gun>
+      -unloadedGuns: List<Gun>
+      -powerUpCards: List<PowerUpCard>
+      -skullsNumber: int
+      -points: int
+      -firstPlayer: boolean
+
+      +void addAmmo(AmmoColor ammo)
+      +void removeAmmos(List<AmmoColor> ammos)
+      +List<AmmoColor> getAmmos()
+      +void addDamages(List<PlayerColor> damages)
+      +void removeAllDamages()
+      +List<PlayerColor> getDamages()
+      +Optional<PlayerColor> getFirstDamage()
+      +Optional<PlayerColor> getKillDamage()
+      +Optional<PlayerColor> getCruelDamage()
+      +void addMarks(List<PlayerColor> marks)
+      +void removeMarks(List<PlayerColor> marks)
+      +List<PlayerColor> getMarks()
+      +void addLoadedGun(Gun loadedGun)
+      +void removeLoadedGun(Gun loadedGun)
+      +List<Gun> getLoadedGuns()
+      +void addUnloadedGun(Gun unloadedGun)
+      +void removeUnloadedGun(Gun loadedGun)
+      +List<Gun> getUnloadedGuns()
+      +void addPowerUpCard(PowerUpCard powerUp)
+      +void removePowerUpCard(PowerUpCard powerUp)
+      +List<PowerUpCard> getPowerUpCards()
+      +void incrementSkullsNumber()
+      +int getSkullsNumber()
+      +void addPoints(int points)
+      +int getPoints()
+      +boolean getFirstPlayer()
+  }
+
+  PlayerDashboard "0..9"- - AmmoColor
+  PlayerDashboard "0..12"- - PlayerColor: "damages"
+  PlayerDashboard "0..n"- - PlayerColor: "marks"
+  PlayerDashboard "0..3"- - PlayerColor: "guns"
+  PlayerDashboard "0..n"- - PowerUpCard: "power up cards"
+
+  class AmmoCard {
+      -ammoColor: List<AmmoColor>
+      -powerUpCard: Optional<PowerUpCard>
+
+      +List<AmmoColor> getAmmoColor()
+      +Optional<PowerUpCard> getPowerUpCard()
+  }
+
+  AmmoCard "2..3"- - AmmoColor
+  AmmoCard "0..1"- - PowerUpCard
+
+  enum Action {
+      MOVE_MOVE_MOVE
+      MOVE_PICKUP
+      SHOOT
+      MOVE_MOVE_PICKUP
+      MOVE_SHOOT
+      MOVE_RELOAD_SHOOT
+      MOVE_MOVE_MOVE_MOVE
+      MOVE_MOVE_RELOAD_SHOOT
+      MOVE_MOVE_MOVE_PICKUP
+  }
+
+  class GameStatus {
+      -killScore: List<Map.Entry<PlayerColor, Boolean>>
+      -remainingSkulls: int
+      -doubleKillScore: List<PlayerColor>
+      -roundPlayer: PlayerColor
+      -dashboard: Dashboard
+      -playerDashboards: List<PlayerDashboard>
+
+      +void addKillScore(PlayerColor playerColor, boolean cruelKill)
+      +List<Map.Entry<PlayerColor, Boolean>> getKillScore()
+      +int decrementSkulls()
+      +int getRemainingSkulls()
+      +void addDoubleKillScore(PlayerColor playerColor)
+      +List<PlayerColor> getDoubleKillScore()
+      +void setRoundPlayer(PlayerColor playerColor)
+      +PlayerColor getRoundPlayer()
+  }
+
+  com.adrenalinici.adrenaline.observer.Observable <|- - GameStatus: "T::ModelEvent"
+
+  note left: killScore is a list of tuples\nwhere PlayerColor is the color of the\nkiller and the Boolean represents cruel kill
+
+  GameStatus "0..8"- - PlayerColor: "assassins"
+  GameStatus "0..n"- - PlayerColor: "double kills"
+  GameStatus "1"- - PlayerColor: "round of player"
+
+  class Dashboard {
+      -dashboardCells: List<DashboardCell>
+
+      +List<DashboardCell> getDashboardCells()
+  }
+
+  enum DashboardCellBoundType{
+      OPEN
+      WALL
+      DOOR
+  }
+
+  interface DashboardCell {
+      +List<PlayerColor> getPlayersInCell()
+      +Optional<DashboardCellBoundType> getNorthDashboardCellBoundType()
+      +Optional<DashboardCellBoundType> getSouthDashboardCellBoundType()
+      +Optional<DashboardCellBoundType> getWestDashboardCellBoundType()
+      +Optional<DashboardCellBoundType> getEastDashboardCellBoundType()
+      +Optional<DashboardCell> getNorthDashboardCell()
+      +Optional<DashboardCell> getSouthDashboardCell()
+      +Optional<DashboardCell> getWestDashboardCell()
+      +Optional<DashboardCell> getEastDashboardCell()
+      +void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell)
+  }
+
+  DashboardCell - -*"0..n" Dashboard
+
+  abstract class BaseDashboardCell implements DashboardCell {
+      -playerInCell: List<PlayerColor>
+      -northDashboardCellBoundType: DashboardCellBoundType
+      -southDashboardCellBoundType: DashboardCellBoundType
+      -westDashboardCellBoundType: DashboardCellBoundType
+      -eastDashboardCellBoundType: DashboardCellBoundType
+  }
+
+  BaseDashboardCell "4"- - DashboardCellBoundType
+
+  class RespawnDashboardCell extends BaseDashboardCell {
+      -availableGuns: List<Gun>
+      +List<Gun> getAvailableGuns()
+      +void removeAvailableGun(Gun gunToRemove)
+      +void addAvailableGun(Gun gunToAdd)
+  }
+
+  RespawnDashboardCell "0..3"- - Gun
+
+  class PickupDashboardCell extends BaseDashboardCell {
+      -ammoCard: Optional<AmmoCard>
+      +AmmoCard getAmmoCard()
+      +void setAmmoCard(AmmoCard ammoCard)
+      +void removeAmmoCard()
+  }
+
+  PickupDashboardCell "0..1"- - AmmoCard
+
+}
+
+package com.adrenalinici.adrenaline.events {
+  interface ViewEvent {
+    +GameView getGameView()
+  }
+
+  class FirstTurnEvent implements ViewEvent {
+    -player: PlayerColor
+    +PlayerColor getPlayer()
+  }
+
+  class NewTurnEvent implements ViewEvent {
+    -player: PlayerColor
+    +PlayerColor getPlayer()
+  }
+
+  class ActionChosenEvent implements ViewEvent {
+    -action: Action
+    +Action getAction()
+  }
+
+  class MovementChosenEvent implements ViewEvent {
+    -movement: Integer[]
+    +Integer[] getMovement()
+  }
+
+  class GunChosenEvent implements ViewEvent {
+    -gun: Gun
+    +Gun getChosenGun()
+  }
+
+  class ChosenEffectConfigurationEvent implements ViewEvent {
+    -playersToHit: List<PlayerColor>
+    -effectToApply: Effect
+    -numberOfScopePowerUpUsed: int
+    +List<PlayerColor> getPlayersToHit()
+    +Effect getEffectToApply()
+    +int getNumberOfScopePowerUpUsed()
+  }
+
+  class ChosenRespawnLocationEvent implements ViewEvent {
+    -respawnCell: Integer[]
+    +Integer[] getRespawnCell()
+  }
+
+  class ReloadGunsEvent implements ViewEvent {
+    -gunsToReload: List<Gun>
+    +List<Gun> getGunsToReload()
+  }
+
+  class ChosenBaseEffectConfigurationEvent implements ViewEvent {
+    -baseEffectPlayersToHit: List<PlayerColor>
+    -extraEffectOnePlayersToHit: List<PlayerColor>
+    -extraEffectTwoPlayersToHit: List<PlayerColor>
+    -numberOfScopePowerUpUsed: int
+    +List<PlayerColor> getBaseEffectPlayersToHit()
+    +PlayerColor getExtraEffectOnePlayersToHit()
+    +PlayerColor getExtraEffectTwoPlayersToHit()
+    +int getNumberOfScopePowerUpUsed()
+  }
+
+  class VenomGranadeChosenEvent implements ViewEvent{
+    -chosenVenomGranades: List<PowerUpCard>
+    +List<PowerUpCard> getChosenVenomGranades()
+  }
+
+  class EnemyChosenEvent implements ViewEvent{
+    -chosenEnemy: PlayerColor
+    +PlayerColor getChosenEnemy()
+  }
+
+  class EnemyMovementChosenEvent implements ViewEvent{
+    -chosenEnemyMovement: Integer[]
+    +Integer[] getChosenEnemyMovement()
+  }
+
+  interface ModelEvent{
+    +GameModel getGameModel()
+  }
+
+  class BoardMovementEvent implements ModelEvent {
+    -movement: Integer[]
+    -playerColor: PlayerColor
+  }
+
+  class DashboardCellUpdatedEvent implements ModelEvent{
+    -dashboard: Dashboard
+    -dashboardCell: DashboardCell
+    +Dashboard getDashboard()
+    +DashboardCell getDashboardCell()
+  }
+
+  class PlayerDashboardUpdatedEvent implements ModelEvent{
+    -playerDashboard: PlayerDashboard
+    +PlayerDashboard getPlayerDashboard()
+  }
+
+  class GameStatusUpdatedEvent implements ModelEvent{
+    -killerColor: PlayerColor
+    -cruelKill: Boolean
+  }
+}
+
+package com.adrenalinici.adrenaline.controller {
+
+  class CardDeck<T> {
+    -List<T> cards
+
+    +void shuffle()
+    +T extract()
+    +void add(T newCard)
+  }
+
+  class GameController {
+    -gameStatus: GameStatus
+    -remainingActions: int
+
+    -void doFirstTurn(PlayerColor player)
+    -void doTurn(PlayerColor player)
+  }
+
+  com.adrenalinici.adrenaline.observer.Observer <|.. GameController: "T::ViewEvent"
+
+  interface DecoratedGun extends com.adrenalinici.adrenaline.model.Gun {
+    +void acceptEvent(ViewEvent viewEventToAccept)
+  }
+
+  class DecoratedAlternativeEffectGun extends com.adrenalinici.adrenaline.model.AlternativeEffectGun implements DecoratedGun
+
+  class DecoratedBaseEffectGun extends com.adrenalinici.adrenaline.model.BaseEffectGun implements DecoratedGun
+
+}
+
+package com.adrenalinici.adrenaline.controller.states {
+  interface ControllerState {
+    +void acceptEvent(ViewEvent viewEventToAccept)
+    +List<Supplier<ControllerState>> getNextStatesFactories()
+  }
+
+  class ExpectingMoveState implements ControllerState{
+
+  }
+
+  class ExpectingPickupState implements ControllerState{
+
+  }
+
+  class ExpectingShootState implements ControllerState{
+
+  }
+
+  class ExecutingGunFlowState implements ControllerState{
+
+  }
+
+  class ShootCompletedState implements ControllerState{
+
+  }
+
+
+
+
+}
+
+
+
+package com.adrenalinici.adrenaline.view {
+  class GameView {
+    +void showAvailableActions(List<CompositeAction> actions)
+    +void showAvailableMovements(List<Integer[]> availableMovements)
+    +void showReloadableGuns(List<Gun> reloadableGuns)
+    +void showLoadedGuns(List<Gun> reloadableGuns)
+    +void showBaseGunExtraEffects(List<Effect> effects)
+    +void showAvailableRespawnLocations(List<AmmoColor> respawnLocations)
+    +void showApplicableEffects(Optional<Map<PlayerColor, Optional<Integer[]>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
+    +void showApplicableEffects(Map<PlayerColor, Optional<Integer[]>> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<Map<PlayerColor, Optional<Integer[]>>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
+    +void showAvailableVenomGranades(PlayerColor player)
+    +void showAvailablePowerUpCards(PlayerColor player)
+    +void showAvailableEnemyMovements(List<Integer[]> availableEnemyMovements)
+  }
+
+  com.adrenalinici.adrenaline.observer.Observable <|- - GameView: "T::ViewEvent"
+  com.adrenalinici.adrenaline.observer.Observer <|.. GameView: "T::ModelEvent"
+
+  note bottom: the two different showApplicableEffects methods are called from AlternativeEffectGun (first one) and from BaseEffectGun (second one)
+}
+
+package com.adrenalinici.adrenaline.observer {
+   interface Observer<T>
+   class Observable<T>
+}
+
+@enduml
+
+PlantUML version 1.2019.04(Fri Mar 29 16:44:36 CET 2019)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_201-b09
+Operating System: Linux
+OS Version: 5.0.3-200.fc29.x86_64
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
