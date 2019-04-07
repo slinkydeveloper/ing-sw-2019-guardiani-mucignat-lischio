@@ -6,6 +6,10 @@ import java.util.function.Consumer;
 
 public interface DashboardCell {
 
+  int getLine();
+
+  int getCell();
+
   class Builder {
     private DashboardCellBoundType northDashboardCellBoundType = DashboardCellBoundType.WALL;
     private DashboardCellBoundType southDashboardCellBoundType = DashboardCellBoundType.WALL;
@@ -57,13 +61,33 @@ public interface DashboardCell {
 
   List<PlayerColor> getPlayersInCell();
 
+  void addPlayer(PlayerColor player);
+
+  void removePlayer(PlayerColor player);
+
   DashboardCellBoundType getNorthDashboardCellBoundType();
+
+  default boolean hasNorthWall() {
+    return getNorthDashboardCellBoundType() == DashboardCellBoundType.WALL;
+  }
 
   DashboardCellBoundType getSouthDashboardCellBoundType();
 
+  default boolean hasSouthWall() {
+    return getSouthDashboardCellBoundType() == DashboardCellBoundType.WALL;
+  }
+
   DashboardCellBoundType getEastDashboardCellBoundType();
 
+  default boolean hasEastWall() {
+    return getEastDashboardCellBoundType() == DashboardCellBoundType.WALL;
+  }
+
   DashboardCellBoundType getWestDashboardCellBoundType();
+
+  default boolean hasWestWall() {
+    return getWestDashboardCellBoundType() == DashboardCellBoundType.WALL;
+  }
 
   Optional<DashboardCell> getNorthDashboardCell();
 

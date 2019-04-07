@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public abstract class BaseDashboardCell implements DashboardCell {
@@ -31,6 +32,16 @@ public abstract class BaseDashboardCell implements DashboardCell {
   }
 
   @Override
+  public void addPlayer(PlayerColor player) {
+    playersInCell.add(player);
+  }
+
+  @Override
+  public void removePlayer(PlayerColor player) {
+    playersInCell.remove(player);
+  }
+
+  @Override
   public DashboardCellBoundType getNorthDashboardCellBoundType() {
     return northDashboardCellBoundType;
   }
@@ -52,21 +63,46 @@ public abstract class BaseDashboardCell implements DashboardCell {
 
   @Override
   public Optional<DashboardCell> getNorthDashboardCell() {
-    return dashboard.getDashboardCell(line - 1, cell);
+    return dashboard.getDashboardCell(Position.of(line - 1, cell));
   }
 
   @Override
   public Optional<DashboardCell> getSouthDashboardCell() {
-    return dashboard.getDashboardCell(line + 1, cell);
+    return dashboard.getDashboardCell(Position.of(line + 1, cell));
   }
 
   @Override
   public Optional<DashboardCell> getEastDashboardCell() {
-    return dashboard.getDashboardCell(line, cell + 1);
+    return dashboard.getDashboardCell(Position.of(line, cell + 1));
   }
 
   @Override
   public Optional<DashboardCell> getWestDashboardCell() {
-    return dashboard.getDashboardCell(line, cell - 1);
+    return dashboard.getDashboardCell(Position.of(line, cell - 1));
+  }
+
+  @Override
+  public int getLine() {
+    return line;
+  }
+
+  @Override
+  public int getCell() {
+    return cell;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    BaseDashboardCell that = (BaseDashboardCell) o;
+    return line == that.line &&
+      cell == that.cell &&
+      dashboard.equals(that.dashboard);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(line, cell, dashboard);
   }
 }

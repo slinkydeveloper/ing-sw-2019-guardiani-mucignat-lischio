@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.adrenalinici.adrenaline.model.MyAssertions.assertListEqualsWithoutOrdering;
+import static com.adrenalinici.adrenaline.testutil.MyAssertions.assertListEqualsWithoutOrdering;
 
 public class GunTest {
 

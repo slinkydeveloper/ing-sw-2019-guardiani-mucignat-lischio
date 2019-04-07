@@ -7,14 +7,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.adrenalinici.adrenaline.model.MyAssertions.*;
+import static com.adrenalinici.adrenaline.testutil.MyAssertions.*;
 import static org.junit.Assert.assertEquals;
 
 public class PlayerDashboardTest {
 
   @Test
   public void addAmmoTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
     assertEquals(4, playerDashboard.getAmmos().size());
     assertContainsExactly(AmmoColor.RED, 2, playerDashboard.getAmmos());
@@ -22,7 +22,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void newPlayerDashboardMustContainOneAmmoForType() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     assertEquals(3, playerDashboard.getAmmos().size());
     assertContainsExactly(AmmoColor.RED, 1, playerDashboard.getAmmos());
     assertContainsExactly(AmmoColor.BLUE, 1, playerDashboard.getAmmos());
@@ -31,7 +31,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void addAmmoMustThrowExceptionTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
     playerDashboard.addAmmo(AmmoColor.RED);
     assertContainsExactly(AmmoColor.RED, 3, playerDashboard.getAmmos());
@@ -41,7 +41,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void removeMarksTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     List<PlayerColor> playerColors = Arrays.asList(
       PlayerColor.PURPLE,
       PlayerColor.PURPLE,
@@ -54,7 +54,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void removeAmmosTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
     playerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.BLUE));
     assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.YELLOW, AmmoColor.RED), playerDashboard.getAmmos());
@@ -62,7 +62,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void getKillDamageTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     List<PlayerColor> damages = Arrays.asList(
       PlayerColor.PURPLE,
       PlayerColor.PURPLE,
@@ -84,7 +84,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void getCruelDamageTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     List<PlayerColor> damages = Arrays.asList(
       PlayerColor.PURPLE,
       PlayerColor.PURPLE,
@@ -106,7 +106,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void getFirstDamageTest() {
-    PlayerDashboard playerDashboard = new PlayerDashboard(false, Collections.emptyList());
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     List<PlayerColor> damages = Arrays.asList(
       PlayerColor.PURPLE,
       PlayerColor.PURPLE,

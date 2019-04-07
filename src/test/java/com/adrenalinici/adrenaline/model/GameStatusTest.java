@@ -8,10 +8,8 @@ import static org.junit.Assert.assertTrue;
 public class GameStatusTest {
   @Test
   public void addKillScoreTest() {
-    PlayerColor playerColor = PlayerColor.CYAN;
-    boolean cruelKill = false;
-    GameStatus gameStatus = new GameStatus(8, playerColor);
-    gameStatus.addKillScore(playerColor, cruelKill);
+    GameStatus gameStatus = new GameStatus(8, null, null);
+    gameStatus.addKillScore(PlayerColor.CYAN, false);
     assertEquals(1, gameStatus.getKillScore().size());
     assertEquals(PlayerColor.CYAN, gameStatus.getKillScore().get(0).getKey());
     assertEquals(false, gameStatus.getKillScore().get(0).getValue());
@@ -19,10 +17,8 @@ public class GameStatusTest {
 
   @Test
   public void inizializationTest() {
-    PlayerColor playerColor = PlayerColor.GRAY;
-    GameStatus gameStatus = new GameStatus(8, playerColor);
+    GameStatus gameStatus = new GameStatus(8, null, null);
     assertEquals(8, gameStatus.getRemainingSkulls());
-    assertEquals(PlayerColor.GRAY, gameStatus.getRoundPlayer());
     assertTrue(gameStatus.getKillScore().isEmpty());
     assertTrue(gameStatus.getDoubleKillScore().isEmpty());
   }

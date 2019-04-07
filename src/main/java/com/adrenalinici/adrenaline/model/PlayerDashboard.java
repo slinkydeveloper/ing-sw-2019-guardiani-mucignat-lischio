@@ -1,12 +1,13 @@
 package com.adrenalinici.adrenaline.model;
 
-import com.adrenalinici.adrenaline.ListUtils;
+import com.adrenalinici.adrenaline.util.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class PlayerDashboard {
+  private PlayerColor player;
   private List<AmmoColor> ammos;
   private List<PlayerColor> damages;
   private List<PlayerColor> marks;
@@ -17,7 +18,8 @@ public class PlayerDashboard {
   private int points;
   private boolean firstPlayer;
 
-  public PlayerDashboard(boolean firstPlayer, List<PowerUpCard> powerUpCards) {
+  public PlayerDashboard(PlayerColor player, boolean firstPlayer, List<PowerUpCard> powerUpCards) {
+    this.player = player;
     this.firstPlayer = firstPlayer;
     this.powerUpCards = new ArrayList<>(powerUpCards);
     this.ammos = new ArrayList<>();
@@ -30,6 +32,10 @@ public class PlayerDashboard {
     addAmmo(AmmoColor.RED);
     addAmmo(AmmoColor.BLUE);
     addAmmo(AmmoColor.YELLOW);
+  }
+
+  public PlayerColor getPlayer() {
+    return player;
   }
 
   public void addAmmo(AmmoColor ammo) throws IllegalStateException {

@@ -1,9 +1,10 @@
 package com.adrenalinici.adrenaline.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class representing game dashboard <br>
@@ -98,9 +99,9 @@ public class Dashboard {
     this.dashboardCells = dashboardCells;
   }
 
-  public Optional<DashboardCell> getDashboardCell(int line, int cell) {
+  public Optional<DashboardCell> getDashboardCell(Position position) {
     try {
-      return Optional.ofNullable(dashboardCells[line][cell]);
+      return Optional.ofNullable(dashboardCells[position.line()][position.cell()]);
     } catch (IndexOutOfBoundsException e) {
       return Optional.empty();
     }
@@ -112,6 +113,61 @@ public class Dashboard {
 
   public int cells() {
     return dashboardCells[0].length;
+  }
+
+  public List<Position> calculateMovements(Position position, int range) {
+    Optional<DashboardCell> startingCellOptional = getDashboardCell(position);
+    if (!startingCellOptional.isPresent()) return Collections.emptyList();
+
+    Set<DashboardCell> scanned = new HashSet<>();
+    Set<DashboardCell> toScan = new HashSet<>();
+    Set<DashboardCell> nextScan = new HashSet<>();
+    toScan.add(startingCellOptional.get());
+
+    for (int i = 0; i < range; i++) {
+      for (DashboardCell c : toScan) {
+        if (!c.hasNorthWall() &&
+          c.getNorthDashboardCell().isPresent() &&
+          !toScan.contains(c.getNorthDashboardCell().get())
+        ) nextScan.add(c.getNorthDashboardCell().get());
+
+        if (!c.hasEastWall() &&
+          c.getEastDashboardCell().isPresent() &&
+          !toScan.contains(c.getEastDashboardCell().get())
+        ) nextScan.add(c.getEastDashboardCell().get());
+
+        if (!c.hasSouthWall() &&
+          c.getSouthDashboardCell().isPresent() &&
+          !toScan.contains(c.getSouthDashboardCell().get())
+        ) nextScan.add(c.getSouthDashboardCell().get());
+
+        if (!c.hasWestWall() &&
+          c.getWestDashboardCell().isPresent() &&
+          !toScan.contains(c.getWestDashboardCell().get())
+        ) nextScan.add(c.getWestDashboardCell().get());
+      }
+      scanned.addAll(toScan);
+      toScan.clear();
+      toScan.addAll(nextScan);
+      nextScan.clear();
+    }
+
+    scanned.addAll(toScan);
+    scanned.addAll(nextScan);
+
+    return scanned.stream().map(c -> new Position(c.getLine(), c.getCell())).collect(Collectors.toList());
+
+  }
+
+  public Map<PlayerColor, Position> getPlayersPositions() {
+    return stream()
+      .filter(c -> c.getPlayersInCell().size() != 0)
+      .flatMap(c -> c.getPlayersInCell().stream().map(p -> new SimpleImmutableEntry<>(p, new Position(c.getLine(), c.getCell()))))
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+
+  public Stream<DashboardCell> stream() {
+    return Arrays.stream(dashboardCells).flatMap(Arrays::stream);
   }
 
 }

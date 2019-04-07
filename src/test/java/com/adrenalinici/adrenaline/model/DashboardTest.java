@@ -1,9 +1,15 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
 import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.*;
-import static com.adrenalinici.adrenaline.model.MyAssertions.*;
+import static com.adrenalinici.adrenaline.testutil.MyAssertions.*;
+import static org.junit.Assert.assertEquals;
 
 public class DashboardTest {
 
@@ -20,43 +26,14 @@ public class DashboardTest {
       .newEmptyCell().build();
     assertDashboardContainsCell(d, 0, 0, PickupDashboardCell.class);
     assertDashboardContainsCell(d, 1, 0, RespawnDashboardCell.class);
-    assertAbsent(d.getDashboardCell(0, 1));
-    assertAbsent(d.getDashboardCell(1, 1));
-    assertAbsent(d.getDashboardCell(2, 0));
+    assertAbsent(d.getDashboardCell(Position.of(0, 1)));
+    assertAbsent(d.getDashboardCell(Position.of(1, 1)));
+    assertAbsent(d.getDashboardCell(Position.of(2, 0)));
   }
 
   @Test
   public void testBuilder3x3() {
-    Dashboard d = Dashboard.newBuilder()
-      .newEastCell(c ->
-        c.setEastType(OPEN).setSouthType(DOOR).newRespawnCell()
-      )
-      .newEastCell(c ->
-        c.setWestType(OPEN).setEastType(DOOR).newPickupCell()
-      )
-      .newEastCell(c ->
-        c.setWestType(DOOR).setSouthType(OPEN).newPickupCell()
-      )
-      .newSouthLine()
-      .newEastCell(c ->
-        c.setNorthType(DOOR).setEastType(OPEN).setSouthType(DOOR).newPickupCell()
-      )
-      .newEastCell(c ->
-        c.setWestType(OPEN).setEastType(DOOR).newPickupCell()
-      )
-      .newEastCell(c ->
-        c.setNorthType(OPEN).setSouthType(DOOR).setWestType(DOOR).newRespawnCell()
-      )
-      .newSouthLine()
-      .newEastCell(c ->
-        c.setNorthType(DOOR).setEastType(OPEN).newRespawnCell()
-      )
-      .newEastCell(c ->
-        c.setEastType(OPEN).setWestType(OPEN).newPickupCell()
-      )
-      .newEastCell(c ->
-        c.setNorthType(DOOR).setWestType(OPEN).newPickupCell()
-      ).build();
+    Dashboard d = TestUtils.build3x3Dashboard();
 
     assertDashboardContainsRespawnCell(d, 0, 0, WALL, OPEN, DOOR, WALL);
     assertDashboardContainsPickupCell(d, 0, 1, WALL, DOOR, WALL, OPEN);
@@ -68,7 +45,7 @@ public class DashboardTest {
     assertDashboardContainsPickupCell(d, 2, 1, WALL, OPEN, WALL, OPEN);
     assertDashboardContainsPickupCell(d, 2, 2, DOOR, WALL, WALL, OPEN);
 
-    DashboardCell centerCell = d.getDashboardCell(1, 1).get();
+    DashboardCell centerCell = d.getDashboardCell(Position.of(1, 1)).get();
 
     assertPresent(centerCell.getNorthDashboardCell());
     assertInstanceOf(PickupDashboardCell.class, centerCell.getNorthDashboardCell().get());
@@ -88,5 +65,36 @@ public class DashboardTest {
 
   }
 
+  @Test
+  public void testCalculateMovements() {
+    Dashboard d = TestUtils.build3x3Dashboard();
+
+    List<Position> calculated = d.calculateMovements(Position.of(1, 1), 2);
+    assertListEqualsWithoutOrdering(
+      Arrays.asList(
+        new Position(1, 1),
+        new Position(0, 0),
+        new Position(1, 0),
+        new Position(2, 0),
+        new Position(0, 2),
+        new Position(1, 2),
+        new Position(2, 2)
+      ), calculated
+    );
+  }
+
+  @Test
+  public void testGetPlayersPositions() {
+    Dashboard d = TestUtils.build3x3Dashboard();
+
+    d.getDashboardCell(Position.of(1, 1)).get().addPlayer(PlayerColor.CYAN);
+    d.getDashboardCell(Position.of(1, 1)).get().addPlayer(PlayerColor.GRAY);
+    d.getDashboardCell(Position.of(2, 0)).get().addPlayer(PlayerColor.GREEN);
+
+    Map<PlayerColor, Position> players = d.getPlayersPositions();
+    assertEquals(new Position(1, 1), players.get(PlayerColor.CYAN));
+    assertEquals(new Position(1, 1), players.get(PlayerColor.GRAY));
+    assertEquals(new Position(2, 0), players.get(PlayerColor.GREEN));
+  }
 
 }
