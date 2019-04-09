@@ -74,6 +74,7 @@ public class GameController implements Observer<ViewEvent> {
         remainingActions--;
         event.getView().showAvailableActions(calculateAvailableActions(turnOfPlayer));
       } else {
+        //TODO refill dashboard
         event.getView().showEndTurn();
       }
     }
