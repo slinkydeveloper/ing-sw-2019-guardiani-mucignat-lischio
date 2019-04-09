@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.adrenalinici.adrenaline.testutil.MyAssertions.*;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 public class PlayerDashboardTest {
 
@@ -16,17 +16,18 @@ public class PlayerDashboardTest {
   public void addAmmoTest() {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
-    assertEquals(4, playerDashboard.getAmmos().size());
-    assertContainsExactly(AmmoColor.RED, 2, playerDashboard.getAmmos());
+
+    assertThat(playerDashboard.getAmmos()).hasSize(4);
+    assertThat(playerDashboard.getAmmos())
+      .containsOnly(AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE);
   }
 
   @Test
   public void newPlayerDashboardMustContainOneAmmoForType() {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
-    assertEquals(3, playerDashboard.getAmmos().size());
-    assertContainsExactly(AmmoColor.RED, 1, playerDashboard.getAmmos());
-    assertContainsExactly(AmmoColor.BLUE, 1, playerDashboard.getAmmos());
-    assertContainsExactly(AmmoColor.YELLOW, 1, playerDashboard.getAmmos());
+    assertThat(playerDashboard.getAmmos()).hasSize(3);
+    assertThat(playerDashboard.getAmmos())
+      .containsOnly(AmmoColor.RED, AmmoColor.BLUE, AmmoColor.YELLOW);
   }
 
   @Test
@@ -34,22 +35,30 @@ public class PlayerDashboardTest {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
     playerDashboard.addAmmo(AmmoColor.RED);
-    assertContainsExactly(AmmoColor.RED, 3, playerDashboard.getAmmos());
-    assertThatCodeThrowsExceptionOfType(() -> playerDashboard.addAmmo(AmmoColor.RED), IllegalStateException.class);
-    assertContainsExactly(AmmoColor.RED, 3, playerDashboard.getAmmos());
+
+    assertThat(playerDashboard.getAmmos())
+      .containsOnly(AmmoColor.RED, AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE);
+    assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> playerDashboard.addAmmo(AmmoColor.RED));
+    assertThat(playerDashboard.getAmmos())
+      .containsOnly(AmmoColor.RED, AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE);
   }
 
   @Test
-  public void removeMarksTest() {
+  public void marksTest() {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     List<PlayerColor> playerColors = Arrays.asList(
       PlayerColor.PURPLE,
       PlayerColor.PURPLE,
       PlayerColor.GREEN
     );
+
     playerDashboard.addMarks(playerColors);
+    assertThat(playerDashboard.getMarks())
+      .containsOnly(PlayerColor.PURPLE, PlayerColor.PURPLE, PlayerColor.GREEN);
+
     playerDashboard.removeMarks(playerColors);
-    assertListEqualsWithoutOrdering(Collections.emptyList(), playerDashboard.getMarks());
+    assertThat(playerDashboard.getMarks())
+      .isEmpty();
   }
 
   @Test
@@ -57,7 +66,8 @@ public class PlayerDashboardTest {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
     playerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.BLUE));
-    assertListEqualsWithoutOrdering(Arrays.asList(AmmoColor.YELLOW, AmmoColor.RED), playerDashboard.getAmmos());
+    assertThat(playerDashboard.getAmmos())
+      .containsOnly(AmmoColor.YELLOW, AmmoColor.RED);
   }
 
   @Test
@@ -77,9 +87,9 @@ public class PlayerDashboardTest {
       PlayerColor.CYAN,
       PlayerColor.GREEN
     );
-    assertEquals(Optional.empty(), playerDashboard.getKillDamage());
+    assertThat(playerDashboard.getKillDamage()).isEqualTo(Optional.empty());
     playerDashboard.addDamages(damages);
-    assertEquals(Optional.of(PlayerColor.CYAN), playerDashboard.getKillDamage());
+    assertThat(playerDashboard.getKillDamage()).isEqualTo(Optional.of(PlayerColor.CYAN));
   }
 
   @Test
@@ -99,9 +109,9 @@ public class PlayerDashboardTest {
       PlayerColor.CYAN,
       PlayerColor.GREEN
     );
-    assertEquals(Optional.empty(), playerDashboard.getCruelDamage());
+    assertThat(playerDashboard.getCruelDamage()).isEqualTo(Optional.empty());
     playerDashboard.addDamages(damages);
-    assertEquals(Optional.of(PlayerColor.GREEN), playerDashboard.getCruelDamage());
+    assertThat(playerDashboard.getCruelDamage()).isEqualTo(Optional.of(PlayerColor.GREEN));
   }
 
   @Test
@@ -121,8 +131,8 @@ public class PlayerDashboardTest {
       PlayerColor.CYAN,
       PlayerColor.GREEN
     );
-    assertEquals(Optional.empty(), playerDashboard.getFirstDamage());
+    assertThat(playerDashboard.getFirstDamage()).isEqualTo(Optional.empty());
     playerDashboard.addDamages(damages);
-    assertEquals(Optional.of(PlayerColor.PURPLE), playerDashboard.getFirstDamage());
+    assertThat(playerDashboard.getFirstDamage()).isEqualTo(Optional.of(PlayerColor.PURPLE));
   }
 }

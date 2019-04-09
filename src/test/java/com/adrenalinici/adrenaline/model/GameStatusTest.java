@@ -2,7 +2,7 @@ package com.adrenalinici.adrenaline.model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class GameStatusTest {
@@ -10,16 +10,16 @@ public class GameStatusTest {
   public void addKillScoreTest() {
     GameStatus gameStatus = new GameStatus(8, null, null);
     gameStatus.addKillScore(PlayerColor.CYAN, false);
-    assertEquals(1, gameStatus.getKillScore().size());
-    assertEquals(PlayerColor.CYAN, gameStatus.getKillScore().get(0).getKey());
-    assertEquals(false, gameStatus.getKillScore().get(0).getValue());
+    assertThat(gameStatus.getKillScore()).hasSize(1);
+    assertThat(gameStatus.getKillScore().get(0).getKey()).isEqualTo(PlayerColor.CYAN);
+    assertThat(gameStatus.getKillScore().get(0).getValue()).isEqualTo(false);
   }
 
   @Test
   public void inizializationTest() {
     GameStatus gameStatus = new GameStatus(8, null, null);
-    assertEquals(8, gameStatus.getRemainingSkulls());
-    assertTrue(gameStatus.getKillScore().isEmpty());
-    assertTrue(gameStatus.getDoubleKillScore().isEmpty());
+    assertThat(gameStatus.getRemainingSkulls()).isEqualTo(8);
+    assertThat(gameStatus.getKillScore().isEmpty()).isTrue();
+    assertThat(gameStatus.getDoubleKillScore().isEmpty()).isTrue();
   }
 }

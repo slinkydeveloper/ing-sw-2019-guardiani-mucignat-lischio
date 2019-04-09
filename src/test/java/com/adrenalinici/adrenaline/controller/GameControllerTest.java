@@ -7,6 +7,7 @@ import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
+import org.assertj.core.api.Condition;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,10 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.adrenalinici.adrenaline.testutil.MyAssertions.assertContainsOneSatisfying;
-import static com.adrenalinici.adrenaline.testutil.MyAssertions.assertListEqualsWithoutOrdering;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameControllerTest {
 
@@ -39,13 +37,13 @@ public class GameControllerTest {
     AtomicBoolean called = new AtomicBoolean(false);
 
     gameViewMock.setAvailableActionsListener(actions ->
-      assertListEqualsWithoutOrdering(Arrays.asList(
-        Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT
-      ), actions), called
+      assertThat(actions)
+        .containsOnly(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT),
+      called
     );
     gameViewMock.notifyEvent(new NewTurnEvent(gameViewMock, PlayerColor.YELLOW));
-    assertEquals(PlayerColor.YELLOW, controller.getTurnOfPlayer());
-    assertTrue(called.get());
+    assertThat(controller.getTurnOfPlayer()).isEqualTo(PlayerColor.YELLOW);
+    assertThat(called).isTrue();
   }
 
   @Test
@@ -55,7 +53,7 @@ public class GameControllerTest {
     AtomicBoolean calledAvailableMovements = new AtomicBoolean(false);
 
     gameViewMock.setAvailableMovementsListener(movements ->
-      assertListEqualsWithoutOrdering(Arrays.asList(
+      assertThat(movements).containsOnly(
         new Position(0, 0),
         new Position(0, 1),
         new Position(0, 2),
@@ -65,26 +63,30 @@ public class GameControllerTest {
         new Position(2, 0),
         new Position(2, 1),
         new Position(2, 2)
-      ), movements), calledAvailableMovements
+      ), calledAvailableMovements
     );
     gameViewMock.notifyEvent(new ActionChosenEvent(gameViewMock, Action.MOVE_MOVE_MOVE));
-    assertTrue(calledAvailableMovements.get());
+    assertThat(calledAvailableMovements).isTrue();
 
     AtomicBoolean calledEndTurn = new AtomicBoolean(false);
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameViewMock.setEndTurnListener(calledEndTurn);
     status.registerObserver(receivedModelEvents::add);
     gameViewMock.notifyEvent(new MovementChosenEvent(gameViewMock, new Position(2, 0)));
-    assertTrue(calledEndTurn.get());
-    assertContainsOneSatisfying(e -> {
-      DashboardCell c = ((DashboardCellUpdatedEvent) e).getCell();
-      return c.getLine() == 1 && c.getCell() == 1;
-    }, receivedModelEvents);
-    assertContainsOneSatisfying(e -> {
-      DashboardCell c = ((DashboardCellUpdatedEvent) e).getCell();
-      return c.getLine() == 2 && c.getCell() == 0;
-    }, receivedModelEvents);
-    assertEquals(Position.of(2, 0), status.getPlayerPosition(PlayerColor.YELLOW));
+    assertThat(calledEndTurn).isTrue();
+    assertThat(receivedModelEvents)
+      .haveExactly(1, new Condition<>(e ->
+        e instanceof DashboardCellUpdatedEvent && ((DashboardCellUpdatedEvent) e).getCell().getLine() == 1 && ((DashboardCellUpdatedEvent) e).getCell().getCell() == 1,
+        "Event must be a DashboardCellUpdatedEvent with cell line 1 and row 1"
+        )
+      );
+    assertThat(receivedModelEvents)
+      .haveExactly(1, new Condition<>(e ->
+          e instanceof DashboardCellUpdatedEvent && ((DashboardCellUpdatedEvent) e).getCell().getLine() == 2 && ((DashboardCellUpdatedEvent) e).getCell().getCell() == 0,
+          "Event must be a DashboardCellUpdatedEvent with cell line 1 and row 1"
+        )
+      );
+    assertThat(status.getPlayerPosition(PlayerColor.YELLOW)).isEqualTo(Position.of(2,  0));
   }
 
 }
