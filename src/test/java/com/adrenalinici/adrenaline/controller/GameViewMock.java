@@ -106,6 +106,11 @@ public class GameViewMock extends Observable<ViewEvent> implements GameView {
   }
 
   @Override
+  public void showAvailableGunsToPickup(List<Gun> availableGunsToPickup) {
+
+  }
+
+  @Override
   public void onEvent(ModelEvent newValue) {
     modelEventListener.accept(newValue);
   }

@@ -122,8 +122,10 @@ public class PlayerDashboard {
     return unloadedGuns;
   }
 
-  public void addPowerUpCard(PowerUpCard powerUp) {
-    powerUpCards.add(powerUp);
+  public void addPowerUpCard(PowerUpCard powerUp) throws IllegalStateException {
+    if (powerUpCards.size() < 3) {
+      powerUpCards.add(powerUp);
+    } else throw new IllegalStateException("You can't have more than 3 PowerUpCards");
   }
 
   public void removePowerUpCard(PowerUpCard powerUp) {

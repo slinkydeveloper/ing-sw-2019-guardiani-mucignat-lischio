@@ -89,6 +89,10 @@ public interface DashboardCell {
     return getWestDashboardCellBoundType() == DashboardCellBoundType.WALL;
   }
 
+  boolean isRespawnCell();
+
+  boolean isPickupCell();
+
   Optional<DashboardCell> getNorthDashboardCell();
 
   Optional<DashboardCell> getSouthDashboardCell();

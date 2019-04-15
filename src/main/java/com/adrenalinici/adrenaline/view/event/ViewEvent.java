@@ -14,4 +14,5 @@ public interface ViewEvent {
 
   void onNewTurnEvent(Consumer<NewTurnEvent> consumer);
 
+  void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer);
 }
