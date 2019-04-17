@@ -19,7 +19,7 @@ public class PickupChosenState implements ControllerState {
       .get();
 
     cell.visit(respawnDashboardCell -> {
-      //TODO add new state in nextStates head
+      nextStates.add(0, oldState -> ExecuteGunPickupState.INSTANCE);
       viewEventToAccept.getView().showAvailableGunsToPickup(gameStatus.calculateAvailableGunsToPickup(respawnDashboardCell, turnOfPlayer));
     }, pickupDashboardCell -> {
       gameStatus.acquireAmmoCard(pickupDashboardCell, turnOfPlayer);

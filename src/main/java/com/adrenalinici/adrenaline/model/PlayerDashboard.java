@@ -5,6 +5,7 @@ import com.adrenalinici.adrenaline.util.ListUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class PlayerDashboard {
   private PlayerColor player;
@@ -103,6 +104,10 @@ public class PlayerDashboard {
   }
 
   public void addLoadedGun(Gun loadedGun) {
+    if (loadedGuns.size() == 3) {
+      Random random = new Random();
+      loadedGuns.remove(random.nextInt(3));
+    }
     loadedGuns.add(loadedGun);
   }
 

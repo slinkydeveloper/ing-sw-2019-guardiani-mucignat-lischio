@@ -16,7 +16,6 @@ public class ExecuteGunPickupState implements ControllerState {
   public void acceptEvent(ViewEvent viewEventToAccept, GameStatus gameStatus, PlayerColor turnOfPlayer, List<ControllerStateFactory> nextStates, Consumer<ViewEvent> endStateCallback) {
     viewEventToAccept.onGunToPickupChosenEvent(gunToPickupChosenEvent -> {
       //TODO ci sarebbe anche da gestire il caso in cui si supera il limite delle tre armi
-      //TODO chiamare metodo di gameStatus (da implementare) che sposta l'arma dalla cell alla playerDashboard
       Gun chosenGun = gunToPickupChosenEvent.getChosenGunToPickup();
       RespawnDashboardCell cell = gunToPickupChosenEvent.getCell();
       gameStatus.acquireGun(cell, turnOfPlayer, chosenGun);

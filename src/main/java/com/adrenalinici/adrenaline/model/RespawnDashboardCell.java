@@ -17,6 +17,10 @@ public class RespawnDashboardCell extends BaseDashboardCell {
     return availableGuns;
   }
 
+  public void addAvailableGun(Gun gun) {
+    availableGuns.add(gun);
+  }
+
   public void removeAvailableGun(Gun gunToRemove) {
     availableGuns.remove(gunToRemove);
   }

@@ -39,7 +39,7 @@ public class TestUtils {
         c.setNorthType(DOOR).setEastType(OPEN).newRespawnCell()
       )
       .newEastCell(c ->
-        c.setEastType(OPEN).setWestType(OPEN).newPickupCell()
+        c.setEastType(OPEN).setWestType(OPEN).setNorthType(OPEN).newPickupCell()
       )
       .newEastCell(c ->
         c.setNorthType(DOOR).setWestType(OPEN).newPickupCell()

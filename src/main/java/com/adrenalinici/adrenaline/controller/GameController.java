@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.state.ControllerState;
+import com.adrenalinici.adrenaline.controller.state.ExecuteGunPickupState;
 import com.adrenalinici.adrenaline.controller.state.PickupChosenState;
 import com.adrenalinici.adrenaline.model.Action;
 import com.adrenalinici.adrenaline.model.GameStatus;
@@ -32,6 +33,7 @@ public class GameController implements Observer<ViewEvent> {
   public void onEvent(ViewEvent event) {
     if (state != null) {
       //state.acceptEvent(event, this::addNextStateFactoryToListHead, this::handlePartialActionEnd);
+      state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
     } else {
       event.onNewTurnEvent(
         e -> {
@@ -52,6 +54,7 @@ public class GameController implements Observer<ViewEvent> {
             case MOVE_PICKUP:
               actualPlayerPosition = status.getDashboard().getPlayersPositions().get(turnOfPlayer);
               //nextStates.add(oldState -> new PickupChosenState(status, turnOfPlayer));
+              nextStates.add(0, oldState -> PickupChosenState.INSTANCE);
               e.getView().showAvailableMovements(
                 status.getDashboard().calculateMovements(actualPlayerPosition, 1)
               );
@@ -83,8 +86,10 @@ public class GameController implements Observer<ViewEvent> {
 
   private void handlePartialActionEnd(ViewEvent event) {
     if (state != null || !nextStates.isEmpty()) {
-      //state = nextStates.remove(0).apply(state);
-      //state.acceptEvent(event, this::addNextStateFactoryToListHead, this::handlePartialActionEnd);
+      if (!nextStates.isEmpty()) {
+        state = nextStates.remove(0).create(state);
+        state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
+      } else state = null;
     } else {
       if (remainingActions != 0) {
         remainingActions--;
@@ -106,6 +111,10 @@ public class GameController implements Observer<ViewEvent> {
 
   int getRemainingActions() {
     return remainingActions;
+  }
+
+  protected void setControllerState(ControllerState controllerState) {
+    this.state = controllerState;
   }
 
 }

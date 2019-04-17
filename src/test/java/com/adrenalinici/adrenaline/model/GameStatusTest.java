@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.util.Bag;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class GameStatusTest {
 
   @Test
   public void calculateAvailableGunsToPickupTest() {
-    //devo testare caso limite in cui magari la gun richiede due RED per pickupare e io ne ho solo uno
     BaseGun gun1 = new BaseEffectGun(
       AmmoColor.BLUE,
       Arrays.asList(AmmoColor.RED, AmmoColor.RED, AmmoColor.BLUE),
@@ -78,8 +78,16 @@ public class GameStatusTest {
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
     GameStatus gameStatus = new GameStatus(8, dashboard, playerDashboardList);
     gameStatus.acquireAmmoCard(pickupDashboardCell, PlayerColor.YELLOW);
-    assertThat(pickupDashboardCell.getAmmoCard() == null);
-    //TODO
+    assertThat(pickupDashboardCell.getAmmoCard()).isNotPresent();
+    assertThat(playerDashboard.getAmmos())
+      .containsExactlyInAnyOrderElementsOf(Arrays.asList(AmmoColor.BLUE, AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.YELLOW));
+
+    assertThat(playerDashboard.getPowerUpCards())
+      .containsExactlyInAnyOrderElementsOf(Arrays.asList(
+        new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY),
+        new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE),
+        new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY)
+      ));
   }
 
 }
