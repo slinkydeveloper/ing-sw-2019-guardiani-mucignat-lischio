@@ -17,6 +17,10 @@ public class RespawnDashboardCell extends BaseDashboardCell {
     return availableGuns;
   }
 
+  public void addAvailableGun(Gun gun) {
+    availableGuns.add(gun);
+  }
+
   public void removeAvailableGun(Gun gunToRemove) {
     availableGuns.remove(gunToRemove);
   }
@@ -26,5 +30,15 @@ public class RespawnDashboardCell extends BaseDashboardCell {
     if (visitRespawnDashboardCell != null) {
       visitRespawnDashboardCell.accept(this);
     }
+  }
+
+  @Override
+  public boolean isRespawnCell() {
+    return true;
+  }
+
+  @Override
+  public boolean isPickupCell() {
+    return false;
   }
 }

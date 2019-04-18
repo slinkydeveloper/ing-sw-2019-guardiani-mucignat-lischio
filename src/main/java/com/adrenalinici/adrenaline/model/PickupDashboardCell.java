@@ -24,4 +24,14 @@ public class PickupDashboardCell extends BaseDashboardCell {
       visitPickupDashboardCell.accept(this);
     }
   }
+
+  @Override
+  public boolean isPickupCell() {
+    return true;
+  }
+
+  @Override
+  public boolean isRespawnCell() {
+    return false;
+  }
 }

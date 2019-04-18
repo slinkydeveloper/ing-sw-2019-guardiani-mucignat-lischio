@@ -15,6 +15,7 @@ public class GameViewMock extends Observable<ViewEvent> implements GameView {
 
   private Consumer<List<Action>> availableActionsListener;
   private Consumer<List<Position>> availableMovementsListener;
+  private Consumer<List<Gun>> availableGunsToPickupListener;
   private Consumer<ModelEvent> modelEventListener;
   private Runnable endTurnListener;
 
@@ -29,6 +30,13 @@ public class GameViewMock extends Observable<ViewEvent> implements GameView {
     this.availableMovementsListener = (v) -> {
       called.set(true);
       availableMovementsListener.accept(v);
+    };
+  }
+
+  public void setAvailableGunsToPickupListener(Consumer<List<Gun>> availableGunsToPickupListener, AtomicBoolean called) {
+    this.availableGunsToPickupListener = (v) -> {
+      called.set(true);
+      availableGunsToPickupListener.accept(v);
     };
   }
 
@@ -103,6 +111,11 @@ public class GameViewMock extends Observable<ViewEvent> implements GameView {
   @Override
   public void showAvailableEnemyMovements(List<Position> availableEnemyMovements) {
 
+  }
+
+  @Override
+  public void showAvailableGunsToPickup(List<Gun> availableGunsToPickup) {
+    this.availableGunsToPickupListener.accept(availableGunsToPickup);
   }
 
   @Override

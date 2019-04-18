@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.state.ControllerState;
+import com.adrenalinici.adrenaline.controller.state.PickupChosenState;
 import com.adrenalinici.adrenaline.model.Action;
 import com.adrenalinici.adrenaline.model.GameStatus;
 import com.adrenalinici.adrenaline.model.PlayerColor;
@@ -11,7 +12,6 @@ import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 public class GameController implements Observer<ViewEvent> {
 
@@ -20,7 +20,7 @@ public class GameController implements Observer<ViewEvent> {
   private int remainingActions;
   private PlayerColor turnOfPlayer;
   private ControllerState state;
-  private List<Function<ControllerState, ControllerState>> nextStates;
+  private List<ControllerStateFactory> nextStates;
 
   public GameController(GameStatus status) {
     this.status = status;
@@ -29,31 +29,44 @@ public class GameController implements Observer<ViewEvent> {
 
   @Override
   public void onEvent(ViewEvent event) {
-    event.onNewTurnEvent(
-      e -> {
-        turnOfPlayer = e.getPlayer();
-        remainingActions = calculateRemainingActions(e.getPlayer());
-        e.getView().showAvailableActions(calculateAvailableActions(e.getPlayer()));
-      }
-    );
-    event.onActionChosenEvent(
-      e -> {
-        switch (e.getAction()) {
-          case MOVE_MOVE_MOVE:
-            Position actualPlayerPosition = status.getDashboard().getPlayersPositions().get(turnOfPlayer);
-            e.getView().showAvailableMovements(
-              status.getDashboard().calculateMovements(actualPlayerPosition, 3)
-            );
-            break;
+    if (state != null) {
+      //state.acceptEvent(event, this::addNextStateFactoryToListHead, this::handlePartialActionEnd);
+      state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
+    } else {
+      event.onNewTurnEvent(
+        e -> {
+          turnOfPlayer = e.getPlayer();
+          remainingActions = calculateRemainingActions(e.getPlayer());
+          e.getView().showAvailableActions(calculateAvailableActions(e.getPlayer()));
         }
-      }
-    );
-    event.onMovementChosenEvent(
-      e -> {
-        status.movePlayerInDashboard(e.getCoordinates(), turnOfPlayer);
-        handlePartialActionEnd(e);
-      }
-    );
+      );
+      event.onActionChosenEvent(
+        e -> {
+          switch (e.getAction()) {
+            case MOVE_MOVE_MOVE:
+              Position actualPlayerPosition = status.getDashboard().getPlayersPositions().get(turnOfPlayer);
+              e.getView().showAvailableMovements(
+                status.getDashboard().calculateMovements(actualPlayerPosition, 3)
+              );
+              break;
+            case MOVE_PICKUP:
+              actualPlayerPosition = status.getDashboard().getPlayersPositions().get(turnOfPlayer);
+              //nextStates.add(oldState -> new PickupChosenState(status, turnOfPlayer));
+              nextStates.add(0, oldState -> PickupChosenState.INSTANCE);
+              e.getView().showAvailableMovements(
+                status.getDashboard().calculateMovements(actualPlayerPosition, 1)
+              );
+              break;
+          }
+        }
+      );
+      event.onMovementChosenEvent(
+        e -> {
+          status.movePlayerInDashboard(e.getCoordinates(), turnOfPlayer);
+          handlePartialActionEnd(e);
+        }
+      );
+    }
   }
 
   private List<Action> calculateAvailableActions(PlayerColor player) {
@@ -65,10 +78,14 @@ public class GameController implements Observer<ViewEvent> {
     return 2; //TODO
   }
 
+  private void addNextStateFactoryToListHead(ControllerStateFactory<?, ?> s) {
+    nextStates.add(0, s);
+  }
+
   private void handlePartialActionEnd(ViewEvent event) {
-    if (state != null || !nextStates.isEmpty()) {
-      state = nextStates.remove(0).apply(state);
-      state.acceptEvent(event);
+    if (!nextStates.isEmpty()) {
+        state = nextStates.remove(0).create(state);
+        state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
     } else {
       if (remainingActions != 0) {
         remainingActions--;
@@ -90,6 +107,10 @@ public class GameController implements Observer<ViewEvent> {
 
   int getRemainingActions() {
     return remainingActions;
+  }
+
+  protected void setControllerState(ControllerState controllerState) {
+    this.state = controllerState;
   }
 
 }

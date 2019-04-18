@@ -2,12 +2,15 @@ package com.adrenalinici.adrenaline.model;
 
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
+import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Map.Entry;
 
@@ -82,4 +85,41 @@ public class GameStatus extends Observable<ModelEvent> {
     newCell.addPlayer(player);
     notifyEvent(new DashboardCellUpdatedEvent(this, newCell));
   }
+
+  public List<Gun> calculateAvailableGunsToPickup(RespawnDashboardCell respawnCell, PlayerColor player) {
+    List<AmmoColor> playerAmmos = new ArrayList<>(getPlayerDashboard(player).getAmmos());
+    getPlayerDashboard(player).getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
+    Bag playerAmmosBag = Bag.from(playerAmmos);
+
+    return respawnCell.getAvailableGuns().stream()
+      .filter(
+        gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToPickup()))
+      )
+      .collect(Collectors.toList());
+  }
+
+  public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
+    PlayerDashboard playerDashboard = getPlayerDashboard(player);
+    cell.getAmmoCard()
+      .ifPresent(
+        ac -> {
+          ac.getAmmoColor().forEach(playerDashboard::addAmmo);
+          ac.getPowerUpCard().ifPresent(playerDashboard::addPowerUpCard);
+          cell.setAmmoCard(null);
+          notifyEvent(new DashboardCellUpdatedEvent(this, cell));
+          notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+        }
+      );
+  }
+
+  public void acquireGun(RespawnDashboardCell cell, PlayerColor player, Gun chosenGun) {
+    PlayerDashboard playerDashboard = getPlayerDashboard(player);
+    playerDashboard.addLoadedGun(chosenGun);
+    playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
+    cell.getAvailableGuns().remove(chosenGun);
+    notifyEvent(new DashboardCellUpdatedEvent(this, cell));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+  }
+
+
 }
