@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.state.ControllerState;
-import com.adrenalinici.adrenaline.controller.state.ExecuteGunPickupState;
 import com.adrenalinici.adrenaline.controller.state.PickupChosenState;
 import com.adrenalinici.adrenaline.model.Action;
 import com.adrenalinici.adrenaline.model.GameStatus;
@@ -13,7 +12,6 @@ import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 public class GameController implements Observer<ViewEvent> {
 
@@ -85,11 +83,9 @@ public class GameController implements Observer<ViewEvent> {
   }
 
   private void handlePartialActionEnd(ViewEvent event) {
-    if (state != null || !nextStates.isEmpty()) {
-      if (!nextStates.isEmpty()) {
+    if (!nextStates.isEmpty()) {
         state = nextStates.remove(0).create(state);
         state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
-      } else state = null;
     } else {
       if (remainingActions != 0) {
         remainingActions--;

@@ -1,6 +1,5 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.controller.state.PickupChosenState;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
@@ -14,7 +13,10 @@ import org.assertj.core.api.Condition;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -108,7 +110,6 @@ public class GameControllerTest {
 
     gameViewMock.setAvailableMovementsListener(movements ->
       assertThat(movements).containsOnly(
-        new Position(1, 1),
         new Position(2, 0),
         new Position(2, 1),
         new Position(2, 2)
@@ -144,9 +145,10 @@ public class GameControllerTest {
     status.registerObserver(receivedModelEvents::add);
     status.getDashboard().getDashboardCell(Position.of(2, 0)).get()
       .visit(respawnDashboardCell ->
-        gameViewMock.notifyEvent(new GunToPickupChosenEvent(gameViewMock, gun, respawnDashboardCell)), pickupDashboardCell -> {
-      });
-    //assertThat(calledEndTurn).isTrue();
+          gameViewMock.notifyEvent(new GunToPickupChosenEvent(gameViewMock, gun, respawnDashboardCell)),
+        pickupDashboardCell -> {
+        });
+    assertThat(calledEndTurn).isTrue();
     assertThat(receivedModelEvents)
       .haveExactly(1, new Condition<>(e ->
         e instanceof DashboardCellUpdatedEvent && ((DashboardCellUpdatedEvent) e).getCell().getLine() == 2 && ((DashboardCellUpdatedEvent) e).getCell().getCell() == 0,
