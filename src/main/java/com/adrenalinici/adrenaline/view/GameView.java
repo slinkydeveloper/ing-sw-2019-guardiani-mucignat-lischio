@@ -12,7 +12,7 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showAvailableMovements(List<Position> availableMovements);
 
-  void showEndTurn();
+  void showNextTurn(PlayerColor playerColor);
 
   void showReloadableGuns(List<Gun> reloadableGuns);
 

@@ -1,21 +1,19 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.controller.state.ControllerState;
-import com.adrenalinici.adrenaline.controller.state.PickupChosenState;
 import com.adrenalinici.adrenaline.model.Action;
 import com.adrenalinici.adrenaline.model.GameStatus;
 import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.util.Observer;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class GameController implements Observer<ViewEvent> {
 
-  private GameStatus status;
+  private GameStatus gameStatus;
 
   private int remainingActions;
   private PlayerColor turnOfPlayer;
@@ -23,94 +21,89 @@ public class GameController implements Observer<ViewEvent> {
   private List<ControllerStateFactory> nextStates;
 
   public GameController(GameStatus status) {
-    this.status = status;
+    this.gameStatus = status;
+    this.state = WaitingNewTurnState.INSTANCE;
     nextStates = new ArrayList<>();
   }
 
   @Override
   public void onEvent(ViewEvent event) {
-    if (state != null) {
-      //state.acceptEvent(event, this::addNextStateFactoryToListHead, this::handlePartialActionEnd);
-      state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
+    state.acceptEvent(event, this);
+  }
+
+  private PlayerColor nextTurnPlayer() {
+    List<PlayerColor> players = gameStatus.getPlayers();
+    return players.get(players.indexOf(turnOfPlayer) + 1 % players.size());
+  }
+
+  @SuppressWarnings("unchecked")
+  void endStateCallback(ViewEvent event) {
+    if (!nextStates.isEmpty()) {
+      state = nextStates.remove(0).create(state);
+      state.acceptEvent(event, this);
     } else {
-      event.onNewTurnEvent(
-        e -> {
-          turnOfPlayer = e.getPlayer();
-          remainingActions = calculateRemainingActions(e.getPlayer());
-          e.getView().showAvailableActions(calculateAvailableActions(e.getPlayer()));
-        }
-      );
-      event.onActionChosenEvent(
-        e -> {
-          switch (e.getAction()) {
-            case MOVE_MOVE_MOVE:
-              Position actualPlayerPosition = status.getDashboard().getPlayersPositions().get(turnOfPlayer);
-              e.getView().showAvailableMovements(
-                status.getDashboard().calculateMovements(actualPlayerPosition, 3)
-              );
-              break;
-            case MOVE_PICKUP:
-              actualPlayerPosition = status.getDashboard().getPlayersPositions().get(turnOfPlayer);
-              //nextStates.add(oldState -> new PickupChosenState(status, turnOfPlayer));
-              nextStates.add(0, oldState -> PickupChosenState.INSTANCE);
-              e.getView().showAvailableMovements(
-                status.getDashboard().calculateMovements(actualPlayerPosition, 1)
-              );
-              break;
-          }
-        }
-      );
-      event.onMovementChosenEvent(
-        e -> {
-          status.movePlayerInDashboard(e.getCoordinates(), turnOfPlayer);
-          handlePartialActionEnd(e);
-        }
-      );
+      if (remainingActions != 0) {
+        event.getView().showAvailableActions(calculateAvailableActions());
+      } else {
+        //TODO refill dashboard
+        event.getView().showNextTurn(nextTurnPlayer());
+        //TODO somewhere maybe here should go the check if match finished
+        state = WaitingNewTurnState.INSTANCE;
+      }
     }
   }
 
-  private List<Action> calculateAvailableActions(PlayerColor player) {
-    //TODO
+  List<Action> calculateAvailableActions() {
+    //TODO based on turn of player
     return Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
   }
 
-  private int calculateRemainingActions(PlayerColor player) {
-    return 2; //TODO
+  GameController configureRemainingActions() {
+    remainingActions = 2; //TODO based on turn of player
+    return this;
   }
 
-  private void addNextStateFactoryToListHead(ControllerStateFactory<?, ?> s) {
-    nextStates.add(0, s);
+  List<ControllerStateFactory> getNextStates() {
+    return nextStates;
   }
 
-  private void handlePartialActionEnd(ViewEvent event) {
-    if (!nextStates.isEmpty()) {
-        state = nextStates.remove(0).create(state);
-        state.acceptEvent(event, status, turnOfPlayer, nextStates, this::handlePartialActionEnd);
-    } else {
-      if (remainingActions != 0) {
-        remainingActions--;
-        event.getView().showAvailableActions(calculateAvailableActions(turnOfPlayer));
-      } else {
-        //TODO refill dashboard
-        event.getView().showEndTurn();
-      }
-    }
+  void addNextStateOnHead(ControllerStateFactory factory) {
+    nextStates.add(0, factory);
+  }
+
+  void addNextStatesOnHead(Collection<ControllerStateFactory> factories) {
+    nextStates.addAll(0, factories);
   }
 
   PlayerColor getTurnOfPlayer() {
     return turnOfPlayer;
   }
 
-  void setTurnOfPlayer(PlayerColor turnOfPlayer) {
+  GameController setTurnOfPlayer(PlayerColor turnOfPlayer) {
     this.turnOfPlayer = turnOfPlayer;
+    return this;
   }
 
   int getRemainingActions() {
     return remainingActions;
   }
 
-  protected void setControllerState(ControllerState controllerState) {
+  GameController setRemainingActions(int remainingActions) {
+    this.remainingActions = remainingActions;
+    return this;
+  }
+
+  GameController decrementRemainingActions() {
+    this.remainingActions--;
+    return this;
+  }
+
+  void setControllerState(ControllerState controllerState) {
     this.state = controllerState;
+  }
+
+  GameStatus getGameStatus() {
+    return gameStatus;
   }
 
 }
