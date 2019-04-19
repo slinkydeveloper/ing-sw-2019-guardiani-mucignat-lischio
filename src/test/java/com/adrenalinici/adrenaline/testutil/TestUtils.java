@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.testutil;
 
 import com.adrenalinici.adrenaline.model.Dashboard;
+import com.adrenalinici.adrenaline.model.GameStatus;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.PlayerDashboard;
 
@@ -52,6 +53,10 @@ public class TestUtils {
       new PlayerDashboard(PlayerColor.GRAY, false, Collections.emptyList()),
       new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList())
     );
+  }
+
+  public static GameStatus generatePlayerStatus() {
+    return new GameStatus(8, build3x3Dashboard(), generate3PlayerDashboards());
   }
 
 }

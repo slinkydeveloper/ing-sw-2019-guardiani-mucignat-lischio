@@ -70,6 +70,9 @@ public class GameStatus extends Observable<ModelEvent> {
     return remainingSkulls == 0;
   }
 
+  public List<PlayerColor> getPlayers() {
+    return getPlayerDashboards().stream().map(PlayerDashboard::getPlayer).collect(Collectors.toList());
+  }
 
   public Position getPlayerPosition(PlayerColor player) {
     return dashboard.getPlayersPositions().get(player);
