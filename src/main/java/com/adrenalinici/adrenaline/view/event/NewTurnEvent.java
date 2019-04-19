@@ -34,4 +34,9 @@ public class NewTurnEvent extends BaseViewEvent {
   @Override
   public void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer) {
   }
+
+  @Override
+  public void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
+
+  }
 }

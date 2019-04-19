@@ -42,4 +42,8 @@ public class GunToPickupChosenEvent extends BaseViewEvent {
   public void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer) {
     consumer.accept(this);
   }
+
+  @Override
+  public void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
+  }
 }

@@ -1,42 +1,45 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.view.GameView;
 
 import java.util.function.Consumer;
 
-public class MovementChosenEvent extends BaseViewEvent {
+public class GunToReloadChosenEvent extends BaseViewEvent {
 
-  Position coordinates;
+  Gun chosenGunToReload;
 
-  public MovementChosenEvent(GameView view, Position coordinates) {
+  public GunToReloadChosenEvent(GameView view, Gun chosenGunToReload) {
     super(view);
-    this.coordinates = coordinates;
+    this.chosenGunToReload = chosenGunToReload;
   }
 
-  public Position getCoordinates() {
-    return coordinates;
+  public Gun getChosenGunToReload() {
+    return chosenGunToReload;
   }
 
   @Override
   public void onActionChosenEvent(Consumer<ActionChosenEvent> consumer) {
+
   }
 
   @Override
   public void onMovementChosenEvent(Consumer<MovementChosenEvent> consumer) {
-    consumer.accept(this);
+
   }
 
   @Override
   public void onNewTurnEvent(Consumer<NewTurnEvent> consumer) {
+
   }
 
   @Override
   public void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer) {
+
   }
 
   @Override
   public void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
-
+    consumer.accept(this);
   }
 }

@@ -118,11 +118,35 @@ public class GameStatus extends Observable<ModelEvent> {
   public void acquireGun(RespawnDashboardCell cell, PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
+    //TODO devo gestire il caso in cui siano state usate powerUpCards per pickupare
     playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
     cell.getAvailableGuns().remove(chosenGun);
     notifyEvent(new DashboardCellUpdatedEvent(this, cell));
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
+  public List<Gun> calculateReloadableGuns(PlayerColor player) {
+    List<AmmoColor> playerAmmos = new ArrayList<>(getPlayerDashboard(player).getAmmos());
+    getPlayerDashboard(player).getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
+    Bag playerAmmosBag = Bag.from(playerAmmos);
+
+    return getPlayerDashboard(player).getUnloadedGuns().stream()
+      .filter(
+        gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToReload()))
+      )
+      .collect(Collectors.toList());
+  }
+
+  public void reloadGun(PlayerColor player, Gun chosenGun) {
+    //prendo la gun
+    //la aggiungo alle gun cariche del player
+    //la tolgo dalle gun scariche
+    //rimuovo le ammo usate dalla player dashboard
+    //notifyEvent PlayerDashboardUpdatedEvent
+    getPlayerDashboard(player).addLoadedGun(chosenGun);
+    getPlayerDashboard(player).getUnloadedGuns().remove(chosenGun);
+
+
+  }
 
 }
