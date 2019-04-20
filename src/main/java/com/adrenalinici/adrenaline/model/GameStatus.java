@@ -4,10 +4,12 @@ import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
 import com.adrenalinici.adrenaline.util.Bag;
+import com.adrenalinici.adrenaline.util.ListUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -118,8 +120,25 @@ public class GameStatus extends Observable<ModelEvent> {
   public void acquireGun(RespawnDashboardCell cell, PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
-    //TODO devo gestire il caso in cui siano state usate powerUpCards per pickupare
-    playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
+    List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
+
+    if (!playerAmmos.contains(chosenGun.getRequiredAmmoToPickup())) {
+      List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
+        playerAmmos.stream()
+          .filter(ammo ->
+            chosenGun.getRequiredAmmoToPickup().contains(ammo)
+          ).collect(Collectors.toList()));
+
+      List<AmmoColor> ammosToRemove = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
+        ammosToGetFromPowerUp);
+      playerDashboard.removeAmmos(ammosToRemove);
+
+      ammosToGetFromPowerUp.stream().forEach(ammo -> {
+        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
+          powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
+        playerDashboard.removePowerUpCard(toRemove);
+      });
+    } else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
     cell.getAvailableGuns().remove(chosenGun);
     notifyEvent(new DashboardCellUpdatedEvent(this, cell));
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
@@ -138,15 +157,28 @@ public class GameStatus extends Observable<ModelEvent> {
   }
 
   public void reloadGun(PlayerColor player, Gun chosenGun) {
-    //prendo la gun
-    //la aggiungo alle gun cariche del player
-    //la tolgo dalle gun scariche
-    //rimuovo le ammo usate dalla player dashboard
-    //notifyEvent PlayerDashboardUpdatedEvent
-    getPlayerDashboard(player).addLoadedGun(chosenGun);
-    getPlayerDashboard(player).getUnloadedGuns().remove(chosenGun);
+    PlayerDashboard playerDashboard = getPlayerDashboard(player);
+    playerDashboard.addLoadedGun(chosenGun);
+    playerDashboard.removeUnloadedGun(chosenGun);
+    List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
+    if (!playerAmmos.contains(chosenGun.getRequiredAmmoToReload())) {
+      List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
+        playerAmmos.stream()
+          .filter(ammo ->
+            chosenGun.getRequiredAmmoToReload().contains(ammo)
+          ).collect(Collectors.toList()));
 
+      List<AmmoColor> ammosToRemove = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
+        ammosToGetFromPowerUp);
+      playerDashboard.removeAmmos(ammosToRemove);
 
+      ammosToGetFromPowerUp.stream().forEach(ammo -> {
+        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
+          powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
+        playerDashboard.removePowerUpCard(toRemove);
+      });
+    } else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
 }

@@ -111,6 +111,11 @@ public class PlayerDashboard {
     loadedGuns.add(loadedGun);
   }
 
+  public void addUnloadedGun(Gun unloadedGun) {
+    //TODO gestire caso limite armi
+    unloadedGuns.add(unloadedGun);
+  }
+
   public void removeLoadedGun(Gun loadedGun) {
     loadedGuns.remove(loadedGun);
   }
