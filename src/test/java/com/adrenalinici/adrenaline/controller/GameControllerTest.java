@@ -4,10 +4,7 @@ import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.adrenalinici.adrenaline.view.GameView;
-import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
-import com.adrenalinici.adrenaline.view.event.GunToPickupChosenEvent;
-import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
-import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
+import com.adrenalinici.adrenaline.view.event.*;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -162,5 +159,66 @@ public class GameControllerTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, status));
 
 
+  }
+
+  @Test
+  public void testEndTurnReloadFlow() {
+    controller.onEvent(new NewTurnEvent(viewMock, PlayerColor.GREEN));
+    status.getDashboard().getDashboardCell(Position.of(1, 1)).get().addPlayer(PlayerColor.GREEN);
+    controller.setRemainingActions(1);
+    assertThat(controller.getTurnOfPlayer()).isEqualTo(PlayerColor.GREEN);
+
+    BaseEffectGun gun = new BaseEffectGun(AmmoColor.BLUE,
+      Arrays.asList(AmmoColor.RED),
+      "Sword", "terrible sword", null, null, Collections.emptyList(),
+      null, Collections.emptyList());
+    status.getPlayerDashboard(PlayerColor.GREEN).addUnloadedGun(gun);
+
+    ArgumentCaptor<List<Action>> actionsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(viewMock, times(1)).showAvailableActions(actionsCaptor.capture());
+    assertThat(actionsCaptor.getValue())
+      .containsOnly(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
+
+    controller.onEvent(new ActionChosenEvent(viewMock, Action.MOVE_MOVE_MOVE));
+    ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(viewMock, times(1)).showAvailableMovements(positionsCaptor.capture());
+    assertThat(positionsCaptor.getValue())
+      .containsOnly(
+        new Position(0, 0),
+        new Position(0, 1),
+        new Position(0, 2),
+        new Position(1, 0),
+        new Position(1, 1),
+        new Position(1, 2),
+        new Position(2, 0),
+        new Position(2, 1),
+        new Position(2, 2)
+      );
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    status.registerObserver(receivedModelEvents::add);
+
+    controller.onEvent(new MovementChosenEvent(viewMock, new Position(2, 0)));
+    assertThat(receivedModelEvents)
+      .haveExactly(1, isDashboardCellUpdatedEvent(1, 1))
+      .haveExactly(1, isDashboardCellUpdatedEvent(2, 0));
+    assertThat(status.getPlayerPosition(PlayerColor.GREEN))
+      .isEqualTo(Position.of(2, 0));
+
+    ArgumentCaptor<List<Gun>> reloadableGunsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(viewMock, times(1)).showReloadableGuns(reloadableGunsCaptor.capture());
+    assertThat(reloadableGunsCaptor.getValue()).containsOnly(gun);
+
+    receivedModelEvents = new ArrayList<>();
+    status.registerObserver(receivedModelEvents::add);
+
+    controller.onEvent(new GunToReloadChosenEvent(viewMock, gun));
+    assertThat(receivedModelEvents)
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, status));
+
+    ArgumentCaptor<PlayerColor> nextPlayerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
+    verify(viewMock, times(1)).showNextTurn(nextPlayerCaptor.capture());
+    assertThat(nextPlayerCaptor.getValue())
+      .isSameAs(PlayerColor.GRAY);
   }
 }
