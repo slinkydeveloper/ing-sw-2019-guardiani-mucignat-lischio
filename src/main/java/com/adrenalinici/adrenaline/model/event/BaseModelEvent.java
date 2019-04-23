@@ -1,17 +1,17 @@
 package com.adrenalinici.adrenaline.model.event;
 
-import com.adrenalinici.adrenaline.model.GameStatus;
+import com.adrenalinici.adrenaline.model.GameModel;
 
 public abstract class BaseModelEvent implements ModelEvent {
 
-  GameStatus gameStatus;
+  GameModel gameModel;
 
-  public BaseModelEvent(GameStatus gameStatus) {
-    this.gameStatus = gameStatus;
+  public BaseModelEvent(GameModel gameModel) {
+    this.gameModel = gameModel;
   }
 
   @Override
-  public GameStatus getGameStatus() {
-    return gameStatus;
+  public GameModel getGameModel() {
+    return gameModel;
   }
 }

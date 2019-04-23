@@ -5,6 +5,7 @@ import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.util.Observer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface GameView extends Observer<ModelEvent> {
@@ -22,7 +23,11 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showAvailableRespawnLocations(List<AmmoColor> respawnLocations);
 
-  void showApplicableEffects(Optional<List<PlayerColor>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<List<PlayerColor>> secondEffect, int numberOfChoosablePlayerSecondEffect);
+  void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect);
+
+  void showChoosePlayerToHit(List<PlayerColor> players);
+
+  void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements);
 
   void showApplicableEffects(List<PlayerColor> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<List<PlayerColor>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<List<PlayerColor>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect);
 

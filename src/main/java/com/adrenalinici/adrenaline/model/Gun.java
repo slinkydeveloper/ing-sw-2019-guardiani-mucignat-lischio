@@ -12,6 +12,8 @@ public interface Gun {
 
   String getName();
 
+  String getId();
+
   Optional<String> getNote();
 
   void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun);

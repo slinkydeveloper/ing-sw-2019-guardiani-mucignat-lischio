@@ -13,11 +13,12 @@ public class GunTest {
   @Test
   public void testGetAmmo() {
     Gun g = new BaseEffectGun(
+      "",
       AmmoColor.BLUE,
       Arrays.asList(AmmoColor.RED),
       "Card 1",
       null,
-      new Effect("", ""),
+      new Effect("", "", ""),
       null, Collections.emptyList(), null, Collections.emptyList()
     );
     assertThat(g.getRequiredAmmoToReload())

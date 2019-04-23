@@ -1,0 +1,33 @@
+{
+  "plasma_rifle": {
+    "name": "Plasma Rifle"
+  },
+  "lock_rifle": {
+    "name": "Lock Rifle",
+    "firstAmmo": "blue",
+    "extraAmmo": [
+      "blue"
+    ],
+    "factory": "alternativeSimple",
+    "firstEffect": {
+    },
+    "secondEffect": {
+      "cost": [
+        "red"
+      ]
+    }
+  },
+  "zx2": {
+    "name": "ZX-2",
+    "firstAmmo": "yellow",
+    "extraAmmo": [
+      "red"
+    ],
+    "firstEffect": {
+      "id": "basic"
+    },
+    "secondEffect": {
+      "id": "scanner"
+    }
+  }
+}

@@ -366,7 +366,7 @@ package com.adrenalinici.adrenaline.controller {
   }
 
   class GameController {
-    -gameStatus: GameStatus
+    -gameModel: GameStatus
     -remainingActions: int
 
     -void doFirstTurn(PlayerColor player)

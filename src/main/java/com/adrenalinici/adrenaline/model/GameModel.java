@@ -3,27 +3,25 @@ package com.adrenalinici.adrenaline.model;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
-import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Map.Entry;
 
-public class GameStatus extends Observable<ModelEvent> {
+public class GameModel extends Observable<ModelEvent> {
   private List<Map.Entry<PlayerColor, Boolean>> killScore;
   private int remainingSkulls;
   private List<PlayerColor> doubleKillScore;
   private Dashboard dashboard;
   private List<PlayerDashboard> playerDashboards;
 
-  public GameStatus(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
+  public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
     this.remainingSkulls = remainingSkulls;
     this.dashboard = dashboard;
     this.playerDashboards = playerDashboards;
@@ -82,23 +80,13 @@ public class GameStatus extends Observable<ModelEvent> {
 
   public void movePlayerInDashboard(Position newPosition, PlayerColor player) {
     Position oldPosition = getPlayerPosition(player);
-    DashboardCell oldCell = dashboard.getDashboardCell(oldPosition).get();
+    DashboardCell oldCell = dashboard.getDashboardCell(oldPosition);
     oldCell.removePlayer(player);
     notifyEvent(new DashboardCellUpdatedEvent(this, oldCell));
 
-    DashboardCell newCell = dashboard.getDashboardCell(newPosition).get();
+    DashboardCell newCell = dashboard.getDashboardCell(newPosition);
     newCell.addPlayer(player);
     notifyEvent(new DashboardCellUpdatedEvent(this, newCell));
-  }
-
-  public List<Gun> calculateAvailableGunsToPickup(RespawnDashboardCell respawnCell, PlayerColor player) {
-    Bag playerAmmosBag = getPlayerDashboard(player).getAllAmmosIncludingPowerups();
-
-    return respawnCell.getAvailableGuns().stream()
-      .filter(
-        gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToPickup()))
-      )
-      .collect(Collectors.toList());
   }
 
   public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
@@ -120,7 +108,7 @@ public class GameStatus extends Observable<ModelEvent> {
     playerDashboard.addLoadedGun(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
 
-    if (!playerAmmos.contains(chosenGun.getRequiredAmmoToPickup())) {
+    if (!playerAmmos.containsAll(chosenGun.getRequiredAmmoToPickup())) {
       List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
         playerAmmos.stream()
           .filter(ammo ->
@@ -131,7 +119,7 @@ public class GameStatus extends Observable<ModelEvent> {
         ammosToGetFromPowerUp);
       playerDashboard.removeAmmos(ammosToRemove);
 
-      ammosToGetFromPowerUp.stream().forEach(ammo -> {
+      ammosToGetFromPowerUp.forEach(ammo -> {
         PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
           powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
         playerDashboard.removePowerUpCard(toRemove);
@@ -142,22 +130,12 @@ public class GameStatus extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
-  public List<Gun> calculateReloadableGuns(PlayerColor player) {
-    Bag playerAmmosBag = getPlayerDashboard(player).getAllAmmosIncludingPowerups();
-
-    return getPlayerDashboard(player).getUnloadedGuns().stream()
-      .filter(
-        gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToReload()))
-      )
-      .collect(Collectors.toList());
-  }
-
   public void reloadGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
     playerDashboard.removeUnloadedGun(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    if (!playerAmmos.contains(chosenGun.getRequiredAmmoToReload())) {
+    if (!playerAmmos.containsAll(chosenGun.getRequiredAmmoToReload())) {
       List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
         playerAmmos.stream()
           .filter(ammo ->
@@ -168,13 +146,24 @@ public class GameStatus extends Observable<ModelEvent> {
         ammosToGetFromPowerUp);
       playerDashboard.removeAmmos(ammosToRemove);
 
-      ammosToGetFromPowerUp.stream().forEach(ammo -> {
-        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
-          powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
+      ammosToGetFromPowerUp.forEach(ammo -> {
+        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(
+          powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
+        ).findFirst().get();
         playerDashboard.removePowerUpCard(toRemove);
       });
     } else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+  }
+
+  public boolean hitPlayer(PlayerColor playerColor, int damages) {
+    //TODO P1 if player killed return true
+    //TODO send view event
+    return false;
+  }
+
+  public void markPlayer(PlayerColor playerColor, int marks) {
+    //TODO send view event
   }
 
 }

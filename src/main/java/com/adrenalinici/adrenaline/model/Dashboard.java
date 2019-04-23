@@ -99,11 +99,11 @@ public class Dashboard {
     this.dashboardCells = dashboardCells;
   }
 
-  public Optional<DashboardCell> getDashboardCell(Position position) {
+  public DashboardCell getDashboardCell(Position position) {
     try {
-      return Optional.ofNullable(dashboardCells[position.line()][position.cell()]);
+      return dashboardCells[position.line()][position.cell()];
     } catch (IndexOutOfBoundsException e) {
-      return Optional.empty();
+      return null;
     }
   }
 
@@ -116,13 +116,13 @@ public class Dashboard {
   }
 
   public List<Position> calculateMovements(Position position, int range) {
-    Optional<DashboardCell> startingCellOptional = getDashboardCell(position);
-    if (!startingCellOptional.isPresent()) return Collections.emptyList();
+    DashboardCell startingCellOptional = getDashboardCell(position);
+    if (startingCellOptional == null) return Collections.emptyList();
 
     Set<DashboardCell> scanned = new HashSet<>();
     Set<DashboardCell> toScan = new HashSet<>();
     Set<DashboardCell> nextScan = new HashSet<>();
-    toScan.add(startingCellOptional.get());
+    toScan.add(startingCellOptional);
 
     for (int i = 0; i < range; i++) {
       for (DashboardCell c : toScan) {

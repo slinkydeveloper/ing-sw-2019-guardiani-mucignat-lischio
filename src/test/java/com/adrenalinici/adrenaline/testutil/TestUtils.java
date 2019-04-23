@@ -1,9 +1,6 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.model.Dashboard;
-import com.adrenalinici.adrenaline.model.GameStatus;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,8 +52,35 @@ public class TestUtils {
     );
   }
 
-  public static GameStatus generatePlayerStatus() {
-    return new GameStatus(8, build3x3Dashboard(), generate3PlayerDashboards());
+  public static GameModel generateModel() {
+    return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards());
   }
+
+  public static final Gun BASE_EFFECT_GUN_SWORD = new BaseEffectGun(
+    "sword",
+    AmmoColor.BLUE,
+    Arrays.asList(AmmoColor.RED, AmmoColor.RED, AmmoColor.BLUE),
+    "Sword", "terrible sword", null, null, Collections.emptyList(),
+    null, Collections.emptyList()
+  );
+
+  public static final Gun BASE_EFFECT_GUN_REVOLVER = new BaseEffectGun(
+    "revolver",
+    AmmoColor.BLUE,
+    Arrays.asList(AmmoColor.RED, AmmoColor.BLUE, AmmoColor.YELLOW),
+    "Revolver", "terrible revolver", null, null, Collections.emptyList(),
+    null, Collections.emptyList()
+  );
+
+  public static final Gun BASE_EFFECT_GUN_RIFLE = new BaseEffectGun(
+    "rifle",
+    AmmoColor.BLUE,
+    Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.YELLOW),
+    "Rifle", "terrible rifle", null, null, Collections.emptyList(),
+    null, Collections.emptyList()
+  );
+
+  public static final List<Gun> BASE_EFFECT_GUNS =
+    Arrays.asList(BASE_EFFECT_GUN_SWORD, BASE_EFFECT_GUN_REVOLVER, BASE_EFFECT_GUN_RIFLE);
 
 }

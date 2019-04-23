@@ -6,8 +6,9 @@ import org.junit.Test;
 import java.util.Map;
 
 import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.*;
-import static com.adrenalinici.adrenaline.testutil.MyAssertions.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.adrenalinici.adrenaline.testutil.MyAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 
 public class DashboardTest {
 
@@ -61,7 +62,7 @@ public class DashboardTest {
     assertThat(d).extractingCell(2, 1).isPickupCell().hasWalls(WALL, OPEN, WALL, OPEN);
     assertThat(d).extractingCell(2, 2).isPickupCell().hasWalls(DOOR, WALL, WALL, OPEN);
 
-    DashboardCell centerCell = d.getDashboardCell(Position.of(1, 1)).get();
+    DashboardCell centerCell = d.getDashboardCell(Position.of(1, 1));
 
     assertThat(centerCell)
       .extractingNorthCell()
@@ -101,9 +102,9 @@ public class DashboardTest {
   public void testGetPlayersPositions() {
     Dashboard d = TestUtils.build3x3Dashboard();
 
-    d.getDashboardCell(Position.of(1, 1)).get().addPlayer(PlayerColor.CYAN);
-    d.getDashboardCell(Position.of(1, 1)).get().addPlayer(PlayerColor.GRAY);
-    d.getDashboardCell(Position.of(2, 0)).get().addPlayer(PlayerColor.GREEN);
+    d.getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.CYAN);
+    d.getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
+    d.getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.GREEN);
 
     Map<PlayerColor, Position> players = d.getPlayersPositions();
 
