@@ -1,11 +1,13 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class PlayerDashboard {
   private PlayerColor player;
@@ -164,5 +166,11 @@ public class PlayerDashboard {
 
   public boolean isFirstPlayer() {
     return firstPlayer;
+  }
+
+  public Bag<AmmoColor> getAllAmmosIncludingPowerups() {
+    List<AmmoColor> playerAmmos = new ArrayList<>(getAmmos());
+    getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
+    return Bag.from(playerAmmos);
   }
 }

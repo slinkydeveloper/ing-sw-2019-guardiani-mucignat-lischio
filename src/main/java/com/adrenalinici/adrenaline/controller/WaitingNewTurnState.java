@@ -15,6 +15,7 @@ public class WaitingNewTurnState implements ControllerState {
           .configureRemainingActions();
         e.getView().showAvailableActions(controller.calculateAvailableActions());
         controller.addNextStateOnHead(oldState -> WaitingChooseActionState.INSTANCE);
+        controller.addNextStateOnBottom(oldState -> ReloadChosenState.INSTANCE);
         controller.endStateCallback(e);
       }
     );

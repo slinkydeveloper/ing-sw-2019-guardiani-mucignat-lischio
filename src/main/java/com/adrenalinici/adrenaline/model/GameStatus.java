@@ -92,9 +92,7 @@ public class GameStatus extends Observable<ModelEvent> {
   }
 
   public List<Gun> calculateAvailableGunsToPickup(RespawnDashboardCell respawnCell, PlayerColor player) {
-    List<AmmoColor> playerAmmos = new ArrayList<>(getPlayerDashboard(player).getAmmos());
-    getPlayerDashboard(player).getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
-    Bag playerAmmosBag = Bag.from(playerAmmos);
+    Bag playerAmmosBag = getPlayerDashboard(player).getAllAmmosIncludingPowerups();
 
     return respawnCell.getAvailableGuns().stream()
       .filter(
@@ -145,9 +143,7 @@ public class GameStatus extends Observable<ModelEvent> {
   }
 
   public List<Gun> calculateReloadableGuns(PlayerColor player) {
-    List<AmmoColor> playerAmmos = new ArrayList<>(getPlayerDashboard(player).getAmmos());
-    getPlayerDashboard(player).getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
-    Bag playerAmmosBag = Bag.from(playerAmmos);
+    Bag playerAmmosBag = getPlayerDashboard(player).getAllAmmosIncludingPowerups();
 
     return getPlayerDashboard(player).getUnloadedGuns().stream()
       .filter(

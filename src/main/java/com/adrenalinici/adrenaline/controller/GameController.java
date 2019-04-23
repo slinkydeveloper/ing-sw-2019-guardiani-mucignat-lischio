@@ -71,6 +71,10 @@ public class GameController implements Observer<ViewEvent> {
     nextStates.add(0, factory);
   }
 
+  void addNextStateOnBottom(ControllerStateFactory factory) {
+    nextStates.add(factory);
+  }
+
   void addNextStatesOnHead(Collection<ControllerStateFactory> factories) {
     nextStates.addAll(0, factories);
   }
