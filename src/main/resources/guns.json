@@ -24,7 +24,7 @@
       "red"
     ],
     "firstEffect": {
-      "id": "basic"
+      "id": "base"
     },
     "secondEffect": {
       "id": "scanner"

@@ -1,21 +1,20 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.view.GameView;
 
 import java.util.function.Consumer;
 
 public class GunChosenEvent extends BaseViewEvent {
 
-  Gun gun;
+  String gunid;
 
-  public GunChosenEvent(GameView view, Gun gun) {
+  public GunChosenEvent(GameView view, String gunid) {
     super(view);
-    this.gun = gun;
+    this.gunid = gunid;
   }
 
-  public Gun getGun() {
-    return gun;
+  public String getGunid() {
+    return gunid;
   }
 
   @Override

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 public class ListUtils {
 
@@ -19,6 +20,10 @@ public class ListUtils {
       newMinuend.remove(a);
     }
     return newMinuend;
+  }
+
+  public static <T> Predicate<T> notIn(List<T> notList) {
+    return t -> !notList.contains(t);
   }
 
   public static <X, Y> BiPredicate<X, Y> combineBiPredicates(List<BiPredicate<X, Y>> predicates) {

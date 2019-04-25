@@ -8,6 +8,11 @@ public interface FlowNode<S extends FlowState, C extends FlowContext> {
 
   String id();
 
+  @SuppressWarnings("unchecked")
+  default S mapState(FlowState oldState) {
+    return (S) oldState;
+  }
+
   /**
    * onJump() called after flow.FlowNode called the first time
    *

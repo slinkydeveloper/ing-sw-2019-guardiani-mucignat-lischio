@@ -1,7 +1,9 @@
-package com.adrenalinici.adrenaline.controller.nodes;
+package com.adrenalinici.adrenaline.controller.guns;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
+import com.adrenalinici.adrenaline.controller.GunFactory;
 import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.controller.nodes.TestControllerFlowContext;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
@@ -22,20 +24,20 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class BaseNodeTest {
+public abstract class BaseGunTest {
 
   @Rule
   public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  public GameModel model;
-  public FlowOrchestrator<ControllerFlowContext> orchestrator;
-  public TestControllerFlowContext context;
-  public GunLoader gunLoader;
+  GameModel model;
+  FlowOrchestrator<ControllerFlowContext> orchestrator;
+  TestControllerFlowContext context;
+  GunLoader gunLoader;
 
-  public AtomicBoolean endCalled;
+  AtomicBoolean endCalled;
 
   @Mock
-  public GameView viewMock;
+  GameView viewMock;
 
   @Before
   public void setUp() {
@@ -43,29 +45,29 @@ public abstract class BaseNodeTest {
     this.endCalled = new AtomicBoolean(false);
     this.gunLoader = createGunLoader();
 
-    FlowNode node = nodeToTest();
+    GunLoader loader = createGunLoader();
     List<FlowNode> nodes = new ArrayList<>();
-    nodes.add(node);
-    nodes.addAll(additionalNodes());
+    nodes.addAll(nodes());
+    nodes.addAll(loader.getAdditionalNodes(gunId()));
 
     this.orchestrator = new FlowOrchestratorImpl<>(nodes, model, v -> endCalled.set(true));
     this.context = new TestControllerFlowContext(
       nodes.stream().map(FlowNode::id).collect(Collectors.toList()),
       this.orchestrator,
-      Collections.singletonList(node.id()),
+      loader.getDecoratedGun(gunId()).getPhases(),
       gunLoader
     );
   }
 
   protected GunLoader createGunLoader() {
-    return new GunLoader(Collections.emptyList());
+    return new GunLoader(Collections.singletonList(gunFactory()));
   }
 
-  public abstract FlowNode nodeToTest();
+  protected abstract GunFactory gunFactory();
 
-  protected List<FlowNode> additionalNodes() {
-    return Collections.emptyList();
-  }
+  protected abstract List<FlowNode> nodes();
+
+  protected abstract String gunId();
 
   public void checkEndCalled() {
     assertThat(endCalled).isTrue();

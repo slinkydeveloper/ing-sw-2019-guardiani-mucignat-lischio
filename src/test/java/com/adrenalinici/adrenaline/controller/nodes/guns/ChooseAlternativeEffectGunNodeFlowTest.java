@@ -1,0 +1,95 @@
+package com.adrenalinici.adrenaline.controller.nodes.guns;
+
+import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
+import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
+import com.adrenalinici.adrenaline.flow.FlowNode;
+import com.adrenalinici.adrenaline.model.Effect;
+import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
+import org.assertj.core.data.Index;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import java.util.Collections;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+@SuppressWarnings("unchecked")
+public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
+
+
+  @Override
+  public void setUp() {
+    super.setUp();
+  }
+
+  @Override
+  protected GunLoader createGunLoader() {
+    return new GunLoader(
+      Collections.singletonList(new ZX2GunFactory())
+    );
+  }
+
+  @Override
+  public FlowNode nodeToTest() {
+    return new ChooseAlternativeEffectForGunFlowNode();
+  }
+
+  @Test
+  public void testShowAvailableEffects() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+
+    orchestrator.startNewFlow(viewMock, context);
+
+    ArgumentCaptor<Effect> effectOneCaptor = ArgumentCaptor.forClass(Effect.class);
+    ArgumentCaptor<Effect> effectTwoCaptor = ArgumentCaptor.forClass(Effect.class);
+    verify(viewMock, times(1)).showAvailableAlternativeEffectsGun(effectOneCaptor.capture(), effectTwoCaptor.capture());
+    assertThat(effectOneCaptor.getValue())
+      .extracting("id")
+      .isEqualTo("base");
+    assertThat(effectTwoCaptor.getValue())
+      .extracting("id")
+      .isEqualTo("scanner");
+  }
+
+  @Test
+  public void testChooseEffectOne() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+
+    orchestrator.startNewFlow(viewMock, context);
+    orchestrator.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, false));
+
+    assertThat(context.getActualState())
+      .extracting("chosenEffect")
+      .satisfies(effect ->
+          assertThat(effect)
+            .extracting("id")
+            .isEqualTo("base"),
+        Index.atIndex(0)
+      );
+  }
+
+  @Test
+  public void testChooseEffectTwo() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+
+    orchestrator.startNewFlow(viewMock, context);
+    orchestrator.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, true));
+
+    assertThat(context.getActualState())
+      .extracting("chosenEffect")
+      .satisfies(effect ->
+          assertThat(effect)
+            .extracting("id")
+            .isEqualTo("scanner"),
+        Index.atIndex(0)
+      );
+  }
+
+}

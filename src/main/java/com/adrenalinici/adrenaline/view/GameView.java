@@ -37,5 +37,7 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showAvailableEnemyMovements(List<Position> availableEnemyMovements);
 
+  void showAvailableGuns(List<Gun> loadedGuns);
+
   void showAvailableGunsToPickup(List<Gun> availableGunsToPickup);
 }

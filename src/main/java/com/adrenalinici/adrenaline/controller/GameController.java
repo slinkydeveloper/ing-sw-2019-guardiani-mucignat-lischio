@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
+import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
 import com.adrenalinici.adrenaline.model.GameModel;
@@ -17,7 +18,7 @@ public class GameController implements Observer<ViewEvent> {
   private GameModel gameModel;
   private FlowOrchestrator<ControllerFlowContext> flowOrchestrator;
 
-  public GameController(List<? extends ControllerFlowNode> flowNodes, GameModel gameModel) {
+  public GameController(List<? extends FlowNode> flowNodes, GameModel gameModel) {
     this.gameModel = gameModel;
     this.flowOrchestrator = new FlowOrchestratorImpl<>(
       flowNodes,
@@ -47,7 +48,7 @@ public class GameController implements Observer<ViewEvent> {
 
   private void startNewTurn(GameView view, PlayerColor player) {
     this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
-      this.flowOrchestrator, Collections.singletonList(ControllerNodes.START_TURN.name())
+      this.flowOrchestrator, Collections.singletonList(ControllerNodes.START_TURN.name()), null
     ).setTurnOfPlayer(player));
   }
 

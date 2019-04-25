@@ -21,7 +21,7 @@ public class ChooseMovementNodeFlowTest extends BaseNodeTest {
 
   @Override
   public FlowNode nodeToTest() {
-    return new ChooseMovementFlowNode();
+    return new ChooseMovementFlowNode(3);
   }
 
   @Test

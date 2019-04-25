@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class BaseFlowContext implements FlowContext {
 
   private FlowNode actualNode;
-  private FlowState actualState;
+  protected FlowState actualState;
 
   private String actualPhaseId;
   private List<String> phasesQueue;
@@ -41,22 +41,22 @@ public abstract class BaseFlowContext implements FlowContext {
   public void jump(String stateId, GameView view, FlowState state) {
     FlowNode s = orchestrator.resolveState(stateId);
     actualNode = s;
-    actualState = state;
+    actualState = s.mapState(state);
     s.onJump(state, view, getOrchestrator().getModel(), this);
   }
 
   @Override
-  public void replayState(GameView view) {
+  public void replayNode(GameView view) {
     jump(actualNode.id(), view, actualState);
   }
 
   @Override
-  public void nextPhase(GameView view) {
+  public void nextPhase(GameView view, FlowState flowState) {
     if (phasesQueue.isEmpty()) {
       end(view);
     } else {
       actualPhaseId = phasesQueue.remove(0);
-      jump(actualPhaseId, view, null);
+      jump(actualPhaseId, view, flowState);
     }
   }
 
@@ -71,7 +71,7 @@ public abstract class BaseFlowContext implements FlowContext {
   }
 
   @Override
-  public FlowNode actualState() {
+  public FlowNode actualNode() {
     return this.actualNode;
   }
 
@@ -98,7 +98,7 @@ public abstract class BaseFlowContext implements FlowContext {
   @SuppressWarnings("unchecked")
   @Override
   public void handleEvent(ViewEvent event) {
-    if (this.actualState() == null) {
+    if (this.actualNode() == null) {
       this.nextPhase(event.getView());
       this.actualNode.handleEvent(event, actualState, event.getView(), getOrchestrator().getModel(), this);
     } else {

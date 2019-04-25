@@ -140,7 +140,7 @@ public class FlowOrchestratorTest {
     doAnswer(invocation -> {
       FlowContext context = invocation.getArgument(3);
       if (passes.getAndDecrement() > 0)
-        context.replayState(view);
+        context.replayNode(view);
       else
         context.end(view);
       return null;

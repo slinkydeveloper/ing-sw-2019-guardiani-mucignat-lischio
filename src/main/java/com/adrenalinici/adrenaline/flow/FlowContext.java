@@ -15,20 +15,24 @@ public interface FlowContext {
    */
   void jump(String stateId, GameView view, FlowState event);
 
-  void replayState(GameView view);
+  void replayNode(GameView view);
 
   void replayPhase(GameView view);
 
   /**
    * The context is built with a list of phases, where each phase is a stateless FlowNode. nextPhase() calls next phase
    */
-  void nextPhase(GameView view);
+  default void nextPhase(GameView view) {
+    nextPhase(view, null);
+  }
+
+  void nextPhase(GameView view, FlowState flowState);
 
   String actualPhase();
 
   FlowNode actualPhaseState();
 
-  FlowNode actualState();
+  FlowNode actualNode();
 
   void addPhasesToHead(String... phases);
 

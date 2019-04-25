@@ -11,8 +11,8 @@ import org.mockito.ArgumentCaptor;
 import java.util.List;
 import java.util.function.Consumer;
 
-import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.MOVEMENT;
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.PICKUP;
+import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.movement;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -42,14 +42,14 @@ public class ChooseActionNodeFlowTest extends BaseNodeTest {
   public void testChooseMoveMoveMove() {
     testChooseSpecificAction(
       Action.MOVE_MOVE_MOVE,
-      phases -> assertThat(phases.get(0)).isEqualTo(MOVEMENT.name())
+      phases -> assertThat(phases.get(0)).isEqualTo(movement(3))
     );
   }
 
   @Test
   public void testChooseMovePickup() {
     testChooseSpecificAction(Action.MOVE_PICKUP, phases -> {
-      assertThat(phases.get(0)).isEqualTo(MOVEMENT.name());
+      assertThat(phases.get(0)).isEqualTo(movement(1));
       assertThat(phases.get(1)).isEqualTo(PICKUP.name());
     });
   }

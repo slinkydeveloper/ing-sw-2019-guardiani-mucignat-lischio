@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
-import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.util.Bag;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.PICKUP;
 
-public class PickupFlowNode implements ControllerFlowNode<VoidState> {
+public class PickupFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public String id() {

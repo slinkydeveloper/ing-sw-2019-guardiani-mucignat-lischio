@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
-import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.GameModel;
 import com.adrenalinici.adrenaline.view.GameView;
@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.*;
 
-public class NewTurnFlowNode implements ControllerFlowNode<VoidState> {
+public class NewTurnFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public String id() {

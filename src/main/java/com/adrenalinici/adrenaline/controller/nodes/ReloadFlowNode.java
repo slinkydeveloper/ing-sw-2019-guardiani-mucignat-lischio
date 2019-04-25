@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
-import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.AmmoColor;
 import com.adrenalinici.adrenaline.model.GameModel;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.RELOAD;
 
-public class ReloadFlowNode implements ControllerFlowNode<VoidState> {
+public class ReloadFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public String id() {
@@ -35,7 +35,7 @@ public class ReloadFlowNode implements ControllerFlowNode<VoidState> {
     event.onGunToReloadChosenEvent(gunToReloadChosenEvent -> {
       Gun chosenGun = gunToReloadChosenEvent.getChosenGunToReload();
       model.reloadGun(context.getTurnOfPlayer(), chosenGun);
-      context.replayState(view);
+      context.replayNode(view);
     });
   }
 

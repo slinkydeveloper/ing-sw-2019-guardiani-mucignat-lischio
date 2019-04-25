@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
-import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.Action;
 import com.adrenalinici.adrenaline.model.GameModel;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.*;
 
-public class ChooseActionFlowNode implements ControllerFlowNode<VoidState> {
+public class ChooseActionFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public String id() {
@@ -35,10 +35,10 @@ public class ChooseActionFlowNode implements ControllerFlowNode<VoidState> {
         context.decrementRemainingActions();
         switch (e.getAction()) {
           case MOVE_MOVE_MOVE:
-            context.addPhasesToHead(MOVEMENT.name());
+            context.addPhasesToHead(movement(3));
             break;
           case MOVE_PICKUP:
-            context.addPhasesToHead(MOVEMENT.name(), PICKUP.name());
+            context.addPhasesToHead(movement(1), PICKUP.name());
             break;
         }
         context.nextPhase(view);
