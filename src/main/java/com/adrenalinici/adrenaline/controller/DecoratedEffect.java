@@ -1,24 +1,21 @@
 package com.adrenalinici.adrenaline.controller;
 
+import com.adrenalinici.adrenaline.model.AmmoColor;
 import com.adrenalinici.adrenaline.model.Effect;
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.PlayerColor;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.function.BiPredicate;
 
 public class DecoratedEffect {
 
   private Effect effect;
   private List<String> additionalPhases;
-  private int playersToChooseToHit;
-  private BiPredicate<PlayerColor, GameModel> distancePredicate;
+  private List<AmmoColor> requiredAmmos;
 
-  public DecoratedEffect(Effect effect, List<String> additionalPhases, int playersToChooseToHit, BiPredicate<PlayerColor, GameModel> distancePredicate) {
+  public DecoratedEffect(Effect effect, List<String> additionalPhases, List<AmmoColor> requiredAmmos) {
     this.effect = effect;
-    this.additionalPhases = additionalPhases;
-    this.playersToChooseToHit = playersToChooseToHit;
-    this.distancePredicate = distancePredicate;
+    this.additionalPhases = additionalPhases == null ? Collections.emptyList() : additionalPhases;
+    this.requiredAmmos = requiredAmmos == null ? Collections.emptyList() : requiredAmmos;
   }
 
   public Effect get() {
@@ -37,15 +34,11 @@ public class DecoratedEffect {
     return effect.getDescription();
   }
 
+  public List<AmmoColor> getRequiredAmmos() {
+    return requiredAmmos;
+  }
+
   public List<String> getAdditionalPhases() {
     return additionalPhases;
-  }
-
-  public int getPlayersToChooseToHit() {
-    return playersToChooseToHit;
-  }
-
-  public BiPredicate<PlayerColor, GameModel> getDistancePredicate() {
-    return distancePredicate;
   }
 }

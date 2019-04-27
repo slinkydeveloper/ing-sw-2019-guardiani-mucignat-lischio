@@ -2,7 +2,9 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.model.AlternativeEffectGun;
 import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
@@ -17,11 +19,10 @@ public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode
 
   @Override
   public void onJump(AlternativeEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    boolean canUseSecondEffect = false; //TODO
-    if (canUseSecondEffect) {
+    if (canUseSecondEffect(model, context.getTurnOfPlayer(), flowState.getChosenGun().get())) {
       view.showAvailableAlternativeEffectsGun(flowState.getChosenGun().getFirstEffect().get(), flowState.getChosenGun().getSecondEffect().get());
     } else {
-      context.nextPhase(view, flowState.setChosenEffect(flowState.getChosenGun().getFirstEffect()));
+      context.nextPhase(view, flowState.setChosenEffect(flowState.getChosenGun().getFirstEffect(), true));
     }
   }
 
@@ -31,11 +32,20 @@ public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode
       flowState.setChosenEffect(
         alternativeGunEffectChosenEvent.chosenFirstEffect() ?
           flowState.getChosenGun().getFirstEffect() :
-          flowState.getChosenGun().getSecondEffect()
+          flowState.getChosenGun().getSecondEffect(),
+        alternativeGunEffectChosenEvent.chosenFirstEffect()
       );
       context.addPhasesToHead(flowState.getChosenEffect().getAdditionalPhases().toArray(new String[0]));
       context.nextPhase(view, flowState);
     });
+  }
+
+  private boolean canUseSecondEffect(GameModel model, PlayerColor playerColor, AlternativeEffectGun gun) {
+    if (gun.getSecondEffectCost() == null || gun.getSecondEffectCost().isEmpty()) return true;
+    return model
+      .getPlayerDashboard(playerColor)
+      .getAllAmmosIncludingPowerups()
+      .contains(gun.getSecondEffectCost());
   }
 
 }

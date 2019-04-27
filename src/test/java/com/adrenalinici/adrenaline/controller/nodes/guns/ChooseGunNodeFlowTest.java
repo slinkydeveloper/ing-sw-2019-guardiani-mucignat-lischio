@@ -54,13 +54,12 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
       .hasOnlyOneElementSatisfying(g ->
         assertThat(g)
           .isInstanceOf(AlternativeEffectGun.class)
-          .extracting("id")
-          .isEqualTo("zx2")
+          .hasFieldOrPropertyWithValue("id", "zx2")
       );
   }
 
   @Test
-  public void testChooseGun() {
+  public void testChooseAlternativeEffectGun() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
     model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
 
@@ -68,15 +67,14 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
 
     orchestrator.handleEvent(new GunChosenEvent(viewMock, "zx2"));
 
-    assertThat(context.actualPhase())
-      .isEqualTo(ControllerNodes.ALTERNATIVE_GUN_START);
-
-    assertThat(context.actualNode())
-      .isInstanceOf(ChooseAlternativeEffectForGunFlowNode.class);
+    assertThat(context.getPhasesQueue())
+      .containsExactly(ControllerNodes.ALTERNATIVE_GUN_START.name());
 
     assertThat(context.getActualState())
       .isInstanceOf(AlternativeEffectGunFlowState.class);
 
   }
+
+  //TODO P2 choose base gun test
 
 }

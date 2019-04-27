@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.testutil;
 
 import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
@@ -21,5 +22,12 @@ public class MyConditions {
       e instanceof PlayerDashboardUpdatedEvent && ((PlayerDashboardUpdatedEvent) e).getPlayerDashboard() == status.getPlayerDashboard(color),
       "Event must be a PlayerDashboardUpdatedEvent of " + color + " player");
   }
+
+  public static Condition<Gun> gunWithId(String id) {
+    return new Condition<>(g ->
+      g.getId().equals(id),
+      "Gun must have id " + id);
+  }
+
 
 }

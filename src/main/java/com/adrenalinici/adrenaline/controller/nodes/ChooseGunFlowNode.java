@@ -17,7 +17,7 @@ public class ChooseGunFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    view.showAvailableGunsToPickup(model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns());
+    view.showAvailableGuns(model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns());
   }
 
   @Override

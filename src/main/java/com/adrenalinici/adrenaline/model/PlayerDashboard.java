@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class PlayerDashboard {
   private PlayerColor player;
@@ -65,6 +64,9 @@ public class PlayerDashboard {
 
   public void addDamages(List<PlayerColor> damages) {
     this.damages.addAll(damages);
+    if (this.damages.size() > 12) {
+      this.damages = this.damages.subList(0, 12);
+    }
   }
 
   public void removeAllDamages() {

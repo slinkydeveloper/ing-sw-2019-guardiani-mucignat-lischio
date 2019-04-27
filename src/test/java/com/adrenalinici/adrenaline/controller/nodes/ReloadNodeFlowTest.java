@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@SuppressWarnings("unchecked")
 public class ReloadNodeFlowTest extends BaseNodeTest {
 
   @Override
@@ -42,6 +43,8 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
   @Test
   public void testReloadOneGun() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    model.registerObserver(receivedModelEvents::add);
 
     BaseEffectGun gun = new BaseEffectGun(
       "sword",
@@ -62,8 +65,6 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
 
     orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun));
 
-    List<ModelEvent> receivedModelEvents = new ArrayList<>();
-    model.registerObserver(receivedModelEvents::add);
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
 
@@ -73,6 +74,8 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
   @Test
   public void testReloadTwoGuns() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    model.registerObserver(receivedModelEvents::add);
 
     BaseEffectGun gun1 = new BaseEffectGun(
       "sword",
@@ -101,8 +104,6 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun1));
     orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun2));
 
-    List<ModelEvent> receivedModelEvents = new ArrayList<>();
-    model.registerObserver(receivedModelEvents::add);
     assertThat(receivedModelEvents)
       .haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
 

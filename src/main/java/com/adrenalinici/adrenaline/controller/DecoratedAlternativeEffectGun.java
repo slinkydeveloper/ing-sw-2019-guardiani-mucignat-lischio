@@ -34,6 +34,10 @@ public class DecoratedAlternativeEffectGun implements DecoratedGun {
     return alternativeEffectGun.getSecondEffectCost();
   }
 
+  public AlternativeEffectGun get() {
+    return alternativeEffectGun;
+  }
+
   @Override
   public void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun) {
     alternativeEffectGun.visit(visitAlternativeEffectGun, visitBaseEffectGun);

@@ -11,6 +11,7 @@ import java.util.List;
 public class AlternativeEffectGunFlowState implements FlowState {
 
   private DecoratedAlternativeEffectGun chosenGun;
+  private boolean firstEffect;
   private DecoratedEffect chosenEffect;
   private List<PlayerColor> chosenPlayersToHit;
   private List<PlayerColor> hitPlayers;
@@ -29,9 +30,14 @@ public class AlternativeEffectGunFlowState implements FlowState {
     return chosenEffect;
   }
 
-  public AlternativeEffectGunFlowState setChosenEffect(DecoratedEffect chosenEffect) {
+  public AlternativeEffectGunFlowState setChosenEffect(DecoratedEffect chosenEffect, boolean chosenEffectIsFirstEffect) {
     this.chosenEffect = chosenEffect;
+    this.firstEffect = chosenEffectIsFirstEffect;
     return this;
+  }
+
+  public boolean isFirstEffect() {
+    return firstEffect;
   }
 
   public List<PlayerColor> getChosenPlayersToHit() {

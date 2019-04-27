@@ -19,6 +19,7 @@ public class TestControllerFlowContext extends ControllerFlowContext {
 
   @Override
   public void nextPhase(GameView view, FlowState flowState) {
+    this.setActualState(flowState);
     if (!getPhasesQueue().isEmpty() && loadedPhases.contains(getPhasesQueue().get(0)))
       super.nextPhase(view, flowState);
     else

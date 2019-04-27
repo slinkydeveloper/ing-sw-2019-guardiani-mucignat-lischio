@@ -1,33 +1,37 @@
 {
-  "plasma_rifle": {
-    "name": "Plasma Rifle"
-  },
-  "lock_rifle": {
-    "name": "Lock Rifle",
-    "firstAmmo": "blue",
-    "extraAmmo": [
-      "blue"
-    ],
-    "factory": "alternativeSimple",
-    "firstEffect": {
-    },
-    "secondEffect": {
-      "cost": [
-        "red"
-      ]
-    }
-  },
   "zx2": {
     "name": "ZX-2",
     "firstAmmo": "yellow",
+    "phases": {
+      "ALTERNATIVE_GUN_START": {}
+    },
     "extraAmmo": [
       "red"
     ],
     "firstEffect": {
-      "id": "base"
+      "id": "base",
+      "name": "Base",
+      "description": "Something happen",
+      "phases": {
+        "CHOOSE_PLAYER_TO_HIT": {
+          "hittablePlayersNumber": 1,
+          "distanceEval": "true"
+        },
+        "apply_gun_effect_zx2_base": {}
+      },
+      "hittablePlayersNumber": 1
     },
     "secondEffect": {
-      "id": "scanner"
+      "id": "scanner",
+      "name": "Scanner",
+      "description": "Something happen",
+      "phases": {
+        "CHOOSE_PLAYER_TO_HIT": {
+          "hittablePlayersNumber": 3,
+          "distanceEval": "true"
+        },
+        "apply_gun_effect_zx2_scanner": {}
+      }
     }
   }
 }

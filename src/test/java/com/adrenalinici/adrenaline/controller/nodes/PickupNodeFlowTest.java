@@ -47,6 +47,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
   @Test
   public void testPickupNode() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getPlayerDashboard(PlayerColor.GREEN).addAmmo(AmmoColor.RED);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).visit(
       respawnDashboardCell -> {
         respawnDashboardCell.addPlayer(PlayerColor.GREEN);
@@ -70,11 +71,6 @@ public class PickupNodeFlowTest extends BaseNodeTest {
       BASE_EFFECT_GUN_SWORD,
       (RespawnDashboardCell) model.getDashboard().getDashboardCell(Position.of(2, 0))
     ));
-
-    ArgumentCaptor<PlayerColor> nextPlayerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
-    verify(viewMock, times(1)).showNextTurn(nextPlayerCaptor.capture());
-    assertThat(nextPlayerCaptor.getValue())
-      .isSameAs(PlayerColor.GRAY);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(2, 0));

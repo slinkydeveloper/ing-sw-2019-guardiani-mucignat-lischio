@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
+import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
@@ -43,17 +44,15 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
     model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
 
-    orchestrator.startNewFlow(viewMock, context);
+    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
 
     ArgumentCaptor<Effect> effectOneCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> effectTwoCaptor = ArgumentCaptor.forClass(Effect.class);
     verify(viewMock, times(1)).showAvailableAlternativeEffectsGun(effectOneCaptor.capture(), effectTwoCaptor.capture());
     assertThat(effectOneCaptor.getValue())
-      .extracting("id")
-      .isEqualTo("base");
+      .hasFieldOrPropertyWithValue("id", "base");
     assertThat(effectTwoCaptor.getValue())
-      .extracting("id")
-      .isEqualTo("scanner");
+      .hasFieldOrPropertyWithValue("id", "scanner");
   }
 
   @Test
@@ -61,15 +60,14 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
     model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
 
-    orchestrator.startNewFlow(viewMock, context);
-    orchestrator.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, false));
+    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, false));
 
     assertThat(context.getActualState())
       .extracting("chosenEffect")
       .satisfies(effect ->
           assertThat(effect)
-            .extracting("id")
-            .isEqualTo("base"),
+            .hasFieldOrPropertyWithValue("id", "base"),
         Index.atIndex(0)
       );
   }
@@ -79,15 +77,14 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
     model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
 
-    orchestrator.startNewFlow(viewMock, context);
-    orchestrator.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, true));
+    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, true));
 
     assertThat(context.getActualState())
       .extracting("chosenEffect")
       .satisfies(effect ->
           assertThat(effect)
-            .extracting("id")
-            .isEqualTo("scanner"),
+            .hasFieldOrPropertyWithValue("id", "scanner"),
         Index.atIndex(0)
       );
   }
