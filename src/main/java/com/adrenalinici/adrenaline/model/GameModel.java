@@ -9,6 +9,7 @@ import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -162,14 +163,36 @@ public class GameModel extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
-  public boolean hitPlayer(PlayerColor playerColor, int damages) {
-    //TODO P1 if player killed return true
-    //TODO send view event
-    return false;
+  public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    victimPlayerDashboard.addDamages(
+      Collections.nCopies(damages, killer)
+    );
+    //TODO P1 check hit players
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
-  public void markPlayer(PlayerColor playerColor, int marks) {
-    //TODO send view event
+  public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    //TODO P2 marks number check
+    victimPlayerDashboard.addMarks(
+      Collections.nCopies(marks, killer)
+    );
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+  }
+
+  public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    //TODO P2 marks number check
+    victimPlayerDashboard.addDamages(
+      Collections.nCopies(damages, killer)
+    );
+    victimPlayerDashboard.addMarks(
+      Collections.nCopies(marks, killer)
+    );
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
 }

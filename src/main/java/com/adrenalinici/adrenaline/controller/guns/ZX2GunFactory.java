@@ -15,17 +15,16 @@ import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.apply
 
 public class ZX2GunFactory extends AlternativeEffectGunFactory {
 
-  private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> SCANNER_EFFECT_APPLY = (state, model, context) -> {
+  private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> BASE_EFFECT_APPLY = (state, model, context) -> {
     state.getChosenPlayersToHit().forEach(p -> {
-      model.markPlayer(p, 2);
-      boolean killed = model.hitPlayer(p, 1);
+      boolean killed = model.hitAndMarkPlayer(context.getTurnOfPlayer(), p, 1, 2);
       if (killed) context.getKilledPlayers().add(p);
       state.getHitPlayers().add(p);
     });
   };
 
-  private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> BASE_EFFECT_APPLY = (state, model, context) -> {
-    state.getChosenPlayersToHit().forEach(p -> model.markPlayer(p, 1));
+  private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> SCANNER_EFFECT_APPLY = (state, model, context) -> {
+    state.getChosenPlayersToHit().forEach(p -> model.markPlayer(context.getTurnOfPlayer(), p, 1));
   };
 
   @Override

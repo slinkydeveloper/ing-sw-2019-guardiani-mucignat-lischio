@@ -1,17 +1,18 @@
 package com.adrenalinici.adrenaline.util;
 
-import java.util.WeakHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Observable<T> {
-  private WeakHashMap<Observer<T>, Void> listeners;
+  private List<Observer<T>> listeners;
 
   public Observable() {
     super();
-    listeners = new WeakHashMap<>();
+    listeners = new ArrayList<>();
   }
 
   public void registerObserver(Observer<T> observer) {
-    listeners.put(observer, null);
+    listeners.add(observer);
   }
 
   public void unregisterObserver(Observer<T> observer) {
@@ -23,7 +24,7 @@ public class Observable<T> {
   }
 
   protected void notifyEvent(T value) {
-    for (Observer<T> listener : listeners.keySet()) {
+    for (Observer<T> listener : listeners) {
       if (listener != null) {
         listener.onEvent(value);
       }
