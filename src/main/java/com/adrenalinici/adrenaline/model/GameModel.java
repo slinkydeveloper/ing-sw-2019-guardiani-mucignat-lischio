@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.model;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
+import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 
@@ -107,8 +108,10 @@ public class GameModel extends Observable<ModelEvent> {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
+    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
+    Bag<AmmoColor> requiredAmmoToPickupBag = Bag.from(chosenGun.getRequiredAmmoToPickup());
 
-    if (!playerAmmos.containsAll(chosenGun.getRequiredAmmoToPickup())) {
+    if (!playerAmmosBag.contains(requiredAmmoToPickupBag)) {
       List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
         playerAmmos.stream()
           .filter(ammo ->
@@ -135,7 +138,10 @@ public class GameModel extends Observable<ModelEvent> {
     playerDashboard.addLoadedGun(chosenGun);
     playerDashboard.removeUnloadedGun(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    if (!playerAmmos.containsAll(chosenGun.getRequiredAmmoToReload())) {
+    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
+    Bag<AmmoColor> requiredAmmoToReloadBag = Bag.from(chosenGun.getRequiredAmmoToReload());
+
+    if (!playerAmmosBag.contains(requiredAmmoToReloadBag)) {
       List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
         playerAmmos.stream()
           .filter(ammo ->

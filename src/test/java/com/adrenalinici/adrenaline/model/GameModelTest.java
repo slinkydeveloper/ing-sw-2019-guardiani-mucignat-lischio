@@ -1,12 +1,16 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
+import static com.adrenalinici.adrenaline.testutil.MyConditions.isDashboardCellUpdatedEvent;
+import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameModelTest {
@@ -104,6 +108,7 @@ public class GameModelTest {
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redTeleport);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, false, powerUpCards);
     RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
+
     BaseGun gun1 = new BaseEffectGun(
       "sword",
       AmmoColor.BLUE,
@@ -121,13 +126,21 @@ public class GameModelTest {
     respawnDashboardCell.addAvailableGun(gun1);
     respawnDashboardCell.addAvailableGun(gun2);
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
+
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+
     gameModel.acquireGun(respawnDashboardCell, PlayerColor.GREEN, gun1);
     assertThat(playerDashboard.getAmmos()).containsOnly(AmmoColor.BLUE);
     assertThat(playerDashboard.getPowerUpCards()).containsOnly(blueKineticRay);
+
     gameModel.acquireGun(respawnDashboardCell, PlayerColor.GREEN, gun2);
     assertThat(playerDashboard.getAmmos().isEmpty()).isTrue();
     assertThat(playerDashboard.getPowerUpCards()).containsOnly(blueKineticRay);
+
+    assertThat(receivedModelEvents).haveExactly(2, isDashboardCellUpdatedEvent(0, 0));
+    assertThat(receivedModelEvents).haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, gameModel));
   }
 
   @Test
@@ -141,6 +154,8 @@ public class GameModelTest {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
     gameModel.acquireAmmoCard(pickupDashboardCell, PlayerColor.YELLOW);
     assertThat(pickupDashboardCell.getAmmoCard()).isNotPresent();
     assertThat(playerDashboard.getAmmos())
@@ -152,6 +167,8 @@ public class GameModelTest {
         new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE),
         new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY)
       ));
+    assertThat(receivedModelEvents).haveExactly(1, isDashboardCellUpdatedEvent(0, 0));
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
   }
 
 }

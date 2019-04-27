@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static com.adrenalinici.adrenaline.testutil.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,12 +26,11 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
   }
 
   @Test
-  public void calculateAvailableGunsToPickupTest() {
+  public void calculateAvailableGunsToReloadTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
-    RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
-    BASE_EFFECT_GUNS.forEach(respawnDashboardCell::addAvailableGun);
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
+    BASE_EFFECT_GUNS.forEach(playerDashboard::addUnloadedGun);
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
     ReloadFlowNode node = new ReloadFlowNode();
