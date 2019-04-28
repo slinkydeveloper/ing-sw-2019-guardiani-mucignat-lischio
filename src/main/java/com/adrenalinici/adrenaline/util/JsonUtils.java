@@ -69,10 +69,18 @@ public class JsonUtils {
     return JsonPointer.compile("/" + String.join("/", keys));
   }
 
-  public static BiPredicate<PlayerColor, GameModel> parseDistanceEvalPredicate(String serializedPredicate) {
-    return (playerColor, gameStatus) -> {
-      int distance = 1;//TODO
-      boolean visible = true;//TODO
+  public static TriPredicate<PlayerColor, PlayerColor, GameModel> parseDistanceEvalPredicate(String serializedPredicate) {
+    return (playerColor1, playerColor2, gameStatus) -> {
+      int distance = gameStatus.getDashboard()
+        .calculateDistance(
+          gameStatus.getPlayerPosition(playerColor1),
+          gameStatus.getPlayerPosition(playerColor2)
+        );
+      boolean visible = gameStatus.getDashboard()
+        .calculateIfVisible(
+          gameStatus.getPlayerPosition(playerColor1),
+          gameStatus.getPlayerPosition(playerColor2)
+        );
       try {
         return (boolean) scriptEngine.eval(String.format(
           "var distance=%d;var visible=%s;%s",
