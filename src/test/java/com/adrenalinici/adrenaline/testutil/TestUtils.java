@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.DOOR;
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
+import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.*;
 
 public class TestUtils {
 
@@ -38,6 +37,39 @@ public class TestUtils {
       )
       .newEastCell(c ->
         c.setEastType(OPEN).setWestType(OPEN).newPickupCell()
+      )
+      .newEastCell(c ->
+        c.setNorthType(DOOR).setWestType(OPEN).newPickupCell()
+      ).build();
+  }
+
+  public static Dashboard build3x3DashboardWithWalls() {
+    return Dashboard.newBuilder()
+      .newEastCell(c ->
+        c.setEastType(DOOR).setSouthType(OPEN).newRespawnCell()
+      )
+      .newEastCell(c ->
+        c.setSouthType(OPEN).setWestType(DOOR).newPickupCell()
+      )
+      .newEastCell(c ->
+        c.setSouthType(OPEN).newPickupCell()
+      )
+      .newSouthLine()
+      .newEastCell(c ->
+        c.setNorthType(OPEN).setEastType(OPEN).newPickupCell()
+      )
+      .newEastCell(c ->
+        c.setNorthType(OPEN).setEastType(WALL).setSouthType(OPEN).setWestType(OPEN).newPickupCell()
+      )
+      .newEastCell(c ->
+        c.setNorthType(OPEN).setSouthType(DOOR).newRespawnCell()
+      )
+      .newSouthLine()
+      .newEastCell(c ->
+        c.setEastType(OPEN).newRespawnCell()
+      )
+      .newEastCell(c ->
+        c.setNorthType(OPEN).setEastType(OPEN).setWestType(OPEN).newPickupCell()
       )
       .newEastCell(c ->
         c.setNorthType(DOOR).setWestType(OPEN).newPickupCell()

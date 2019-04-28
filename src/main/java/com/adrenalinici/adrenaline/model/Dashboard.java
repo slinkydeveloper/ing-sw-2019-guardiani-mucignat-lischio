@@ -170,4 +170,98 @@ public class Dashboard {
     return Arrays.stream(dashboardCells).flatMap(Arrays::stream);
   }
 
+  public boolean calculateIfVisible(Position from, Position to) {
+    if (from.equals(to)) return true;
+
+    List<DashboardCell> walled;
+    if (from.line() == to.line()) {
+      if (from.cell() < to.cell()) {
+        walled = stream()
+          .filter(dashboardCell ->
+            dashboardCell.getLine() == from.line() &&
+              dashboardCell.hasEastWall() &&
+              dashboardCell.getCell() >= from.cell() &&
+              dashboardCell.getCell() < to.cell()
+          ).collect(Collectors.toList());
+        return walled.isEmpty();
+      } else {
+        walled = stream()
+          .filter(dashboardCell ->
+            dashboardCell.getLine() == from.line() &&
+              dashboardCell.hasWestWall() &&
+              dashboardCell.getCell() <= from.cell() &&
+              dashboardCell.getCell() > to.cell()
+          ).collect(Collectors.toList());
+        return walled.isEmpty();
+      }
+    } else if (from.cell() == to.cell()) {
+      if (from.line() < to.line()) {
+        walled = stream()
+          .filter(dashboardCell ->
+            dashboardCell.getCell() == from.cell() &&
+              dashboardCell.hasSouthWall() &&
+              dashboardCell.getLine() >= from.line() &&
+              dashboardCell.getLine() < to.line()
+          ).collect(Collectors.toList());
+        return walled.isEmpty();
+      } else {
+        walled = stream()
+          .filter(dashboardCell ->
+            dashboardCell.getCell() == from.cell() &&
+              dashboardCell.hasNorthWall() &&
+              dashboardCell.getLine() <= from.line() &&
+              dashboardCell.getLine() > to.line()
+          ).collect(Collectors.toList());
+        return walled.isEmpty();
+      }
+    } else return false;
+  }
+
+  public int calculateDistance(Position from, Position to) {
+    if (from.equals(to)) return 0;
+
+    DashboardCell startingCell = getDashboardCell(from);
+    Set<DashboardCell> toScan = new HashSet<>();
+    Set<DashboardCell> nextScan = new HashSet<>();
+    toScan.add(startingCell);
+
+    for (int i = 0; ; i++) {
+      for (DashboardCell c : toScan) {
+        if (!c.hasNorthWall() &&
+          c.getNorthDashboardCell().isPresent() &&
+          !toScan.contains(c.getNorthDashboardCell().get())
+        ) {
+          if (Position.of(c.getLine() - 1, c.getCell()).equals(to)) return i + 1;
+          nextScan.add(c.getNorthDashboardCell().get());
+        }
+
+        if (!c.hasEastWall() &&
+          c.getEastDashboardCell().isPresent() &&
+          !toScan.contains(c.getEastDashboardCell().get())
+        ) {
+          if (Position.of(c.getLine(), c.getCell() + 1).equals(to)) return i + 1;
+          nextScan.add(c.getEastDashboardCell().get());
+        }
+
+        if (!c.hasSouthWall() &&
+          c.getSouthDashboardCell().isPresent() &&
+          !toScan.contains(c.getSouthDashboardCell().get())
+        ) {
+          if (Position.of(c.getLine() + 1, c.getCell()).equals(to)) return i + 1;
+          nextScan.add(c.getSouthDashboardCell().get());
+        }
+
+        if (!c.hasWestWall() &&
+          c.getWestDashboardCell().isPresent() &&
+          !toScan.contains(c.getWestDashboardCell().get())
+        ) {
+          if (Position.of(c.getLine(), c.getCell() - 1).equals(to)) return i + 1;
+          nextScan.add(c.getWestDashboardCell().get());
+        }
+      }
+      toScan.clear();
+      toScan.addAll(nextScan);
+      nextScan.clear();
+    }
+  }
 }

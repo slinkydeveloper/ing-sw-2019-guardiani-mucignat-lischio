@@ -116,4 +116,31 @@ public class DashboardTest {
       );
   }
 
+  @Test
+  public void testCalculateIfVisible() {
+    Dashboard d = TestUtils.build3x3DashboardWithWalls();
+
+    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(0, 1))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(0, 2))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(1, 0))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(2, 0))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(1, 1))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(0, 2), Position.of(0, 1))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(1, 2), Position.of(1, 0))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(2, 0), Position.of(1, 0))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(0, 2), Position.of(0, 2))).isTrue();
+
+  }
+
+  @Test
+  public void testCalculateDistance() {
+    Dashboard d = TestUtils.build3x3DashboardWithWalls();
+
+    assertThat(d.calculateDistance(Position.of(0, 2), Position.of(2, 0))).isEqualTo(4);
+    assertThat(d.calculateDistance(Position.of(0, 1), Position.of(0, 2))).isEqualTo(5);
+    assertThat(d.calculateDistance(Position.of(0, 0), Position.of(0, 2))).isEqualTo(6);
+    assertThat(d.calculateDistance(Position.of(1, 0), Position.of(1, 1))).isEqualTo(1);
+    assertThat(d.calculateDistance(Position.of(0, 2), Position.of(0, 2))).isEqualTo(0);
+  }
+
 }
