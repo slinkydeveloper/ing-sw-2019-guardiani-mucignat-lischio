@@ -32,15 +32,15 @@ public abstract class AlternativeEffectGunFactory implements GunFactory {
     ObjectNode secondEffectConfig = (ObjectNode) config.get("secondEffect");
     return new DecoratedAlternativeEffectGun(
       modelGun,
-      JsonUtils.parseObjectKeys(config, "phases"),
+      JsonUtils.parseListString(config, "phases"),
       new DecoratedEffect(
         modelGun.getFirstEffect(),
-        JsonUtils.parseObjectKeys(firstEffectConfig, "phases"),
+        JsonUtils.parseListString(firstEffectConfig, "phases"),
         null
       ),
       new DecoratedEffect(
         modelGun.getSecondEffect(),
-        JsonUtils.parseObjectKeys(secondEffectConfig, "phases"),
+        JsonUtils.parseListString(secondEffectConfig, "phases"),
         modelGun.getSecondEffectCost()
       )
     );

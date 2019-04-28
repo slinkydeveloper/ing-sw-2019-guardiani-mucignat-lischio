@@ -95,6 +95,7 @@ public class ZX2Test extends BaseGunTest {
     context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, true));
     context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
     context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
+    context.handleEvent(new PlayerChosenEvent(viewMock, null));
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getMarks())
       .containsExactly(PlayerColor.GREEN);

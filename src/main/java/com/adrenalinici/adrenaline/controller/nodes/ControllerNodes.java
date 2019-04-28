@@ -9,7 +9,8 @@ public enum ControllerNodes {
   RESPAWN_KILLED_PEOPLE,
   CHOOSE_GUN,
   CHOOSE_PLAYER_TO_HIT,
-  ALTERNATIVE_GUN_START;
+  ALTERNATIVE_GUN_START,
+  BASE_GUN_START;
 
   public static String movement(int distance) {
     return "movement_" + distance;

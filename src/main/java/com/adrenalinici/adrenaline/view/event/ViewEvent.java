@@ -26,15 +26,12 @@ public interface ViewEvent {
   default void onGunChosenEvent(Consumer<GunChosenEvent> consumer) {
   }
 
-  ;
-
   default void onPlayerChosenEvent(Consumer<PlayerChosenEvent> consumer) {
   }
-
-  ;
 
   default void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
   }
 
-  ;
+  default void onBaseGunEffectChosenEvent(Consumer<BaseGunEffectChosenEvent> consumer) {
+  }
 }

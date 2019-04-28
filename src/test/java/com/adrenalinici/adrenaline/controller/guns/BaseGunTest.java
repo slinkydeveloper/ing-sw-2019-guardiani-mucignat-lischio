@@ -41,7 +41,7 @@ public abstract class BaseGunTest {
 
   @Before
   public void setUp() {
-    this.model = TestUtils.generateModel();
+    this.model = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate4PlayerDashboards());
     this.endCalled = new AtomicBoolean(false);
     this.gunLoader = createGunLoader();
 

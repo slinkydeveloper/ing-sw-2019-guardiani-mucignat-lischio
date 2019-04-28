@@ -7,6 +7,8 @@ import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
@@ -70,6 +72,10 @@ public class JsonUtils {
     return JsonPointer.compile("/" + String.join("/", keys));
   }
 
+  public static JsonPointer pointer(JsonPointer head, String... keys) {
+    return head.append(pointer(keys));
+  }
+
   public static TriPredicate<PlayerColor, PlayerColor, GameModel> parseDistanceEvalPredicate(String serializedPredicate) {
     return (playerColor1, playerColor2, gameStatus) -> {
       int distance = gameStatus.getDashboard()
@@ -94,6 +100,32 @@ public class JsonUtils {
         return false;
       }
     };
+  }
+
+  /**
+   * This function merges two objects with following rules. When there are two conflicting keys:
+   * <ul>
+   * <li>If both values are numbers, the values are summed </li>
+   * <li>In other cases, the child value overrides parent value</li>
+   * </ul>
+   *
+   * @param parent
+   * @param child
+   * @return
+   */
+  public static ObjectNode mergeConfigs(ObjectNode parent, ObjectNode child) {
+    ObjectNode result = JsonNodeFactory.instance.objectNode();
+    if (parent != null)
+      parent.fieldNames().forEachRemaining(s -> result.set(s, parent.get(s)));
+    if (child != null)
+      child.fieldNames().forEachRemaining(s -> {
+        if (child.get(s).isNumber() && result.has(s) && result.get(s).isNumber()) {
+          result.set(s, JsonNodeFactory.instance.numberNode(result.get(s).asDouble() + child.get(s).asDouble()));
+        } else {
+          result.set(s, child.get(s));
+        }
+      });
+    return result;
   }
 
 }

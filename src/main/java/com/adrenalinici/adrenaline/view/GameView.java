@@ -6,7 +6,6 @@ import com.adrenalinici.adrenaline.util.Observer;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface GameView extends Observer<ModelEvent> {
   void showAvailableActions(List<Action> actions);
@@ -29,7 +28,7 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements);
 
-  void showApplicableEffects(List<PlayerColor> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<List<PlayerColor>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<List<PlayerColor>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect);
+  void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect);
 
   void showAvailableVenomGranades(PlayerColor player);
 

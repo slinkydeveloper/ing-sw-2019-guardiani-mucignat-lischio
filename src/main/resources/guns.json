@@ -2,36 +2,86 @@
   "zx2": {
     "name": "ZX-2",
     "firstAmmo": "yellow",
-    "phases": {
-      "ALTERNATIVE_GUN_START": {}
-    },
+    "note": "Remember that the three targets can be in three different rooms.",
+    "phases": [
+      "ALTERNATIVE_GUN_START",
+      "CHOOSE_PLAYER_TO_HIT"
+    ],
     "extraAmmo": [
       "red"
     ],
     "firstEffect": {
       "id": "base",
-      "name": "Base",
-      "description": "Something happen",
-      "phases": {
+      "name": "Basic mode",
+      "description": "Deal 1 damage and 2 marks to 1 target you can see.",
+      "phases": [
+        "apply_gun_effect_zx2_base"
+      ],
+      "phasesConfig": {
         "CHOOSE_PLAYER_TO_HIT": {
           "hittablePlayersNumber": 1,
-          "distanceEval": "visible == true"
-        },
-        "apply_gun_effect_zx2_base": {}
-      },
-      "hittablePlayersNumber": 1
+          "distanceEval": "visible === true"
+        }
+      }
     },
     "secondEffect": {
       "id": "scanner",
-      "name": "Scanner",
-      "description": "Something happen",
-      "phases": {
+      "name": "Scanner mode",
+      "description": "Choose up to 3 targets you can see and deal 1 mark to each.",
+      "phases": [
+        "apply_gun_effect_zx2_scanner"
+      ],
+      "phasesConfig": {
         "CHOOSE_PLAYER_TO_HIT": {
           "hittablePlayersNumber": 3,
-          "distanceEval": "visible == true"
-        },
-        "apply_gun_effect_zx2_scanner": {}
+          "distanceEval": "visible === true"
+        }
       }
+    }
+  },
+  "machine_gun": {
+    "name": "Machine Gun",
+    "note": "If you deal both additional points of damage, they must be dealt to 2 different targets. If you see only 2 targets, you deal 2 to each if you use both optional effects. If you use the basic effect on only 1 target, you can still use the the turret tripod to give it 1 additional damage.",
+    "firstAmmo": "blue",
+    "extraAmmo": [
+      "red"
+    ],
+    "phases": [
+      "BASE_GUN_START",
+      "CHOOSE_PLAYER_TO_HIT",
+      "apply_gun_effect_machine_gun_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 2,
+        "distanceEval": "true"
+      }
+    },
+    "baseEffect": {
+      "id": "base",
+      "name": "Basic effect",
+      "description": "Choose 1 or 2 targets you can see and deal 1 damage to each."
+    },
+    "firstExtraEffect": {
+      "id": "focus",
+      "name": "Focus shot",
+      "description": "Deal 1 additional damage to the first target.",
+      "cost": [
+        "yellow"
+      ]
+    },
+    "secondExtraEffect": {
+      "id": "tripod",
+      "name": "Turret tripod",
+      "description": "Deal 1 additional damage to the second target and/or deal 1 damage to a different target you can see.",
+      "phasesConfig": {
+        "CHOOSE_PLAYER_TO_HIT": {
+          "hittablePlayersNumber": 1
+        }
+      },
+      "cost": [
+        "blue"
+      ]
     }
   }
 }
