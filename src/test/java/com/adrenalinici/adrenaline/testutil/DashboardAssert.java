@@ -5,8 +5,6 @@ import com.adrenalinici.adrenaline.model.DashboardCell;
 import com.adrenalinici.adrenaline.model.Position;
 import org.assertj.core.api.AbstractAssert;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -21,12 +19,12 @@ public class DashboardAssert extends AbstractAssert<DashboardAssert, Dashboard> 
   }
 
   public DashboardCellAssert extractingCell(Position position) {
-    Optional<DashboardCell> cell = actual.getDashboardCell(position);
+    DashboardCell cell = actual.getDashboardCell(position);
 
     assertThat(cell)
-      .isPresent();
+      .isNotNull();
 
-    return new DashboardCellAssert(cell.get());
+    return new DashboardCellAssert(cell);
   }
 
   public DashboardAssert hasCell(int line, int cell) {
@@ -44,7 +42,7 @@ public class DashboardAssert extends AbstractAssert<DashboardAssert, Dashboard> 
   }
 
   public DashboardAssert doesntHaveCell(Position position) {
-    assertThat(actual.getDashboardCell(position)).isNotPresent();
+    assertThat(actual.getDashboardCell(position)).isNull();
 
     return this;
   }

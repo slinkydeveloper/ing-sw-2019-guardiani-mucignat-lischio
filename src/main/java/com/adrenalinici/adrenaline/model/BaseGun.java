@@ -7,16 +7,23 @@ import java.util.Optional;
 
 public abstract class BaseGun implements Gun {
 
+  private String id;
   private AmmoColor firstAmmo;
   private List<AmmoColor> extraAmmo;
   private String name;
   private String note;
 
-  public BaseGun(AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, String note) {
+  public BaseGun(String id, AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, String note) {
+    this.id = id;
     this.firstAmmo = firstAmmo;
     this.extraAmmo = extraAmmo;
     this.name = name;
     this.note = note;
+  }
+
+  @Override
+  public String getId() {
+    return id;
   }
 
   @Override

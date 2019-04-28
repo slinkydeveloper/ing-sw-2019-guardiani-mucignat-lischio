@@ -63,22 +63,22 @@ public abstract class BaseDashboardCell implements DashboardCell {
 
   @Override
   public Optional<DashboardCell> getNorthDashboardCell() {
-    return dashboard.getDashboardCell(Position.of(line - 1, cell));
+    return Optional.ofNullable(dashboard.getDashboardCell(Position.of(line - 1, cell)));
   }
 
   @Override
   public Optional<DashboardCell> getSouthDashboardCell() {
-    return dashboard.getDashboardCell(Position.of(line + 1, cell));
+    return Optional.ofNullable(dashboard.getDashboardCell(Position.of(line + 1, cell)));
   }
 
   @Override
   public Optional<DashboardCell> getEastDashboardCell() {
-    return dashboard.getDashboardCell(Position.of(line, cell + 1));
+    return Optional.ofNullable(dashboard.getDashboardCell(Position.of(line, cell + 1)));
   }
 
   @Override
   public Optional<DashboardCell> getWestDashboardCell() {
-    return dashboard.getDashboardCell(Position.of(line, cell - 1));
+    return Optional.ofNullable(dashboard.getDashboardCell(Position.of(line, cell - 1)));
   }
 
   @Override

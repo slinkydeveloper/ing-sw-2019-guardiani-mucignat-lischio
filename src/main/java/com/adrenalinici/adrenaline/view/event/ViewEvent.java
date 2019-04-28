@@ -8,13 +8,33 @@ public interface ViewEvent {
 
   GameView getView();
 
-  void onActionChosenEvent(Consumer<ActionChosenEvent> consumer);
+  default void onActionChosenEvent(Consumer<ActionChosenEvent> consumer) {
+  }
 
-  void onMovementChosenEvent(Consumer<MovementChosenEvent> consumer);
+  default void onMovementChosenEvent(Consumer<MovementChosenEvent> consumer) {
+  }
 
-  void onNewTurnEvent(Consumer<NewTurnEvent> consumer);
+  default void onNewTurnEvent(Consumer<NewTurnEvent> consumer) {
+  }
 
-  void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer);
+  default void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer) {
+  }
 
-  void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer);
+  default void onAlternativeGunEffectChosenEvent(Consumer<AlternativeGunEffectChosenEvent> consumer) {
+  }
+
+  default void onGunChosenEvent(Consumer<GunChosenEvent> consumer) {
+  }
+
+  ;
+
+  default void onPlayerChosenEvent(Consumer<PlayerChosenEvent> consumer) {
+  }
+
+  ;
+
+  default void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
+  }
+
+  ;
 }

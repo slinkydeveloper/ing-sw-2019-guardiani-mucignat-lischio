@@ -22,21 +22,4 @@ public class ActionChosenEvent extends BaseViewEvent {
   public void onActionChosenEvent(Consumer<ActionChosenEvent> consumer) {
     consumer.accept(this);
   }
-
-  @Override
-  public void onMovementChosenEvent(Consumer<MovementChosenEvent> consumer) {
-  }
-
-  @Override
-  public void onNewTurnEvent(Consumer<NewTurnEvent> consumer) {
-  }
-
-  @Override
-  public void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer) {
-  }
-
-  @Override
-  public void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
-
-  }
 }

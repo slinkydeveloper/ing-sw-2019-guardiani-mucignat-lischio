@@ -9,21 +9,21 @@ import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Map.Entry;
 
-public class GameStatus extends Observable<ModelEvent> {
+public class GameModel extends Observable<ModelEvent> {
   private List<Map.Entry<PlayerColor, Boolean>> killScore;
   private int remainingSkulls;
   private List<PlayerColor> doubleKillScore;
   private Dashboard dashboard;
   private List<PlayerDashboard> playerDashboards;
 
-  public GameStatus(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
+  public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
     this.remainingSkulls = remainingSkulls;
     this.dashboard = dashboard;
     this.playerDashboards = playerDashboards;
@@ -82,23 +82,13 @@ public class GameStatus extends Observable<ModelEvent> {
 
   public void movePlayerInDashboard(Position newPosition, PlayerColor player) {
     Position oldPosition = getPlayerPosition(player);
-    DashboardCell oldCell = dashboard.getDashboardCell(oldPosition).get();
+    DashboardCell oldCell = dashboard.getDashboardCell(oldPosition);
     oldCell.removePlayer(player);
     notifyEvent(new DashboardCellUpdatedEvent(this, oldCell));
 
-    DashboardCell newCell = dashboard.getDashboardCell(newPosition).get();
+    DashboardCell newCell = dashboard.getDashboardCell(newPosition);
     newCell.addPlayer(player);
     notifyEvent(new DashboardCellUpdatedEvent(this, newCell));
-  }
-
-  public List<Gun> calculateAvailableGunsToPickup(RespawnDashboardCell respawnCell, PlayerColor player) {
-    Bag playerAmmosBag = getPlayerDashboard(player).getAllAmmosIncludingPowerups();
-
-    return respawnCell.getAvailableGuns().stream()
-      .filter(
-        gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToPickup()))
-      )
-      .collect(Collectors.toList());
   }
 
   public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
@@ -119,8 +109,10 @@ public class GameStatus extends Observable<ModelEvent> {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
+    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
+    Bag<AmmoColor> requiredAmmoToPickupBag = Bag.from(chosenGun.getRequiredAmmoToPickup());
 
-    if (!playerAmmos.contains(chosenGun.getRequiredAmmoToPickup())) {
+    if (!playerAmmosBag.contains(requiredAmmoToPickupBag)) {
       List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
         playerAmmos.stream()
           .filter(ammo ->
@@ -131,7 +123,7 @@ public class GameStatus extends Observable<ModelEvent> {
         ammosToGetFromPowerUp);
       playerDashboard.removeAmmos(ammosToRemove);
 
-      ammosToGetFromPowerUp.stream().forEach(ammo -> {
+      ammosToGetFromPowerUp.forEach(ammo -> {
         PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
           powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
         playerDashboard.removePowerUpCard(toRemove);
@@ -142,22 +134,15 @@ public class GameStatus extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
-  public List<Gun> calculateReloadableGuns(PlayerColor player) {
-    Bag playerAmmosBag = getPlayerDashboard(player).getAllAmmosIncludingPowerups();
-
-    return getPlayerDashboard(player).getUnloadedGuns().stream()
-      .filter(
-        gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToReload()))
-      )
-      .collect(Collectors.toList());
-  }
-
   public void reloadGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
     playerDashboard.removeUnloadedGun(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    if (!playerAmmos.contains(chosenGun.getRequiredAmmoToReload())) {
+    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
+    Bag<AmmoColor> requiredAmmoToReloadBag = Bag.from(chosenGun.getRequiredAmmoToReload());
+
+    if (!playerAmmosBag.contains(requiredAmmoToReloadBag)) {
       List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
         playerAmmos.stream()
           .filter(ammo ->
@@ -168,13 +153,46 @@ public class GameStatus extends Observable<ModelEvent> {
         ammosToGetFromPowerUp);
       playerDashboard.removeAmmos(ammosToRemove);
 
-      ammosToGetFromPowerUp.stream().forEach(ammo -> {
-        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
-          powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
+      ammosToGetFromPowerUp.forEach(ammo -> {
+        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(
+          powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
+        ).findFirst().get();
         playerDashboard.removePowerUpCard(toRemove);
       });
     } else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+  }
+
+  public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    victimPlayerDashboard.addDamages(
+      Collections.nCopies(damages, killer)
+    );
+    //TODO P1 check hit players
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    return victimPlayerDashboard.getKillDamage().isPresent();
+  }
+
+  public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    //TODO P2 marks number check
+    victimPlayerDashboard.addMarks(
+      Collections.nCopies(marks, killer)
+    );
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+  }
+
+  public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    //TODO P2 marks number check
+    victimPlayerDashboard.addDamages(
+      Collections.nCopies(damages, killer)
+    );
+    victimPlayerDashboard.addMarks(
+      Collections.nCopies(marks, killer)
+    );
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
 }

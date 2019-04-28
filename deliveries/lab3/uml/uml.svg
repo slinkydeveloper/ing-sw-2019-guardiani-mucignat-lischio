@@ -565,7 +565,7 @@
           x="1315.5" y="198.1479">MOVE_MOVE_MOVE_PICKUP
     </text>
     <line style="stroke: #A80036; stroke-width: 1.5;" x1="1310.5" x2="1487.5" y1="204.7422"
-          y2="204.7422"/><!--class GameStatus-->
+          y2="204.7422"/><!--class GameModel-->
     <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="227.2656" id="GameStatus"
           style="stroke: #A80036; stroke-width: 1.5;" width="366" x="1571" y="1534.5"/>
     <ellipse cx="1711.25" cy="1550.5" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
@@ -1291,7 +1291,7 @@
     <line style="stroke: #A80036; stroke-width: 1.5;" x1="2295" x2="2523" y1="378" y2="378"/>
     <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2302" y="386.9023"/>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="148"
-          x="2314" y="392.2104">gameStatus: GameStatus
+          x="2314" y="392.2104">gameModel: GameStatus
     </text>
     <rect fill="none" height="6" style="stroke: #C82930; stroke-width: 1.0;" width="6" x="2302" y="399.707"/>
     <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="120"
@@ -1330,7 +1330,7 @@
     </text>
     <line style="stroke: #A80036; stroke-width: 1.5;" x1="1962" x2="2186" y1="794" y2="794"/>
     <line style="stroke: #A80036; stroke-width: 1.5;" x1="1962" x2="2186" y1="802"
-          y2="802"/><!--class DecoratedBaseEffectGun-->
+          y2="802"/><!--class DecoratedGunImpl-->
     <rect fill="#FEFECE" filter="url(#f1lscr7nve3fsr)" height="48" id="DecoratedBaseEffectGun"
           style="stroke: #A80036; stroke-width: 1.5;" width="190" x="2222" y="762"/>
     <ellipse cx="2237" cy="778" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/>
@@ -1616,7 +1616,7 @@
       fill="none" id="AmmoCard-PowerUpCard" style="stroke: #A80036; stroke-width: 1.0;"/>
     <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
           x="732.3784" y="1717.6489">0..1
-    </text><!--link com.adrenalinici.adrenaline.observer.Observable to GameStatus-->
+    </text><!--link com.adrenalinici.adrenaline.observer.Observable to GameModel-->
     <path
       d="M2825.2075,172.6186 C2797.3578,223.4014 2756,312.7468 2756,395.5 C2756,395.5 2756,395.5 2756,1338.5 C2756,1507.9369 2226.34,1594.5979 1937.1994,1629.2828 "
       fill="none" id="com.adrenalinici.adrenaline.observer.Observable-GameStatus"
@@ -1625,7 +1625,7 @@
              style="stroke: #A80036; stroke-width: 1.0;"/>
     <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="89"
           x="2757" y="925.0669">T::ModelEvent
-    </text><!--link GameStatus to PlayerColor-->
+    </text><!--link GameModel to PlayerColor-->
     <path
       d="M1741.3998,1761.773 C1730.0944,1827.6356 1708.8222,1909.9133 1669,1974 C1638.5568,2022.9929 1586.8938,2064.5664 1548.1166,2091.2481 "
       fill="none" id="GameStatus-PlayerColor" style="stroke: #A80036; stroke-width: 1.0;"/>
@@ -1634,7 +1634,7 @@
     </text>
     <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
           x="1715.747" y="1781.9835">0..8
-    </text><!--link GameStatus to PlayerColor-->
+    </text><!--link GameModel to PlayerColor-->
     <path
       d="M1778.9661,1761.6839 C1787.3572,1827.9096 1786.7645,1910.5878 1750,1974 C1706.4075,2049.1893 1608.6566,2090.317 1548.2247,2109.4021 "
       fill="none" id="GameStatus-PlayerColor-1" style="stroke: #A80036; stroke-width: 1.0;"/>
@@ -1643,7 +1643,7 @@
     </text>
     <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24"
           x="1755.8373" y="1781.8884">0..n
-    </text><!--link GameStatus to PlayerColor-->
+    </text><!--link GameModel to PlayerColor-->
     <path
       d="M1677.185,1761.5249 C1640.1823,1818.7713 1596.6524,1890.0946 1563,1957 C1545.0924,1992.6027 1528.5331,2034.2885 1516.4806,2066.9802 "
       fill="none" id="GameStatus-PlayerColor-2" style="stroke: #A80036; stroke-width: 1.0;"/>
@@ -1795,13 +1795,13 @@
           id="DecoratedGun-DecoratedAlternativeEffectGun"
           style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
     <polygon fill="none" points="2098.3686,445.4148,2107.1751,426.1419,2112.3095,446.7001,2098.3686,445.4148"
-             style="stroke: #A80036; stroke-width: 1.0;"/><!--link com.adrenalinici.adrenaline.model.BaseEffectGun to DecoratedBaseEffectGun-->
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link com.adrenalinici.adrenaline.model.BaseEffectGun to DecoratedGunImpl-->
     <path
       d="M1150.8801,170.9282 C1164.7294,187.1539 1181.9911,205.2712 1200,219 C1558.6599,492.4191 2069.2185,694.9297 2250.2312,761.9957 "
       fill="none" id="com.adrenalinici.adrenaline.model.BaseEffectGun-DecoratedBaseEffectGun"
       style="stroke: #A80036; stroke-width: 1.0;"/>
     <polygon fill="none" points="1145.3054,175.1694,1138.0315,155.2674,1156.1289,166.2895,1145.3054,175.1694"
-             style="stroke: #A80036; stroke-width: 1.0;"/><!--link DecoratedGun to DecoratedBaseEffectGun-->
+             style="stroke: #A80036; stroke-width: 1.0;"/><!--link DecoratedGun to DecoratedGunImpl-->
     <path d="M2135.6636,443.9137 C2180.2809,528.083 2270.5872,698.4434 2304.1001,761.6647 " fill="none"
           id="DecoratedGun-DecoratedBaseEffectGun"
           style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/>
@@ -2020,7 +2020,7 @@ package com.adrenalinici.adrenaline.model {
       MOVE_MOVE_MOVE_PICKUP
   }
 
-  class GameStatus {
+  class GameModel {
       -killScore: List<Map.Entry<PlayerColor, Boolean>>
       -remainingSkulls: int
       -doubleKillScore: List<PlayerColor>
@@ -2038,13 +2038,13 @@ package com.adrenalinici.adrenaline.model {
       +PlayerColor getRoundPlayer()
   }
 
-  com.adrenalinici.adrenaline.observer.Observable <|- - GameStatus: "T::ModelEvent"
+  com.adrenalinici.adrenaline.observer.Observable <|- - GameModel: "T::ModelEvent"
 
   note left: killScore is a list of tuples\nwhere PlayerColor is the color of the\nkiller and the Boolean represents cruel kill
 
-  GameStatus "0..8"- - PlayerColor: "assassins"
-  GameStatus "0..n"- - PlayerColor: "double kills"
-  GameStatus "1"- - PlayerColor: "round of player"
+  GameModel "0..8"- - PlayerColor: "assassins"
+  GameModel "0..n"- - PlayerColor: "double kills"
+  GameModel "1"- - PlayerColor: "round of player"
 
   class Dashboard {
       -dashboardCells: List<DashboardCell>
@@ -2216,7 +2216,7 @@ package com.adrenalinici.adrenaline.controller {
   }
 
   class GameController {
-    -gameStatus: GameStatus
+    -gameModel: GameModel
     -remainingActions: int
 
     -void doFirstTurn(PlayerColor player)
@@ -2231,7 +2231,7 @@ package com.adrenalinici.adrenaline.controller {
 
   class DecoratedAlternativeEffectGun extends com.adrenalinici.adrenaline.model.AlternativeEffectGun implements DecoratedGun
 
-  class DecoratedBaseEffectGun extends com.adrenalinici.adrenaline.model.BaseEffectGun implements DecoratedGun
+  class DecoratedGunImpl extends com.adrenalinici.adrenaline.model.BaseEffectGun implements DecoratedGun
 
 }
 

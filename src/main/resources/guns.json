@@ -1,0 +1,37 @@
+{
+  "zx2": {
+    "name": "ZX-2",
+    "firstAmmo": "yellow",
+    "phases": {
+      "ALTERNATIVE_GUN_START": {}
+    },
+    "extraAmmo": [
+      "red"
+    ],
+    "firstEffect": {
+      "id": "base",
+      "name": "Base",
+      "description": "Something happen",
+      "phases": {
+        "CHOOSE_PLAYER_TO_HIT": {
+          "hittablePlayersNumber": 1,
+          "distanceEval": "true"
+        },
+        "apply_gun_effect_zx2_base": {}
+      },
+      "hittablePlayersNumber": 1
+    },
+    "secondEffect": {
+      "id": "scanner",
+      "name": "Scanner",
+      "description": "Something happen",
+      "phases": {
+        "CHOOSE_PLAYER_TO_HIT": {
+          "hittablePlayersNumber": 3,
+          "distanceEval": "true"
+        },
+        "apply_gun_effect_zx2_scanner": {}
+      }
+    }
+  }
+}

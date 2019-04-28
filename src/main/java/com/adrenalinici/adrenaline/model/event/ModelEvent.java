@@ -1,9 +1,9 @@
 package com.adrenalinici.adrenaline.model.event;
 
-import com.adrenalinici.adrenaline.model.GameStatus;
+import com.adrenalinici.adrenaline.model.GameModel;
 
 public interface ModelEvent {
 
-  GameStatus getGameStatus();
+  GameModel getGameModel();
 
 }
