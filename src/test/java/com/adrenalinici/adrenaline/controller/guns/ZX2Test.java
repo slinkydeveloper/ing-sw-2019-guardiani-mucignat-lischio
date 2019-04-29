@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowN
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -43,6 +44,11 @@ public class ZX2Test extends BaseGunTest {
   @Test
   public void testBaseEffect() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun("zx2"));
 
@@ -74,6 +80,11 @@ public class ZX2Test extends BaseGunTest {
   @Test
   public void testScannerEffect() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun("zx2"));
 
