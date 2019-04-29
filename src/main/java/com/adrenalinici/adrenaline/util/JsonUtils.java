@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -82,12 +83,11 @@ public class JsonUtils {
           gameStatus.getPlayerPosition(playerColor2)
         );
       try {
-        return (boolean) scriptEngine.eval(String.format(
-          "var distance=%d;var visible=%s;%s",
-          distance,
-          Boolean.toString(visible),
-          serializedPredicate
-        ));
+        Bindings bindings = scriptEngine.createBindings();
+        bindings.put("distance", distance);
+        bindings.put("visible", visible);
+        return (boolean) scriptEngine.eval(serializedPredicate, bindings);
+
       } catch (ScriptException | ClassCastException e) {
         System.err.println("You dumb!");
         e.printStackTrace();
