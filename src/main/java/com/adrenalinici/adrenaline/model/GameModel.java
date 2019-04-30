@@ -108,28 +108,16 @@ public class GameModel extends Observable<ModelEvent> {
   public void acquireGun(RespawnDashboardCell cell, PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
+    cell.getAvailableGuns().remove(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
     Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
     Bag<AmmoColor> requiredAmmoToPickupBag = Bag.from(chosenGun.getRequiredAmmoToPickup());
 
-    if (!playerAmmosBag.contains(requiredAmmoToPickupBag)) {
-      List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
-        playerAmmos.stream()
-          .filter(ammo ->
-            chosenGun.getRequiredAmmoToPickup().contains(ammo)
-          ).collect(Collectors.toList()));
+    if (!playerAmmosBag.contains(requiredAmmoToPickupBag))
+      playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup());
 
-      List<AmmoColor> ammosToRemove = ListUtils.differencePure(chosenGun.getRequiredAmmoToPickup(),
-        ammosToGetFromPowerUp);
-      playerDashboard.removeAmmos(ammosToRemove);
+    else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
 
-      ammosToGetFromPowerUp.forEach(ammo -> {
-        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(powerUpCard ->
-          powerUpCard.getAmmoColor().equals(ammo)).findFirst().get();
-        playerDashboard.removePowerUpCard(toRemove);
-      });
-    } else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
-    cell.getAvailableGuns().remove(chosenGun);
     notifyEvent(new DashboardCellUpdatedEvent(this, cell));
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
@@ -142,24 +130,11 @@ public class GameModel extends Observable<ModelEvent> {
     Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
     Bag<AmmoColor> requiredAmmoToReloadBag = Bag.from(chosenGun.getRequiredAmmoToReload());
 
-    if (!playerAmmosBag.contains(requiredAmmoToReloadBag)) {
-      List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
-        playerAmmos.stream()
-          .filter(ammo ->
-            chosenGun.getRequiredAmmoToReload().contains(ammo)
-          ).collect(Collectors.toList()));
+    if (!playerAmmosBag.contains(requiredAmmoToReloadBag))
+      playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload());
 
-      List<AmmoColor> ammosToRemove = ListUtils.differencePure(chosenGun.getRequiredAmmoToReload(),
-        ammosToGetFromPowerUp);
-      playerDashboard.removeAmmos(ammosToRemove);
+    else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToReload());
 
-      ammosToGetFromPowerUp.forEach(ammo -> {
-        PowerUpCard toRemove = playerDashboard.getPowerUpCards().stream().filter(
-          powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
-        ).findFirst().get();
-        playerDashboard.removePowerUpCard(toRemove);
-      });
-    } else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 

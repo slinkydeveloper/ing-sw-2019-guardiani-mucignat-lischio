@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class PlayerDashboard {
   private PlayerColor player;
@@ -174,5 +175,19 @@ public class PlayerDashboard {
     List<AmmoColor> playerAmmos = new ArrayList<>(getAmmos());
     getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
     return Bag.from(playerAmmos);
+  }
+
+  public void removeAmmosIncludingPowerups(List<AmmoColor> ammos) {
+    List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(ammos, getAmmos());
+
+    List<AmmoColor> ammosToRemove = ListUtils.differencePure(ammos, ammosToGetFromPowerUp);
+    removeAmmos(ammosToRemove);
+
+    ammosToGetFromPowerUp.forEach(ammo -> {
+      PowerUpCard toRemove = getPowerUpCards().stream().filter(
+        powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
+      ).findFirst().get();
+      removePowerUpCard(toRemove);
+    });
   }
 }

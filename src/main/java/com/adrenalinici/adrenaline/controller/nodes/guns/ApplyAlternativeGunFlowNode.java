@@ -2,8 +2,10 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.model.AmmoColor;
 import com.adrenalinici.adrenaline.model.GameModel;
 import com.adrenalinici.adrenaline.model.PlayerDashboard;
+import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.TriConsumer;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
@@ -28,7 +30,13 @@ public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<Alternati
     consumer.accept(flowState, model, context);
     // Remove ammos required for effect and unload the gun
     PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
-    dashboard.removeAmmos(flowState.getChosenEffect().getRequiredAmmos());
+    Bag<AmmoColor> playerAmmosBag = Bag.from(dashboard.getAmmos());
+    Bag<AmmoColor> requiredAmmosBag = Bag.from(flowState.getChosenEffect().getRequiredAmmos());
+
+    if (!playerAmmosBag.contains(requiredAmmosBag))
+      dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
+    else dashboard.removeAmmos(flowState.getChosenEffect().getRequiredAmmos());
+
     dashboard.removeLoadedGun(flowState.getChosenGun().get());
     dashboard.addUnloadedGun(flowState.getChosenGun().get());
     context.nextPhase(view, flowState);

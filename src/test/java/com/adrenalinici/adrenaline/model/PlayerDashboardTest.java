@@ -2,10 +2,7 @@ package com.adrenalinici.adrenaline.model;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.adrenalinici.adrenaline.testutil.MyAssertions.*;
 import static org.assertj.core.api.Assertions.*;
@@ -68,6 +65,18 @@ public class PlayerDashboardTest {
     playerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.BLUE));
     assertThat(playerDashboard.getAmmos())
       .containsOnly(AmmoColor.YELLOW, AmmoColor.RED);
+  }
+
+  @Test
+  public void removeAmmosIncludingPowerupsTest() {
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
+    PowerUpCard blueScope = new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false,
+      Arrays.asList(blueKineticRay, blueScope));
+    List<AmmoColor> ammosToRemove = Arrays.asList(AmmoColor.RED, AmmoColor.BLUE, AmmoColor.BLUE);
+
+    playerDashboard.removeAmmosIncludingPowerups(ammosToRemove);
+    assertThat(playerDashboard.getPowerUpCards()).containsOnly(blueScope);
   }
 
   @Test
