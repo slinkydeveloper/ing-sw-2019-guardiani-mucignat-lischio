@@ -15,7 +15,7 @@
       "phases": {
         "CHOOSE_PLAYER_TO_HIT": {
           "hittablePlayersNumber": 1,
-          "distanceEval": "true"
+          "distanceEval": "visible == true"
         },
         "apply_gun_effect_zx2_base": {}
       },
@@ -28,7 +28,7 @@
       "phases": {
         "CHOOSE_PLAYER_TO_HIT": {
           "hittablePlayersNumber": 3,
-          "distanceEval": "true"
+          "distanceEval": "visible == true"
         },
         "apply_gun_effect_zx2_scanner": {}
       }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -69,17 +70,24 @@ public class JsonUtils {
     return JsonPointer.compile("/" + String.join("/", keys));
   }
 
-  public static BiPredicate<PlayerColor, GameModel> parseDistanceEvalPredicate(String serializedPredicate) {
-    return (playerColor, gameStatus) -> {
-      int distance = 1;//TODO
-      boolean visible = true;//TODO
+  public static TriPredicate<PlayerColor, PlayerColor, GameModel> parseDistanceEvalPredicate(String serializedPredicate) {
+    return (playerColor1, playerColor2, gameStatus) -> {
+      int distance = gameStatus.getDashboard()
+        .calculateDistance(
+          gameStatus.getPlayerPosition(playerColor1),
+          gameStatus.getPlayerPosition(playerColor2)
+        );
+      boolean visible = gameStatus.getDashboard()
+        .calculateIfVisible(
+          gameStatus.getPlayerPosition(playerColor1),
+          gameStatus.getPlayerPosition(playerColor2)
+        );
       try {
-        return (boolean) scriptEngine.eval(String.format(
-          "var distance=%d;var visible=%s;%s",
-          distance,
-          Boolean.toString(visible),
-          serializedPredicate
-        ));
+        Bindings bindings = scriptEngine.createBindings();
+        bindings.put("distance", distance);
+        bindings.put("visible", visible);
+        return (boolean) scriptEngine.eval(serializedPredicate, bindings);
+
       } catch (ScriptException | ClassCastException e) {
         System.err.println("You dumb!");
         e.printStackTrace();

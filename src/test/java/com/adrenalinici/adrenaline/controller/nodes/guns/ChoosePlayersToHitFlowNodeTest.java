@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,8 +41,12 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
   @Test
   public void testChooseSinglePlayer() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
 
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
     context.nextPhase(viewMock,
       new AlternativeEffectGunFlowState(gun).setChosenEffect(gun.getFirstEffect(), true)
     );
@@ -62,6 +67,11 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
   @Test
   public void testChooseMultiplePlayers() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
