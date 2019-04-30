@@ -73,10 +73,25 @@ public class PlayerDashboardTest {
     PowerUpCard blueScope = new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false,
       Arrays.asList(blueKineticRay, blueScope));
+
     List<AmmoColor> ammosToRemove = Arrays.asList(AmmoColor.RED, AmmoColor.BLUE, AmmoColor.BLUE);
 
     playerDashboard.removeAmmosIncludingPowerups(ammosToRemove);
     assertThat(playerDashboard.getPowerUpCards()).containsOnly(blueScope);
+  }
+
+  @Test
+  public void removeAmmosIncludingPowerupsWithoutNeedOfPowerupsTest() {
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
+    PowerUpCard yellowScope = new PowerUpCard(AmmoColor.YELLOW, PowerUpType.SCOPE);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false,
+      Arrays.asList(blueKineticRay, yellowScope));
+
+    List<AmmoColor> ammosToRemove = Arrays.asList(AmmoColor.BLUE, AmmoColor.YELLOW);
+
+    playerDashboard.removeAmmosIncludingPowerups(ammosToRemove);
+    assertThat(playerDashboard.getPowerUpCards()).containsExactlyInAnyOrder(blueKineticRay, yellowScope);
+    assertThat(playerDashboard.getAmmos()).containsOnly(AmmoColor.RED);
   }
 
   @Test
