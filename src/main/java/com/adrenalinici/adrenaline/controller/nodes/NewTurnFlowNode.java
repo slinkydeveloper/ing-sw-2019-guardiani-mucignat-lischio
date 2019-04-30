@@ -30,7 +30,7 @@ public class NewTurnFlowNode implements StatelessControllerFlowNode {
         context.setRemainingActions(remainingActions);
 
         // I add one CHOOSE_ACTION for each remaining actions
-        IntStream.range(0, remainingActions).forEach(i -> context.addPhasesToHead(CHOOSE_ACTION.name()));
+        IntStream.range(0, remainingActions).forEach(i -> context.addPhases(CHOOSE_ACTION.name()));
 
         context.addPhasesToEnd(RELOAD.name(), RESPAWN_KILLED_PEOPLE.name());
 

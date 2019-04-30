@@ -35,7 +35,7 @@ public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode
           flowState.getChosenGun().getSecondEffect(),
         alternativeGunEffectChosenEvent.chosenFirstEffect()
       );
-      context.addPhasesToHead(flowState.getChosenEffect().getAdditionalPhases().toArray(new String[0]));
+      context.addPhases(flowState.getChosenEffect().getAdditionalPhases().toArray(new String[0]));
       context.nextPhase(view, flowState);
     });
   }
