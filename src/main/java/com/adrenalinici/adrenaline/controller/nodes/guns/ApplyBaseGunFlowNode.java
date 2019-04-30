@@ -29,9 +29,9 @@ public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlo
     // Remove ammos required for effect and unload the gun
     PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
     if (flowState.isActivatedFirstExtraEffect())
-      dashboard.removeAmmos(flowState.getChosenGun().getFirstExtraEffectCost());
+      dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getFirstExtraEffectCost());
     if (flowState.isActivatedSecondExtraEffect())
-      dashboard.removeAmmos(flowState.getChosenGun().getSecondExtraEffectCost());
+      dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getSecondExtraEffectCost());
     dashboard.removeLoadedGun(flowState.getChosenGun().get());
     dashboard.addUnloadedGun(flowState.getChosenGun().get());
     context.nextPhase(view, flowState);
