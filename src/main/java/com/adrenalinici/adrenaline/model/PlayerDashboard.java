@@ -177,17 +177,27 @@ public class PlayerDashboard {
     return Bag.from(playerAmmos);
   }
 
+
+  /**
+   * Removes the specified list of AmmoColor from PlayerDashboard.
+   * In case PlayerDashboard does not contain all of the ammos in the list,
+   * it calculates the missing ammos and removes the first PowerupCard of the same color
+   * for each one
+   *
+   * @param ammos
+   */
   public void removeAmmosIncludingPowerups(List<AmmoColor> ammos) {
     List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(ammos, getAmmos());
 
     List<AmmoColor> ammosToRemove = ListUtils.differencePure(ammos, ammosToGetFromPowerUp);
     removeAmmos(ammosToRemove);
 
-    ammosToGetFromPowerUp.forEach(ammo -> {
-      PowerUpCard toRemove = getPowerUpCards().stream().filter(
-        powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
-      ).findFirst().get();
-      removePowerUpCard(toRemove);
-    });
+    if (!ammosToGetFromPowerUp.isEmpty())
+      ammosToGetFromPowerUp.forEach(ammo -> {
+        PowerUpCard toRemove = getPowerUpCards().stream().filter(
+          powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
+        ).findFirst().get();
+        removePowerUpCard(toRemove);
+      });
   }
 }

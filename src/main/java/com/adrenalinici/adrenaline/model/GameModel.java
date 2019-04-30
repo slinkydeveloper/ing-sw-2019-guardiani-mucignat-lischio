@@ -113,10 +113,7 @@ public class GameModel extends Observable<ModelEvent> {
     Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
     Bag<AmmoColor> requiredAmmoToPickupBag = Bag.from(chosenGun.getRequiredAmmoToPickup());
 
-    if (!playerAmmosBag.contains(requiredAmmoToPickupBag))
-      playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup());
-
-    else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToPickup());
+    playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup());
 
     notifyEvent(new DashboardCellUpdatedEvent(this, cell));
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
@@ -130,10 +127,7 @@ public class GameModel extends Observable<ModelEvent> {
     Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
     Bag<AmmoColor> requiredAmmoToReloadBag = Bag.from(chosenGun.getRequiredAmmoToReload());
 
-    if (!playerAmmosBag.contains(requiredAmmoToReloadBag))
-      playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload());
-
-    else playerDashboard.removeAmmos(chosenGun.getRequiredAmmoToReload());
+    playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload());
 
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }

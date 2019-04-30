@@ -33,9 +33,7 @@ public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<Alternati
     Bag<AmmoColor> playerAmmosBag = Bag.from(dashboard.getAmmos());
     Bag<AmmoColor> requiredAmmosBag = Bag.from(flowState.getChosenEffect().getRequiredAmmos());
 
-    if (!playerAmmosBag.contains(requiredAmmosBag))
-      dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
-    else dashboard.removeAmmos(flowState.getChosenEffect().getRequiredAmmos());
+    dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
 
     dashboard.removeLoadedGun(flowState.getChosenGun().get());
     dashboard.addUnloadedGun(flowState.getChosenGun().get());
