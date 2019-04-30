@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class PlayerDashboard {
   private PlayerColor player;
@@ -174,5 +175,29 @@ public class PlayerDashboard {
     List<AmmoColor> playerAmmos = new ArrayList<>(getAmmos());
     getPowerUpCards().stream().forEach(powerUpCard -> playerAmmos.add(powerUpCard.getAmmoColor()));
     return Bag.from(playerAmmos);
+  }
+
+
+  /**
+   * Removes the specified list of AmmoColor from PlayerDashboard.
+   * In case PlayerDashboard does not contain all of the ammos in the list,
+   * it calculates the missing ammos and removes the first PowerupCard of the same color
+   * for each one
+   *
+   * @param ammos
+   */
+  public void removeAmmosIncludingPowerups(List<AmmoColor> ammos) {
+    List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(ammos, getAmmos());
+
+    List<AmmoColor> ammosToRemove = ListUtils.differencePure(ammos, ammosToGetFromPowerUp);
+    removeAmmos(ammosToRemove);
+
+    if (!ammosToGetFromPowerUp.isEmpty())
+      ammosToGetFromPowerUp.forEach(ammo -> {
+        PowerUpCard toRemove = getPowerUpCards().stream().filter(
+          powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
+        ).findFirst().get();
+        removePowerUpCard(toRemove);
+      });
   }
 }
