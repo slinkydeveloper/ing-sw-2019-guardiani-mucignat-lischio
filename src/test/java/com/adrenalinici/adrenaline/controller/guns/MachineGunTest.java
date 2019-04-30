@@ -9,6 +9,7 @@ import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.AmmoColor;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.view.event.BaseGunEffectChosenEvent;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -44,6 +45,12 @@ public class MachineGunTest extends BaseGunTest {
   @Test
   public void testOnlyBaseEffect() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun(gunId()));
 
@@ -80,6 +87,12 @@ public class MachineGunTest extends BaseGunTest {
   @Test
   public void testBaseEffectAndFocus() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun(gunId()));
 
@@ -116,6 +129,12 @@ public class MachineGunTest extends BaseGunTest {
   @Test
   public void testBaseEffectAndTripod() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun(gunId()));
 
@@ -157,6 +176,12 @@ public class MachineGunTest extends BaseGunTest {
   @Test
   public void testBaseEffectAndTripodWithoutThirdPlayerChosen() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun(gunId()));
 
@@ -194,6 +219,12 @@ public class MachineGunTest extends BaseGunTest {
   @Test
   public void testBaseEffectAndFocusAndTripod() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
+
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun(gunId()));
 

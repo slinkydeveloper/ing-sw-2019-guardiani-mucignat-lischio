@@ -54,7 +54,7 @@
     "phasesConfig": {
       "CHOOSE_PLAYER_TO_HIT": {
         "hittablePlayersNumber": 2,
-        "distanceEval": "true"
+        "distanceEval": "visible === true"
       }
     },
     "baseEffect": {

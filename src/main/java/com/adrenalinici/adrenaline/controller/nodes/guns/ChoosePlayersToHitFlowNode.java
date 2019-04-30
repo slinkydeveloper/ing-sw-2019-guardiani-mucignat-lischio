@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.model.GameModel;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.util.JsonUtils;
+import com.adrenalinici.adrenaline.util.TriPredicate;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
@@ -27,7 +28,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     if (flowState.getChosenPlayersToHit().size() == resolveHittablePlayersNumber(flowState)) {
       context.nextPhase(view, flowState);
     } else {
-      BiPredicate<PlayerColor, GameModel> predicate = resolveDistanceEvalPredicate(flowState);
+      TriPredicate<PlayerColor, PlayerColor, GameModel> predicate = resolveDistanceEvalPredicate(flowState);
       List<PlayerColor> hittable =
         model
           .getPlayers()
@@ -35,7 +36,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
           .filter(notIn(flowState.getChosenPlayersToHit()))
           .filter(notIn(context.getKilledPlayers()))
           .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
-          .filter(p -> predicate.test(p, model))
+          .filter(p -> predicate.test(context.getTurnOfPlayer(), p, model))
           .collect(Collectors.toList());
       if (hittable.isEmpty()) context.nextPhase(view, flowState);
       else view.showChoosePlayerToHit(hittable);
@@ -57,7 +58,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     return flowState.resolvePhaseConfiguration(id()).get("hittablePlayersNumber").asInt();
   }
 
-  private BiPredicate<PlayerColor, GameModel> resolveDistanceEvalPredicate(GunFlowState flowState) {
+  private TriPredicate<PlayerColor, PlayerColor, GameModel> resolveDistanceEvalPredicate(GunFlowState flowState) {
     return JsonUtils.parseDistanceEvalPredicate(
       flowState.resolvePhaseConfiguration(id()).get("distanceEval").asText()
     );

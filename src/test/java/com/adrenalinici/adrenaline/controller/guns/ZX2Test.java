@@ -48,6 +48,7 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun("zx2"));
@@ -84,6 +85,7 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addLoadedGun(gunLoader.getModelGun("zx2"));
@@ -98,7 +100,7 @@ public class ZX2Test extends BaseGunTest {
     context.handleEvent(new PlayerChosenEvent(viewMock, null));
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getMarks())
-      .containsExactly(PlayerColor.GREEN);
+      .containsExactly( PlayerColor.GREEN);
 
     assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
       .containsExactly(PlayerColor.GREEN);
