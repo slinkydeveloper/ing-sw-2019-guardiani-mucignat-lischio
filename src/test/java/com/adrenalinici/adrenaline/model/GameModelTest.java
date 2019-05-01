@@ -1,16 +1,14 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
-import static com.adrenalinici.adrenaline.testutil.MyConditions.isDashboardCellUpdatedEvent;
-import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
+import static com.adrenalinici.adrenaline.testutil.MyConditions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameModelTest {
@@ -172,5 +170,50 @@ public class GameModelTest {
   }
 
   //TODO P1 test for hitPlayer/markPlayer/hitAndMarkPlayer
+  @Test
+  public void hitPlayerTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 9);
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages()).containsExactly(
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN
+    );
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+
+    receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 2);
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages()).containsExactly(
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN,
+      PlayerColor.GREEN
+    );
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent(gameModel));
+    assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
+    assertThat(gameModel.getKillScore().get(0)).isEqualTo(new AbstractMap.SimpleEntry<>(PlayerColor.GREEN, Boolean.FALSE));
+
+  }
 
 }

@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.model.GameModel;
 import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
+import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
 import org.assertj.core.api.Condition;
@@ -21,6 +22,12 @@ public class MyConditions {
     return new Condition<>(e ->
       e instanceof PlayerDashboardUpdatedEvent && ((PlayerDashboardUpdatedEvent) e).getPlayerDashboard() == status.getPlayerDashboard(color),
       "Event must be a PlayerDashboardUpdatedEvent of " + color + " player");
+  }
+
+  public static Condition<ModelEvent> isGameModelUpdatedEvent(GameModel model) {
+    return new Condition<>(e ->
+      e instanceof GameModelUpdatedEvent && ((GameModelUpdatedEvent) e).getGameModel() == model,
+      "Event must be a PlayerDashboardUpdatedEvent");
   }
 
   public static Condition<Gun> gunWithId(String id) {

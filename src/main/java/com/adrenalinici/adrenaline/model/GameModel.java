@@ -1,17 +1,15 @@
 package com.adrenalinici.adrenaline.model;
 
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
+import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
 import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 
+import java.util.*;
 import java.util.AbstractMap.SimpleImmutableEntry;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Map.Entry;
@@ -165,34 +163,81 @@ public class GameModel extends Observable<ModelEvent> {
 
   public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    PlayerDashboard killerPlayerDashboard = getPlayerDashboard(killer);
+    int killerMarksOnVictimDashboard = victimPlayerDashboard.getMarks().stream()
+      .filter(playerColor -> playerColor.equals(killer)).collect(Collectors.toList()).size();
+
+    damages += killerMarksOnVictimDashboard;
+
     victimPlayerDashboard.addDamages(
       Collections.nCopies(damages, killer)
     );
-    //TODO P1 check hit players
+
+    victimPlayerDashboard.removeMarks(
+      Collections.nCopies(killerMarksOnVictimDashboard, killer)
+    );
+
+    if (victimPlayerDashboard.getKillDamage().isPresent()) {
+      decrementSkulls();
+      victimPlayerDashboard.incrementSkullsNumber();
+
+      if (victimPlayerDashboard.getCruelDamage().isPresent()) {
+        killScore.add(new AbstractMap.SimpleEntry<PlayerColor, Boolean>(killer, Boolean.TRUE));
+        markPlayer(victim, killer, 1);
+        notifyEvent(new PlayerDashboardUpdatedEvent(this, killerPlayerDashboard));
+      } else killScore.add(new AbstractMap.SimpleEntry<PlayerColor, Boolean>(killer, Boolean.FALSE));
+      notifyEvent(new GameModelUpdatedEvent(this));
+    }
+
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
     return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
   public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    //TODO P2 marks number check
-    victimPlayerDashboard.addMarks(
-      Collections.nCopies(marks, killer)
-    );
+    int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
+
+    if (marksOnOtherPlayerDashboards != 3) {
+      switch (marksOnOtherPlayerDashboards) {
+        case 0:
+          victimPlayerDashboard.addMarks(Collections.nCopies(marks, killer));
+          break;
+        case 1:
+          victimPlayerDashboard.addMarks(Collections.nCopies(marks > 2 ? 2 : marks, killer));
+          break;
+        case 2:
+          victimPlayerDashboard.addMarks(Collections.nCopies(marks > 1 ? 1 : marks, killer));
+          break;
+      }
+    }
+
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
   }
 
   public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    //TODO P2 marks number check
-    victimPlayerDashboard.addDamages(
-      Collections.nCopies(damages, killer)
-    );
-    victimPlayerDashboard.addMarks(
-      Collections.nCopies(marks, killer)
-    );
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+
+    hitPlayer(killer, victim, damages);
+    markPlayer(killer, victim, marks);
+
     return victimPlayerDashboard.getKillDamage().isPresent();
+  }
+
+  /**
+   * @param player
+   * @return number of player marks on other playerDashboards
+   */
+  public int calculateMarksOnOtherPlayerDashboards(PlayerColor player) {
+    List<PlayerColor> marksOnOtherPlayerDashboards = new ArrayList<>();
+    playerDashboards.stream()
+      .filter(playerDashboard -> !playerDashboard.getPlayer().equals(player))
+      .forEach(playerDashboard ->
+        playerDashboard.getMarks().stream()
+          .filter(playerColor -> playerColor.equals(player))
+          .forEach(playerColor -> marksOnOtherPlayerDashboards.add(playerColor))
+      );
+
+    return marksOnOtherPlayerDashboards.size();
   }
 
 }
