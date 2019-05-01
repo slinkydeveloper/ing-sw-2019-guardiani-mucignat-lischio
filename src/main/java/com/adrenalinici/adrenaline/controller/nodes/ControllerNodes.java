@@ -11,7 +11,8 @@ public enum ControllerNodes {
   CHOOSE_GUN,
   CHOOSE_PLAYER_TO_HIT,
   ALTERNATIVE_GUN_START,
-  BASE_GUN_START;
+  BASE_GUN_START,
+  VENOM_GRENADE;
 
   public static String movement(int distance) {
     return "movement_" + distance;
