@@ -8,15 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface GameView extends Observer<ModelEvent> {
+
   void showAvailableActions(List<Action> actions);
 
-  void showAvailableMovements(List<Position> availableMovements);
+  void showAvailableMovements(List<Position> positions);
 
-  void showNextTurn(PlayerColor playerColor);
+  void showNextTurn(PlayerColor player);
 
-  void showReloadableGuns(List<Gun> reloadableGuns);
+  void showReloadableGuns(List<Gun> guns);
 
-  void showLoadedGuns(List<Gun> reloadableGuns);
+  void showLoadedGuns(List<Gun> guns);
 
   void showBaseGunExtraEffects(List<Effect> effects);
 
@@ -34,9 +35,10 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showAvailablePowerUpCards(PlayerColor player);
 
-  void showAvailableEnemyMovements(List<Position> availableEnemyMovements);
+  void showAvailableEnemyMovements(List<Position> positions);
 
-  void showAvailableGuns(List<Gun> loadedGuns);
+  void showAvailableGuns(List<Gun> guns);
 
-  void showAvailableGunsToPickup(List<Gun> availableGunsToPickup);
+  void showAvailableGunsToPickup(List<Gun> guns);
+
 }

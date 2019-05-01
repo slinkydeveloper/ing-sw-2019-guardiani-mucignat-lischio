@@ -21,7 +21,7 @@ public class NewTurnFlowNodeTest extends BaseNodeTest {
 
     orchestrator.startNewFlow(viewMock, context);
 
-    orchestrator.handleEvent(new NewTurnEvent(viewMock, PlayerColor.GREEN));
+    orchestrator.handleEvent(new NewTurnEvent(), viewMock);
 
     assertThat(context.getPhasesQueue()) // The first CHOOSE_ACTION is pushed out after NewTurnFlowNode handleEvent completes
       .containsExactly(CHOOSE_ACTION.name(), CHOOSE_ACTION.name(), RELOAD.name(), RESPAWN_KILLED_PEOPLE.name());

@@ -57,8 +57,8 @@ public class ZX2Test extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
-    context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, false));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
+    context.handleEvent(new AlternativeGunEffectChosenEvent(false), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .containsExactly(PlayerColor.GREEN);
@@ -94,10 +94,10 @@ public class ZX2Test extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
-    context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, true));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
-    context.handleEvent(new PlayerChosenEvent(viewMock, null));
+    context.handleEvent(new AlternativeGunEffectChosenEvent(true), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new PlayerChosenEvent(null), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getMarks())
       .containsExactly( PlayerColor.GREEN);

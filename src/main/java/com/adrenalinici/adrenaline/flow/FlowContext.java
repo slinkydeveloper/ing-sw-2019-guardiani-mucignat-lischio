@@ -96,6 +96,6 @@ public interface FlowContext {
    *
    * @param event
    */
-  void handleEvent(ViewEvent event);
+  void handleEvent(ViewEvent event, GameView view);
 
 }

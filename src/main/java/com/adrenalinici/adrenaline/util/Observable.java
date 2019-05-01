@@ -23,7 +23,7 @@ public class Observable<T> {
     listeners.clear();
   }
 
-  protected void notifyEvent(T value) {
+  public void notifyEvent(T value) {
     for (Observer<T> listener : listeners) {
       if (listener != null) {
         listener.onEvent(value);

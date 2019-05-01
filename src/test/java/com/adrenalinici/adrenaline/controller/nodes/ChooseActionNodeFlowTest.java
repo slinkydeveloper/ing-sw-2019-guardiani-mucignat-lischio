@@ -61,7 +61,7 @@ public class ChooseActionNodeFlowTest extends BaseNodeTest {
 
     orchestrator.startNewFlow(viewMock, context);
 
-    orchestrator.handleEvent(new ActionChosenEvent(viewMock, action));
+    orchestrator.handleEvent(new ActionChosenEvent(action), viewMock);
 
     remainingPhases.accept(context.getPhasesQueue());
 

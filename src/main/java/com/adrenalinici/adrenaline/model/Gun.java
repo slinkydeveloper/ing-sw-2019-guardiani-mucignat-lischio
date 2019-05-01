@@ -1,10 +1,11 @@
 package com.adrenalinici.adrenaline.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public interface Gun {
+public interface Gun extends Serializable {
 
   List<AmmoColor> getRequiredAmmoToPickup();
 

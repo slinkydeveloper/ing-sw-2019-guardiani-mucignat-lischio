@@ -3,7 +3,7 @@ package com.adrenalinici.adrenaline.controller.nodes;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
-import com.adrenalinici.adrenaline.view.event.GunToPickupChosenEvent;
+import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -66,11 +66,9 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    orchestrator.handleEvent(new GunToPickupChosenEvent(
-      viewMock,
-      BASE_EFFECT_GUN_SWORD,
-      (RespawnDashboardCell) model.getDashboard().getDashboardCell(Position.of(2, 0))
-    ));
+    orchestrator.handleEvent(new GunChosenEvent(
+      BASE_EFFECT_GUN_SWORD.getId()
+    ), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(2, 0));

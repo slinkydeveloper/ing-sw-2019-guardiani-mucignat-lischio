@@ -1,13 +1,18 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Position {
+public class Position implements Serializable {
 
-  private final int line;
-  private final int cell;
+  @JsonProperty private final int line;
+  @JsonProperty private final int cell;
 
-  public Position(int line, int cell) {
+  @JsonCreator
+  public Position(@JsonProperty("line") int line, @JsonProperty("cell") int cell) {
     this.line = line;
     this.cell = cell;
   }

@@ -66,7 +66,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
 
     orchestrator.startNewFlow(viewMock, context);
 
-    orchestrator.handleEvent(new GunChosenEvent(viewMock, "zx2"));
+    orchestrator.handleEvent(new GunChosenEvent("zx2"), viewMock);
 
     assertThat(context.getPhasesQueue().get(0))
       .isEqualTo(ControllerNodes.ALTERNATIVE_GUN_START.name());
@@ -83,7 +83,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
 
     orchestrator.startNewFlow(viewMock, context);
 
-    orchestrator.handleEvent(new GunChosenEvent(viewMock, "machine_gun"));
+    orchestrator.handleEvent(new GunChosenEvent("machine_gun"), viewMock);
 
     assertThat(context.getPhasesQueue().get(0))
       .isEqualTo(ControllerNodes.BASE_GUN_START.name());

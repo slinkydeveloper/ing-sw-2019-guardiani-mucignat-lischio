@@ -3,7 +3,7 @@ package com.adrenalinici.adrenaline.controller.nodes;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
-import com.adrenalinici.adrenaline.view.event.GunToReloadChosenEvent;
+import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -63,7 +63,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     verify(viewMock, times(1)).showReloadableGuns(reloadableGunsCaptor.capture());
     assertThat(reloadableGunsCaptor.getValue()).containsOnly(gun);
 
-    orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun));
+    orchestrator.handleEvent(new GunChosenEvent(gun.getId()), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
@@ -101,8 +101,8 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
 
     orchestrator.startNewFlow(viewMock, context);
 
-    orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun1));
-    orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun2));
+    orchestrator.handleEvent(new GunChosenEvent(gun1.getId()), viewMock);
+    orchestrator.handleEvent(new GunChosenEvent(gun2.getId()), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));

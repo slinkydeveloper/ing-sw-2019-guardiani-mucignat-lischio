@@ -61,7 +61,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
     model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
 
     context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
-    context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, false));
+    context.handleEvent(new AlternativeGunEffectChosenEvent(false), viewMock);
 
     assertThat(context.getActualState())
       .extracting("chosenEffect")
@@ -78,7 +78,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
     model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
 
     context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
-    context.handleEvent(new AlternativeGunEffectChosenEvent(viewMock, true));
+    context.handleEvent(new AlternativeGunEffectChosenEvent(true), viewMock);
 
     assertThat(context.getActualState())
       .extracting("chosenEffect")
