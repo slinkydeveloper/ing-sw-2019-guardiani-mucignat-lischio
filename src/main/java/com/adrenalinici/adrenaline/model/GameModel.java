@@ -161,6 +161,7 @@ public class GameModel extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
+  @SuppressWarnings("Duplicates")
   public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     PlayerDashboard killerPlayerDashboard = getPlayerDashboard(killer);
@@ -184,7 +185,6 @@ public class GameModel extends Observable<ModelEvent> {
       if (victimPlayerDashboard.getCruelDamage().isPresent()) {
         killScore.add(new AbstractMap.SimpleEntry<PlayerColor, Boolean>(killer, Boolean.TRUE));
         markPlayer(victim, killer, 1);
-        notifyEvent(new PlayerDashboardUpdatedEvent(this, killerPlayerDashboard));
       } else killScore.add(new AbstractMap.SimpleEntry<PlayerColor, Boolean>(killer, Boolean.FALSE));
       notifyEvent(new GameModelUpdatedEvent(this));
     }
@@ -193,6 +193,7 @@ public class GameModel extends Observable<ModelEvent> {
     return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
+  @SuppressWarnings("Duplicates")
   public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
@@ -214,12 +215,52 @@ public class GameModel extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
   }
 
+  @SuppressWarnings("Duplicates")
   public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    PlayerDashboard killerPlayerDashboard = getPlayerDashboard(killer);
 
-    hitPlayer(killer, victim, damages);
-    markPlayer(killer, victim, marks);
+    int killerMarksOnVictimDashboard = victimPlayerDashboard.getMarks().stream()
+      .filter(playerColor -> playerColor.equals(killer)).collect(Collectors.toList()).size();
 
+    damages += killerMarksOnVictimDashboard;
+
+    victimPlayerDashboard.addDamages(
+      Collections.nCopies(damages, killer)
+    );
+
+    victimPlayerDashboard.removeMarks(
+      Collections.nCopies(killerMarksOnVictimDashboard, killer)
+    );
+
+    if (victimPlayerDashboard.getKillDamage().isPresent()) {
+      decrementSkulls();
+      victimPlayerDashboard.incrementSkullsNumber();
+
+      if (victimPlayerDashboard.getCruelDamage().isPresent()) {
+        killScore.add(new AbstractMap.SimpleEntry<PlayerColor, Boolean>(killer, Boolean.TRUE));
+        markPlayer(victim, killer, 1);
+      } else killScore.add(new AbstractMap.SimpleEntry<PlayerColor, Boolean>(killer, Boolean.FALSE));
+      notifyEvent(new GameModelUpdatedEvent(this));
+    }
+
+    int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
+
+    if (marksOnOtherPlayerDashboards != 3) {
+      switch (marksOnOtherPlayerDashboards) {
+        case 0:
+          victimPlayerDashboard.addMarks(Collections.nCopies(marks, killer));
+          break;
+        case 1:
+          victimPlayerDashboard.addMarks(Collections.nCopies(marks > 2 ? 2 : marks, killer));
+          break;
+        case 2:
+          victimPlayerDashboard.addMarks(Collections.nCopies(marks > 1 ? 1 : marks, killer));
+          break;
+      }
+    }
+
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
     return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
