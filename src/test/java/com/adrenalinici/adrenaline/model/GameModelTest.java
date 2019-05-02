@@ -177,38 +177,40 @@ public class GameModelTest {
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
-    gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 9);
+    boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 10);
 
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages()).containsExactly(
-      PlayerColor.GREEN, //9 times
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN
-    );
+    assertThat(killed).isFalse();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(10, PlayerColor.GREEN));
+
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(gameModel.getRemainingSkulls()).isEqualTo(8);
+    assertThat(gameModel.getKillScore().size()).isEqualTo(0);
+  }
+
+  @Test
+  public void hitPlayerWithKillDamageTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 9);
+
+    assertThat(killed).isFalse();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(9, PlayerColor.GREEN));
+
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
 
     receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
-    gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 2);
+    killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 2);
 
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages()).containsExactly(
-      PlayerColor.GREEN, //11 times
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN
-    );
+    assertThat(killed).isTrue();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(11, PlayerColor.GREEN));
+
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
     assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent(gameModel));
     assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
@@ -223,22 +225,12 @@ public class GameModelTest {
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
-    gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 11);
+    boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 11);
 
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages()).containsExactly(
-      PlayerColor.GREEN, //12 times
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN
-    );
+    assertThat(killed).isTrue();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(12, PlayerColor.GREEN));
+
     assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks().size()).isEqualTo(0);
     assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getMarks()).containsExactly(PlayerColor.YELLOW);
 
@@ -262,11 +254,8 @@ public class GameModelTest {
     gameModel.markPlayer(PlayerColor.GREEN, PlayerColor.GRAY, 2);
 
     assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
-      .containsExactly(
-        PlayerColor.GREEN,
-        PlayerColor.GREEN,
-        PlayerColor.GREEN
-      );
+      .isEqualTo(Collections.nCopies(3, PlayerColor.GREEN));
+
     assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getMarks().size()).isEqualTo(0);
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, gameModel));
@@ -279,11 +268,8 @@ public class GameModelTest {
     gameModel.markPlayer(PlayerColor.GREEN, PlayerColor.GRAY, 2);
 
     assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getMarks())
-      .containsExactly(
-        PlayerColor.GREEN,
-        PlayerColor.GREEN,
-        PlayerColor.GREEN
-      );
+      .isEqualTo(Collections.nCopies(3, PlayerColor.GREEN));
+
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, gameModel));
   }
 
@@ -296,22 +282,12 @@ public class GameModelTest {
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
-    gameModel.hitAndMarkPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 11, 3);
+    boolean killed = gameModel.hitAndMarkPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 11, 3);
 
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages()).containsExactly(
-      PlayerColor.GREEN, //12 times
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN,
-      PlayerColor.GREEN
-    );
+    assertThat(killed).isTrue();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(12, PlayerColor.GREEN));
+
     assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks().size()).isEqualTo(2);
     assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getMarks()).containsExactly(PlayerColor.YELLOW);
 

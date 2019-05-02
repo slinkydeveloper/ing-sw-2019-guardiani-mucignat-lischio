@@ -27,7 +27,7 @@ public class MyConditions {
   public static Condition<ModelEvent> isGameModelUpdatedEvent(GameModel model) {
     return new Condition<>(e ->
       e instanceof GameModelUpdatedEvent && ((GameModelUpdatedEvent) e).getGameModel() == model,
-      "Event must be a PlayerDashboardUpdatedEvent");
+      "Event must be a GameModelUpdatedEvent");
   }
 
   public static Condition<Gun> gunWithId(String id) {
