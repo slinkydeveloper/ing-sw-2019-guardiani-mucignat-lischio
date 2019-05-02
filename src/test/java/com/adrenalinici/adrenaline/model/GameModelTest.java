@@ -1,16 +1,14 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
-import static com.adrenalinici.adrenaline.testutil.MyConditions.isDashboardCellUpdatedEvent;
-import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
+import static com.adrenalinici.adrenaline.testutil.MyConditions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameModelTest {
@@ -171,6 +169,143 @@ public class GameModelTest {
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
   }
 
-  //TODO P1 test for hitPlayer/markPlayer/hitAndMarkPlayer
+  @Test
+  public void hitPlayerTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
 
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 10);
+
+    assertThat(killed).isFalse();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(10, PlayerColor.GREEN));
+
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(gameModel.getRemainingSkulls()).isEqualTo(8);
+    assertThat(gameModel.getKillScore().size()).isEqualTo(0);
+  }
+
+  @Test
+  public void hitPlayerWithKillDamageTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 9);
+
+    assertThat(killed).isFalse();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(9, PlayerColor.GREEN));
+
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+
+    receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 2);
+
+    assertThat(killed).isTrue();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(11, PlayerColor.GREEN));
+
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent(gameModel));
+    assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
+    assertThat(gameModel.getKillScore().get(0)).isEqualTo(new AbstractMap.SimpleEntry<>(PlayerColor.GREEN, Boolean.FALSE));
+  }
+
+  @Test
+  public void hitPlayerWithCruelDamageAndMarksTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Arrays.asList(PlayerColor.GREEN, PlayerColor.GREEN));
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 11);
+
+    assertThat(killed).isTrue();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(12, PlayerColor.GREEN));
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks().size()).isEqualTo(0);
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getMarks()).containsExactly(PlayerColor.YELLOW);
+
+    assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
+    assertThat(gameModel.getKillScore().get(0)).isEqualTo(new AbstractMap.SimpleEntry<>(PlayerColor.GREEN, Boolean.TRUE));
+
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent(gameModel));
+  }
+
+  @Test
+  public void markPlayerTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.nCopies(3, PlayerColor.GREEN));
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    gameModel.markPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 1);
+    gameModel.markPlayer(PlayerColor.GREEN, PlayerColor.GRAY, 2);
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
+      .isEqualTo(Collections.nCopies(3, PlayerColor.GREEN));
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getMarks().size()).isEqualTo(0);
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, gameModel));
+
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).removeMarks(Collections.nCopies(3, PlayerColor.GREEN));
+    gameModel.getPlayerDashboard(PlayerColor.GRAY).addMarks(Collections.nCopies(2, PlayerColor.GREEN));
+
+    receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    gameModel.markPlayer(PlayerColor.GREEN, PlayerColor.GRAY, 2);
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getMarks())
+      .isEqualTo(Collections.nCopies(3, PlayerColor.GREEN));
+
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, gameModel));
+  }
+
+  @Test
+  public void hitAndMarkPlayerTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.singletonList(PlayerColor.GREEN));
+    gameModel.getPlayerDashboard(PlayerColor.GRAY).addMarks(Collections.singletonList(PlayerColor.GREEN));
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    gameModel.registerObserver(receivedModelEvents::add);
+    boolean killed = gameModel.hitAndMarkPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 11, 3);
+
+    assertThat(killed).isTrue();
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
+      .isEqualTo(Collections.nCopies(12, PlayerColor.GREEN));
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks().size()).isEqualTo(2);
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getMarks()).containsExactly(PlayerColor.YELLOW);
+
+    assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
+    assertThat(gameModel.getKillScore().get(0)).isEqualTo(new AbstractMap.SimpleEntry<>(PlayerColor.GREEN, Boolean.TRUE));
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, gameModel));
+    assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent(gameModel));
+  }
+
+  @Test
+  public void calculateMarksOnOtherPlayerDashboardsTest() {
+    GameModel gameModel = new GameModel(8, null,
+      TestUtils.generate3PlayerDashboards());
+
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.singletonList(PlayerColor.GREEN));
+    gameModel.getPlayerDashboard(PlayerColor.GRAY).addMarks(Arrays.asList(PlayerColor.GREEN, PlayerColor.YELLOW));
+    gameModel.getPlayerDashboard(PlayerColor.GREEN).addMarks(Collections.singletonList(PlayerColor.GREEN));
+
+    assertThat(gameModel.calculateMarksOnOtherPlayerDashboards(PlayerColor.GREEN)).isEqualTo(2);
+  }
 }

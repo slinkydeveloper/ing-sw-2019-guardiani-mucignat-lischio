@@ -1,17 +1,15 @@
 package com.adrenalinici.adrenaline.model;
 
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
+import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
 import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 
+import java.util.*;
 import java.util.AbstractMap.SimpleImmutableEntry;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Map.Entry;
@@ -132,36 +130,132 @@ public class GameModel extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
+  private boolean hitter(PlayerColor killer, PlayerColor victim, int damages) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+
+    int killerMarksOnVictimDashboard = victimPlayerDashboard.getMarks().stream()
+      .filter(playerColor -> playerColor.equals(killer)).collect(Collectors.toList()).size();
+
+    damages += killerMarksOnVictimDashboard;
+
+    victimPlayerDashboard.addDamages(
+      Collections.nCopies(damages, killer)
+    );
+
+    victimPlayerDashboard.removeMarks(
+      Collections.nCopies(killerMarksOnVictimDashboard, killer)
+    );
+
+    if (victimPlayerDashboard.getKillDamage().isPresent()) {
+      decrementSkulls();
+      victimPlayerDashboard.incrementSkullsNumber();
+
+      if (victimPlayerDashboard.getCruelDamage().isPresent()) {
+        killScore.add(new AbstractMap.SimpleImmutableEntry<PlayerColor, Boolean>(killer, Boolean.TRUE));
+        markPlayer(victim, killer, 1);
+      } else killScore.add(new AbstractMap.SimpleImmutableEntry<PlayerColor, Boolean>(killer, Boolean.FALSE));
+      notifyEvent(new GameModelUpdatedEvent(this));
+    }
+
+    return victimPlayerDashboard.getKillDamage().isPresent();
+  }
+
+  private void marker(PlayerColor killer, PlayerColor victim, int marks) {
+    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
+    int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
+
+    victimPlayerDashboard.addMarks(
+      Collections.nCopies(
+        marks > 3 - marksOnOtherPlayerDashboards ? 3 - marksOnOtherPlayerDashboards : marks,
+        killer)
+    );
+  }
+
+  /**
+   * This method hits a victim (adding damages).
+   * It also mutates killer's marks into damages (in case there's any of it)
+   * and then removes it from victim Playerdashboard.
+   * In case victim is killed it decrements skulls in Game model,
+   * and increments skulls in victim Playerdashboard,
+   * then it checks if cruelDamage is present and add a new element to killScore,
+   * launching a new GameModelUpdatedEvent.
+   * Finally launches a new PlayerDashboardUpdatedEvent
+   * of victim's color.
+   *
+   * @param killer  player who hits
+   * @param victim  hitted player
+   * @param damages number of damages to add
+   * @return true if victim was killed
+   */
   public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    victimPlayerDashboard.addDamages(
-      Collections.nCopies(damages, killer)
-    );
-    //TODO P1 check hit players
+    boolean killed = hitter(killer, victim, damages);
+
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
-    return victimPlayerDashboard.getKillDamage().isPresent();
+    return killed;
   }
 
+  /**
+   * This method marks a victim after making a check on the number
+   * of killer's marks already present on all other PlayerDashboards.
+   * Finally launches a new PlayerDashboardUpdatedEvent
+   * of victim's color.
+   *
+   * @param killer player who marks
+   * @param victim marked player
+   * @param marks number of marks to add
+   */
   public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    //TODO P2 marks number check
-    victimPlayerDashboard.addMarks(
-      Collections.nCopies(marks, killer)
-    );
+
+    marker(killer, victim, marks);
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
   }
 
+  /**
+   * This method hits a victim (adding damages).
+   * It also mutates killer's marks into damages (in case there's any of it)
+   * and then removes it from victim Playerdashboard.
+   * In case victim is killed it decrements skulls in Game model,
+   * and increments skulls in victim Playerdashboard,
+   * then it checks if cruelDamage is present and add a new element to killScore,
+   * launching a new GameModelUpdatedEvent.
+   * After that, it marks the victim after making a check on the number
+   * of killer's marks already present on all other PlayerDashboards.
+   * Finally launches a new PlayerDashboardUpdatedEvent
+   * of victim's color.
+   *
+   * @param killer
+   * @param victim
+   * @param damages
+   * @param marks
+   * @return true if victim was killed
+   */
   public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    //TODO P2 marks number check
-    victimPlayerDashboard.addDamages(
-      Collections.nCopies(damages, killer)
-    );
-    victimPlayerDashboard.addMarks(
-      Collections.nCopies(marks, killer)
-    );
+
+    boolean killed = hitter(killer, victim, damages);
+    marker(killer, victim, marks);
+
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
-    return victimPlayerDashboard.getKillDamage().isPresent();
+    return killed;
+  }
+
+  /**
+   * @param player
+   * @return number of player marks on other playerDashboards
+   */
+  public int calculateMarksOnOtherPlayerDashboards(PlayerColor player) {
+    List<PlayerColor> marksOnOtherPlayerDashboards = new ArrayList<>();
+    playerDashboards.stream()
+      .filter(playerDashboard -> !playerDashboard.getPlayer().equals(player))
+      .forEach(playerDashboard ->
+        playerDashboard.getMarks().stream()
+          .filter(playerColor -> playerColor.equals(player))
+          .forEach(playerColor -> marksOnOtherPlayerDashboards.add(playerColor))
+      );
+
+    return marksOnOtherPlayerDashboards.size();
   }
 
 }
