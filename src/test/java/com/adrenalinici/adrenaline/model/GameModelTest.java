@@ -169,7 +169,6 @@ public class GameModelTest {
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, gameModel));
   }
 
-  //TODO P1 test for hitPlayer/markPlayer/hitAndMarkPlayer
   @Test
   public void hitPlayerTest() {
     GameModel gameModel = new GameModel(8, null,

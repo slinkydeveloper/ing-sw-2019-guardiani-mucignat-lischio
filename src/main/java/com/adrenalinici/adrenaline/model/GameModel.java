@@ -130,20 +130,6 @@ public class GameModel extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
   }
 
-  /**
-   * This method hits a victim (adding damages).
-   * It also mutates killer's marks into damages (in case there's any of it)
-   * and then removes it from victim Playerdashboard
-   * In case victim is killed it decrements skulls in Game model,
-   * and increments skulls in victim Playerdashboard,
-   * then it checks if cruelDamage is present and add a new element to killScore,
-   * launching a new GameModelUpdatedEvent.
-   *
-   * @param killer  player who hits
-   * @param victim  hitted player
-   * @param damages number of damages to add
-   * @return true if victim was killed
-   */
   private boolean hitter(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
 
@@ -174,14 +160,6 @@ public class GameModel extends Observable<ModelEvent> {
     return victimPlayerDashboard.getKillDamage().isPresent();
   }
 
-  /**
-   * This method marks a victim after making a check on the number
-   * of killer's marks already present on all other PlayerDashboards
-   *
-   * @param killer player who marks
-   * @param victim marked player
-   * @param marks  number of marks to add
-   */
   private void marker(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
@@ -194,8 +172,15 @@ public class GameModel extends Observable<ModelEvent> {
   }
 
   /**
-   * Calls hitter method and then launches a new PlayerDashboardUpdatedEvent
-   * of victim's color
+   * This method hits a victim (adding damages).
+   * It also mutates killer's marks into damages (in case there's any of it)
+   * and then removes it from victim Playerdashboard.
+   * In case victim is killed it decrements skulls in Game model,
+   * and increments skulls in victim Playerdashboard,
+   * then it checks if cruelDamage is present and add a new element to killScore,
+   * launching a new GameModelUpdatedEvent.
+   * Finally launches a new PlayerDashboardUpdatedEvent
+   * of victim's color.
    *
    * @param killer  player who hits
    * @param victim  hitted player
@@ -211,8 +196,10 @@ public class GameModel extends Observable<ModelEvent> {
   }
 
   /**
-   * Calls marker method and then launches a new PlayerDashboardUpdatedEvent
-   * of victim's color
+   * This method marks a victim after making a check on the number
+   * of killer's marks already present on all other PlayerDashboards.
+   * Finally launches a new PlayerDashboardUpdatedEvent
+   * of victim's color.
    *
    * @param killer player who marks
    * @param victim marked player
@@ -226,8 +213,17 @@ public class GameModel extends Observable<ModelEvent> {
   }
 
   /**
-   * Calls hitter and then marker methods and then launches (only one) PlayerDashboardUpdatedEvent
-   * of victim's color
+   * This method hits a victim (adding damages).
+   * It also mutates killer's marks into damages (in case there's any of it)
+   * and then removes it from victim Playerdashboard.
+   * In case victim is killed it decrements skulls in Game model,
+   * and increments skulls in victim Playerdashboard,
+   * then it checks if cruelDamage is present and add a new element to killScore,
+   * launching a new GameModelUpdatedEvent.
+   * After that, it marks the victim after making a check on the number
+   * of killer's marks already present on all other PlayerDashboards.
+   * Finally launches a new PlayerDashboardUpdatedEvent
+   * of victim's color.
    *
    * @param killer
    * @param victim
