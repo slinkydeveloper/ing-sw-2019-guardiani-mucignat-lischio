@@ -2,28 +2,24 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.controller.DecoratedEffect;
-import com.adrenalinici.adrenaline.flow.FlowState;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.util.JsonUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.ArrayList;
-import java.util.List;
+import static com.adrenalinici.adrenaline.util.JsonUtils.pointer;
 
-public class AlternativeEffectGunFlowState implements FlowState {
+public class AlternativeEffectGunFlowState extends GunFlowState {
 
-  private DecoratedAlternativeEffectGun chosenGun;
-  private boolean firstEffect;
+  private Boolean firstEffect;
   private DecoratedEffect chosenEffect;
-  private List<PlayerColor> chosenPlayersToHit;
-  private List<PlayerColor> hitPlayers;
 
   public AlternativeEffectGunFlowState(DecoratedAlternativeEffectGun chosenGun) {
-    this.chosenGun = chosenGun;
-    this.chosenPlayersToHit = new ArrayList<>();
-    this.hitPlayers = new ArrayList<>();
+    super(chosenGun);
   }
 
   public DecoratedAlternativeEffectGun getChosenGun() {
-    return chosenGun;
+    return (DecoratedAlternativeEffectGun) chosenGun;
   }
 
   public DecoratedEffect getChosenEffect() {
@@ -40,11 +36,16 @@ public class AlternativeEffectGunFlowState implements FlowState {
     return firstEffect;
   }
 
-  public List<PlayerColor> getChosenPlayersToHit() {
-    return chosenPlayersToHit;
-  }
-
-  public List<PlayerColor> getHitPlayers() {
-    return hitPlayers;
+  @Override
+  public ObjectNode resolvePhaseConfiguration(String phaseId) {
+    JsonNode gunWideConfig = GunLoader.config.at(pointer(chosenGun.getId(), "phasesConfig", phaseId));
+    JsonNode effectWideConfig = (firstEffect != null) ?
+      (ObjectNode) GunLoader.config.at(
+        pointer(chosenGun.getId(), firstEffect ? "firstEffect" : "secondEffect", "phasesConfig", phaseId)
+      ) : null;
+    return JsonUtils.mergeConfigs(
+      gunWideConfig != null && gunWideConfig.isObject() ? (ObjectNode) gunWideConfig : null,
+      effectWideConfig != null && effectWideConfig.isObject() ? (ObjectNode) effectWideConfig : null
+    );
   }
 }

@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.controller.guns.MachineGunGunFactory;
 import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.controller.nodes.ChooseGunFlowNode;
@@ -13,7 +14,7 @@ import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +33,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
   @Override
   protected GunLoader createGunLoader() {
     return new GunLoader(
-      Collections.singletonList(new ZX2GunFactory())
+      Arrays.asList(new ZX2GunFactory(), new MachineGunGunFactory())
     );
   }
 
@@ -67,11 +68,28 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
 
     orchestrator.handleEvent(new GunChosenEvent(viewMock, "zx2"));
 
-    assertThat(context.getPhasesQueue())
-      .containsExactly(ControllerNodes.ALTERNATIVE_GUN_START.name());
+    assertThat(context.getPhasesQueue().get(0))
+      .isEqualTo(ControllerNodes.ALTERNATIVE_GUN_START.name());
 
     assertThat(context.getActualState())
       .isInstanceOf(AlternativeEffectGunFlowState.class);
+
+  }
+
+  @Test
+  public void testChooseBaseEffectGun() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("machine_gun"));
+
+    orchestrator.startNewFlow(viewMock, context);
+
+    orchestrator.handleEvent(new GunChosenEvent(viewMock, "machine_gun"));
+
+    assertThat(context.getPhasesQueue().get(0))
+      .isEqualTo(ControllerNodes.BASE_GUN_START.name());
+
+    assertThat(context.getActualState())
+      .isInstanceOf(BaseEffectGunFlowState.class);
 
   }
 

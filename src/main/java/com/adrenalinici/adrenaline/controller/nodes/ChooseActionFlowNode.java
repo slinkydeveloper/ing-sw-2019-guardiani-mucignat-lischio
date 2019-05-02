@@ -35,10 +35,10 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
         context.decrementRemainingActions();
         switch (e.getAction()) {
           case MOVE_MOVE_MOVE:
-            context.addPhasesToHead(movement(3));
+            context.addPhases(movement(3));
             break;
           case MOVE_PICKUP:
-            context.addPhasesToHead(movement(1), PICKUP.name());
+            context.addPhases(movement(1), PICKUP.name());
             break;
         }
         context.nextPhase(view);

@@ -22,6 +22,8 @@ public abstract class BaseFlowContext implements FlowContext {
 
   private FlowOrchestrator orchestrator;
 
+  private int actualIndex;
+
   public BaseFlowContext(FlowOrchestrator orchestrator) {
     this(orchestrator, Collections.emptyList());
   }
@@ -29,6 +31,7 @@ public abstract class BaseFlowContext implements FlowContext {
   public BaseFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
     this.orchestrator = orchestrator;
     this.phasesQueue = initialPhases != null ? new ArrayList<>(initialPhases) : new ArrayList<>();
+    this.actualIndex = this.phasesQueue.size();
   }
 
   @Override
@@ -56,6 +59,7 @@ public abstract class BaseFlowContext implements FlowContext {
       end(view);
     } else {
       actualPhaseId = phasesQueue.remove(0);
+      if (actualIndex > 0) actualIndex--;
       jump(actualPhaseId, view, flowState);
     }
   }
@@ -66,7 +70,7 @@ public abstract class BaseFlowContext implements FlowContext {
   }
 
   @Override
-  public FlowNode actualPhaseState() {
+  public FlowNode actualFlowNode() {
     return this.orchestrator.resolveState(this.actualPhaseId);
   }
 
@@ -81,8 +85,9 @@ public abstract class BaseFlowContext implements FlowContext {
   }
 
   @Override
-  public void addPhasesToHead(String... phases) {
-    this.phasesQueue.addAll(0, Arrays.asList(phases));
+  public void addPhases(String... phases) {
+    this.phasesQueue.addAll(actualIndex, Arrays.asList(phases));
+    actualIndex = actualIndex + phases.length;
   }
 
   @Override

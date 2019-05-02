@@ -84,6 +84,15 @@ public class TestUtils {
     );
   }
 
+  public static List<PlayerDashboard> generate4PlayerDashboards() {
+    return Arrays.asList(
+      new PlayerDashboard(PlayerColor.GREEN, true, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.GRAY, false, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.CYAN, false, Collections.emptyList())
+    );
+  }
+
   public static GameModel generateModel() {
     return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards());
   }

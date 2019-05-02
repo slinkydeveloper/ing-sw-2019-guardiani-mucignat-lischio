@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public class BaseEffectGun extends BaseGun {
@@ -25,20 +24,28 @@ public class BaseEffectGun extends BaseGun {
     return baseEffect;
   }
 
-  public Optional<Effect> getFirstExtraEffect() {
-    return Optional.ofNullable(firstExtraEffect);
+  public boolean hasFirstExtraEffect() {
+    return firstExtraEffect != null;
   }
 
-  public Optional<List<AmmoColor>> getFirstExtraEffectCost() {
-    return Optional.ofNullable(firstExtraEffectCost);
+  public Effect getFirstExtraEffect() {
+    return firstExtraEffect;
   }
 
-  public Optional<Effect> getSecondExtraEffect() {
-    return Optional.ofNullable(secondExtraEffect);
+  public List<AmmoColor> getFirstExtraEffectCost() {
+    return firstExtraEffectCost;
   }
 
-  public Optional<List<AmmoColor>> getSecondExtraEffectCost() {
-    return Optional.ofNullable(secondExtraEffectCost);
+  public boolean hasSecondExtraEffect() {
+    return secondExtraEffect != null;
+  }
+
+  public Effect getSecondExtraEffect() {
+    return secondExtraEffect;
+  }
+
+  public List<AmmoColor> getSecondExtraEffectCost() {
+    return secondExtraEffectCost;
   }
 
   @Override

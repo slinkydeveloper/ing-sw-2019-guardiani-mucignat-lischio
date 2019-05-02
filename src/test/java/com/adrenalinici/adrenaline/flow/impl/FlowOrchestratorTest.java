@@ -64,7 +64,7 @@ public class FlowOrchestratorTest {
     when(nodeOne.id()).thenReturn("one");
     doAnswer(invocation -> {
       FlowContext context = invocation.getArgument(3);
-      context.addPhasesToHead("two");
+      context.addPhases("two");
       context.nextPhase(view);
       return null;
     }).when(nodeOne).onJump(any(), any(), any(), any());
@@ -156,6 +156,23 @@ public class FlowOrchestratorTest {
 
     assertThat(bool).isTrue();
     assertThat(passes).hasValue(-1);
+  }
+
+  @Test
+  public void testAddPhases() {
+    FlowOrchestrator<FlowContextImpl> orchestrator = new FlowOrchestratorImpl<>(Collections.emptyList(), model, context -> {
+    });
+    FlowContextImpl context = new FlowContextImpl(orchestrator, Collections.singletonList("z"));
+
+    context.addPhases("a", "b");
+    assertThat(context.getPhasesQueue())
+      .containsExactly("z", "a", "b");
+    context.addPhasesToEnd("e", "f");
+    assertThat(context.getPhasesQueue())
+      .containsExactly("z", "a", "b", "e", "f");
+    context.addPhases("c", "d");
+    assertThat(context.getPhasesQueue())
+      .containsExactly("z", "a", "b", "c", "d", "e", "f");
   }
 
 }

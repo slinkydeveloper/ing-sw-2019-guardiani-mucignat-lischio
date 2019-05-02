@@ -2,8 +2,10 @@ package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
+import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
+import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowState;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.GameModel;
 import com.adrenalinici.adrenaline.view.GameView;
@@ -30,10 +32,14 @@ public class ChooseGunFlowNode implements StatelessControllerFlowNode {
         DecoratedAlternativeEffectGun decorated = (DecoratedAlternativeEffectGun) context
           .getGunLoader()
           .getDecoratedGun(alternativeEffectGun.getId());
-        context.addPhasesToHead(decorated.getPhases().toArray(new String[0]));
+          context.addPhases(decorated.getPhases().toArray(new String[0]));
         context.nextPhase(view, new AlternativeEffectGunFlowState(decorated));
       }, baseEffectGun -> {
-        //TODO P1
+          DecoratedBaseEffectGun decorated = (DecoratedBaseEffectGun) context
+            .getGunLoader()
+            .getDecoratedGun(baseEffectGun.getId());
+          context.addPhases(decorated.getPhases().toArray(new String[0]));
+          context.nextPhase(view, new BaseEffectGunFlowState(decorated));
       });
     });
   }
