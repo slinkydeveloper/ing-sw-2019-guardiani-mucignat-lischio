@@ -392,44 +392,8 @@ package com.adrenalinici.adrenaline.controller {
      }
 
   }
-  package com.adrenalinici.adrenaline.controller.flow{
-    package com.adrenalinici.adrenaline.controller.flow.impl{
-
-    }
-  }
 
   package com.adrenalinici.adrenaline.controller.nodes{
-
-    NewTurnFlowNode <|-- StatelessControllerFlowNode
-          class NewTurnFlowNode implements StatelessControllerFlowNode {
-
-           + String id()
-           + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-           + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-         }
-
-    enum ControllerNodes {
-            START_TURN,
-            PICKUP,
-            RELOAD,
-            CHOOSE_ACTION,
-            RESPAWN_KILLED_PEOPLE,
-            CHOOSE_GUN,
-            CHOOSE_PLAYER_TO_HIT,
-            ALTERNATIVE_GUN_START,
-            BASE_GUN_START;
-
-            + static String movement(int distance)
-            + static String applyGunEffect(String gunId, String effectId)
-          }
-
-          PickupFlowNode <|-- StatelessControllerFlowNode
-                  class PickupFlowNode implements StatelessControllerFlowNode {
-
-                    + String id()
-                    + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                    + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                    }
 
         ChooseActionFlowNode <|-- StatelessControllerFlowNode
               class ChooseActionFlowNode implements StatelessControllerFlowNode {
@@ -467,78 +431,68 @@ package com.adrenalinici.adrenaline.controller {
 
     package com.adrenalinici.adrenaline.controller.nodes.guns{
 
-      AlternativeEffectGunFlowState ..> GunFlowState
-
-      class AlternativeEffectGunFlowState extends GunFlowState {
-        - Boolean firstEffect;
-        - DecoratedEffect chosenEffect;
-
-        + AlternativeEffectGunFlowState(DecoratedAlternativeEffectGun chosenGun)
-        + DecoratedAlternativeEffectGun getChosenGun()
-        + DecoratedEffect getChosenEffect()
-        + AlternativeEffectGunFlowState setChosenEffect(DecoratedEffect chosenEffect, boolean chosenEffectIsFirstEffect)
-        + boolean isFirstEffect()
-        + ObjectNode resolvePhaseConfiguration(String phaseId)
-      }
-
-      class ApplyBaseGunFlowNode  {
-        - String nodeId
-        - TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext> consumer
-
-        + String id()
-        + void onJump(BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-        + void handleEvent(ViewEvent event, BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-      }
-
-       BaseEffectGunFlowState ..> GunFlowState
-
-      class BaseEffectGunFlowState extends GunFlowState {
-        - boolean activatedFirstExtraEffect
-        - boolean activatedSecondExtraEffect
-
-        + DecoratedBaseEffectGun getChosenGun()
-        + boolean isActivatedFirstExtraEffect()
-        + BaseEffectGunFlowState setActivatedFirstExtraEffect(boolean activatedFirstExtraEffect)
-        + boolean isActivatedSecondExtraEffect()
-        + BaseEffectGunFlowState setActivatedSecondExtraEffect(boolean activatedSecondExtraEffect)
-        + ObjectNode resolvePhaseConfiguration(String phaseId)
-      }
-
-      class ChooseAlternativeEffectForGunFlowNode  {
-        - int distance
-
-        + String id()
-        + void onJump(AlternativeEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-        + void handleEvent(ViewEvent event, AlternativeEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-        - boolean canUseSecondEffect(GameModel model, PlayerColor playerColor, AlternativeEffectGun gun)
-      }
-
-
-
-
-      class ChooseBaseEffectForGunFlowNode  {
+    ChooseActionFlowNode <|-- StatelessControllerFlowNode
+   class ChooseActionFlowNode implements StatelessControllerFlowNode {
 
       + String id()
-      + void onJump(BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-      + void handleEvent(ViewEvent event, BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-      - boolean canUseFirstExtraEffect(GameModel model, PlayerColor playerColor, BaseEffectGun gun)
-      - boolean canUseSecondExtraEffect(GameModel model, PlayerColor playerColor, BaseEffectGun gun)
-      }
+      + onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+      +  void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
+      - List<Action> calculateAvailableActions()
+   }
+    ChooseGunFlowNode <|-- StatelessControllerFlowNode
+    class ChooseGunFlowNode implements StatelessControllerFlowNode {
+      + String id()
+      + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+      + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
 
-      class ChoosePlayersToHitFlowNode {
+    }
 
-        + String id()
-        + void onJump(GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-        + void handleEvent(ViewEvent event, GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context)
-        - int resolveHittablePlayersNumber(GunFlowState flowState)
-        - TriPredicate<PlayerColor, PlayerColor, GameModel> resolveDistanceEvalPredicate(GunFlowState flowState)
-        }
-         G ..> Gun
-        interface GunFlowNodesFactory<G extends Gun> {
-          + boolean canConsume(String key, JsonNode config)
-          + List<ControllerFlowNode> create(G gun, JsonNode gunConfig)
-        }
+  ChooseMovementFlowNode <|-- StatelessControllerFlowNode
+  class ChooseMovementFlowNode implements StatelessControllerFlowNode {
+      - int distance
 
+       + String id()
+       +void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+       + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+    }
+
+  NewTurnFlowNode <|-- StatelessControllerFlowNode
+  class NewTurnFlowNode implements StatelessControllerFlowNode {
+    + String id()
+    + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+    + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+    - int calculateRemainingActions()
+   }
+
+    ReloadFlowNode <|-- StatelessControllerFlowNode
+    class ReloadFlowNode implements StatelessControllerFlowNode {
+      + String id()
+      + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+      + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+
+    }
+    enum ControllerNodes {
+                START_TURN,
+                PICKUP,
+                RELOAD,
+                CHOOSE_ACTION,
+                RESPAWN_KILLED_PEOPLE,
+                CHOOSE_GUN,
+                CHOOSE_PLAYER_TO_HIT,
+                ALTERNATIVE_GUN_START,
+                BASE_GUN_START;
+
+                + static String movement(int distance)
+                + static String applyGunEffect(String gunId, String effectId)
+              }
+
+        PickupFlowNode <|-- StatelessControllerFlowNode
+        class PickupFlowNode implements StatelessControllerFlowNode {
+
+          + String id()
+          + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+          + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
+          }
 
       }
 
