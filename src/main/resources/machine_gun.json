@@ -1,0 +1,45 @@
+{
+  "name": "Machine Gun",
+  "note": "If you deal both additional points of damage, they must be dealt to 2 different targets. If you see only 2 targets, you deal 2 to each if you use both optional effects. If you use the basic effect on only 1 target, you can still use the the turret tripod to give it 1 additional damage.",
+  "firstAmmo": "blue",
+  "extraAmmo": [
+    "red"
+  ],
+  "phases": [
+    "BASE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT",
+    "apply_gun_effect_machine_gun_base"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 2,
+      "distanceEval": "visible === true"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Choose 1 or 2 targets you can see and deal 1 damage to each."
+  },
+  "firstExtraEffect": {
+    "id": "focus",
+    "name": "Focus shot",
+    "description": "Deal 1 additional damage to the first target.",
+    "cost": [
+      "yellow"
+    ]
+  },
+  "secondExtraEffect": {
+    "id": "tripod",
+    "name": "Turret tripod",
+    "description": "Deal 1 additional damage to the second target and/or deal 1 damage to a different target you can see.",
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1
+      }
+    },
+    "cost": [
+      "blue"
+    ]
+  }
+}
