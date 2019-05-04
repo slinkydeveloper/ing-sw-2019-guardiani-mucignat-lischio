@@ -672,99 +672,100 @@ package com.adrenalinici.adrenaline.controller.states {
 
 package com.adrenalinici.adrenaline.flow {
 
-interface FlowContext {
+    BaseFlowContext <|-- FlowContext
 
-    +FlowOrchestrator getOrchestrator()
-    +void jump(String stateId, GameView view, FlowState event)
-    +void replayNode(GameView view)
-    +void replayPhase(GameView view)
-    +void nextPhase(GameView view)
-    +void nextPhase(GameView view, FlowState flowState)
-    +String actualPhase()
-    +FlowNode actualFlowNode()
-    +FlowNode actualNode()
-    +void addPhases(String... phases)
-    +void addPhasesToEnd(String... phases)
-    +void end(GameView view)
-    +void handleEvent(ViewEvent event)
+    interface FlowContext {
 
+      + FlowOrchestrator getOrchestrator()
+      + void jump(String stateId, GameView view, FlowState event)
+      + void replayNode(GameView view)
+      + void replayPhase(GameView view)
+      + void nextPhase(GameView view)
+      + void nextPhase(GameView view, FlowState flowState)
+      + String actualPhase()
+      + FlowNode actualFlowNode()
+      + FlowNode actualNode()
+      + void addPhases(String... phases)
+      + void addPhasesToEnd(String... phases)
+      + void end(GameView view)
+      + void handleEvent(ViewEvent event)
+    }
+
+      interface FlowNode<S extends FlowState, C extends FlowContext> {
+
+          + String id()
+          + default S mapState(FlowState oldState)
+          + void onJump(S flowState, GameView view, GameModel model, C context)
+          + void handleEvent(ViewEvent event, S flowState, GameView view, GameModel model, C context)
+      }
+
+    interface FlowOrchestrator<T extends FlowContext> {
+
+        + GameModel getModel()
+        + void handleEvent(ViewEvent event)
+        + void onEnd(GameView view)
+        + FlowNode resolveState(String id)
+        + void startNewFlow(GameView view, T context)
+        + T getActualContext()
+    }
+
+    interface FlowState {
+    }
+
+    StatelessFlowNode ..> FlowNode
+
+    interface StatelessFlowNode<C extends FlowContext> extends FlowNode{
+      + default VoidState mapState(FlowState oldState)
+    }
+
+    package com.adrenalinici.adrenaline.flow.impl {
+      BaseFlowContext <|-- FlowContext
+      abstract class BaseFlowContext implements FlowContext {
+
+        - FlowNode actualNode;
+        # FlowState actualState;
+        - String actualPhaseId;
+        - List<String> phasesQueue;
+        - FlowOrchestrator orchestrator;
+        - int actualIndex;
+
+        + BaseFlowContext(FlowOrchestrator orchestrator)
+        + FlowOrchestrator getOrchestrator()
+        + void jump(String stateId, GameView view, FlowState state)
+        + void replayNode(GameView view) {
+        + void nextPhase(GameView view, FlowState flowState)
+        + String actualPhase()
+        + FlowNode actualFlowNode()
+        + FlowNode actualNode()
+        + void replayPhase(GameView view)
+        + void addPhases(String... phases)
+        + void addPhasesToEnd(String... phases)
+        + void end(GameView view)
+        + void handleEvent(ViewEvent event)
+        + List<String> getPhasesQueue()
+      }
+      FlowOrchestratorImpl<|-- FlowOrchestrator
+      class FlowOrchestratorImpl<T extends FlowContext>  {
+
+        private Map<String, ? extends FlowNode> nodes;
+        private T actualContext;
+        private GameModel model;
+        private Consumer<GameView> onEndCallback;
+
+        + FlowOrchestratorImpl(List<? extends FlowNode> nodes, GameModel model, Consumer<GameView> onEndCallback)
+         + GameModel getModel()
+         + void handleEvent(ViewEvent event)
+        + void onEnd(GameView view)
+         + FlowNode resolveState(String id)
+         +void startNewFlow(GameView gameView, T context)
+        + T getActualContext()
+      }
+      VoidState <|-- FlowState
+      class VoidState implements FlowState {
+
+        }
+    }
   }
-
-  interface FlowNode<S extends FlowState, C extends FlowContext> {
-
-    +String id()
-    +default S mapState(FlowState oldState)
-    +void onJump(S flowState, GameView view, GameModel model, C context)
-    +void handleEvent(ViewEvent event, S flowState, GameView view, GameModel model, C context)
-  }
-  interface FlowOrchestrator<T extends FlowContext> {
-
-    + GameModel getModel()
-    + void handleEvent(ViewEvent event)
-    + void onEnd(GameView view)
-     +FlowNode resolveState(String id)
-    + void startNewFlow(GameView view, T context)
-   + T getActualContext()
-
-  }
-
-  interface FlowState {
-  }
-  StatelessFlowNode ..> FlowNode
-  interface StatelessFlowNode<C extends FlowContext> extends FlowNode{
-    + default VoidState mapState(FlowState oldState)
-  }
-
-  package com.adrenalinici.adrenaline.flow.impl {
-
-  BaseFlowContext <|-- FlowContext
-  abstract class BaseFlowContext implements FlowContext {
-
-   - FlowNode actualNode;
-   # FlowState actualState;
-   - String actualPhaseId;
-   - List<String> phasesQueue;
-   - FlowOrchestrator orchestrator;
-   - int actualIndex;
-
-    + BaseFlowContext(FlowOrchestrator orchestrator)
-    +FlowOrchestrator getOrchestrator()
-  + void jump(String stateId, GameView view, FlowState state)
-     + void replayNode(GameView view) {
-  + void nextPhase(GameView view, FlowState flowState)
-   + String actualPhase()
-    + FlowNode actualFlowNode()
-    +FlowNode actualNode()
-    +void replayPhase(GameView view)
-    + void addPhases(String... phases)
-    +void addPhasesToEnd(String... phases)
-   +void end(GameView view)
-    + void handleEvent(ViewEvent event)
-    +List<String> getPhasesQueue()
-
-  }
-FlowOrchestratorImpl<|-- FlowOrchestrator
-class FlowOrchestratorImpl<T extends FlowContext>  {
-
-  private Map<String, ? extends FlowNode> nodes;
-  private T actualContext;
-  private GameModel model;
-  private Consumer<GameView> onEndCallback;
-
-  + FlowOrchestratorImpl(List<? extends FlowNode> nodes, GameModel model, Consumer<GameView> onEndCallback)
-   + GameModel getModel()
-   + void handleEvent(ViewEvent event)
-  + void onEnd(GameView view)
-   + FlowNode resolveState(String id)
-   +void startNewFlow(GameView gameView, T context)
-  + T getActualContext()
-}
-VoidState <|-- FlowState
-class VoidState implements FlowState {
-}
-}
-
-}
 
 package com.adrenalinici.adrenaline.view {
   class GameView {
