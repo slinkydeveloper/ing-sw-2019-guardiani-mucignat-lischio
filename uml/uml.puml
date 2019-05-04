@@ -360,7 +360,7 @@ package com.adrenalinici.adrenaline.controller {
 
   package com.adrenalinici.adrenaline.controller.guns {
 
-    AlternativeEffectGunFactory ..> GunFactory
+
     BaseEffectGunFactory ..> GunFactory
     MachineGunGunFactory ..> BaseEffectGunFactory
     ZX2GunFactory ..> AlternativeEffectGunFactory
@@ -518,7 +518,7 @@ package com.adrenalinici.adrenaline.controller {
 
 
 interface ControllerFlowNode<T extends FlowState> extends FlowNode {
-<T, ControllerFlowContext>
+
 }
 
 class DecoratedAlternativeEffectGun extends DecoratedGun {
@@ -598,7 +598,7 @@ interface GunFactory {
 }
 
 class GunLoader {
-  + {static} JsonNode ?????????????
+  + {static} JsonNode 
   - List<GunFactory> factories
 
   + GunLoader(List<GunFactory> factories)
@@ -624,7 +624,7 @@ class GunLoader {
   }
 
  interface StatelessControllerFlowNode extends StatelessFlowNode {
-  <ControllerFlowContext>
+
  }
   com.adrenalinici.adrenaline.observer.Observer <|.. GameController: "T::ViewEvent"
 
