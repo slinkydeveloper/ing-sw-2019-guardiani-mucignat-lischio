@@ -6,58 +6,37 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
-import java.util.Map;
 
 public class GunLoader {
-
-  //public static JsonNode config = JsonUtils.getConfigurationJSONFromClasspath("guns.json");
-  //public List<JsonNode> config;
-  //public List<Map<String, JsonNode>> config; //mappa dove la stringa sarebbe l'id dell'arma
 
   private List<GunFactory> factories;
 
   public GunLoader(List<GunFactory> factories) {
     this.factories = factories;
   }
-  /*public GunLoader(List<GunFactory> factories, String id) {
-    this.factories = factories;
-  }*/
 
-
-  /*public Gun getModelGun(String id) {
-    return resolveGunFactory(id).getModelGun(id, (ObjectNode) config.get(id));
-  }*/
   public Gun getModelGun(String id) {
-    return resolveGunFactory(id).getModelGun(id, (ObjectNode) JsonUtils.getConfigurationJSONFromClasspath(id + ".json"));
+    return resolveGunFactory(id).getModelGun(id, (ObjectNode) getGunConfigJson(id));
   }
 
-  /*public DecoratedGun getDecoratedGun(String id) {
-    return resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) config.get(id));
-  }*/
   public DecoratedGun getDecoratedGun(String id) {
-    return resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) JsonUtils.getConfigurationJSONFromClasspath(id + ".json"));
+    return resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) getGunConfigJson(id));
   }
 
-  /*public List<ControllerFlowNode> getAdditionalNodes(String id) {
-    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) config.get(id));
-  }*/
   public List<ControllerFlowNode> getAdditionalNodes(String id) {
-    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) JsonUtils.getConfigurationJSONFromClasspath(id + ".json"));
+    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id));
   }
 
-  /*private GunFactory resolveGunFactory(String id) {
-    return factories
-      .stream()
-      .filter(f -> f.canConsume(id, (ObjectNode) config.get(id)))
-      .findFirst()
-      .orElseThrow(() -> new IllegalStateException("Cannot find in config gun " + id));
-  }*/
   private GunFactory resolveGunFactory(String id) {
     return factories
       .stream()
-      .filter(f -> f.canConsume(id, (ObjectNode) JsonUtils.getConfigurationJSONFromClasspath(id)))
+      .filter(f -> f.canConsume(id, (ObjectNode) getGunConfigJson(id)))
       .findFirst()
       .orElseThrow(() -> new IllegalStateException("Cannot find in config gun " + id));
+  }
+
+  public static JsonNode getGunConfigJson(String id) {
+    return JsonUtils.getConfigurationJSONFromClasspath(id + ".json");
   }
 
 }

@@ -36,28 +36,17 @@ public class AlternativeEffectGunFlowState extends GunFlowState {
     return firstEffect;
   }
 
-  /*@Override
-  public ObjectNode resolvePhaseConfiguration(String phaseId) {
-    JsonNode gunWideConfig = GunLoader.config.at(pointer(chosenGun.getId(), "phasesConfig", phaseId));
-    JsonNode effectWideConfig = (firstEffect != null) ?
-      (ObjectNode) GunLoader.config.at(
-        pointer(chosenGun.getId(), firstEffect ? "firstEffect" : "secondEffect", "phasesConfig", phaseId)
-      ) : null;
-    return JsonUtils.mergeConfigs(
-      gunWideConfig != null && gunWideConfig.isObject() ? (ObjectNode) gunWideConfig : null,
-      effectWideConfig != null && effectWideConfig.isObject() ? (ObjectNode) effectWideConfig : null
-    );
-  }*/
   @Override
   public ObjectNode resolvePhaseConfiguration(String phaseId) {
-    //JsonNode gunWideConfig = GunLoader.config.at(pointer(chosenGun.getId(), "phasesConfig", phaseId));
-    JsonNode gunWideConfig = JsonUtils.getConfigurationJSONFromClasspath(chosenGun.getId())
+    JsonNode gunWideConfig = JsonUtils.getConfigurationJSONFromClasspath(chosenGun.getId() + ".json")
       .at(pointer("phasesConfig", phaseId));
 
     JsonNode effectWideConfig = (firstEffect != null) ?
-      (ObjectNode) JsonUtils.getConfigurationJSONFromClasspath(getChosenGun().getId()).at(
+      (ObjectNode) JsonUtils.getConfigurationJSONFromClasspath(getChosenGun().getId() + ".json")
+        .at(
         pointer(firstEffect ? "firstEffect" : "secondEffect", "phasesConfig", phaseId)
-      ) : null;
+        ) : null;
+
     return JsonUtils.mergeConfigs(
       gunWideConfig != null && gunWideConfig.isObject() ? (ObjectNode) gunWideConfig : null,
       effectWideConfig != null && effectWideConfig.isObject() ? (ObjectNode) effectWideConfig : null
