@@ -258,7 +258,7 @@ package com.adrenalinici.adrenaline.model {
 
 }
 
-package com.adrenalinici.adrenaline.events {
+package com.adrenalinici.adrenaline.view.events {
   interface ViewEvent {
     +GameView getGameView()
   }
@@ -332,7 +332,9 @@ package com.adrenalinici.adrenaline.events {
     -chosenEnemyMovement: Position
     +Position getChosenEnemyMovement()
   }
+}
 
+package com.adrenalinici.adrenaline.model.events {
   interface ModelEvent{
     +GameStatus getGameStatus()
   }
@@ -355,431 +357,311 @@ package com.adrenalinici.adrenaline.events {
   }
 }
 
+package com.adrenalinici.adrenaline.controller.guns {
+  abstract class AlternativeEffectGunFactory implements GunFactory {
+    + AlternativeEffectGun getModelGun (String key, ObjectNode config)
+    + public DecoratedAlternativeEffectGun getDecoratedGun(String key, ObjectNode config)
+  }
+
+  abstract class BaseEffectGunFactory implements GunFactory {
+   +BaseEffectGun getModelGun(String key, ObjectNode config)
+   +DecoratedBaseEffectGun getDecoratedGun(String key, ObjectNode config)
+  }
+
+  class MachineGunGunFactory extends BaseEffectGunFactory {
+    +boolean canConsume(String key, ObjectNode config)
+    +List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config)
+  }
+
+  class ZX2GunFactory extends AlternativeEffectGunFactory {
+
+    + boolean canConsume(String key, ObjectNode config)
+    + List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config)
+  }
+}
 
 package com.adrenalinici.adrenaline.controller {
 
-  package com.adrenalinici.adrenaline.controller.guns {
+  class ControllerFlowContext extends com.adrenalinici.adrenaline.flow.BaseFlowContext {
+    -int remainingActions;
+    -PlayerColor turnOfPlayer;
+    - List<PlayerColor> killedPlayers;
+    - GunLoader loader;
 
-
-    BaseEffectGunFactory ..> GunFactory
-    MachineGunGunFactory ..> BaseEffectGunFactory
-    ZX2GunFactory ..> AlternativeEffectGunFactory
-
-    abstract class AlternativeEffectGunFactory implements GunFactory {
-
-        + AlternativeEffectGun getModelGun (String key, ObjectNode config)
-        + public DecoratedAlternativeEffectGun getDecoratedGun(String key, ObjectNode config)
-      }
-   abstract class BaseEffectGunFactory implements GunFactory {
-
-       +BaseEffectGun getModelGun(String key, ObjectNode config)
-       +DecoratedBaseEffectGun getDecoratedGun(String key, ObjectNode config)
-     }
-
-   class MachineGunGunFactory extends BaseEffectGunFactory {
-     - {static} final TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext>
-
-     +boolean canConsume(String key, ObjectNode config)
-     +List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config)
-     }
-
-     class ZX2GunFactory extends AlternativeEffectGunFactory {
-      - {static} final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> BASE_EFFECT_APPLY
-      - {static} final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> SCANNER_EFFECT_APPLY
-
-     + boolean canConsume(String key, ObjectNode config)
-     + List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config)
-     }
-
+    + int getRemainingActions()
+    + ControllerFlowContext setRemainingActions(int remainingActions)
+    + ControllerFlowContext decrementRemainingActions()
+    + PlayerColor getTurnOfPlayer()
+    + ControllerFlowContext setTurnOfPlayer(PlayerColor turnOfPlayer)
+    + List<PlayerColor> getKilledPlayers()
+    + ControllerFlowContext setKilledPlayers(List<PlayerColor> killedPlayers)
+    + GunLoader getGunLoader()
   }
 
-  package com.adrenalinici.adrenaline.controller.nodes{
+  interface ControllerFlowNode extends com.adrenalinici.adrenaline.flow.FlowNode
 
-        ChooseActionFlowNode <|-- StatelessControllerFlowNode
-              class ChooseActionFlowNode implements StatelessControllerFlowNode {
+  class DecoratedEffect {
+    - Effect effect
+    - List<String> additionalPhases
+    - List<AmmoColor> requiredAmmos
 
-                + String id()
-                + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                - List<Action> calculateAvailableActions()
-              }
-               ChooseGunFlowNode <|-- StatelessControllerFlowNode
-              class ChooseGunFlowNode implements StatelessControllerFlowNode {
-                + String id()
-                + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-               }
-                ChooseMovementFlowNode <|-- StatelessControllerFlowNode
-               class ChooseMovementFlowNode implements StatelessControllerFlowNode {
-                  - int distance
-
-                  + ChooseMovementFlowNode(int distance)
-                  + String id()
-                  + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                  + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-               }
-
-               ReloadFlowNode <|-- StatelessControllerFlowNode
-              class ReloadFlowNode implements StatelessControllerFlowNode {
-
-                  + String id()
-                  + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-                  + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-
-              }
-
-
-    package com.adrenalinici.adrenaline.controller.nodes.guns{
-
-    ChooseActionFlowNode <|-- StatelessControllerFlowNode
-   class ChooseActionFlowNode implements StatelessControllerFlowNode {
-
-      + String id()
-      + onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-      +  void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-      - List<Action> calculateAvailableActions()
-   }
-    ChooseGunFlowNode <|-- StatelessControllerFlowNode
-    class ChooseGunFlowNode implements StatelessControllerFlowNode {
-      + String id()
-      + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-      + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-
-    }
-
-  ChooseMovementFlowNode <|-- StatelessControllerFlowNode
-  class ChooseMovementFlowNode implements StatelessControllerFlowNode {
-      - int distance
-
-       + String id()
-       +void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-       + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-    }
-
-  NewTurnFlowNode <|-- StatelessControllerFlowNode
-  class NewTurnFlowNode implements StatelessControllerFlowNode {
-    + String id()
-    + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-    + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-    - int calculateRemainingActions()
-   }
-
-    ReloadFlowNode <|-- StatelessControllerFlowNode
-    class ReloadFlowNode implements StatelessControllerFlowNode {
-      + String id()
-      + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-      + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-
-    }
-    enum ControllerNodes {
-                START_TURN,
-                PICKUP,
-                RELOAD,
-                CHOOSE_ACTION,
-                RESPAWN_KILLED_PEOPLE,
-                CHOOSE_GUN,
-                CHOOSE_PLAYER_TO_HIT,
-                ALTERNATIVE_GUN_START,
-                BASE_GUN_START;
-
-                + static String movement(int distance)
-                + static String applyGunEffect(String gunId, String effectId)
-              }
-
-        PickupFlowNode <|-- StatelessControllerFlowNode
-        class PickupFlowNode implements StatelessControllerFlowNode {
-
-          + String id()
-          + void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-          + void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context)
-          }
-
-      }
-
-
-
+    + Effect get()
+    + String getId()
+    + String getName()
+    + String getDescription()
+    + List<AmmoColor> getRequiredAmmos()
+    + List<String> getAdditionalPhases()
   }
 
-  class ControllerFlowContext extends BaseFlowContext {
-  -int remainingActions;
-  -PlayerColor turnOfPlayer;
-  - List<PlayerColor> killedPlayers;
-  - GunLoader loader;
+  class GameController  {
+    - GameModel gameModel
+    - FlowOrchestrator<ControllerFlowContext> flowOrchestrator
 
-  + int getRemainingActions()
-  + ControllerFlowContext setRemainingActions(int remainingActions)
-  + ControllerFlowContext decrementRemainingActions()
-  + PlayerColor getTurnOfPlayer()
-  + ControllerFlowContext setTurnOfPlayer(PlayerColor turnOfPlayer)
-  + List<PlayerColor> getKilledPlayers()
-  + ControllerFlowContext setKilledPlayers(List<PlayerColor> killedPlayers)
-  + GunLoader getGunLoader()
+    + public GameController(List<? extends FlowNode> flowNodes, GameModel gameModel)
+    + void onEvent(ViewEvent event)
+    - PlayerColor nextTurnPlayer()
+    + endTurnCallback(GameView view)
+    - void startNewTurn(GameView view, PlayerColor player)
+    # ControllerFlowContext getFlowContext()
   }
 
+  interface GunFactory {
 
-interface ControllerFlowNode<T extends FlowState> extends FlowNode {
+    +boolean canConsume(String key, ObjectNode config)
 
-}
+    + Gun getModelGun(String key, ObjectNode config)
+    + DecoratedGun getDecoratedGun(String key, ObjectNode config)
+    + List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config)
+  }
 
-class DecoratedAlternativeEffectGun extends DecoratedGun {
+  class GunLoader {
+    - List<GunFactory> factories
 
-  - DecoratedEffect firstEffect
-  - DecoratedEffect secondEffect
-
-  + DecoratedEffect getFirstEffect()
-  + DecoratedEffect getSecondEffect()
-  + AlternativeEffectGun get()
-}
-
-class DecoratedBaseEffectGun extends DecoratedGun {
-
-  - DecoratedEffect baseEffect
-  - DecoratedEffect firstExtraEffect
-  - DecoratedEffect secondExtraEffect
-
-  + DecoratedEffect getBaseEffect()
-  + List<AmmoColor> getFirstExtraEffectCost()
-  + DecoratedEffect getFirstExtraEffect()
-  + boolean hasFirstExtraEffect()
-  + List<AmmoColor> getSecondExtraEffectCost()
-  + DecoratedEffect getSecondExtraEffect()
-  + boolean hasSecondExtraEffect()
-  + BaseEffectGun get()
-}
-
-class DecoratedEffect {
-  - Effect effect
-  - List<String> additionalPhases
-  - List<AmmoColor> requiredAmmos
-
-  + Effect get()
-  + String getId()
-  + String getName()
-  + String getDescription()
-  + List<AmmoColor> getRequiredAmmos()
-  + List<String> getAdditionalPhases()
-}
-
-abstract class DecoratedGun implements Gun {
-  - Gun gun
-  - List<String> phases
-
-  + DecoratedGun(Gun gun, List<String> phases)
-  + Gun get()
-  +void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun)
-  + String getId()
-  + List<AmmoColor> getRequiredAmmoToPickup()
-  + List<AmmoColor> getRequiredAmmoToReload()
-  + String getName()
-  + Optional<String> getNote()
-  + List<String> getPhases()
-}
-
- class GameController  {
-
-  - GameModel gameModel
-  - FlowOrchestrator<ControllerFlowContext> flowOrchestrator
-
-  + public GameController(List<? extends FlowNode> flowNodes, GameModel gameModel)
-  + void onEvent(ViewEvent event)
-  - PlayerColor nextTurnPlayer()
-  + endTurnCallback(GameView view)
-  - void startNewTurn(GameView view, PlayerColor player)
-  # ControllerFlowContext getFlowContext()
-}
-
-interface GunFactory {
-
-  +boolean canConsume(String key, ObjectNode config)
-
-  + Gun getModelGun(String key, ObjectNode config)
-  + DecoratedGun getDecoratedGun(String key, ObjectNode config)
-  + List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config)
-}
-
-class GunLoader {
-  + {static} JsonNode config
-  - List<GunFactory> factories
-
-  + GunLoader(List<GunFactory> factories)
-  + Gun getModelGun(String id)
-  + DecoratedGun getDecoratedGun(String id)
-  + List<ControllerFlowNode> getAdditionalNodes(String id)
-  + GunFactory resolveGunFactory(String id)
-}
+    + GunLoader(List<GunFactory> factories)
+    + Gun getModelGun(String id)
+    + DecoratedGun getDecoratedGun(String id)
+    + List<ControllerFlowNode> getAdditionalNodes(String id)
+    + GunFactory resolveGunFactory(String id)
+    + {static} JsonNode getGunConfigJson(String id)
+  }
 
   class CardDeck<T> {
     -List<T> queue
 
     +CardDeck(List<T> queue)
     +Optional<T> getCard()
-     }
-
-  class GameController {
-    -gameModel: GameStatus
-    -remainingActions: int
-
-    -void doFirstTurn(PlayerColor player)
-    -void doTurn(PlayerColor player)
   }
 
- interface StatelessControllerFlowNode extends StatelessFlowNode {
+  interface StatelessControllerFlowNode extends com.adrenalinici.adrenaline.flow.StatelessFlowNode
 
- }
   com.adrenalinici.adrenaline.observer.Observer <|.. GameController: "T::ViewEvent"
 
   interface DecoratedGun extends com.adrenalinici.adrenaline.model.Gun {
-    +void acceptEvent(ViewEvent viewEventToAccept)
+    - Gun gun
+    - List<String> phases
+
+    + DecoratedGun(Gun gun, List<String> phases)
+    + Gun get()
+    +void visit(Consumer<AlternativeEffectGun> visitAlternativeEffectGun, Consumer<BaseEffectGun> visitBaseEffectGun)
+    + String getId()
+    + List<AmmoColor> getRequiredAmmoToPickup()
+    + List<AmmoColor> getRequiredAmmoToReload()
+    + String getName()
+    + Optional<String> getNote()
+    + List<String> getPhases()
   }
 
-  class DecoratedAlternativeEffectGun extends com.adrenalinici.adrenaline.model.AlternativeEffectGun implements DecoratedGun
+  class DecoratedAlternativeEffectGun extends DecoratedGun {
+    - DecoratedEffect firstEffect
+    - DecoratedEffect secondEffect
 
-  class DecoratedBaseEffectGun extends com.adrenalinici.adrenaline.model.BaseEffectGun implements DecoratedGun
+    + DecoratedEffect getFirstEffect()
+    + DecoratedEffect getSecondEffect()
+    + AlternativeEffectGun get()
+  }
+
+  class DecoratedBaseEffectGun extends DecoratedGun {
+    - DecoratedEffect baseEffect
+    - DecoratedEffect firstExtraEffect
+    - DecoratedEffect secondExtraEffect
+
+    + DecoratedEffect getBaseEffect()
+    + List<AmmoColor> getFirstExtraEffectCost()
+    + DecoratedEffect getFirstExtraEffect()
+    + boolean hasFirstExtraEffect()
+    + List<AmmoColor> getSecondExtraEffectCost()
+    + DecoratedEffect getSecondExtraEffect()
+    + boolean hasSecondExtraEffect()
+    + BaseEffectGun get()
+  }
 
 }
 
+package com.adrenalinici.adrenaline.controller.nodes {
 
-package com.adrenalinici.adrenaline.controller.states {
-  interface ControllerState {
-    +void acceptEvent(ViewEvent viewEventToAccept)
-    +List<Supplier<ControllerState>> getNextStatesFactories()
+  enum ControllerNodes {
+      START_TURN
+      PICKUP
+      RELOAD
+      CHOOSE_ACTION
+      RESPAWN_KILLED_PEOPLE
+      CHOOSE_GUN
+      CHOOSE_PLAYER_TO_HIT
+      ALTERNATIVE_GUN_START
+      BASE_GUN_START
   }
 
-  class ExpectingMoveState implements ControllerState{
+  class ChooseActionFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
 
+  class ChooseGunFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+
+  class ChooseMovementFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode {
+    -int distance
   }
 
-  class ExpectingPickupState implements ControllerState{
+  class NewTurnFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
 
+  class PickupFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+
+  class ReloadFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+}
+
+package com.adrenalinici.adrenaline.controller.nodes.guns {
+
+  abstract class GunFlowState implements com.adrenalinici.adrenaline.flow.FlowState {
+    -chosenGun: DecoratedGun
+    -chosenPlayersToHit: List<PlayerColor>
+    -hitPlayers: List<PlayerColor>
   }
 
-  class ExpectingShootState implements ControllerState{
-
+  class AlternativeEffectGunFlowState extends GunFlowState {
+    -firstEffect: Boolean
+    -chosenEffect: DecoratedEffect
   }
 
-  class ExecutingGunFlowState implements ControllerState{
-
+  class BaseEffectGunFlowState extends GunFlowState {
+    -activatedFirstExtraEffect: boolean
+    -activatedSecondExtraEffect: boolean
   }
 
-  class ShootCompletedState implements ControllerState{
-
+  class ApplyAlternativeGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode {
+    -nodeId: String
+    -consumer: TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext>
   }
 
+  class ApplyBaseGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode {
+    -nodeId: String
+    -consumer: TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext>
+  }
 
-
-
+  class ChooseAlternativeEffectForGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode
+  class ChooseBaseEffectForGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode
+  class ChoosePlayersToHitFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode
 }
 
 package com.adrenalinici.adrenaline.flow {
 
-    BaseFlowContext <|-- FlowContext
-
-    interface FlowContext {
-
-      + FlowOrchestrator getOrchestrator()
-      + void jump(String stateId, GameView view, FlowState event)
-      + void replayNode(GameView view)
-      + void replayPhase(GameView view)
-      + void nextPhase(GameView view)
-      + void nextPhase(GameView view, FlowState flowState)
-      + String actualPhase()
-      + FlowNode actualFlowNode()
-      + FlowNode actualNode()
-      + void addPhases(String... phases)
-      + void addPhasesToEnd(String... phases)
-      + void end(GameView view)
-      + void handleEvent(ViewEvent event)
-    }
-
-      interface FlowNode<S extends FlowState, C extends FlowContext> {
-
-          + String id()
-          + default S mapState(FlowState oldState)
-          + void onJump(S flowState, GameView view, GameModel model, C context)
-          + void handleEvent(ViewEvent event, S flowState, GameView view, GameModel model, C context)
-      }
-
-    interface FlowOrchestrator<T extends FlowContext> {
-
-        + GameModel getModel()
-        + void handleEvent(ViewEvent event)
-        + void onEnd(GameView view)
-        + FlowNode resolveState(String id)
-        + void startNewFlow(GameView view, T context)
-        + T getActualContext()
-    }
-
-    interface FlowState {
-    }
-
-    StatelessFlowNode ..> FlowNode
-
-    interface StatelessFlowNode<C extends FlowContext> extends FlowNode{
-      + default VoidState mapState(FlowState oldState)
-    }
-
-    package com.adrenalinici.adrenaline.flow.impl {
-      BaseFlowContext <|-- FlowContext
-      abstract class BaseFlowContext implements FlowContext {
-
-        - FlowNode actualNode;
-        # FlowState actualState;
-        - String actualPhaseId;
-        - List<String> phasesQueue;
-        - FlowOrchestrator orchestrator;
-        - int actualIndex;
-
-        + BaseFlowContext(FlowOrchestrator orchestrator)
-        + FlowOrchestrator getOrchestrator()
-        + void jump(String stateId, GameView view, FlowState state)
-        + void replayNode(GameView view) {
-        + void nextPhase(GameView view, FlowState flowState)
-        + String actualPhase()
-        + FlowNode actualFlowNode()
-        + FlowNode actualNode()
-        + void replayPhase(GameView view)
-        + void addPhases(String... phases)
-        + void addPhasesToEnd(String... phases)
-        + void end(GameView view)
-        + void handleEvent(ViewEvent event)
-        + List<String> getPhasesQueue()
-      }
-      FlowOrchestratorImpl<|-- FlowOrchestrator
-      class FlowOrchestratorImpl<T extends FlowContext>  {
-
-        private Map<String, ? extends FlowNode> nodes;
-        private T actualContext;
-        private GameModel model;
-        private Consumer<GameView> onEndCallback;
-
-        + FlowOrchestratorImpl(List<? extends FlowNode> nodes, GameModel model, Consumer<GameView> onEndCallback)
-         + GameModel getModel()
-         + void handleEvent(ViewEvent event)
-        + void onEnd(GameView view)
-         + FlowNode resolveState(String id)
-         +void startNewFlow(GameView gameView, T context)
-        + T getActualContext()
-      }
-      VoidState <|-- FlowState
-      class VoidState implements FlowState {
-
-        }
-    }
+  interface FlowContext {
+    + FlowOrchestrator getOrchestrator()
+    + void jump(String stateId, GameView view, FlowState event)
+    + void replayNode(GameView view)
+    + void replayPhase(GameView view)
+    + void nextPhase(GameView view)
+    + void nextPhase(GameView view, FlowState flowState)
+    + String actualPhase()
+    + FlowNode actualFlowNode()
+    + FlowNode actualNode()
+    + void addPhases(String... phases)
+    + void addPhasesToEnd(String... phases)
+    + void end(GameView view)
+    + void handleEvent(ViewEvent event)
   }
+
+  interface FlowNode<S extends FlowState, C extends FlowContext> {
+      + String id()
+      + default S mapState(FlowState oldState)
+      + void onJump(S flowState, GameView view, GameModel model, C context)
+      + void handleEvent(ViewEvent event, S flowState, GameView view, GameModel model, C context)
+  }
+
+  interface FlowOrchestrator<T extends FlowContext> {
+      + GameModel getModel()
+      + void handleEvent(ViewEvent event)
+      + void onEnd(GameView view)
+      + FlowNode resolveState(String id)
+      + void startNewFlow(GameView view, T context)
+      + T getActualContext()
+  }
+
+  interface FlowState
+
+  interface StatelessFlowNode<C extends FlowContext> extends FlowNode {
+    + default VoidState mapState(FlowState oldState)
+  }
+}
+
+package com.adrenalinici.adrenaline.flow.impl {
+  abstract class BaseFlowContext implements com.adrenalinici.adrenaline.flow.FlowContext {
+    - FlowNode actualNode;
+    # FlowState actualState;
+    - String actualPhaseId;
+    - List<String> phasesQueue;
+    - FlowOrchestrator orchestrator;
+    - int actualIndex;
+
+    + BaseFlowContext(FlowOrchestrator orchestrator)
+    + FlowOrchestrator getOrchestrator()
+    + void jump(String stateId, GameView view, FlowState state)
+    + void replayNode(GameView view) {
+    + void nextPhase(GameView view, FlowState flowState)
+    + String actualPhase()
+    + FlowNode actualFlowNode()
+    + FlowNode actualNode()
+    + void replayPhase(GameView view)
+    + void addPhases(String... phases)
+    + void addPhasesToEnd(String... phases)
+    + void end(GameView view)
+    + void handleEvent(ViewEvent event)
+    + List<String> getPhasesQueue()
+  }
+
+  class FlowOrchestratorImpl<T extends FlowContext> implements com.adrenalinici.adrenaline.flow.FlowOrchestrator {
+
+    -Map<String, ? extends FlowNode> nodes;
+    -T actualContext;
+    -GameModel model;
+    -Consumer<GameView> onEndCallback;
+
+    +FlowOrchestratorImpl(List<? extends FlowNode> nodes, GameModel model, Consumer<GameView> onEndCallback)
+    +GameModel getModel()
+    +void handleEvent(ViewEvent event)
+    +void onEnd(GameView view)
+    +FlowNode resolveState(String id)
+    +void startNewFlow(GameView gameView, T context)
+    +T getActualContext()
+  }
+
+  class VoidState implements com.adrenalinici.adrenaline.flow.FlowState
+}
 
 package com.adrenalinici.adrenaline.view {
   class GameView {
-    +void showAvailableActions(List<CompositeAction> actions)
-    +void showAvailableMovements(List<Position> availableMovements)
-    +void showReloadableGuns(List<Gun> reloadableGuns)
-    +void showLoadedGuns(List<Gun> reloadableGuns)
+    +void showAvailableActions(List<Action> actions)
+    +void showAvailableMovements(List<Position> positions)
+    +void showNextTurn(PlayerColor player)
+    +void showReloadableGuns(List<Gun> guns)
+    +void showLoadedGuns(List<Gun> guns)
     +void showBaseGunExtraEffects(List<Effect> effects)
     +void showAvailableRespawnLocations(List<AmmoColor> respawnLocations)
-    +void showApplicableEffects(Optional<Map<PlayerColor, Optional<Position>>> firstEffect, int numberOfChoosablePlayerFirstEffect, Optional<Map<PlayerColor, Optional<Position>>> secondEffect, int numberOfChoosablePlayerSecondEffect)
-    +void showApplicableEffects(Map<PlayerColor, Optional<Position>> baseEffect, int numberOfChoosablePlayerBaseEffect, Optional<Map<PlayerColor, Optional<Position>>> firstExtraEffect, int numberOfChoosablePlayerFirstExtraEffect, Optional<Map<PlayerColor, Optional<Position>>> secondExtraEffect, int numberOfChoosablePlayerSecondExtraEffect)
+    +void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect)
+    +void showChoosePlayerToHit(List<PlayerColor> players)
+    +void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements)
+    +void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect)
     +void showAvailableVenomGranades(PlayerColor player)
     +void showAvailablePowerUpCards(PlayerColor player)
-    +void showAvailableEnemyMovements(List<Position> availableEnemyMovements)
+    +void showAvailableEnemyMovements(List<Position> positions)
+    +void showAvailableGuns(List<Gun> guns)
+    +void showAvailableGunsToPickup(List<Gun> guns)
   }
 
   com.adrenalinici.adrenaline.observer.Observable <|-- GameView: "T::ViewEvent"
