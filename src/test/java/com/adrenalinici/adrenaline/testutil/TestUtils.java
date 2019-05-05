@@ -1,6 +1,10 @@
 package com.adrenalinici.adrenaline.testutil;
 
+import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.controller.GunFactory;
+import com.adrenalinici.adrenaline.controller.guns.BaseEffectGunFactory;
 import com.adrenalinici.adrenaline.model.*;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -97,31 +101,39 @@ public class TestUtils {
     return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards());
   }
 
-  public static final Gun BASE_EFFECT_GUN_SWORD = new BaseEffectGun(
-    "sword",
-    AmmoColor.BLUE,
-    Arrays.asList(AmmoColor.RED, AmmoColor.RED, AmmoColor.BLUE),
-    "Sword", "terrible sword", null, null, Collections.emptyList(),
-    null, Collections.emptyList()
-  );
+  public static final GunFactory BASE_EFFECT_GUN_SWORD_FACTORY = new BaseEffectGunFactory() {
+    @Override
+    public boolean canConsume(String key, ObjectNode config) {
+      return "test_sword".equals(key);
+    }
 
-  public static final Gun BASE_EFFECT_GUN_REVOLVER = new BaseEffectGun(
-    "revolver",
-    AmmoColor.BLUE,
-    Arrays.asList(AmmoColor.RED, AmmoColor.BLUE, AmmoColor.YELLOW),
-    "Revolver", "terrible revolver", null, null, Collections.emptyList(),
-    null, Collections.emptyList()
-  );
+    @Override
+    public List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config) {
+      return Collections.emptyList();
+    }
+  };
 
-  public static final Gun BASE_EFFECT_GUN_RIFLE = new BaseEffectGun(
-    "rifle",
-    AmmoColor.BLUE,
-    Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.YELLOW),
-    "Rifle", "terrible rifle", null, null, Collections.emptyList(),
-    null, Collections.emptyList()
-  );
+  public static final GunFactory BASE_EFFECT_GUN_REVOLVER_FACTORY = new BaseEffectGunFactory() {
+    @Override
+    public boolean canConsume(String key, ObjectNode config) {
+      return "test_revolver".equals(key);
+    }
 
-  public static final List<Gun> BASE_EFFECT_GUNS =
-    Arrays.asList(BASE_EFFECT_GUN_SWORD, BASE_EFFECT_GUN_REVOLVER, BASE_EFFECT_GUN_RIFLE);
+    @Override
+    public List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config) {
+      return Collections.emptyList();
+    }
+  };
 
+  public static final GunFactory BASE_EFFECT_GUN_RIFLE_FACTORY = new BaseEffectGunFactory() {
+    @Override
+    public boolean canConsume(String key, ObjectNode config) {
+      return "test_rifle".equals(key);
+    }
+
+    @Override
+    public List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config) {
+      return Collections.emptyList();
+    }
+  };
 }

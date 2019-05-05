@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isDashboardCellUpdatedEvent;
@@ -27,16 +28,22 @@ public class PickupNodeFlowTest extends BaseNodeTest {
   public void calculateAvailableGunsToPickupTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
     RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
-    BASE_EFFECT_GUNS.forEach(respawnDashboardCell::addAvailableGun);
+    Stream
+      .of("test_revolver", "test_rifle", "test_sword")
+      .map(s -> gunLoader.getModelGun(s))
+      .forEach(respawnDashboardCell::addAvailableGun);
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
 
     PickupFlowNode node = new PickupFlowNode();
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW)).contains(BASE_EFFECT_GUN_SWORD);
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW)).contains(BASE_EFFECT_GUN_REVOLVER);
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW)).doesNotContain(BASE_EFFECT_GUN_RIFLE);
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
+      .extracting(Gun::getId).contains("test_sword");
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
+      .extracting(Gun::getId).contains("test_revolver");
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
+      .extracting(Gun::getId).doesNotContain("test_rifle");
   }
 
   @Override
@@ -51,7 +58,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).visit(
       respawnDashboardCell -> {
         respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-        respawnDashboardCell.addAvailableGun(BASE_EFFECT_GUN_SWORD);
+        respawnDashboardCell.addAvailableGun(gunLoader.getModelGun("test_sword"));
       },
       null
     );
@@ -61,19 +68,24 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(viewMock, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());
     assertThat(gunsCaptor.getValue())
-      .containsOnly(BASE_EFFECT_GUN_SWORD);
+      .extracting(Gun::getId)
+      .containsOnly("test_sword");
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
     orchestrator.handleEvent(new GunChosenEvent(
-      BASE_EFFECT_GUN_SWORD.getId()
+      "test_sword"
     ), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(2, 0));
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+
+    assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getLoadedGuns())
+      .extracting(Gun::getId)
+      .containsOnly("test_sword");
 
     checkEndCalled();
   }

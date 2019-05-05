@@ -1,0 +1,14 @@
+{
+  "name": "Sword",
+  "firstAmmo": "blue",
+  "extraAmmo": [
+    "red",
+    "red",
+    "blue"
+  ],
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Basic"
+  }
+}
