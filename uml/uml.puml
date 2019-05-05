@@ -675,4 +675,193 @@ package com.adrenalinici.adrenaline.observer {
    class Observable<T>
 }
 
+package com.adrenalinici.adrenaline.network.inbox {
+  interface InboxMessage
+
+  class InboxEntry {
+    -connectionId: String
+    -message: InboxMessage
+
+    +String getConnectionId()
+    +InboxMessage getMessage()
+  }
+  
+  class ViewEventMessage implements InboxMessage {
+    -viewEvent: ViewEvent
+    
+    +ViewEvent getViewEvent()
+  }
+  
+  class ConnectedPlayerMessage implements InboxMessage
+  
+  class DisconnectedPlayerMessage implements InboxMessage
+  
+  class ChosenMyPlayerColorMessage implements InboxMessage {
+    -color: PlayerColor
+    
+    +PlayerColor getColor()
+  }
+}
+
+package com.adrenalinici.adrenaline.network.outbox {
+  interface OutboxMessage
+
+  class AvailableActionsMessage implements OutboxMessage
+  class AvailableAlternativeEffectsGunMessage implements OutboxMessage
+  class AvailableEnemyExtraMovementsMessage implements OutboxMessage
+  class AvailableExtraEffectsMessage implements OutboxMessage
+  class AvailableGunsToPickupMessage implements OutboxMessage
+  class AvailableMovementsMessage implements OutboxMessage
+  class AvailablePowerUpCardsMessage implements OutboxMessage
+  class AvailableRespawnLocationsMessage implements OutboxMessage
+  class AvailableVenomGrenadesMessage implements OutboxMessage
+  class baseGunExtraEffectsMessage implements OutboxMessage
+  class ChooseMyPlayerMessage implements OutboxMessage
+  class ChoosePlayerToHitMessage implements OutboxMessage
+  class ChoosePlayerToMoveMessage implements OutboxMessage
+  class LoadedGunsMessage implements OutboxMessage
+  class ModelEventMessage implements OutboxMessage
+  class NextTurnMessage implements OutboxMessage
+  class ReloadableGunsMessage implements OutboxMessage
+}
+
+package com.adrenalinici.adrenaline.network.client {
+  class ClientViewProxy {
+    -view: BaseClientGameView
+
+    +void handleNewServerMessage(OutboxMessage message)
+  }
+
+  com.adrenalinici.adrenaline.observer.Observable <|-- ClientViewProxy: "T::InboxMessage"
+
+  class ClientNetworkAdapter implements java.lang.Runnable {
+    -clientViewOutbox: BlockingQueue<InboxMessage>
+    -clientViewInbox: BlockingQueue<OutboxMessage>
+    -proxy: ClientViewProxy
+
+    +void initialize()
+    +void run()
+    +void stop()
+  }
+
+  com.adrenalinici.adrenaline.observer.Observer <|-- ClientNetworkAdapter: "T::InboxMessage"
+}
+
+package com.adrenalinici.adrenaline.network.client.rmi {
+  interface GameRmiClient extends java.rmi.Remote {
+    +void acceptMessage(OutboxMessage message)
+  }
+
+  class GameRmiClientImpl implements GameRmiClient {
+    -clientViewInbox: BlockingQueue<OutboxMessage>
+  }
+
+  class RmiClientNetworkAdapter extends com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter {
+    -registry: Registry
+    -server: GameRmiServer
+    -senderThread: Thread
+  }
+
+  class SenderRunnable implements java.lang.Runnable {
+    -clientViewOutbox: BlockingQueue<InboxMessage>
+    -server: GameRmiServer
+    -client: GameRmiClient
+  }
+}
+
+package com.adrenalinici.adrenaline.network.client.socket {
+
+  class SocketClientNetworkAdapter extends com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter {
+    -receiverThread: Thread
+    -senderThread: Thread
+    -channel: SocketChannel
+  }
+
+  class ReceiverRunnable implements java.lang.Runnable {
+    -clientViewInbox: BlockingQueue<OutboxMessage>
+    -channel: SocketChannel
+  }
+
+  class SenderRunnable implements java.lang.Runnable {
+    -clientViewOutbox: BlockingQueue<InboxMessage>
+    -channel: SocketChannel
+  }
+}
+
+package com.adrenalinici.adrenaline.network.server {
+  abstract class BaseGameViewServer implements com.adrenalinici.adrenaline.view.GameView, java.lang.Runnable {
+    -inbox: BlockingQueue<InboxEntry>
+    -outbox: BlockingQueue<OutboxMessage>
+    -connectedPlayers: Map<String, PlayerColor>
+    -availablePlayers: Set<PlayerColor>
+
+    +void run()
+    -void checkStartMatch()
+    -void checkResumeMatch()
+    #void broadcast(OutboxMessage en)
+  }
+
+  com.adrenalinici.adrenaline.observer.Observable <|-- BaseGameViewServer: "T::DecoratedEvent<ViewEvent, BaseGameViewServer>"
+
+  class GameViewServer extends BaseGameViewServer
+
+  abstract class ServerNetworkAdapter {
+    -inbox: BlockingQueue<InboxEntry>
+    -outbox: BlockingQueue<OutboxMessage>
+
+    +abstract void start()
+    +abstract void stop()
+  }
+
+}
+
+package com.adrenalinici.adrenaline.network.server.socket {
+  abstract class BaseSocketRunnable {
+    #connectedClients: Map<Socket, String>
+  }
+
+  class BroadcasterRunnable extends BaseSocketRunnable {
+    -viewOutbox: BlockingQueue<OutboxMessage>
+  }
+
+  class ReceiverRunnable extends BaseSocketRunnable {
+    -readSelector: Selector
+    -viewInbox: BlockingQueue<InboxEntry>
+  }
+
+  class SocketServerNetworkAdapter extends com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter {
+    -receiverThread: Thread
+    -broadcasterThread: Thread
+    -serverChannel: ServerSocketChannel
+    -connectedClients: Map<Socket, String>
+
+    +void start()
+    +void stop()
+  }
+
+}
+
+package com.adrenalinici.adrenaline.network.server.rmi {
+  interface GameRmiServer extends java.rmi.Remote {
+    +void acceptMessage(InboxMessage message, GameRmiClient client)
+    +void startConnection(GameRmiClient client)
+  }
+
+  class BroadcasterRunnable implements java.lang.Runnable {
+    -connectedClients: Map<String, GameRmiClient>
+    -viewOutbox: BlockingQueue<OutboxMessage>
+  }
+
+  class RmiServerNetworkAdapter extends com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter implements GameRmiServer {
+    -addressToConnectionId: Map<String, String>
+    -connectionIdToClient: Map<String, GameRmiClient>
+    -broadcasterThread: Thread
+    -registry: Registry
+
+    +void start()
+    +void stop()
+  }
+
+}
+
 @enduml
