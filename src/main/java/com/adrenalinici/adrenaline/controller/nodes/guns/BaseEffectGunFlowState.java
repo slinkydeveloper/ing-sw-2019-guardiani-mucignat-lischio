@@ -41,11 +41,18 @@ public class BaseEffectGunFlowState extends GunFlowState {
 
   @Override
   public ObjectNode resolvePhaseConfiguration(String phaseId) {
-    JsonNode gunWideConfig = GunLoader.config.at(pointer(chosenGun.getId(), "phasesConfig", phaseId));
+    JsonNode gunWideConfig = JsonUtils.getConfigurationJSONFromClasspath(chosenGun.getId() + ".json")
+      .at(pointer("phasesConfig", phaseId));
+
     JsonNode firstExtraEffectWideConfig = activatedFirstExtraEffect ?
-      GunLoader.config.at(pointer(chosenGun.getId(), "firstExtraEffect", "phasesConfig", phaseId)) : null;
+      JsonUtils.getConfigurationJSONFromClasspath(chosenGun.getId() + ".json").at(
+        pointer("firstExtraEffect", "phasesConfig", phaseId)
+      ) : null;
     JsonNode secondExtraEffectWideConfig = activatedSecondExtraEffect ?
-      GunLoader.config.at(pointer(chosenGun.getId(), "secondExtraEffect", "phasesConfig", phaseId)) : null;
+      JsonUtils.getConfigurationJSONFromClasspath(chosenGun.getId() + ".json").at(
+        pointer("secondExtraEffect", "phasesConfig", phaseId)
+      ) : null;
+
     return JsonUtils.mergeConfigs(
       gunWideConfig.isObject() ? (ObjectNode) gunWideConfig : null,
       JsonUtils.mergeConfigs(

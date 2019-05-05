@@ -9,8 +9,6 @@ import java.util.List;
 
 public class GunLoader {
 
-  public static JsonNode config = JsonUtils.getConfigurationJSONFromClasspath("guns.json");
-
   private List<GunFactory> factories;
 
   public GunLoader(List<GunFactory> factories) {
@@ -18,25 +16,27 @@ public class GunLoader {
   }
 
   public Gun getModelGun(String id) {
-    return resolveGunFactory(id).getModelGun(id, (ObjectNode) config.get(id));
+    return resolveGunFactory(id).getModelGun(id, (ObjectNode) getGunConfigJson(id));
   }
 
   public DecoratedGun getDecoratedGun(String id) {
-    return resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) config.get(id));
+    return resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) getGunConfigJson(id));
   }
 
   public List<ControllerFlowNode> getAdditionalNodes(String id) {
-    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) config.get(id));
+    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id));
   }
 
   private GunFactory resolveGunFactory(String id) {
     return factories
       .stream()
-      .filter(f -> f.canConsume(id, (ObjectNode) config.get(id)))
+      .filter(f -> f.canConsume(id, (ObjectNode) getGunConfigJson(id)))
       .findFirst()
       .orElseThrow(() -> new IllegalStateException("Cannot find in config gun " + id));
   }
 
-
+  public static JsonNode getGunConfigJson(String id) {
+    return JsonUtils.getConfigurationJSONFromClasspath(id + ".json");
+  }
 
 }
