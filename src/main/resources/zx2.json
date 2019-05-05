@@ -1,0 +1,40 @@
+{
+  "name": "ZX-2",
+  "firstAmmo": "yellow",
+  "note": "Remember that the three targets can be in three different rooms.",
+  "phases": [
+    "ALTERNATIVE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT"
+  ],
+  "extraAmmo": [
+    "red"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 1 damage and 2 marks to 1 target you can see.",
+    "phases": [
+      "apply_gun_effect_zx2_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "visible === true"
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "scanner",
+    "name": "Scanner mode",
+    "description": "Choose up to 3 targets you can see and deal 1 mark to each.",
+    "phases": [
+      "apply_gun_effect_zx2_scanner"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 3,
+        "distanceEval": "visible === true"
+      }
+    }
+  }
+}

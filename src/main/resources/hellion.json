@@ -1,0 +1,43 @@
+{
+  "name": "Hellion",
+  "firstAmmo": "red",
+  "note": "Remember that the three targets can be in three different rooms.",
+  "phases": [
+    "ALTERNATIVE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT"
+  ],
+  "extraAmmo": [
+    "yellow"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 1 damage to 1 target you can see at least 1 move away. Then give 1 mark to that target and everyone else on that square.",
+    "phases": [
+      "apply_gun_effect_hellion_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "visible === true && distance >= 1"
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "nano-tracer",
+    "name": "Nano-tracer mode",
+    "description": "Deal 1 damage to 1 target you can see at least 1 move away. Then give 2 marks to that target and everyone else on that square.",
+    "phases": [
+      "apply_gun_effect_hellion_nano-tracer"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "visible === true && distance >= 1"
+      }
+    },
+    "cost": [
+      "red"
+    ]
+  }
+}
