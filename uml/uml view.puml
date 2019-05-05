@@ -1,0 +1,113 @@
+@startuml
+
+class LaunchGui extends Application {
+
+ + {static} void main()
+ + void start(Stage stage) throws IOException, InterruptedException
+}
+
+class StartController {
+  - Button rmiButton
+  - Button socketButton
+
+  - void initialize()
+  - void changeButton()
+  - void changeSceneHandle(ActionEvent event, String path)
+}
+
+class ChooseColorPlayer {
+
+  -void chooseColor ( List<PlayerColor> )
+  - void changeSceneHandle(ActionEvent event, String path)
+}
+
+class ThreePlayerDashboardController{
+
+  -Button bluAmmo1
+  -Button bluAmmo2
+  -Button bluAmmo3
+  -Button yellowAmmo1
+  -Button yellowAmmo2
+  -Button yellowAmmo3
+  -Button violetAmmo1
+  -Button redAmmo1
+  -Button redAmmo2
+  -Button whiteAmmo1
+  -Button whiteAmmo2
+  -Button redRespawn
+  -Button bluRespawn
+  -Button yellowRespawn
+  -List List<AmmoCard>
+  -List List<Gun>
+
+  + void chooseAction(ActionEvent chooseGun)
+  + void chooseAction(ActionEvent chooseRespawn)
+  + void chooseAction(ActionEvent movement)
+  - void respawn
+  - void pickUpAmmo()
+  - void doubleKill(PlayerColor)
+  - void KillerList<PlayerColor>
+  - void changeSceneHandle(ActionEvent event, String path)
+}
+
+class FourPlayerDashboardController{
+  -Button greenAmmo1
+  -Button bluAmmo1
+  -Button bluAmmo2
+  -Button bluAmmo3
+  -Button yellowAmmo1
+  -Button yellowAmmo2
+  -Button yellowAmmo3
+  -Button yellowAmmo4
+  -Button violetAmmo1
+  -Button redAmmo1
+  -Button redAmmo2
+  -Button whiteAmmo1
+  -Button whiteAmmo2
+  -Button redRespawn
+  -Button bluRespawn
+  -Button yellowRespawn
+  -List List<AmmoCard>
+  -List List<Gun>
+
+  + void chooseAction(ActionEvent chooseGun)
+  + void chooseAction(ActionEvent chooseRespawn)
+  + void chooseAction(ActionEvent movement)
+  - void respawn
+  - void pickUpAmmo()
+  - void doubleKill(PlayerColor)
+  - void KillerList<PlayerColor>
+  - void changeSceneHandle(ActionEvent event, String path)
+}
+
+class FivePlayerDashboardController{
+  -Button greenAmmo1
+  -Button bluAmmo1
+  -Button bluAmmo2
+  -Button bluAmmo3
+  -Button yellowAmmo1
+  -Button yellowAmmo2
+  -Button yellowAmmo3
+  -Button yellowAmmo4
+  -Button violetAmmo1
+  -Button redAmmo1
+  -Button redAmmo2
+  -Button whiteAmmo1
+  -Button whiteAmmo2
+  -Button redRespawn
+  -Button bluRespawn
+  -Button yellowRespawn
+  -List List<AmmoCard>
+  -List List<Gun>
+
+  + void chooseAction(ActionEvent chooseGun)
+  + void chooseAction(ActionEvent chooseRespawn)
+  + void chooseAction(ActionEvent movement)
+  - void respawn
+  - void pickUpAmmo()
+  - void doubleKill(PlayerColor)
+  - void KillerList<PlayerColor>
+  - void changeSceneHandle(ActionEvent event, String path)
+}
+
+@enduml
