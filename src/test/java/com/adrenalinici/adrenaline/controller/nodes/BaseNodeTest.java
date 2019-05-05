@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -58,7 +59,7 @@ public abstract class BaseNodeTest {
   }
 
   protected GunLoader createGunLoader() {
-    return new GunLoader(Collections.emptyList());
+    return new GunLoader(Arrays.asList(TestUtils.BASE_EFFECT_GUN_REVOLVER_FACTORY, TestUtils.BASE_EFFECT_GUN_RIFLE_FACTORY, TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
   }
 
   public abstract FlowNode nodeToTest();

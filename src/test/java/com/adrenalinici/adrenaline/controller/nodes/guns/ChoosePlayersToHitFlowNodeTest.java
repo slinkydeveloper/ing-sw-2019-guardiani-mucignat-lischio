@@ -56,7 +56,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     assertThat(playersCaptor.getValue())
       .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
 
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
     assertThat(((AlternativeEffectGunFlowState) context.getActualState()).getChosenPlayersToHit())
       .containsExactlyInAnyOrder(PlayerColor.GRAY);
@@ -80,8 +80,8 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
       new AlternativeEffectGunFlowState(gun).setChosenEffect(gun.getSecondEffect(), false)
     );
 
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
 
     verify(viewMock, times(2)).showChoosePlayerToHit(playersCaptor.capture());
     assertThat(playersCaptor.getAllValues().get(0))

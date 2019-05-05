@@ -1,0 +1,14 @@
+{
+  "name": "Rifle",
+  "firstAmmo": "blue",
+  "extraAmmo": [
+    "red",
+    "yellow",
+    "yellow"
+  ],
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Basic"
+  }
+}

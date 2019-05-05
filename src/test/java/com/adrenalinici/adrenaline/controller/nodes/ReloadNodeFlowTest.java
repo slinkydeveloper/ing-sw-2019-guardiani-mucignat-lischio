@@ -3,7 +3,7 @@ package com.adrenalinici.adrenaline.controller.nodes;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
-import com.adrenalinici.adrenaline.view.event.GunToReloadChosenEvent;
+import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static com.adrenalinici.adrenaline.testutil.TestUtils.*;
@@ -31,13 +32,17 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     Dashboard dashboard = Dashboard.newBuilder().build();
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
-    BASE_EFFECT_GUNS.forEach(playerDashboard::addUnloadedGun);
-    List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
+    Stream
+      .of("test_revolver", "test_rifle", "test_sword")
+      .map(s -> gunLoader.getModelGun(s))
+      .forEach(playerDashboard::addUnloadedGun);
+    List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
     ReloadFlowNode node = new ReloadFlowNode();
-    assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW)).contains(BASE_EFFECT_GUN_SWORD);
-    assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW)).contains(BASE_EFFECT_GUN_REVOLVER);
-    assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW)).doesNotContain(BASE_EFFECT_GUN_RIFLE);
+    assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW))
+      .extracting(Gun::getId)
+      .contains("test_sword", "test_revolver")
+      .doesNotContain("test_rifle");
   }
 
   @Test
@@ -45,28 +50,29 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
+    PlayerDashboard d = model.getPlayerDashboard(PlayerColor.GREEN);
+    d.addAmmo(AmmoColor.RED);
+    d.addAmmo(AmmoColor.BLUE);
 
-    BaseEffectGun gun = new BaseEffectGun(
-      "sword",
-      AmmoColor.BLUE,
-      Arrays.asList(AmmoColor.RED),
-      "Sword", "terrible sword",
-      null,
-      null, Collections.emptyList(),
-      null, Collections.emptyList()
-    );
-    model.getPlayerDashboard(PlayerColor.GREEN).addUnloadedGun(gun);
+    d.addUnloadedGun(gunLoader.getModelGun("test_sword"));
 
     orchestrator.startNewFlow(viewMock, context);
 
     ArgumentCaptor<List<Gun>> reloadableGunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(viewMock, times(1)).showReloadableGuns(reloadableGunsCaptor.capture());
-    assertThat(reloadableGunsCaptor.getValue()).containsOnly(gun);
+    assertThat(reloadableGunsCaptor.getValue())
+      .extracting(Gun::getId)
+      .containsOnly("test_sword");
 
-    orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun));
+    orchestrator.handleEvent(new GunChosenEvent("test_sword"), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+
+    assertThat(d.getLoadedGuns())
+      .extracting(Gun::getId)
+      .containsOnly("test_sword");
+    assertThat(d.getUnloadedGuns()).isEmpty();
 
     checkEndCalled();
   }
@@ -77,32 +83,20 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    BaseEffectGun gun1 = new BaseEffectGun(
-      "sword",
-      AmmoColor.BLUE,
-      Collections.emptyList(),
-      "Sword", "terrible sword",
-      null,
-      null, Collections.emptyList(),
-      null, Collections.emptyList()
-    );
-    BaseEffectGun gun2 = new BaseEffectGun(
-      "knife",
-      AmmoColor.BLUE,
-      Collections.emptyList(),
-      "Knige", "terrible knife",
-      null,
-      null, Collections.emptyList(),
-      null, Collections.emptyList()
-    );
-    model.getPlayerDashboard(PlayerColor.GREEN).addUnloadedGun(gun1);
-    model.getPlayerDashboard(PlayerColor.GREEN).addUnloadedGun(gun2);
-    model.getPlayerDashboard(PlayerColor.GREEN).addAmmo(AmmoColor.BLUE);
+    PlayerDashboard d = model.getPlayerDashboard(PlayerColor.GREEN);
+    d.addAmmo(AmmoColor.RED);
+    d.addAmmo(AmmoColor.YELLOW);
+    d.addAmmo(AmmoColor.YELLOW);
+    d.addAmmo(AmmoColor.BLUE);
+    d.addAmmo(AmmoColor.BLUE);
+
+    d.addUnloadedGun(gunLoader.getModelGun("test_revolver"));
+    d.addUnloadedGun(gunLoader.getModelGun("test_rifle"));
 
     orchestrator.startNewFlow(viewMock, context);
 
-    orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun1));
-    orchestrator.handleEvent(new GunToReloadChosenEvent(viewMock, gun2));
+    orchestrator.handleEvent(new GunChosenEvent("test_revolver"), viewMock);
+    orchestrator.handleEvent(new GunChosenEvent("test_rifle"), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
@@ -110,8 +104,17 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     // We check if showReloadableGuns was called two times with right arguments
     ArgumentCaptor<List<Gun>> reloadableGunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(viewMock, times(2)).showReloadableGuns(reloadableGunsCaptor.capture());
-    assertThat(reloadableGunsCaptor.getAllValues().get(0)).containsExactlyInAnyOrder(gun1, gun2);
-    assertThat(reloadableGunsCaptor.getAllValues().get(1)).containsExactlyInAnyOrder(gun2);
+    assertThat(reloadableGunsCaptor.getAllValues().get(0))
+      .extracting(Gun::getId)
+      .containsExactlyInAnyOrder("test_rifle", "test_revolver");
+    assertThat(reloadableGunsCaptor.getAllValues().get(1))
+      .extracting(Gun::getId)
+      .containsExactlyInAnyOrder("test_rifle");
+
+    assertThat(d.getLoadedGuns())
+      .extracting(Gun::getId)
+      .containsExactlyInAnyOrder("test_rifle", "test_revolver");
+    assertThat(d.getUnloadedGuns()).isEmpty();
 
     checkEndCalled();
   }

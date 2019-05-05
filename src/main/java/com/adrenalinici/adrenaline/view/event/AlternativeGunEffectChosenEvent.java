@@ -1,16 +1,18 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.view.GameView;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+import java.util.Objects;
 import java.util.function.Consumer;
 
-public class AlternativeGunEffectChosenEvent extends BaseViewEvent {
+public class AlternativeGunEffectChosenEvent implements ViewEvent {
 
-  boolean chosenSecondEffect;
+  private boolean chosenSecondEffect;
 
-  public AlternativeGunEffectChosenEvent(GameView view, boolean chooseSecondaryEffect) {
-    super(view);
-    this.chosenSecondEffect = chooseSecondaryEffect;
+  public AlternativeGunEffectChosenEvent(boolean chosenSecondEffect) {
+    this.chosenSecondEffect = chosenSecondEffect;
   }
 
   public boolean chosenFirstEffect() {
@@ -24,5 +26,18 @@ public class AlternativeGunEffectChosenEvent extends BaseViewEvent {
   @Override
   public void onAlternativeGunEffectChosenEvent(Consumer<AlternativeGunEffectChosenEvent> consumer) {
     consumer.accept(this);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    AlternativeGunEffectChosenEvent that = (AlternativeGunEffectChosenEvent) o;
+    return chosenSecondEffect == that.chosenSecondEffect;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(chosenSecondEffect);
   }
 }

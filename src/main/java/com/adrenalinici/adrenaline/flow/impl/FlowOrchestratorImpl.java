@@ -36,9 +36,9 @@ public class FlowOrchestratorImpl<T extends FlowContext> implements FlowOrchestr
   }
 
   @Override
-  public void handleEvent(ViewEvent event) {
+  public void handleEvent(ViewEvent event, GameView view) {
     if (actualContext != null)
-      actualContext.handleEvent(event);
+      actualContext.handleEvent(event, view);
   }
 
   public void onEnd(GameView view) {

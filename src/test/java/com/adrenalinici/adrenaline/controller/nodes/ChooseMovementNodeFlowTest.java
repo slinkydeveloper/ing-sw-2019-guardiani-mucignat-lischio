@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -49,7 +50,7 @@ public class ChooseMovementNodeFlowTest extends BaseNodeTest {
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    orchestrator.handleEvent(new MovementChosenEvent(viewMock, new Position(2, 0)));
+    orchestrator.handleEvent(new MovementChosenEvent(new Position(2, 0)), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(1, 1))

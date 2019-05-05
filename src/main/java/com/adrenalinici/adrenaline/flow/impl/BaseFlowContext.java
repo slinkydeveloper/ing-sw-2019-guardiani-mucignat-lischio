@@ -102,12 +102,12 @@ public abstract class BaseFlowContext implements FlowContext {
 
   @SuppressWarnings("unchecked")
   @Override
-  public void handleEvent(ViewEvent event) {
+  public void handleEvent(ViewEvent event, GameView view) {
     if (this.actualNode() == null) {
-      this.nextPhase(event.getView());
-      this.actualNode.handleEvent(event, actualState, event.getView(), getOrchestrator().getModel(), this);
+      this.nextPhase(view);
+      this.actualNode.handleEvent(event, actualState, view, getOrchestrator().getModel(), this);
     } else {
-      this.actualNode.handleEvent(event, actualState, event.getView(), getOrchestrator().getModel(), this);
+      this.actualNode.handleEvent(event, actualState, view, getOrchestrator().getModel(), this);
     }
   }
 

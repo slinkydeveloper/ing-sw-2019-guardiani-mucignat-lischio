@@ -8,7 +8,7 @@ public interface FlowOrchestrator<T extends FlowContext> {
 
   GameModel getModel();
 
-  void handleEvent(ViewEvent event);
+  void handleEvent(ViewEvent event, GameView view);
 
   void onEnd(GameView view);
 

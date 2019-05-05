@@ -1,12 +1,9 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.view.GameView;
-
+import java.io.Serializable;
 import java.util.function.Consumer;
 
-public interface ViewEvent {
-
-  GameView getView();
+public interface ViewEvent extends Serializable {
 
   default void onActionChosenEvent(Consumer<ActionChosenEvent> consumer) {
   }
@@ -17,9 +14,6 @@ public interface ViewEvent {
   default void onNewTurnEvent(Consumer<NewTurnEvent> consumer) {
   }
 
-  default void onGunToPickupChosenEvent(Consumer<GunToPickupChosenEvent> consumer) {
-  }
-
   default void onAlternativeGunEffectChosenEvent(Consumer<AlternativeGunEffectChosenEvent> consumer) {
   }
 
@@ -27,9 +21,6 @@ public interface ViewEvent {
   }
 
   default void onPlayerChosenEvent(Consumer<PlayerChosenEvent> consumer) {
-  }
-
-  default void onGunToReloadChosenEvent(Consumer<GunToReloadChosenEvent> consumer) {
   }
 
   default void onBaseGunEffectChosenEvent(Consumer<BaseGunEffectChosenEvent> consumer) {

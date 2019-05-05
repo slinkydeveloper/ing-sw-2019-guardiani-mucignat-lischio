@@ -58,9 +58,9 @@ public class MachineGunTest extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun(gunId())));
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, false, false));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
+    context.handleEvent(new BaseGunEffectChosenEvent(false, false), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .containsExactly(PlayerColor.GREEN);
@@ -100,9 +100,9 @@ public class MachineGunTest extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun(gunId())));
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, true, false));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
+    context.handleEvent(new BaseGunEffectChosenEvent(true, false), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .containsExactly(PlayerColor.GREEN, PlayerColor.GREEN);
@@ -142,10 +142,10 @@ public class MachineGunTest extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun(gunId())));
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, false, true));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.CYAN));
+    context.handleEvent(new BaseGunEffectChosenEvent(false, true), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.CYAN), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .containsExactly(PlayerColor.GREEN);
@@ -189,10 +189,10 @@ public class MachineGunTest extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun(gunId())));
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, false, true));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
-    context.handleEvent(new PlayerChosenEvent(viewMock, null));
+    context.handleEvent(new BaseGunEffectChosenEvent(false, true), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new PlayerChosenEvent(null), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .containsExactly(PlayerColor.GREEN);
@@ -232,10 +232,10 @@ public class MachineGunTest extends BaseGunTest {
     model.registerObserver(receivedModelEvents::add);
 
     context.nextPhase(viewMock, new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun(gunId())));
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, true, true));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.GRAY));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.YELLOW));
-    context.handleEvent(new PlayerChosenEvent(viewMock, PlayerColor.CYAN));
+    context.handleEvent(new BaseGunEffectChosenEvent(true, true), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.CYAN), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .containsExactly(PlayerColor.GREEN, PlayerColor.GREEN);

@@ -60,7 +60,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
     BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, false, false));
+    context.handleEvent(new BaseGunEffectChosenEvent(false, false), viewMock);
 
     assertThat(state.isActivatedFirstExtraEffect()).isFalse();
     assertThat(state.isActivatedSecondExtraEffect()).isFalse();
@@ -73,7 +73,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
     BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, true, false));
+    context.handleEvent(new BaseGunEffectChosenEvent(true, false), viewMock);
 
     assertThat(state.isActivatedFirstExtraEffect()).isTrue();
     assertThat(state.isActivatedSecondExtraEffect()).isFalse();
@@ -86,7 +86,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
     BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
-    context.handleEvent(new BaseGunEffectChosenEvent(viewMock, true, true));
+    context.handleEvent(new BaseGunEffectChosenEvent(true, true), viewMock);
 
     assertThat(state.isActivatedFirstExtraEffect()).isTrue();
     assertThat(state.isActivatedSecondExtraEffect()).isTrue();

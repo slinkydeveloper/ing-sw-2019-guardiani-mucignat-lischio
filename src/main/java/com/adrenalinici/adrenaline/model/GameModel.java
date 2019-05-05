@@ -103,9 +103,11 @@ public class GameModel extends Observable<ModelEvent> {
       );
   }
 
-  public void acquireGun(RespawnDashboardCell cell, PlayerColor player, Gun chosenGun) {
+  public void acquireGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addLoadedGun(chosenGun);
+
+    RespawnDashboardCell cell = (RespawnDashboardCell) dashboard.getDashboardCell(getPlayerPosition(player));
     cell.getAvailableGuns().remove(chosenGun);
     List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
     Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
