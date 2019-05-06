@@ -89,4 +89,39 @@ public class PickupNodeFlowTest extends BaseNodeTest {
 
     checkEndCalled();
   }
+
+  @Test
+  public void testPickupNodeOnAmmoCard() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getPlayerDashboard(PlayerColor.GREEN)
+      .removeAmmos(Arrays.asList(AmmoColor.BLUE, AmmoColor.YELLOW, AmmoColor.RED));
+
+    PowerUpCard powerUpCard = new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY);
+    AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), powerUpCard);
+    model.getDashboard().getDashboardCell(Position.of(0, 1))
+      .visit(
+        null,
+        pickupDashboardCell -> {
+          pickupDashboardCell.addPlayer(PlayerColor.GREEN);
+          pickupDashboardCell.setAmmoCard(ammoCard);
+        }
+      );
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    model.registerObserver(receivedModelEvents::add);
+
+    orchestrator.startNewFlow(viewMock, context);
+
+    assertThat(receivedModelEvents)
+      .haveExactly(1, isDashboardCellUpdatedEvent(0, 1));
+    assertThat(receivedModelEvents)
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+
+    assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getAmmos())
+      .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.RED);
+    assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getPowerUpCards())
+      .containsExactly(powerUpCard);
+
+    checkEndCalled();
+  }
 }
