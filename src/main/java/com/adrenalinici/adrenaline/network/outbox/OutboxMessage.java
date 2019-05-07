@@ -41,4 +41,5 @@ public interface OutboxMessage extends Serializable {
   default void onModelEventMessage(Consumer<ModelEventMessage> c) {}
 
   default void onChooseMyPlayerMessage(Consumer<ChooseMyPlayerMessage> c) {}
+
 }

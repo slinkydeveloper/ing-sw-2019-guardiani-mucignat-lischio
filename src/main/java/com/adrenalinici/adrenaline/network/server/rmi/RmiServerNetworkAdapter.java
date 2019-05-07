@@ -52,6 +52,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   public void stop() throws IOException {
     try {
       registry.unbind(GameRmiServer.class.getSimpleName());
+      UnicastRemoteObject.unexportObject(registry, true);
     } catch (NotBoundException e) {
       e.printStackTrace();
     }
