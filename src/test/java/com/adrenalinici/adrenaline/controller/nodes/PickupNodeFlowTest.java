@@ -31,7 +31,6 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
     Stream
       .of("test_revolver", "test_rifle", "test_sword")
-      .map(s -> GunLoader.INSTANCE.getModelGun(s))
       .forEach(respawnDashboardCell::addAvailableGun);
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
@@ -39,12 +38,12 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
 
     PickupFlowNode node = new PickupFlowNode();
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
-      .extracting(Gun::getId).contains("test_sword");
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
-      .extracting(Gun::getId).contains("test_revolver");
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
-      .extracting(Gun::getId).doesNotContain("test_rifle");
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW, gunLoader))
+      .contains("test_sword");
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW, gunLoader))
+      .contains("test_revolver");
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW, gunLoader))
+      .doesNotContain("test_rifle");
   }
 
   @Override
@@ -59,17 +58,16 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).visit(
       respawnDashboardCell -> {
         respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-        respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
+        respawnDashboardCell.addAvailableGun("test_sword");
       },
       null
     );
 
     orchestrator.startNewFlow(viewMock, context);
 
-    ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<List<String>> gunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(viewMock, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());
     assertThat(gunsCaptor.getValue())
-      .extracting(Gun::getId)
       .containsOnly("test_sword");
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
@@ -85,7 +83,6 @@ public class PickupNodeFlowTest extends BaseNodeTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
 
     assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getLoadedGuns())
-      .extracting(Gun::getId)
       .containsOnly("test_sword");
 
     checkEndCalled();

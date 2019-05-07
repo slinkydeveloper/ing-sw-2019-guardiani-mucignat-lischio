@@ -1,18 +1,19 @@
 package com.adrenalinici.adrenaline.model.event;
 
 import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.PlayerDashboard;
 
 public class PlayerDashboardUpdatedEvent extends BaseModelEvent {
 
-  PlayerDashboard playerDashboard;
+  private PlayerColor playerColor;
 
-  public PlayerDashboardUpdatedEvent(GameModel gameModel, PlayerDashboard playerDashboard) {
+  public PlayerDashboardUpdatedEvent(GameModel gameModel, PlayerColor playerColor) {
     super(gameModel);
-    this.playerDashboard = playerDashboard;
+    this.playerColor = playerColor;
   }
 
-  public PlayerDashboard getPlayerDashboard() {
-    return playerDashboard;
+  public PlayerColor getPlayerColor() {
+    return playerColor;
   }
 }

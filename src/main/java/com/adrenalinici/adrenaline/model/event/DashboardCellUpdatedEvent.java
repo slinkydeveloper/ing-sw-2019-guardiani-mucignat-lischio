@@ -1,18 +1,18 @@
 package com.adrenalinici.adrenaline.model.event;
 
-import com.adrenalinici.adrenaline.model.DashboardCell;
 import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.Position;
 
 public class DashboardCellUpdatedEvent extends BaseModelEvent {
 
-  DashboardCell cell;
+  private Position cellPosition;
 
-  public DashboardCellUpdatedEvent(GameModel gameModel, DashboardCell cell) {
+  public DashboardCellUpdatedEvent(GameModel gameModel, Position cellPosition) {
     super(gameModel);
-    this.cell = cell;
+    this.cellPosition = cellPosition;
   }
 
-  public DashboardCell getCell() {
-    return cell;
+  public Position getCellPosition() {
+    return cellPosition;
   }
 }

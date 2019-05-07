@@ -32,6 +32,7 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingOnlyAmmosTest() {
+    GunLoader gunLoader = new GunLoader(Collections.singletonList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
 
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
@@ -43,7 +44,7 @@ public class GameModelTest {
     RespawnDashboardCell respawnDashboardCell = (RespawnDashboardCell) dashboard.getDashboardCell(Position.of(0, 0));
 
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
+    respawnDashboardCell.addAvailableGun("test_sword");
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
 
@@ -51,7 +52,7 @@ public class GameModelTest {
     assertThat(playerDashboard.getAmmos())
       .containsOnly(AmmoColor.YELLOW);
     assertThat(playerDashboard.getLoadedGuns())
-      .extracting(Gun::getId).containsOnly("test_sword");
+      .containsOnly("test_sword");
 
     assertThat(playerDashboard.getPowerUpCards()).containsExactlyInAnyOrder(blueKineticRay, redTeleport);
   }
@@ -71,7 +72,7 @@ public class GameModelTest {
     RespawnDashboardCell respawnDashboardCell = (RespawnDashboardCell) dashboard.getDashboardCell(Position.of(0, 0));
 
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
+    respawnDashboardCell.addAvailableGun("test_sword");
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
     assertThat(playerDashboard.getAmmos().isEmpty()).isTrue();
@@ -80,7 +81,7 @@ public class GameModelTest {
     assertThat(playerDashboard.getPowerUpCards())
       .containsOnly(blueTeleport);
     assertThat(playerDashboard.getLoadedGuns())
-      .extracting(Gun::getId).containsOnly("test_sword");
+      .containsOnly("test_sword");
   }
 
   @Test
@@ -96,8 +97,8 @@ public class GameModelTest {
     RespawnDashboardCell respawnDashboardCell = (RespawnDashboardCell) dashboard.getDashboardCell(Position.of(0, 0));
 
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
-    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_revolver"));
+    respawnDashboardCell.addAvailableGun("test_sword");
+    respawnDashboardCell.addAvailableGun("test_revolver");
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
 
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);

@@ -11,6 +11,10 @@ public interface DashboardCell extends Serializable {
 
   int getCell();
 
+  default Position getPosition() {
+    return Position.of(getLine(), getCell());
+  }
+
   class Builder {
     private DashboardCellBoundType northDashboardCellBoundType = DashboardCellBoundType.WALL;
     private DashboardCellBoundType southDashboardCellBoundType = DashboardCellBoundType.WALL;
@@ -18,7 +22,7 @@ public interface DashboardCell extends Serializable {
     private DashboardCellBoundType westDashboardCellBoundType = DashboardCellBoundType.WALL;
     private final int cell;
     private final int line;
-    private DashboardCellFactory cellFactory;
+    private BaseDashboardCell.DashboardCellFactory cellFactory;
 
     public Builder(int line, int cell) {
       this.cell = cell;

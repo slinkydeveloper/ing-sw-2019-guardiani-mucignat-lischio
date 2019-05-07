@@ -5,5 +5,5 @@ public enum PlayerColor {
   YELLOW,
   GREEN,
   PURPLE,
-  CYAN;
+  CYAN
 }

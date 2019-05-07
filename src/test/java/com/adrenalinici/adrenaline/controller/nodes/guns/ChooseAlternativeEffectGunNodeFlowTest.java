@@ -35,7 +35,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     context.nextPhase(
       viewMock,
@@ -55,7 +55,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseEffectOne() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     context.nextPhase(
       viewMock,
@@ -75,7 +75,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseEffectTwo() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     context.nextPhase(
       viewMock,

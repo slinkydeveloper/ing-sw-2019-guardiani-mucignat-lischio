@@ -1,27 +1,29 @@
 package com.adrenalinici.adrenaline.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class RespawnDashboardCell extends BaseDashboardCell {
 
-  private List<Gun> availableGuns;
+  private Set<String> availableGuns;
 
   public RespawnDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell, Dashboard dashboard) {
     super(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboard);
-    this.availableGuns = new ArrayList<>();
+    this.availableGuns = new HashSet<>();
   }
 
-  public List<Gun> getAvailableGuns() {
+  public Set<String> getAvailableGuns() {
     return availableGuns;
   }
 
-  public void addAvailableGun(Gun gun) {
+  public void addAvailableGun(String gun) {
     availableGuns.add(gun);
   }
 
-  public void removeAvailableGun(Gun gunToRemove) {
+  public void removeAvailableGun(String gunToRemove) {
     availableGuns.remove(gunToRemove);
   }
 

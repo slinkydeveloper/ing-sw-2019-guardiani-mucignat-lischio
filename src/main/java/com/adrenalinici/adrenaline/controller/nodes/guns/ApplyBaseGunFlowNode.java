@@ -32,12 +32,10 @@ public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlo
       dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getFirstExtraEffectCost());
     if (flowState.isActivatedSecondExtraEffect())
       dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getSecondExtraEffectCost());
-    dashboard.removeLoadedGun(flowState.getChosenGun().get());
-    dashboard.addUnloadedGun(flowState.getChosenGun().get());
+    dashboard.unloadGun(flowState.getChosenGun().getId());
     context.nextPhase(view, flowState);
   }
 
   @Override
-  public void handleEvent(ViewEvent event, BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-  }
+  public void handleEvent(ViewEvent event, BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) { }
 }

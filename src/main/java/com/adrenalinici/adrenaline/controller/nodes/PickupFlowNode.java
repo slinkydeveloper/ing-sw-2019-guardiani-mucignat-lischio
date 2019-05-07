@@ -10,6 +10,7 @@ import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.PICKUP;
@@ -27,7 +28,7 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
     DashboardCell cell = model.getDashboard().getDashboardCell(actualPlayerPosition);
 
     cell.visit(respawnDashboardCell -> {
-      view.showAvailableGunsToPickup(calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer()));
+      view.showAvailableGunsToPickup(calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer(), context.getGunLoader()));
     }, pickupDashboardCell -> {
       // No user interaction required
       model.acquireAmmoCard(pickupDashboardCell, context.getTurnOfPlayer());
@@ -45,12 +46,16 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
     });
   }
 
-  protected List<Gun> calculateAvailableGunsToPickup(GameModel model, RespawnDashboardCell respawnCell, PlayerColor player) {
+  protected Set<String> calculateAvailableGunsToPickup(GameModel model, RespawnDashboardCell respawnCell, PlayerColor player, GunLoader loader) {
     Bag<AmmoColor> playerAmmosBag = model.getPlayerDashboard(player).getAllAmmosIncludingPowerups();
-    return respawnCell.getAvailableGuns().stream()
+    return respawnCell
+      .getAvailableGuns()
+      .stream()
+      .map(loader::getModelGun)
       .filter(
         gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToPickup()))
       )
-      .collect(Collectors.toList());
+      .map(Gun::getId)
+      .collect(Collectors.toSet());
   }
 }

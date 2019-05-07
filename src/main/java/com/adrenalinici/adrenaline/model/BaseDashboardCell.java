@@ -6,6 +6,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 public abstract class BaseDashboardCell implements DashboardCell {
+
+  @FunctionalInterface
+  public static interface DashboardCellFactory {
+    DashboardCell create(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int cell, int line, Dashboard dashboard);
+  }
+
   private final List<PlayerColor> playersInCell;
   private final DashboardCellBoundType northDashboardCellBoundType;
   private final DashboardCellBoundType southDashboardCellBoundType;

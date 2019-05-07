@@ -3,22 +3,16 @@ package com.adrenalinici.adrenaline.model;
 import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlayerDashboard {
-
-  private static Random RND = new Random();
 
   private PlayerColor player;
   private List<AmmoColor> ammos;
   private List<PlayerColor> damages;
   private List<PlayerColor> marks;
-  private List<Gun> loadedGuns;
-  private List<Gun> unloadedGuns;
+  private HashMap<String, Boolean> guns;
   private List<PowerUpCard> powerUpCards;
   private int skullsNumber;
   private int points;
@@ -31,8 +25,7 @@ public class PlayerDashboard {
     this.ammos = new ArrayList<>();
     this.damages = new ArrayList<>();
     this.marks = new ArrayList<>();
-    this.loadedGuns = new ArrayList<>();
-    this.unloadedGuns = new ArrayList<>();
+    this.guns = new HashMap<>();
     this.skullsNumber = 0;
     this.points = 0;
     addAmmo(AmmoColor.RED);
@@ -111,32 +104,68 @@ public class PlayerDashboard {
     return marks;
   }
 
-  public void addLoadedGun(Gun loadedGun) {
-    if (loadedGuns.size() == 3) {
-      loadedGuns.remove(RND.nextInt(3));
+  /**
+   * Add a loaded gun
+   *
+   * @param gun
+   */
+  public void addGun(String gun) {
+    if (guns.size() == 3) {
+      guns.remove(
+        guns
+          .entrySet()
+          .stream()
+          .min((e1, e2) -> (e1.getValue() == e2.getValue()) ? 0 : !e1.getValue() ? -1 : 1)
+          .get()
+          .getKey()
+      );
     }
-    loadedGuns.add(loadedGun);
+    guns.put(gun, false);
   }
 
-  public void addUnloadedGun(Gun unloadedGun) {
-    //TODO gestire caso limite armi
-    unloadedGuns.add(unloadedGun);
+  /**
+   * Unload a gun already owned by this player
+   *
+   * @param gun
+   */
+  public void unloadGun(String gun) {
+    guns.replace(gun, false);
   }
 
-  public void removeLoadedGun(Gun loadedGun) {
-    loadedGuns.remove(loadedGun);
+  /**
+   * Load a gun already owned by this player
+   *
+   * @param gun
+   */
+  public void reloadGun(String gun) {
+    guns.replace(gun, true);
   }
 
-  public List<Gun> getLoadedGuns() {
-    return loadedGuns;
+  /**
+   * Remove a gun owned by this player
+   *
+   * @param gun
+   */
+  public void removeGun(String gun) {
+    guns.remove(gun);
   }
 
-  public void removeUnloadedGun(Gun loadedGun) {
-    unloadedGuns.remove(loadedGun);
+  public Set<String> getLoadedGuns() {
+    return guns
+      .entrySet()
+      .stream()
+      .filter(Map.Entry::getValue)
+      .map(Map.Entry::getKey)
+      .collect(Collectors.toSet());
   }
 
-  public List<Gun> getUnloadedGuns() {
-    return unloadedGuns;
+  public Set<String> getUnloadedGuns() {
+    return guns
+      .entrySet()
+      .stream()
+      .filter(e -> !e.getValue())
+      .map(Map.Entry::getKey)
+      .collect(Collectors.toSet());
   }
 
   public void addPowerUpCard(PowerUpCard powerUp) throws IllegalStateException {

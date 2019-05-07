@@ -8,13 +8,13 @@ import java.util.function.Consumer;
 
 public class LoadedGunsMessage implements OutboxMessage {
 
-  private List<Gun> guns;
+  private Set<String> guns;
 
-  public LoadedGunsMessage(List<Gun> guns) {
+  public LoadedGunsMessage(Set<String> guns) {
     this.guns = guns;
   }
 
-  public List<Gun> getGuns() { return this.guns; }
+  public Set<String> getGuns() { return this.guns; }
 
   @Override
   public void onLoadedGunsMessage(Consumer<LoadedGunsMessage> c) { c.accept(this); }

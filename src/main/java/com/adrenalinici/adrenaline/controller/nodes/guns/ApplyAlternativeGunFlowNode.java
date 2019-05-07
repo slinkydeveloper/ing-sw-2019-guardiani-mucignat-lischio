@@ -30,13 +30,10 @@ public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<Alternati
     consumer.accept(flowState, model, context);
     // Remove ammos required for effect and unload the gun
     PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
-    Bag<AmmoColor> playerAmmosBag = Bag.from(dashboard.getAmmos());
-    Bag<AmmoColor> requiredAmmosBag = Bag.from(flowState.getChosenEffect().getRequiredAmmos());
 
     dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
 
-    dashboard.removeLoadedGun(flowState.getChosenGun().get());
-    dashboard.addUnloadedGun(flowState.getChosenGun().get());
+    dashboard.unloadGun(flowState.getChosenGun().getId());
     context.nextPhase(view, flowState);
   }
 

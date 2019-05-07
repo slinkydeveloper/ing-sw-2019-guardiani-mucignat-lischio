@@ -33,7 +33,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("machine_gun");
 
     context.nextPhase(
       viewMock,
@@ -53,7 +53,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testNoExtraEffect() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("machine_gun");
     BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
@@ -66,7 +66,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testOnlyExtraEffectOne() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("machine_gun");
     BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
@@ -79,7 +79,7 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testAllExtraEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("machine_gun");
     BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);

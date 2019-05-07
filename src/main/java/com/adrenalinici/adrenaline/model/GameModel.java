@@ -82,11 +82,11 @@ public class GameModel extends Observable<ModelEvent> {
     Position oldPosition = getPlayerPosition(player);
     DashboardCell oldCell = dashboard.getDashboardCell(oldPosition);
     oldCell.removePlayer(player);
-    notifyEvent(new DashboardCellUpdatedEvent(this, oldCell));
+    notifyEvent(new DashboardCellUpdatedEvent(this, oldPosition));
 
     DashboardCell newCell = dashboard.getDashboardCell(newPosition);
     newCell.addPlayer(player);
-    notifyEvent(new DashboardCellUpdatedEvent(this, newCell));
+    notifyEvent(new DashboardCellUpdatedEvent(this, newPosition));
   }
 
   public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
@@ -97,46 +97,39 @@ public class GameModel extends Observable<ModelEvent> {
           ac.getAmmoColor().forEach(playerDashboard::addAmmo);
           ac.getPowerUpCard().ifPresent(playerDashboard::addPowerUpCard);
           cell.setAmmoCard(null);
-          notifyEvent(new DashboardCellUpdatedEvent(this, cell));
-          notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+          notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
+          notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
         }
       );
   }
 
   public void acquireGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
-    playerDashboard.addLoadedGun(chosenGun);
+    playerDashboard.addGun(chosenGun.getId());
 
     RespawnDashboardCell cell = (RespawnDashboardCell) dashboard.getDashboardCell(getPlayerPosition(player));
-    cell.getAvailableGuns().remove(chosenGun);
-    List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
-    Bag<AmmoColor> requiredAmmoToPickupBag = Bag.from(chosenGun.getRequiredAmmoToPickup());
+    cell.getAvailableGuns().remove(chosenGun.getId());
 
     playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup());
 
-    notifyEvent(new DashboardCellUpdatedEvent(this, cell));
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+    notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
   }
 
   public void reloadGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
-    playerDashboard.addLoadedGun(chosenGun);
-    playerDashboard.removeUnloadedGun(chosenGun);
-    List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
-    Bag<AmmoColor> requiredAmmoToReloadBag = Bag.from(chosenGun.getRequiredAmmoToReload());
+    playerDashboard.reloadGun(chosenGun.getId());
 
     playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload());
 
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
   }
 
   private boolean hitter(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
 
-    int killerMarksOnVictimDashboard = victimPlayerDashboard.getMarks().stream()
-      .filter(playerColor -> playerColor.equals(killer)).collect(Collectors.toList()).size();
+    int killerMarksOnVictimDashboard = (int) victimPlayerDashboard.getMarks().stream()
+      .filter(playerColor -> playerColor.equals(killer)).count();
 
     damages += killerMarksOnVictimDashboard;
 
@@ -153,9 +146,9 @@ public class GameModel extends Observable<ModelEvent> {
       victimPlayerDashboard.incrementSkullsNumber();
 
       if (victimPlayerDashboard.getCruelDamage().isPresent()) {
-        killScore.add(new AbstractMap.SimpleImmutableEntry<PlayerColor, Boolean>(killer, Boolean.TRUE));
+        killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.TRUE));
         markPlayer(victim, killer, 1);
-      } else killScore.add(new AbstractMap.SimpleImmutableEntry<PlayerColor, Boolean>(killer, Boolean.FALSE));
+      } else killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.FALSE));
       notifyEvent(new GameModelUpdatedEvent(this));
     }
 
@@ -193,7 +186,7 @@ public class GameModel extends Observable<ModelEvent> {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     boolean killed = hitter(killer, victim, damages);
 
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
     return killed;
   }
 
@@ -211,7 +204,7 @@ public class GameModel extends Observable<ModelEvent> {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
 
     marker(killer, victim, marks);
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
   }
 
   /**
@@ -239,7 +232,7 @@ public class GameModel extends Observable<ModelEvent> {
     boolean killed = hitter(killer, victim, damages);
     marker(killer, victim, marks);
 
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
     return killed;
   }
 
@@ -248,16 +241,16 @@ public class GameModel extends Observable<ModelEvent> {
    * @return number of player marks on other playerDashboards
    */
   public int calculateMarksOnOtherPlayerDashboards(PlayerColor player) {
-    List<PlayerColor> marksOnOtherPlayerDashboards = new ArrayList<>();
-    playerDashboards.stream()
+    return (int) playerDashboards
+      .stream()
       .filter(playerDashboard -> !playerDashboard.getPlayer().equals(player))
-      .forEach(playerDashboard ->
-        playerDashboard.getMarks().stream()
+      .mapToLong(playerDashboard ->
+        playerDashboard
+          .getMarks()
+          .stream()
           .filter(playerColor -> playerColor.equals(player))
-          .forEach(playerColor -> marksOnOtherPlayerDashboards.add(playerColor))
-      );
-
-    return marksOnOtherPlayerDashboards.size();
+          .count()
+      ).count();
   }
 
 }

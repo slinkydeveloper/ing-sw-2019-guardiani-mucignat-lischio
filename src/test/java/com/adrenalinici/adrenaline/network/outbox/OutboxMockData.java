@@ -9,7 +9,7 @@ public class OutboxMockData {
   public static final List<Action> ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.SHOOT, Action.MOVE_PICKUP);
   public static final List<Position> POSITIONS = Arrays.asList(Position.of(2, 3), Position.of(1, 4));
   public static final PlayerColor PLAYER = PlayerColor.GREEN;
-  public static final List<Gun> GUNS = Collections.emptyList(); //TODO add some data
+  public static final Set<String> GUNS = new HashSet<>(Arrays.asList("zx2", "machine_gun")); //TODO add some data
   public static final Effect FIRST_EFFECT = new Effect("aaa", "aaaaa", "aaaaaaaaa");
   public static final Effect SECOND_EFFECT = new Effect("bbb", "bbbbb", "bbbbbbbbbb");
   public static final Effect FIRST_EXTRA_EFFECT = FIRST_EFFECT;

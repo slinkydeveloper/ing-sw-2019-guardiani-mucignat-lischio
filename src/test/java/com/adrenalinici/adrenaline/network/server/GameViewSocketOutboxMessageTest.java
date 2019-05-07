@@ -58,7 +58,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
     Thread.sleep(100);
 
-    ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showReloadableGuns(gunsCaptor.capture());
 
     assertThat(gunsCaptor.getValue()).isEqualTo(GUNS);
@@ -70,7 +70,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
     Thread.sleep(100);
 
-    ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showLoadedGuns(gunsCaptor.capture());
 
     assertThat(gunsCaptor.getValue()).isEqualTo(GUNS);
@@ -194,7 +194,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
     Thread.sleep(100);
 
-    ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showAvailableGuns(gunsCaptor.capture());
 
     assertThat(gunsCaptor.getValue()).isEqualTo(GUNS);
@@ -206,7 +206,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
     Thread.sleep(100);
 
-    ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());
 
     assertThat(gunsCaptor.getValue()).isEqualTo(GUNS);

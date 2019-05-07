@@ -52,7 +52,7 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    playerDashboard.addGun("zx2");
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -75,11 +75,10 @@ public class ZX2Test extends BaseGunTest {
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId("zx2"));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId("zx2"));
+      .containsExactly("zx2");
   }
 
   @Test
@@ -92,7 +91,7 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    playerDashboard.addGun("zx2");
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -118,11 +117,10 @@ public class ZX2Test extends BaseGunTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId("zx2"));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId("zx2"));
+      .containsExactly("zx2");
 
   }
 

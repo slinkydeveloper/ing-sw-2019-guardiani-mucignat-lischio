@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 public class PickupDashboardCell extends BaseDashboardCell {
+
   private AmmoCard ammoCard;
 
   public PickupDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell, Dashboard dashboard) {
@@ -34,4 +35,5 @@ public class PickupDashboardCell extends BaseDashboardCell {
   public boolean isRespawnCell() {
     return false;
   }
+
 }
