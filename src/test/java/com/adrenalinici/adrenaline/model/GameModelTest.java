@@ -32,7 +32,8 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingOnlyAmmosTest() {
-    GunLoader gunLoader = new GunLoader(Collections.singletonList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
+    //GunLoader gunLoader = new GunLoader(Collections.singletonList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
+    GunLoader gunLoader = GunLoader.getGunLoaderInstance();
 
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
@@ -59,7 +60,8 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingOnlyPowerupsTest() {
-    GunLoader gunLoader = new GunLoader(Collections.singletonList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
+    //GunLoader gunLoader = new GunLoader(Collections.singletonList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
+    GunLoader gunLoader = GunLoader.getGunLoaderInstance();
 
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
     PowerUpCard redKineticRay = new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY);
@@ -87,7 +89,8 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingBothAmmosAndPowerupsTest() {
-    GunLoader gunLoader = new GunLoader(Arrays.asList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY, TestUtils.BASE_EFFECT_GUN_REVOLVER_FACTORY));
+    //GunLoader gunLoader = new GunLoader(Arrays.asList(TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY, TestUtils.BASE_EFFECT_GUN_REVOLVER_FACTORY));
+    GunLoader gunLoader = GunLoader.getGunLoaderInstance();
 
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);

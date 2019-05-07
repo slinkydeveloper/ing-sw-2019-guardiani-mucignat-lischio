@@ -2,7 +2,9 @@ package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.guns.MachineGunGunFactory;
 import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
+import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.util.JsonUtils;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +21,8 @@ public class GunLoaderTest {
 
   AtomicBoolean endCalled;
 
+  //ZX2GunFactory zx2GunFactory = new ZX2GunFactory();
+
   @Before
   public void setup() {
     this.endCalled = new AtomicBoolean(false);
@@ -26,30 +30,25 @@ public class GunLoaderTest {
   }
 
   @Test
-  public void testGunLoaderCacheOnZX2() {
+  public void testGunLoaderCache() {
     assertThat(gunLoader.getGuns().isEmpty()).isTrue();
     gunLoader.getModelGun(ZX2Id());
     gunLoader.getModelGun(MachineGunId());
-    assertThat(gunLoader.getConfigs().size()).isEqualTo(2);
-    assertThat(gunLoader.getConfigs().get(0))
-      .isEqualTo(new AbstractMap.SimpleImmutableEntry<>(
-        ZX2Id(),
+    assertThat(GunLoader.getConfigs().get(ZX2Id()))
+      .isEqualTo(
         JsonUtils.getConfigurationJSONFromClasspath(ZX2Id() + ".json")
-      ));
-    assertThat(gunLoader.getConfigs().get(1))
-      .isEqualTo(new AbstractMap.SimpleImmutableEntry<>(
-        MachineGunId(),
+      );
+    assertThat(GunLoader.getConfigs().get(MachineGunId()))
+      .isEqualTo(
         JsonUtils.getConfigurationJSONFromClasspath(MachineGunId() + ".json")
-      ));
-    assertThat(gunLoader.getGuns().size()).isEqualTo(2);
+      );
 
-    gunLoader.getModelGun(ZX2Id());
-    assertThat(gunLoader.getConfigs().size()).isEqualTo(2);
-    assertThat(gunLoader.getGuns().size()).isEqualTo(2);
+    //gunLoader.getDecoratedGun(ZX2Id());
+    //gunLoader.getDecoratedGun(MachineGunId());
   }
 
   private GunLoader createGunLoader() {
-    return new GunLoader(Arrays.asList(new ZX2GunFactory(), new MachineGunGunFactory()));
+    return GunLoader.getGunLoaderInstance();
   }
 
   private String ZX2Id() {

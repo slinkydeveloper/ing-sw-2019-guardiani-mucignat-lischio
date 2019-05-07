@@ -27,9 +27,10 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
 
   @Override
   protected GunLoader createGunLoader() {
-    return new GunLoader(
+    /*return new GunLoader(
       Collections.singletonList(new MachineGunGunFactory())
-    );
+    );*/
+    return GunLoader.getGunLoaderInstance();
   }
 
   @Override

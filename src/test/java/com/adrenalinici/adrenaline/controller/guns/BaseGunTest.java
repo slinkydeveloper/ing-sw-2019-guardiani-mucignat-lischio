@@ -60,7 +60,8 @@ public abstract class BaseGunTest {
   }
 
   protected GunLoader createGunLoader() {
-    return new GunLoader(Collections.singletonList(gunFactory()));
+    //return new GunLoader(Collections.singletonList(gunFactory()));
+    return GunLoader.getGunLoaderInstance();
   }
 
   protected abstract GunFactory gunFactory();

@@ -32,9 +32,10 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
 
   @Override
   protected GunLoader createGunLoader() {
-    return new GunLoader(
+    /*return new GunLoader(
       Arrays.asList(new ZX2GunFactory(), new MachineGunGunFactory())
-    );
+    );*/
+    return GunLoader.getGunLoaderInstance();
   }
 
   @Override

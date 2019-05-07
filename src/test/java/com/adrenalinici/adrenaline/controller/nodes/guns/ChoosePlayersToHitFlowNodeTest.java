@@ -5,6 +5,7 @@ import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
+import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -28,9 +29,10 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
 
   @Override
   protected GunLoader createGunLoader() {
-    return new GunLoader(
+    /*return new GunLoader(
       Collections.singletonList(new ZX2GunFactory())
-    );
+    );*/
+    return GunLoader.getGunLoaderInstance();
   }
 
   @Override
