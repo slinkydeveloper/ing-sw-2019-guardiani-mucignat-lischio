@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BroadcasterRunnable extends BaseSocketRunnable {
@@ -34,10 +35,12 @@ public class BroadcasterRunnable extends BaseSocketRunnable {
           try {
             s.getChannel().write(byteBuffer);
           } catch (IOException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "IOException while broadcasting message", e);
           }
         });
-      } catch (InterruptedException e) {}
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
     }
   }
 }

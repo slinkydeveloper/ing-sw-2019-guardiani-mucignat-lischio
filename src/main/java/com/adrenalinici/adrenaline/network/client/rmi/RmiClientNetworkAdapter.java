@@ -39,9 +39,7 @@ public class RmiClientNetworkAdapter extends ClientNetworkAdapter {
       senderThread = new Thread(new SenderRunnable(clientViewOutbox, server, remote));
       senderThread.start();
       server.startConnection(remote);
-    } catch (NotBoundException e) {
-      e.printStackTrace();
-    }
+    } catch (NotBoundException e) { }
   }
 
   @Override

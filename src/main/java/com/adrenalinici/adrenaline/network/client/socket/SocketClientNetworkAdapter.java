@@ -23,6 +23,7 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
   private Thread receiverThread;
   private Thread senderThread;
   private SocketChannel channel;
+  private Selector readSelector;
 
   public SocketClientNetworkAdapter(ClientViewProxy proxy) {
     super(proxy);
@@ -30,7 +31,7 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
 
   @Override
   public void initialize() throws IOException {
-    Selector readSelector = Selector.open();
+    readSelector = Selector.open();
 
     this.channel = SocketChannel.open(new InetSocketAddress(ADDRESS, PORT));
     this.channel.configureBlocking(false);
@@ -56,5 +57,9 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
       receiverThread.interrupt();
     if (senderThread != null)
       senderThread.interrupt();
+    if (readSelector != null && readSelector.isOpen())
+      readSelector.close();
+    if (channel != null && channel.isOpen())
+      channel.close();
   }
 }

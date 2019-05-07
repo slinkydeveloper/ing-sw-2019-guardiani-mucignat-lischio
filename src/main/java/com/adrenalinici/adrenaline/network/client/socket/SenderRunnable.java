@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SenderRunnable implements Runnable {
@@ -30,8 +31,9 @@ public class SenderRunnable implements Runnable {
         LOG.fine(String.format("Going to send message %s", message.getClass()));
         channel.write(ByteBuffer.wrap(SerializationUtils.serialize(message)));
       } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
       } catch (IOException e) {
-        e.printStackTrace();
+        LOG.log(Level.SEVERE, "IOException while sending a message", e);
       }
     }
   }

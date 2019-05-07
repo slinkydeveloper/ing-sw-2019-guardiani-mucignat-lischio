@@ -57,7 +57,6 @@ public interface DashboardCell extends Serializable {
       return cellFactory.create(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboardInstance);
     }
 
-
   }
 
   List<PlayerColor> getPlayersInCell();
@@ -94,13 +93,29 @@ public interface DashboardCell extends Serializable {
 
   boolean isPickupCell();
 
-  Optional<DashboardCell> getNorthDashboardCell();
+  DashboardCell getNorthDashboardCell();
 
-  Optional<DashboardCell> getSouthDashboardCell();
+  default boolean hasNorthDashboardCell() {
+    return getNorthDashboardCell() != null;
+  }
 
-  Optional<DashboardCell> getEastDashboardCell();
+  DashboardCell getSouthDashboardCell();
 
-  Optional<DashboardCell> getWestDashboardCell();
+  default boolean hasSouthDashboardCell() {
+    return getSouthDashboardCell() != null;
+  }
+
+  DashboardCell getEastDashboardCell();
+
+  default boolean hasEastDashboardCell() {
+    return getEastDashboardCell() != null;
+  }
+
+  DashboardCell getWestDashboardCell();
+
+  default boolean hasWestDashboardCell() {
+    return getWestDashboardCell() != null;
+  }
 
   void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell);
 }
