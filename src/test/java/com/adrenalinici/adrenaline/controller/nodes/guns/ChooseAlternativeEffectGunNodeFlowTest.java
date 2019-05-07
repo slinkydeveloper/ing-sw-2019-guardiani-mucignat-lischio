@@ -21,7 +21,6 @@ import static org.mockito.Mockito.verify;
 @SuppressWarnings("unchecked")
 public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
 
-
   @Override
   public void setUp() {
     super.setUp();
