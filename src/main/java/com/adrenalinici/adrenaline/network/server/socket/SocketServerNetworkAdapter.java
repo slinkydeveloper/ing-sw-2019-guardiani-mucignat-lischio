@@ -26,6 +26,7 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
   private Thread broadcasterThread;
   private ServerSocketChannel serverChannel;
   private Map<Socket, String> connectedClients;
+  private Selector readSelector;
 
   public SocketServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox) {
     super(viewInbox, viewOutbox);
@@ -33,10 +34,10 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
 
   @Override
   public void start() throws IOException {
-    Selector readSelector = Selector.open();
+    readSelector = Selector.open();
     this.connectedClients = new ConcurrentHashMap<>();
 
-    // Configure socker server and register channel to selector
+    // Configure socket server and register channel to selector
     this.serverChannel = ServerSocketChannel.open();
     this.serverChannel.configureBlocking(false);
     this.serverChannel.socket().bind(new InetSocketAddress(PORT));
@@ -62,6 +63,8 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
       receiverThread.interrupt();
     if (broadcasterThread != null)
       broadcasterThread.interrupt();
+    if (readSelector != null && readSelector.isOpen())
+      readSelector.close();
     if (serverChannel != null && serverChannel.isOpen())
       serverChannel.close();
   }

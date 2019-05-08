@@ -7,6 +7,7 @@ import com.adrenalinici.adrenaline.util.LogUtils;
 import java.rmi.RemoteException;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BroadcasterRunnable implements Runnable {
@@ -31,10 +32,12 @@ public class BroadcasterRunnable implements Runnable {
           try {
             rmiClient.acceptMessage(message);
           } catch (RemoteException e) {
-            e.printStackTrace();
+            LOG.log(Level.WARNING, "This should never happen", e);
           }
         });
-      } catch (InterruptedException e) {}
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
     }
   }
 }

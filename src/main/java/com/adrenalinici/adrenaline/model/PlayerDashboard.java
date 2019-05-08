@@ -10,6 +10,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class PlayerDashboard {
+
+  private static Random RND = new Random();
+
   private PlayerColor player;
   private List<AmmoColor> ammos;
   private List<PlayerColor> damages;
@@ -110,8 +113,7 @@ public class PlayerDashboard {
 
   public void addLoadedGun(Gun loadedGun) {
     if (loadedGuns.size() == 3) {
-      Random random = new Random();
-      loadedGuns.remove(random.nextInt(3));
+      loadedGuns.remove(RND.nextInt(3));
     }
     loadedGuns.add(loadedGun);
   }

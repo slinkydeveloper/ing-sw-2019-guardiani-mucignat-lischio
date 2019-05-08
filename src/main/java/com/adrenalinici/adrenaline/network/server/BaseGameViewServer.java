@@ -71,7 +71,9 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
             notifyEvent(new DecoratedEvent<>(viewEventInboxEntry.getViewEvent(), this));
           }
         });
-      } catch (InterruptedException ex) { }
+      } catch (InterruptedException ex) {
+        Thread.currentThread().interrupt();
+      }
     }
   }
 

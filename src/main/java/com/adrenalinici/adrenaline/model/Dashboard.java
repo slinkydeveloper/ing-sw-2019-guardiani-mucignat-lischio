@@ -127,24 +127,24 @@ public class Dashboard {
     for (int i = 0; i < range; i++) {
       for (DashboardCell c : toScan) {
         if (!c.hasNorthWall() &&
-          c.getNorthDashboardCell().isPresent() &&
-          !toScan.contains(c.getNorthDashboardCell().get())
-        ) nextScan.add(c.getNorthDashboardCell().get());
+          c.hasNorthDashboardCell() &&
+          !toScan.contains(c.getNorthDashboardCell())
+        ) nextScan.add(c.getNorthDashboardCell());
 
         if (!c.hasEastWall() &&
-          c.getEastDashboardCell().isPresent() &&
-          !toScan.contains(c.getEastDashboardCell().get())
-        ) nextScan.add(c.getEastDashboardCell().get());
+          c.hasEastDashboardCell() &&
+          !toScan.contains(c.getEastDashboardCell())
+        ) nextScan.add(c.getEastDashboardCell());
 
         if (!c.hasSouthWall() &&
-          c.getSouthDashboardCell().isPresent() &&
-          !toScan.contains(c.getSouthDashboardCell().get())
-        ) nextScan.add(c.getSouthDashboardCell().get());
+          c.hasSouthDashboardCell() &&
+          !toScan.contains(c.getSouthDashboardCell())
+        ) nextScan.add(c.getSouthDashboardCell());
 
         if (!c.hasWestWall() &&
-          c.getWestDashboardCell().isPresent() &&
-          !toScan.contains(c.getWestDashboardCell().get())
-        ) nextScan.add(c.getWestDashboardCell().get());
+          c.hasWestDashboardCell() &&
+          !toScan.contains(c.getWestDashboardCell())
+        ) nextScan.add(c.getWestDashboardCell());
       }
       scanned.addAll(toScan);
       toScan.clear();
@@ -228,35 +228,35 @@ public class Dashboard {
     for (int i = 0; ; i++) {
       for (DashboardCell c : toScan) {
         if (!c.hasNorthWall() &&
-          c.getNorthDashboardCell().isPresent() &&
-          !toScan.contains(c.getNorthDashboardCell().get())
+          c.hasNorthDashboardCell() &&
+          !toScan.contains(c.getNorthDashboardCell())
         ) {
           if (Position.of(c.getLine() - 1, c.getCell()).equals(to)) return i + 1;
-          nextScan.add(c.getNorthDashboardCell().get());
+          nextScan.add(c.getNorthDashboardCell());
         }
 
         if (!c.hasEastWall() &&
-          c.getEastDashboardCell().isPresent() &&
-          !toScan.contains(c.getEastDashboardCell().get())
+          c.hasEastDashboardCell() &&
+          !toScan.contains(c.getEastDashboardCell())
         ) {
           if (Position.of(c.getLine(), c.getCell() + 1).equals(to)) return i + 1;
-          nextScan.add(c.getEastDashboardCell().get());
+          nextScan.add(c.getEastDashboardCell());
         }
 
         if (!c.hasSouthWall() &&
-          c.getSouthDashboardCell().isPresent() &&
-          !toScan.contains(c.getSouthDashboardCell().get())
+          c.hasSouthDashboardCell() &&
+          !toScan.contains(c.getSouthDashboardCell())
         ) {
           if (Position.of(c.getLine() + 1, c.getCell()).equals(to)) return i + 1;
-          nextScan.add(c.getSouthDashboardCell().get());
+          nextScan.add(c.getSouthDashboardCell());
         }
 
         if (!c.hasWestWall() &&
-          c.getWestDashboardCell().isPresent() &&
-          !toScan.contains(c.getWestDashboardCell().get())
+          c.hasWestDashboardCell() &&
+          !toScan.contains(c.getWestDashboardCell())
         ) {
           if (Position.of(c.getLine(), c.getCell() - 1).equals(to)) return i + 1;
-          nextScan.add(c.getWestDashboardCell().get());
+          nextScan.add(c.getWestDashboardCell());
         }
       }
       toScan.clear();

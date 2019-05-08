@@ -10,14 +10,12 @@ import com.adrenalinici.adrenaline.util.SerializationUtils;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ReceiverRunnable extends BaseSocketRunnable {
@@ -53,8 +51,9 @@ public class ReceiverRunnable extends BaseSocketRunnable {
           }
         }
       } catch (IOException e) {
-        e.printStackTrace();
-        System.err.println("Error in NewConnectionAcceptRunnable");
+        LOG.log(Level.WARNING, "IOException in NewConnectionAcceptRunnable", e);
+      } catch (ClosedSelectorException e) {
+        Thread.currentThread().interrupt();
       }
     }
   }
