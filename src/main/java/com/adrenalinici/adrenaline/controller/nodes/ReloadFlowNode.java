@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
+import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.AmmoColor;
@@ -33,7 +34,7 @@ public class ReloadFlowNode implements StatelessControllerFlowNode {
   @Override
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onGunChosenEvent(gunToReloadChosenEvent -> {
-      Gun chosenGun = context.getGunLoader().getModelGun(gunToReloadChosenEvent.getGunid());
+      Gun chosenGun = GunLoader.INSTANCE.getModelGun(gunToReloadChosenEvent.getGunid());
       model.reloadGun(context.getTurnOfPlayer(), chosenGun);
       context.replayNode(view);
     });

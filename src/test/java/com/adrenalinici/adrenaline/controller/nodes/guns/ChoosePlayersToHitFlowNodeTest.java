@@ -40,7 +40,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
 
-    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
     context.nextPhase(viewMock,
       new AlternativeEffectGunFlowState(gun).setChosenEffect(gun.getFirstEffect(), true)
     );
@@ -66,7 +66,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
 
-    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
 

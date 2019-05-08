@@ -32,7 +32,6 @@ public abstract class BaseNodeTest {
   public GameModel model;
   public FlowOrchestrator<ControllerFlowContext> orchestrator;
   public TestControllerFlowContext context;
-  public GunLoader gunLoader;
 
   public AtomicBoolean endCalled;
 
@@ -43,7 +42,6 @@ public abstract class BaseNodeTest {
   public void setUp() {
     this.model = TestUtils.generateModel();
     this.endCalled = new AtomicBoolean(false);
-    this.gunLoader = GunLoader.INSTANCE;
 
     FlowNode node = nodeToTest();
     List<FlowNode> nodes = new ArrayList<>();
@@ -54,8 +52,7 @@ public abstract class BaseNodeTest {
     this.context = new TestControllerFlowContext(
       nodes.stream().map(FlowNode::id).collect(Collectors.toList()),
       this.orchestrator,
-      Collections.singletonList(node.id()),
-      gunLoader
+      Collections.singletonList(node.id())
     );
   }
 

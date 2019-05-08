@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
+import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
@@ -30,7 +31,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
     Stream
       .of("test_revolver", "test_rifle", "test_sword")
-      .map(s -> gunLoader.getModelGun(s))
+      .map(s -> GunLoader.INSTANCE.getModelGun(s))
       .forEach(respawnDashboardCell::addAvailableGun);
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
@@ -58,7 +59,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).visit(
       respawnDashboardCell -> {
         respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-        respawnDashboardCell.addAvailableGun(gunLoader.getModelGun("test_sword"));
+        respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
       },
       null
     );

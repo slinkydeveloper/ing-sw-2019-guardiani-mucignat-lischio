@@ -38,7 +38,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableGuns() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
     orchestrator.startNewFlow(viewMock, context);
 
@@ -55,7 +55,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseAlternativeEffectGun() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
     orchestrator.startNewFlow(viewMock, context);
 
@@ -72,7 +72,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseBaseEffectGun() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
 
     orchestrator.startNewFlow(viewMock, context);
 

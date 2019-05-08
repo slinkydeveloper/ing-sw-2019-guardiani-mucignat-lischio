@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
+import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.*;
@@ -38,7 +39,7 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onGunChosenEvent(gunToPickupChosenEvent -> {
       //TODO P2 ci sarebbe anche da gestire il caso in cui si supera il limite delle tre armi
-      Gun chosenGun = context.getGunLoader().getModelGun(gunToPickupChosenEvent.getGunid());
+      Gun chosenGun = GunLoader.INSTANCE.getModelGun(gunToPickupChosenEvent.getGunid());
       model.acquireGun(context.getTurnOfPlayer(), chosenGun);
       context.nextPhase(view);
     });

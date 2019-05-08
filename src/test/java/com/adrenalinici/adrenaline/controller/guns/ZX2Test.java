@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.controller.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.controller.GunFactory;
+import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
@@ -51,12 +52,15 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(gunLoader.getModelGun("zx2"));
+    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.nextPhase(
+      viewMock,
+      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+    );
     context.handleEvent(new AlternativeGunEffectChosenEvent(false), viewMock);
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
@@ -88,12 +92,15 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(gunLoader.getModelGun("zx2"));
+    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.nextPhase(
+      viewMock,
+      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+    );
     context.handleEvent(new AlternativeGunEffectChosenEvent(true), viewMock);
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
     context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);

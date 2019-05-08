@@ -33,13 +33,17 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
 
-    context.nextPhase(viewMock, new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun")));
+    context.nextPhase(
+      viewMock,
+      new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"))
+    );
 
     ArgumentCaptor<Effect> extraEffectOneCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> extraEffectTwoCaptor = ArgumentCaptor.forClass(Effect.class);
-    verify(viewMock, times(1)).showAvailableExtraEffects(extraEffectOneCaptor.capture(), extraEffectTwoCaptor.capture());
+    verify(viewMock, times(1))
+      .showAvailableExtraEffects(extraEffectOneCaptor.capture(), extraEffectTwoCaptor.capture());
     assertThat(extraEffectOneCaptor.getValue())
       .hasFieldOrPropertyWithValue("id", "focus");
     assertThat(extraEffectTwoCaptor.getValue())
@@ -49,8 +53,8 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testNoExtraEffect() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("machine_gun"));
-    BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
     context.handleEvent(new BaseGunEffectChosenEvent(false, false), viewMock);
@@ -62,8 +66,8 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testOnlyExtraEffectOne() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("machine_gun"));
-    BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
     context.handleEvent(new BaseGunEffectChosenEvent(true, false), viewMock);
@@ -75,8 +79,8 @@ public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testAllExtraEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("machine_gun"));
-    BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) gunLoader.getDecoratedGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    BaseEffectGunFlowState state = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
 
     context.nextPhase(viewMock, state);
     context.handleEvent(new BaseGunEffectChosenEvent(true, true), viewMock);

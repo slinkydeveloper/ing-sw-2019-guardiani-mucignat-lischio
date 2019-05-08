@@ -32,7 +32,6 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingOnlyAmmosTest() {
-    GunLoader gunLoader = GunLoader.INSTANCE;
 
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
@@ -44,11 +43,11 @@ public class GameModelTest {
     RespawnDashboardCell respawnDashboardCell = (RespawnDashboardCell) dashboard.getDashboardCell(Position.of(0, 0));
 
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-    respawnDashboardCell.addAvailableGun(gunLoader.getModelGun("test_sword"));
+    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
 
-    gameModel.acquireGun(PlayerColor.GREEN, gunLoader.getModelGun("test_sword"));
+    gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("test_sword"));
     assertThat(playerDashboard.getAmmos())
       .containsOnly(AmmoColor.YELLOW);
     assertThat(playerDashboard.getLoadedGuns())
@@ -59,7 +58,6 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingOnlyPowerupsTest() {
-    GunLoader gunLoader = GunLoader.INSTANCE;
 
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
     PowerUpCard redKineticRay = new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY);
@@ -73,12 +71,12 @@ public class GameModelTest {
     RespawnDashboardCell respawnDashboardCell = (RespawnDashboardCell) dashboard.getDashboardCell(Position.of(0, 0));
 
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-    respawnDashboardCell.addAvailableGun(gunLoader.getModelGun("test_sword"));
+    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
     assertThat(playerDashboard.getAmmos().isEmpty()).isTrue();
 
-    gameModel.acquireGun(PlayerColor.GREEN, gunLoader.getModelGun("test_sword"));
+    gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("test_sword"));
     assertThat(playerDashboard.getPowerUpCards())
       .containsOnly(blueTeleport);
     assertThat(playerDashboard.getLoadedGuns())
@@ -87,7 +85,6 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingBothAmmosAndPowerupsTest() {
-    GunLoader gunLoader = GunLoader.INSTANCE;
 
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
@@ -99,19 +96,19 @@ public class GameModelTest {
     RespawnDashboardCell respawnDashboardCell = (RespawnDashboardCell) dashboard.getDashboardCell(Position.of(0, 0));
 
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
-    respawnDashboardCell.addAvailableGun(gunLoader.getModelGun("test_sword"));
-    respawnDashboardCell.addAvailableGun(gunLoader.getModelGun("test_revolver"));
+    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_sword"));
+    respawnDashboardCell.addAvailableGun(GunLoader.INSTANCE.getModelGun("test_revolver"));
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
 
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
 
-    gameModel.acquireGun(PlayerColor.GREEN, gunLoader.getModelGun("test_sword"));
+    gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("test_sword"));
     assertThat(playerDashboard.getAmmos()).containsOnly(AmmoColor.YELLOW);
     assertThat(playerDashboard.getPowerUpCards()).containsOnly(blueKineticRay, redTeleport);
 
-    gameModel.acquireGun(PlayerColor.GREEN, gunLoader.getModelGun("test_revolver"));
+    gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("test_revolver"));
     assertThat(playerDashboard.getAmmos()).isEmpty();
     assertThat(playerDashboard.getPowerUpCards()).isEmpty();
 

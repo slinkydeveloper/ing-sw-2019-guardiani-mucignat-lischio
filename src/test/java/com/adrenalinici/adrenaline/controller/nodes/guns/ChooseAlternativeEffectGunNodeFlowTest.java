@@ -35,13 +35,17 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
-    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.nextPhase(
+      viewMock,
+      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+    );
 
     ArgumentCaptor<Effect> effectOneCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> effectTwoCaptor = ArgumentCaptor.forClass(Effect.class);
-    verify(viewMock, times(1)).showAvailableAlternativeEffectsGun(effectOneCaptor.capture(), effectTwoCaptor.capture());
+    verify(viewMock, times(1))
+      .showAvailableAlternativeEffectsGun(effectOneCaptor.capture(), effectTwoCaptor.capture());
     assertThat(effectOneCaptor.getValue())
       .hasFieldOrPropertyWithValue("id", "base");
     assertThat(effectTwoCaptor.getValue())
@@ -51,9 +55,12 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseEffectOne() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
-    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.nextPhase(
+      viewMock,
+      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+    );
     context.handleEvent(new AlternativeGunEffectChosenEvent(false), viewMock);
 
     assertThat(context.getActualState())
@@ -68,9 +75,12 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseEffectTwo() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(gunLoader.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
 
-    context.nextPhase(viewMock, new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2")));
+    context.nextPhase(
+      viewMock,
+      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+    );
     context.handleEvent(new AlternativeGunEffectChosenEvent(true), viewMock);
 
     assertThat(context.getActualState())
