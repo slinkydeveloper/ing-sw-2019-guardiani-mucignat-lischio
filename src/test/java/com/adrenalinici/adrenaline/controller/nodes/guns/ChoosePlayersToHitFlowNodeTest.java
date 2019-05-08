@@ -28,14 +28,6 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
   }
 
   @Override
-  protected GunLoader createGunLoader() {
-    /*return new GunLoader(
-      Collections.singletonList(new ZX2GunFactory())
-    );*/
-    return GunLoader.getGunLoaderInstance();
-  }
-
-  @Override
   public FlowNode nodeToTest() {
     return new ChoosePlayersToHitFlowNode();
   }

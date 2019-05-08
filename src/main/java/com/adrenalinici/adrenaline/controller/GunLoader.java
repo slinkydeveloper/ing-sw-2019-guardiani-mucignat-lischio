@@ -6,21 +6,22 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GunLoader {
 
-  private static GunLoader gunLoaderInstance = null;
+  public static final GunLoader INSTANCE = new GunLoader();
   private List<GunFactory> factories;
 
   private static Map<String, JsonNode> configs = new HashMap<>();
   private Map<String, Gun> guns;
   private Map<String, DecoratedGun> decoratedGuns;
+  private Map<String, List<ControllerFlowNode>> nodes;
 
   private GunLoader() {
     factories = new ArrayList<>();
     guns = new HashMap<>();
     decoratedGuns = new HashMap<>();
+    nodes = new HashMap<>();
     ServiceLoader<GunFactory> loader = ServiceLoader
       .load(
         GunFactory.class,
@@ -29,13 +30,6 @@ public class GunLoader {
     for (GunFactory currLoader : loader) {
       factories.add(currLoader);
     }
-  }
-
-  public static GunLoader getGunLoaderInstance() {
-    if (gunLoaderInstance == null)
-      gunLoaderInstance = new GunLoader();
-
-    return gunLoaderInstance;
   }
 
   public Gun getModelGun(String id) {
@@ -51,7 +45,9 @@ public class GunLoader {
   }
 
   public List<ControllerFlowNode> getAdditionalNodes(String id) {
-    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id));
+    if (nodes.containsKey(id)) return nodes.get(id);
+    nodes.put(id, resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id)));
+    return nodes.get(id);
   }
 
   private GunFactory resolveGunFactory(String id) {
@@ -89,7 +85,7 @@ public class GunLoader {
     return decoratedGuns;
   }
 
-  public List<GunFactory> getFactories() {
-    return factories;
+  protected Map<String, List<ControllerFlowNode>> getNodes() {
+    return nodes;
   }
 }

@@ -101,39 +101,4 @@ public class TestUtils {
     return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards());
   }
 
-  public static final GunFactory BASE_EFFECT_GUN_SWORD_FACTORY = new BaseEffectGunFactory() {
-    @Override
-    public boolean canConsume(String key, ObjectNode config) {
-      return "test_sword".equals(key);
-    }
-
-    @Override
-    public List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config) {
-      return Collections.emptyList();
-    }
-  };
-
-  public static final GunFactory BASE_EFFECT_GUN_REVOLVER_FACTORY = new BaseEffectGunFactory() {
-    @Override
-    public boolean canConsume(String key, ObjectNode config) {
-      return "test_revolver".equals(key);
-    }
-
-    @Override
-    public List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config) {
-      return Collections.emptyList();
-    }
-  };
-
-  public static final GunFactory BASE_EFFECT_GUN_RIFLE_FACTORY = new BaseEffectGunFactory() {
-    @Override
-    public boolean canConsume(String key, ObjectNode config) {
-      return "test_rifle".equals(key);
-    }
-
-    @Override
-    public List<ControllerFlowNode> getAdditionalNodes(String key, ObjectNode config) {
-      return Collections.emptyList();
-    }
-  };
 }

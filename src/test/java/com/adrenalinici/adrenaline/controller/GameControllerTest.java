@@ -26,8 +26,7 @@ public class GameControllerTest {
     GameController controller = new GameController(
       Collections.singletonList(new NewTurnFlowNode()),
       status,
-      //new GunLoader(Collections.emptyList())
-      GunLoader.getGunLoaderInstance()
+      GunLoader.INSTANCE
     );
 
     assertThat(controller.getFlowContext().getTurnOfPlayer())

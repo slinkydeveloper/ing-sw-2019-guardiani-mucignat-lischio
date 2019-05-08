@@ -1,16 +1,11 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.controller.guns.MachineGunGunFactory;
-import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
-import com.adrenalinici.adrenaline.model.Gun;
+import com.adrenalinici.adrenaline.model.AlternativeEffectGun;
+import com.adrenalinici.adrenaline.model.BaseEffectGun;
 import com.adrenalinici.adrenaline.util.JsonUtils;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,17 +16,14 @@ public class GunLoaderTest {
 
   AtomicBoolean endCalled;
 
-  //ZX2GunFactory zx2GunFactory = new ZX2GunFactory();
-
   @Before
   public void setup() {
     this.endCalled = new AtomicBoolean(false);
-    this.gunLoader = createGunLoader();
+    this.gunLoader = GunLoader.INSTANCE;
   }
 
   @Test
   public void testGunLoaderCache() {
-    assertThat(gunLoader.getGuns().isEmpty()).isTrue();
     gunLoader.getModelGun(ZX2Id());
     gunLoader.getModelGun(MachineGunId());
     assertThat(GunLoader.getConfigs().get(ZX2Id()))
@@ -43,12 +35,27 @@ public class GunLoaderTest {
         JsonUtils.getConfigurationJSONFromClasspath(MachineGunId() + ".json")
       );
 
-    //gunLoader.getDecoratedGun(ZX2Id());
-    //gunLoader.getDecoratedGun(MachineGunId());
-  }
+    assertThat(gunLoader.getGuns().get(ZX2Id())).isInstanceOf(AlternativeEffectGun.class);
+    assertThat(gunLoader.getGuns().get(MachineGunId())).isInstanceOf(BaseEffectGun.class);
 
-  private GunLoader createGunLoader() {
-    return GunLoader.getGunLoaderInstance();
+    gunLoader.getDecoratedGun(ZX2Id());
+    assertThat(gunLoader.getDecoratedGuns().get(ZX2Id())).isInstanceOf(DecoratedAlternativeEffectGun.class);
+
+    gunLoader.getDecoratedGun(MachineGunId());
+    assertThat(gunLoader.getDecoratedGuns().get(MachineGunId())).isInstanceOf(DecoratedBaseEffectGun.class);
+
+    gunLoader.getAdditionalNodes(ZX2Id());
+    assertThat(gunLoader.getNodes().get(ZX2Id()).size()).isEqualTo(2);
+    assertThat(gunLoader.getNodes().get(ZX2Id()).get(0).id())
+      .isEqualTo("apply_gun_effect_zx2_base");
+    assertThat(gunLoader.getNodes().get(ZX2Id()).get(1).id())
+      .isEqualTo("apply_gun_effect_zx2_scanner");
+
+    gunLoader.getAdditionalNodes(MachineGunId());
+    assertThat(gunLoader.getNodes().get(MachineGunId()).size()).isEqualTo(1);
+    assertThat(gunLoader.getNodes().get(MachineGunId()).get(0).id())
+      .isEqualTo("apply_gun_effect_machine_gun_base");
+
   }
 
   private String ZX2Id() {

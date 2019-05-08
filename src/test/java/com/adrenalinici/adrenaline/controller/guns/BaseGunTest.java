@@ -43,9 +43,9 @@ public abstract class BaseGunTest {
   public void setUp() {
     this.model = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate4PlayerDashboards());
     this.endCalled = new AtomicBoolean(false);
-    this.gunLoader = createGunLoader();
+    this.gunLoader = GunLoader.INSTANCE;
 
-    GunLoader loader = createGunLoader();
+    GunLoader loader = GunLoader.INSTANCE;
     List<FlowNode> nodes = new ArrayList<>();
     nodes.addAll(nodes());
     nodes.addAll(loader.getAdditionalNodes(gunId()));
@@ -57,11 +57,6 @@ public abstract class BaseGunTest {
       loader.getDecoratedGun(gunId()).getPhases(),
       gunLoader
     );
-  }
-
-  protected GunLoader createGunLoader() {
-    //return new GunLoader(Collections.singletonList(gunFactory()));
-    return GunLoader.getGunLoaderInstance();
   }
 
   protected abstract GunFactory gunFactory();

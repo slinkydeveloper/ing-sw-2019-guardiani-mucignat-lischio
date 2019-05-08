@@ -43,7 +43,7 @@ public abstract class BaseNodeTest {
   public void setUp() {
     this.model = TestUtils.generateModel();
     this.endCalled = new AtomicBoolean(false);
-    this.gunLoader = createGunLoader();
+    this.gunLoader = GunLoader.INSTANCE;
 
     FlowNode node = nodeToTest();
     List<FlowNode> nodes = new ArrayList<>();
@@ -57,11 +57,6 @@ public abstract class BaseNodeTest {
       Collections.singletonList(node.id()),
       gunLoader
     );
-  }
-
-  protected GunLoader createGunLoader() {
-    //return new GunLoader(Arrays.asList(TestUtils.BASE_EFFECT_GUN_REVOLVER_FACTORY, TestUtils.BASE_EFFECT_GUN_RIFLE_FACTORY, TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
-    return GunLoader.getGunLoaderInstance();
   }
 
   public abstract FlowNode nodeToTest();
