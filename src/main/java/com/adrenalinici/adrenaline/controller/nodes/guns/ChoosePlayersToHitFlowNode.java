@@ -3,8 +3,8 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.adrenalinici.adrenaline.util.TriPredicate;
 import com.adrenalinici.adrenaline.view.GameView;
@@ -12,7 +12,6 @@ import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.util.ListUtils.notIn;

@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.util;
 
-import com.adrenalinici.adrenaline.model.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
 import org.junit.Test;
 
 import java.util.Arrays;

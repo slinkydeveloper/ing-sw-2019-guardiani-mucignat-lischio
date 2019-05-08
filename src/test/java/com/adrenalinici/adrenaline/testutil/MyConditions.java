@@ -1,9 +1,9 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.Gun;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.common.Gun;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;

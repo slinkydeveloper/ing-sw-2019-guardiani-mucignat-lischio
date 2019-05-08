@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
@@ -10,7 +10,6 @@ import com.adrenalinici.adrenaline.view.BaseClientGameView;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -23,7 +22,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doCallRealMethod;
 
 public class BaseGameViewSocketIntegrationTest {
 

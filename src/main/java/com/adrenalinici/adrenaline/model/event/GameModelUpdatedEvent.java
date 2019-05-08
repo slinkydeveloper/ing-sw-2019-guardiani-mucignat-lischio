@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.model.event;
 
-import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 
 public class GameModelUpdatedEvent extends BaseModelEvent {
 

@@ -3,7 +3,7 @@ package com.adrenalinici.adrenaline.controller.guns;
 import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.controller.DecoratedEffect;
 import com.adrenalinici.adrenaline.controller.GunFactory;
-import com.adrenalinici.adrenaline.model.BaseEffectGun;
+import com.adrenalinici.adrenaline.model.common.BaseEffectGun;
 import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

@@ -1,5 +1,10 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.fat;
 
+import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PowerUpCard;
+import com.adrenalinici.adrenaline.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
 
@@ -117,7 +122,7 @@ public class PlayerDashboard {
           .stream()
           .min((e1, e2) -> (e1.getValue() == e2.getValue()) ? 0 : !e1.getValue() ? -1 : 1)
           .get()
-          .getKey()
+          .getKey() // I remove the first unloaded gun
       );
     }
     guns.put(gun, false);
@@ -230,5 +235,20 @@ public class PlayerDashboard {
         ).findFirst().get();
         removePowerUpCard(toRemove);
       });
+  }
+
+  public LightPlayerDashboard light() {
+    return new LightPlayerDashboard(
+      player,
+      ammos,
+      damages,
+      marks,
+      getLoadedGuns().stream().map(GunLoader.INSTANCE::getGunModel).collect(Collectors.toSet()),
+      getUnloadedGuns().stream().map(GunLoader.INSTANCE::getGunModel).collect(Collectors.toSet()),
+      powerUpCards,
+      skullsNumber,
+      points,
+      firstPlayer
+    );
   }
 }

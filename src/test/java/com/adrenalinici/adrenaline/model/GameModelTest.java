@@ -1,14 +1,15 @@
 package com.adrenalinici.adrenaline.model;
 
 import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.fat.*;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
 import java.util.*;
 
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
+import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

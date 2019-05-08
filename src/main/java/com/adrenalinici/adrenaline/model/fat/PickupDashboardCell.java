@@ -1,4 +1,8 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.fat;
+
+import com.adrenalinici.adrenaline.model.common.AmmoCard;
+import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
+import com.adrenalinici.adrenaline.model.light.LightPickupDashboardCell;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -15,7 +19,7 @@ public class PickupDashboardCell extends BaseDashboardCell {
     return Optional.ofNullable(ammoCard);
   }
 
-  public void setAmmoCard(AmmoCard ammoCard) {
+  protected void setAmmoCard(AmmoCard ammoCard) {
     this.ammoCard = ammoCard;
   }
 
@@ -34,6 +38,11 @@ public class PickupDashboardCell extends BaseDashboardCell {
   @Override
   public boolean isRespawnCell() {
     return false;
+  }
+
+  @Override
+  public LightDashboardCell light() {
+    return new LightPickupDashboardCell(getPlayersInCell(), ammoCard);
   }
 
 }

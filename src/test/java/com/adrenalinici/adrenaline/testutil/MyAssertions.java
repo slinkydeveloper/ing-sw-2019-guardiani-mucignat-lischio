@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.model.Dashboard;
-import com.adrenalinici.adrenaline.model.DashboardCell;
+import com.adrenalinici.adrenaline.model.fat.Dashboard;
+import com.adrenalinici.adrenaline.model.fat.DashboardCell;
 
 public class MyAssertions {
 

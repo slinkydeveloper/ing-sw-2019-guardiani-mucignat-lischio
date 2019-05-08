@@ -1,8 +1,8 @@
 package com.adrenalinici.adrenaline.util;
 
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;

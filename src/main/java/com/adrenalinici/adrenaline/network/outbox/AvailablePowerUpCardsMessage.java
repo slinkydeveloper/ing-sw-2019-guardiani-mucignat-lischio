@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.network.outbox;
 
 import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.*;
 
 import java.util.*;
 

@@ -3,14 +3,17 @@ package com.adrenalinici.adrenaline.testutil;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.GunFactory;
 import com.adrenalinici.adrenaline.controller.guns.BaseEffectGunFactory;
-import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.Dashboard;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.*;
+import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.*;
 
 public class TestUtils {
 

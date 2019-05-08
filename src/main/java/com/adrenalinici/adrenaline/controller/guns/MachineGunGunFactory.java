@@ -5,8 +5,8 @@ import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ApplyBaseGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowState;
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.util.TriConsumer;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

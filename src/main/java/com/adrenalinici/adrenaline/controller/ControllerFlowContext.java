@@ -2,7 +2,7 @@ package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.BaseFlowContext;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.ArrayList;
 import java.util.List;

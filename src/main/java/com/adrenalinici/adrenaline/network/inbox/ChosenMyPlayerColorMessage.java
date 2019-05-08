@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.network.inbox;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.function.Consumer;
 

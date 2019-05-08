@@ -1,8 +1,7 @@
 package com.adrenalinici.adrenaline.model.event;
 
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 public class PlayerDashboardUpdatedEvent extends BaseModelEvent {
 

@@ -1,8 +1,8 @@
 package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.nodes.NewTurnFlowNode;
-import com.adrenalinici.adrenaline.model.GameModel;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Before;
 import org.junit.Test;

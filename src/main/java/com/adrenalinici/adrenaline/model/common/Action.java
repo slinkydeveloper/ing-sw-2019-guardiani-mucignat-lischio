@@ -1,4 +1,4 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.common;
 
 public enum Action {
   MOVE_MOVE_MOVE,

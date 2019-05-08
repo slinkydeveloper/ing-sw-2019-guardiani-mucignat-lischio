@@ -5,8 +5,6 @@ import com.adrenalinici.adrenaline.network.outbox.*;
 import com.adrenalinici.adrenaline.util.Observable;
 import com.adrenalinici.adrenaline.view.BaseClientGameView;
 
-import java.util.*;
-
 public class ClientViewProxy extends Observable<InboxMessage> {
 
   private BaseClientGameView view;

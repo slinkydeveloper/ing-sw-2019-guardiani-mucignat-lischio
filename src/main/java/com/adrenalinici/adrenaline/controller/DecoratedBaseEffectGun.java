@@ -1,8 +1,8 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.model.AmmoColor;
-import com.adrenalinici.adrenaline.model.BaseEffectGun;
-import com.adrenalinici.adrenaline.model.Gun;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.BaseEffectGun;
+import com.adrenalinici.adrenaline.model.common.Gun;
 
 import java.util.List;
 

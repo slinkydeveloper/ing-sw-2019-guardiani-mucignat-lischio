@@ -1,11 +1,16 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.Dashboard;
+import com.adrenalinici.adrenaline.model.fat.DashboardCell;
+import com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
 import java.util.Map;
 
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.*;
+import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.*;
 import static com.adrenalinici.adrenaline.testutil.MyAssertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;

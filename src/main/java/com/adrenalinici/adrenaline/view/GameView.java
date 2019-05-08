@@ -1,7 +1,11 @@
 package com.adrenalinici.adrenaline.view;
 
-import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.Action;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.Effect;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.util.Observer;
 
 import java.util.List;

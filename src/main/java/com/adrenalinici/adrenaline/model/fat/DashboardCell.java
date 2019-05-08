@@ -1,19 +1,14 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.fat;
+
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
+import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public interface DashboardCell extends Serializable {
-
-  int getLine();
-
-  int getCell();
-
-  default Position getPosition() {
-    return Position.of(getLine(), getCell());
-  }
 
   class Builder {
     private DashboardCellBoundType northDashboardCellBoundType = DashboardCellBoundType.WALL;
@@ -61,6 +56,14 @@ public interface DashboardCell extends Serializable {
       return cellFactory.create(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboardInstance);
     }
 
+  }
+
+  int getLine();
+
+  int getCell();
+
+  default Position getPosition() {
+    return Position.of(getLine(), getCell());
   }
 
   List<PlayerColor> getPlayersInCell();
@@ -120,6 +123,8 @@ public interface DashboardCell extends Serializable {
   default boolean hasWestDashboardCell() {
     return getWestDashboardCell() != null;
   }
+
+  LightDashboardCell light();
 
   void visit(Consumer<RespawnDashboardCell> visitRespawnDashboardCell, Consumer<PickupDashboardCell> visitPickupDashboardCell);
 }

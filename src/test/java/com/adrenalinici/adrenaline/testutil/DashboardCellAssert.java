@@ -1,9 +1,9 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.model.DashboardCell;
-import com.adrenalinici.adrenaline.model.DashboardCellBoundType;
-import com.adrenalinici.adrenaline.model.PickupDashboardCell;
-import com.adrenalinici.adrenaline.model.RespawnDashboardCell;
+import com.adrenalinici.adrenaline.model.fat.DashboardCell;
+import com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType;
+import com.adrenalinici.adrenaline.model.fat.PickupDashboardCell;
+import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
 import org.assertj.core.api.AbstractAssert;
 
 import static org.assertj.core.api.Assertions.assertThat;

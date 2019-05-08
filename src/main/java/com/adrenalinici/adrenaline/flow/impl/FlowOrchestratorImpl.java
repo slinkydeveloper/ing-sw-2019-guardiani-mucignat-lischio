@@ -4,7 +4,7 @@ package com.adrenalinici.adrenaline.flow.impl;
 import com.adrenalinici.adrenaline.flow.FlowContext;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
-import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 

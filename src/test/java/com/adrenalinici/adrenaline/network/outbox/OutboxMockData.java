@@ -1,6 +1,10 @@
 package com.adrenalinici.adrenaline.network.outbox;
 
-import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.Action;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.Effect;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 
 import java.util.*;
 

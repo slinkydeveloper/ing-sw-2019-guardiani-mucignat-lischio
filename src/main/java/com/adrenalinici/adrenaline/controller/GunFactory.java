@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.model.Gun;
+import com.adrenalinici.adrenaline.model.common.Gun;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;

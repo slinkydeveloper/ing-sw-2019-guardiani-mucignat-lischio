@@ -1,11 +1,13 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.fat;
 
+import com.adrenalinici.adrenaline.model.common.Gun;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
-import com.adrenalinici.adrenaline.util.Bag;
-import com.adrenalinici.adrenaline.util.ListUtils;
+import com.adrenalinici.adrenaline.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.*;
@@ -183,7 +185,6 @@ public class GameModel extends Observable<ModelEvent> {
    * @return true if victim was killed
    */
   public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
-    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     boolean killed = hitter(killer, victim, damages);
 
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
@@ -201,8 +202,6 @@ public class GameModel extends Observable<ModelEvent> {
    * @param marks number of marks to add
    */
   public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
-    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-
     marker(killer, victim, marks);
     notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
   }
@@ -227,8 +226,6 @@ public class GameModel extends Observable<ModelEvent> {
    * @return true if victim was killed
    */
   public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
-    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-
     boolean killed = hitter(killer, victim, damages);
     marker(killer, victim, marks);
 
@@ -251,6 +248,16 @@ public class GameModel extends Observable<ModelEvent> {
           .filter(playerColor -> playerColor.equals(player))
           .count()
       ).count();
+  }
+
+  public LightGameModel light() {
+    return new LightGameModel(
+      killScore,
+      remainingSkulls,
+      doubleKillScore,
+      dashboard.light(),
+      playerDashboards.stream().map(PlayerDashboard::light).collect(Collectors.toList())
+    );
   }
 
 }

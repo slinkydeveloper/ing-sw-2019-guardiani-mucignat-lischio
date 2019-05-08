@@ -1,4 +1,9 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.fat;
+
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
+import com.adrenalinici.adrenaline.model.light.LightDashboard;
+import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.*;
@@ -92,8 +97,7 @@ public class Dashboard {
 
   private DashboardCell[][] dashboardCells;
 
-  private Dashboard() {
-  }
+  private Dashboard() { }
 
   private void setDashboardCells(DashboardCell[][] dashboardCells) {
     this.dashboardCells = dashboardCells;
@@ -263,5 +267,17 @@ public class Dashboard {
       toScan.addAll(nextScan);
       nextScan.clear();
     }
+  }
+
+  public LightDashboard light() {
+    LightDashboardCell[][] d = new LightDashboardCell[lines()][cells()];
+
+    for (int i = 0; i < lines(); i++) {
+      for (int j = 0; j < cells(); j++) {
+        d[i][j] = dashboardCells[i][j].light();
+      }
+    }
+
+    return new LightDashboard(d);
   }
 }

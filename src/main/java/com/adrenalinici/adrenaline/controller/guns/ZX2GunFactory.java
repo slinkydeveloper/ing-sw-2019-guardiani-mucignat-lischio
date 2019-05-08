@@ -4,7 +4,7 @@ import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ApplyAlternativeGunFlowNode;
-import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.util.TriConsumer;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

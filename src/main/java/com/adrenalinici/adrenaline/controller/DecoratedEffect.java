@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.model.AmmoColor;
-import com.adrenalinici.adrenaline.model.Effect;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.Effect;
 
 import java.util.Collections;
 import java.util.List;

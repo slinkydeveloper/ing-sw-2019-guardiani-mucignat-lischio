@@ -2,8 +2,9 @@ package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.fat.*;
 import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -14,10 +15,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.adrenalinici.adrenaline.model.DashboardCellBoundType.OPEN;
+import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isDashboardCellUpdatedEvent;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
-import static com.adrenalinici.adrenaline.testutil.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

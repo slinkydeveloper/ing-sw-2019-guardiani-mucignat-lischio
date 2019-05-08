@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.view.GameView;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.Objects;
 import java.util.function.Consumer;

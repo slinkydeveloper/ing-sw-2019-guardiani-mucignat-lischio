@@ -1,4 +1,4 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.common;
 
 import java.io.Serializable;
 import java.util.Objects;

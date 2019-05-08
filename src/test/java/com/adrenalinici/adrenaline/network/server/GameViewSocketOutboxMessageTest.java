@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.network.server;
 
 import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.network.outbox.*;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
