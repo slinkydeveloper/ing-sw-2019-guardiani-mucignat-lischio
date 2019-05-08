@@ -2,7 +2,9 @@ package com.adrenalinici.adrenaline.model.light;
 
 import com.adrenalinici.adrenaline.model.common.Position;
 
-public class LightDashboard {
+import java.io.Serializable;
+
+public class LightDashboard implements Serializable {
 
   private LightDashboardCell[][] dashboardCells;
 

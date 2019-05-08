@@ -26,7 +26,7 @@ public class ReloadFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    Set<String> reloadableGuns = calculateReloadableGuns(model, context.getTurnOfPlayer(), context.getGunLoader());
+    Set<String> reloadableGuns = calculateReloadableGuns(model, context.getTurnOfPlayer());
     if (reloadableGuns.isEmpty()) context.nextPhase(view);
     else view.showReloadableGuns(reloadableGuns);
   }
@@ -40,12 +40,12 @@ public class ReloadFlowNode implements StatelessControllerFlowNode {
     });
   }
 
-  protected Set<String> calculateReloadableGuns(GameModel model, PlayerColor player, GunLoader loader) {
+  protected Set<String> calculateReloadableGuns(GameModel model, PlayerColor player) {
     Bag<AmmoColor> playerAmmoBag = model.getPlayerDashboard(player).getAllAmmosIncludingPowerups();
     return model.getPlayerDashboard(player)
       .getUnloadedGuns()
       .stream()
-      .map(loader::getModelGun)
+      .map(GunLoader.INSTANCE::getModelGun)
       .filter(
         gun -> playerAmmoBag.contains(Bag.from(gun.getRequiredAmmoToReload()))
       )

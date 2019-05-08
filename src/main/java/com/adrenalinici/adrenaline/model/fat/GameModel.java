@@ -130,8 +130,8 @@ public class GameModel extends Observable<ModelEvent> {
   private boolean hitter(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
 
-    int killerMarksOnVictimDashboard = (int) victimPlayerDashboard.getMarks().stream()
-      .filter(playerColor -> playerColor.equals(killer)).count();
+    int killerMarksOnVictimDashboard = victimPlayerDashboard.getMarks().stream()
+      .filter(playerColor -> playerColor.equals(killer)).collect(Collectors.toList()).size();
 
     damages += killerMarksOnVictimDashboard;
 
@@ -241,12 +241,13 @@ public class GameModel extends Observable<ModelEvent> {
     return (int) playerDashboards
       .stream()
       .filter(playerDashboard -> !playerDashboard.getPlayer().equals(player))
-      .mapToLong(playerDashboard ->
+      .mapToInt(playerDashboard ->
         playerDashboard
           .getMarks()
           .stream()
           .filter(playerColor -> playerColor.equals(player))
-          .count()
+          .collect(Collectors.toList())
+          .size()
       ).count();
   }
 

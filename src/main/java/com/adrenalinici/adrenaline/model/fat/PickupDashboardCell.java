@@ -19,7 +19,7 @@ public class PickupDashboardCell extends BaseDashboardCell {
     return Optional.ofNullable(ammoCard);
   }
 
-  protected void setAmmoCard(AmmoCard ammoCard) {
+  public void setAmmoCard(AmmoCard ammoCard) {
     this.ammoCard = ammoCard;
   }
 

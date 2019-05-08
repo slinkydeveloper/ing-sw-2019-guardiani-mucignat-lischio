@@ -5,10 +5,11 @@ import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.PowerUpCard;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public class LightPlayerDashboard {
+public class LightPlayerDashboard implements Serializable {
 
   private PlayerColor player;
   private List<AmmoColor> ammos;

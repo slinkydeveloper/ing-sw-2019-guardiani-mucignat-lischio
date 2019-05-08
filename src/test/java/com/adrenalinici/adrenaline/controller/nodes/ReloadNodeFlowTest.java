@@ -44,7 +44,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
     ReloadFlowNode node = new ReloadFlowNode();
-    assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW, gunLoader))
+    assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW))
       .contains("test_sword", "test_revolver")
       .doesNotContain("test_rifle");
   }
@@ -71,7 +71,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     orchestrator.handleEvent(new GunChosenEvent("test_sword"), viewMock);
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
 
     assertThat(d.getLoadedGuns())
       .containsOnly("test_sword");
@@ -104,7 +104,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     orchestrator.handleEvent(new GunChosenEvent("test_rifle"), viewMock);
 
     assertThat(receivedModelEvents)
-      .haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+      .haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
 
     // We check if showReloadableGuns was called two times with right arguments
     ArgumentCaptor<Set<String>> reloadableGunsCaptor = ArgumentCaptor.forClass(Set.class);

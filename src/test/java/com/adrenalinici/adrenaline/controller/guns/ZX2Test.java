@@ -72,7 +72,7 @@ public class ZX2Test extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
     assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
@@ -105,7 +105,7 @@ public class ZX2Test extends BaseGunTest {
     context.handleEvent(new PlayerChosenEvent(null), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getMarks())
-      .containsExactly( PlayerColor.GREEN);
+      .containsExactly(PlayerColor.GREEN);
 
     assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
       .containsExactly(PlayerColor.GREEN);
@@ -113,8 +113,8 @@ public class ZX2Test extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 

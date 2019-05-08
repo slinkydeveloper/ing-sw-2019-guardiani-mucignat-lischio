@@ -2,10 +2,11 @@ package com.adrenalinici.adrenaline.model.light;
 
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class LightGameModel {
+public class LightGameModel implements Serializable {
 
   private List<Map.Entry<PlayerColor, Boolean>> killScore;
   private int remainingSkulls;

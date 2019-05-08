@@ -22,11 +22,11 @@ public class RespawnDashboardCell extends BaseDashboardCell {
     return availableGuns;
   }
 
-  protected void addAvailableGun(String gun) {
+  public void addAvailableGun(String gun) {
     availableGuns.add(gun);
   }
 
-  protected void removeAvailableGun(String gunToRemove) {
+  public void removeAvailableGun(String gunToRemove) {
     availableGuns.remove(gunToRemove);
   }
 
@@ -51,7 +51,7 @@ public class RespawnDashboardCell extends BaseDashboardCell {
   public LightDashboardCell light() {
     return new LightRespawnDashboardCell(
       getPlayersInCell(),
-      availableGuns.stream().map(GunLoader.INSTANCE::getGunModel).collect(Collectors.toSet())
+      availableGuns.stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet())
     );
   }
 }

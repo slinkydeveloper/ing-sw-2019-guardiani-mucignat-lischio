@@ -33,7 +33,7 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
     DashboardCell cell = model.getDashboard().getDashboardCell(actualPlayerPosition);
 
     cell.visit(respawnDashboardCell -> {
-      view.showAvailableGunsToPickup(calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer(), context.getGunLoader()));
+      view.showAvailableGunsToPickup(calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer()));
     }, pickupDashboardCell -> {
       // No user interaction required
       model.acquireAmmoCard(pickupDashboardCell, context.getTurnOfPlayer());
@@ -51,12 +51,12 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
     });
   }
 
-  protected Set<String> calculateAvailableGunsToPickup(GameModel model, RespawnDashboardCell respawnCell, PlayerColor player, GunLoader loader) {
+  protected Set<String> calculateAvailableGunsToPickup(GameModel model, RespawnDashboardCell respawnCell, PlayerColor player) {
     Bag<AmmoColor> playerAmmosBag = model.getPlayerDashboard(player).getAllAmmosIncludingPowerups();
     return respawnCell
       .getAvailableGuns()
       .stream()
-      .map(loader::getModelGun)
+      .map(GunLoader.INSTANCE::getModelGun)
       .filter(
         gun -> playerAmmosBag.contains(Bag.from(gun.getRequiredAmmoToPickup()))
       )

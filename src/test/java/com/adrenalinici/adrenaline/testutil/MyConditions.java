@@ -19,15 +19,15 @@ public class MyConditions {
     );
   }
 
-  public static Condition<ModelEvent> isPlayerDashboardUpdateEvent(PlayerColor color, GameModel status) {
+  public static Condition<ModelEvent> isPlayerDashboardUpdateEvent(PlayerColor color) {
     return new Condition<>(e ->
       e instanceof PlayerDashboardUpdatedEvent && ((PlayerDashboardUpdatedEvent) e).getPlayerColor() == color,
       "Event must be a PlayerDashboardUpdatedEvent of " + color + " player");
   }
 
-  public static Condition<ModelEvent> isGameModelUpdatedEvent(GameModel model) {
+  public static Condition<ModelEvent> isGameModelUpdatedEvent() {
     return new Condition<>(e ->
-      e instanceof GameModelUpdatedEvent && ((GameModelUpdatedEvent) e).getGameModel() == model,
+      e instanceof GameModelUpdatedEvent,
       "Event must be a GameModelUpdatedEvent");
   }
 

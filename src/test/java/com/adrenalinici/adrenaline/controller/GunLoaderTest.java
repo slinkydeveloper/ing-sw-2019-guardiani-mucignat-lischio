@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.model.AlternativeEffectGun;
-import com.adrenalinici.adrenaline.model.BaseEffectGun;
+import com.adrenalinici.adrenaline.model.common.AlternativeEffectGun;
+import com.adrenalinici.adrenaline.model.common.BaseEffectGun;
 import com.adrenalinici.adrenaline.util.JsonUtils;
 import org.junit.Before;
 import org.junit.Test;

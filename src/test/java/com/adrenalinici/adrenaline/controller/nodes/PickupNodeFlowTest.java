@@ -9,10 +9,7 @@ import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
@@ -38,11 +35,11 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
 
     PickupFlowNode node = new PickupFlowNode();
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW, gunLoader))
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
       .contains("test_sword");
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW, gunLoader))
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
       .contains("test_revolver");
-    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW, gunLoader))
+    assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))
       .doesNotContain("test_rifle");
   }
 
@@ -65,7 +62,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
 
     orchestrator.startNewFlow(viewMock, context);
 
-    ArgumentCaptor<List<String>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(viewMock, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());
     assertThat(gunsCaptor.getValue())
       .containsOnly("test_sword");
@@ -80,7 +77,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(2, 0));
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
 
     assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getLoadedGuns())
       .containsOnly("test_sword");
@@ -113,7 +110,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(0, 1));
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
 
     assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.RED);

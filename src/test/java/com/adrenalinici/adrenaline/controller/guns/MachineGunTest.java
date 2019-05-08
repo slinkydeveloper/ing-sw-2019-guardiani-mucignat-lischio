@@ -75,8 +75,8 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
@@ -119,8 +119,8 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
@@ -167,9 +167,9 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN));
 
     assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
@@ -213,8 +213,8 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(playerDashboard.getLoadedGuns())
       .doesNotContain(gunId());
@@ -262,9 +262,9 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN));
 
     assertThat(playerDashboard.getLoadedGuns())
       .doesNotContain(gunId());

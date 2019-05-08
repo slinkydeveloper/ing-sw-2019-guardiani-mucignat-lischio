@@ -2,10 +2,11 @@ package com.adrenalinici.adrenaline.model.light;
 
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class LightDashboardCell {
+public abstract class LightDashboardCell implements Serializable {
 
   private final List<PlayerColor> playersInCell;
 

@@ -3,9 +3,11 @@ package com.adrenalinici.adrenaline.network.server;
 import com.adrenalinici.adrenaline.model.common.Action;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.network.inbox.ChosenMyPlayerColorMessage;
 import com.adrenalinici.adrenaline.network.outbox.ChooseMyPlayerMessage;
 import com.adrenalinici.adrenaline.network.outbox.ModelEventMessage;
+import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
@@ -81,7 +83,7 @@ public class GameViewServerSocketTest extends BaseGameViewServerSocketTest {
     // Now we need to notify some event to check that after reconnection it's sended again
 
     ViewEvent lastSentEvent = new ActionChosenEvent(Action.MOVE_MOVE_MOVE);
-    gameViewServer.onEvent(new GameModelUpdatedEvent(null));
+    gameViewServer.onEvent(new GameModelUpdatedEvent(TestUtils.generateModel()));
 
     Thread.sleep(100);
 

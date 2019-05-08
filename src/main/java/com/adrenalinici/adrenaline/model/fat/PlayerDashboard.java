@@ -98,11 +98,11 @@ public class PlayerDashboard {
   }
 
   public void addMarks(List<PlayerColor> marks) {
-    this.marks.addAll(marks);
+    this.marks = Bag.sum(this.marks, marks).toList();
   }
 
   public void removeMarks(List<PlayerColor> marks) {
-    ListUtils.difference(this.marks, marks);
+    this.marks = Bag.difference(this.marks, marks).toList();
   }
 
   public List<PlayerColor> getMarks() {
@@ -125,7 +125,7 @@ public class PlayerDashboard {
           .getKey() // I remove the first unloaded gun
       );
     }
-    guns.put(gun, false);
+    guns.put(gun, true);
   }
 
   /**
@@ -243,8 +243,8 @@ public class PlayerDashboard {
       ammos,
       damages,
       marks,
-      getLoadedGuns().stream().map(GunLoader.INSTANCE::getGunModel).collect(Collectors.toSet()),
-      getUnloadedGuns().stream().map(GunLoader.INSTANCE::getGunModel).collect(Collectors.toSet()),
+      getLoadedGuns().stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet()),
+      getUnloadedGuns().stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet()),
       powerUpCards,
       skullsNumber,
       points,
