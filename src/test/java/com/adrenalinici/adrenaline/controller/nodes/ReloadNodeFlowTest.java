@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
+import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
@@ -34,7 +35,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
     Stream
       .of("test_revolver", "test_rifle", "test_sword")
-      .map(s -> gunLoader.getModelGun(s))
+      .map(s -> GunLoader.INSTANCE.getModelGun(s))
       .forEach(playerDashboard::addUnloadedGun);
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
@@ -54,7 +55,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     d.addAmmo(AmmoColor.RED);
     d.addAmmo(AmmoColor.BLUE);
 
-    d.addUnloadedGun(gunLoader.getModelGun("test_sword"));
+    d.addUnloadedGun(GunLoader.INSTANCE.getModelGun("test_sword"));
 
     orchestrator.startNewFlow(viewMock, context);
 
@@ -90,8 +91,8 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
     d.addAmmo(AmmoColor.BLUE);
     d.addAmmo(AmmoColor.BLUE);
 
-    d.addUnloadedGun(gunLoader.getModelGun("test_revolver"));
-    d.addUnloadedGun(gunLoader.getModelGun("test_rifle"));
+    d.addUnloadedGun(GunLoader.INSTANCE.getModelGun("test_revolver"));
+    d.addUnloadedGun(GunLoader.INSTANCE.getModelGun("test_rifle"));
 
     orchestrator.startNewFlow(viewMock, context);
 

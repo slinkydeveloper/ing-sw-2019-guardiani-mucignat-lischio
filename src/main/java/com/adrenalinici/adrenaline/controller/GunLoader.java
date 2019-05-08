@@ -5,26 +5,49 @@ import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.List;
+import java.util.*;
 
 public class GunLoader {
 
+  public static final GunLoader INSTANCE = new GunLoader();
   private List<GunFactory> factories;
 
-  public GunLoader(List<GunFactory> factories) {
-    this.factories = factories;
+  private static Map<String, JsonNode> configs = new HashMap<>();
+  private Map<String, Gun> guns;
+  private Map<String, DecoratedGun> decoratedGuns;
+  private Map<String, List<ControllerFlowNode>> nodes;
+
+  private GunLoader() {
+    factories = new ArrayList<>();
+    guns = new HashMap<>();
+    decoratedGuns = new HashMap<>();
+    nodes = new HashMap<>();
+    ServiceLoader<GunFactory> loader = ServiceLoader
+      .load(
+        GunFactory.class,
+        GunFactory.class.getClassLoader()
+      );
+    for (GunFactory currLoader : loader) {
+      factories.add(currLoader);
+    }
   }
 
   public Gun getModelGun(String id) {
-    return resolveGunFactory(id).getModelGun(id, (ObjectNode) getGunConfigJson(id));
+    if (guns.containsKey(id)) return guns.get(id);
+    guns.put(id, resolveGunFactory(id).getModelGun(id, (ObjectNode) getGunConfigJson(id)));
+    return guns.get(id);
   }
 
   public DecoratedGun getDecoratedGun(String id) {
-    return resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) getGunConfigJson(id));
+    if (decoratedGuns.containsKey(id)) return decoratedGuns.get(id);
+    decoratedGuns.put(id, resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) getGunConfigJson(id)));
+    return decoratedGuns.get(id);
   }
 
   public List<ControllerFlowNode> getAdditionalNodes(String id) {
-    return resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id));
+    if (nodes.containsKey(id)) return nodes.get(id);
+    nodes.put(id, resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id)));
+    return nodes.get(id);
   }
 
   private GunFactory resolveGunFactory(String id) {
@@ -35,8 +58,34 @@ public class GunLoader {
       .orElseThrow(() -> new IllegalStateException("Cannot find in config gun " + id));
   }
 
-  public static JsonNode getGunConfigJson(String id) {
-    return JsonUtils.getConfigurationJSONFromClasspath(id + ".json");
+
+  /**
+   * This method loads and returns the gun configuration taken from json config file.
+   * It checks if the configuration of the gun is already stored in the configs
+   * cache and return it if present, in order to avoid multiple creation of the config.
+   *
+   * @param id of wanted gun
+   * @return Json configuration of the gun
+   */
+  private static JsonNode getGunConfigJson(String id) {
+    if (configs.containsKey(id)) return configs.get(id);
+    configs.put(id, JsonUtils.getConfigurationJSONFromClasspath(id + ".json"));
+    return configs.get(id);
   }
 
+  protected static Map<String, JsonNode> getConfigs() {
+    return configs;
+  }
+
+  protected Map<String, Gun> getGuns() {
+    return guns;
+  }
+
+  protected Map<String, DecoratedGun> getDecoratedGuns() {
+    return decoratedGuns;
+  }
+
+  protected Map<String, List<ControllerFlowNode>> getNodes() {
+    return nodes;
+  }
 }

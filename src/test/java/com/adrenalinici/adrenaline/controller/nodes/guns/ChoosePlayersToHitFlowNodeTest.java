@@ -5,6 +5,7 @@ import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
+import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.model.PlayerColor;
 import com.adrenalinici.adrenaline.model.Position;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -27,13 +28,6 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
   }
 
   @Override
-  protected GunLoader createGunLoader() {
-    return new GunLoader(
-      Collections.singletonList(new ZX2GunFactory())
-    );
-  }
-
-  @Override
   public FlowNode nodeToTest() {
     return new ChoosePlayersToHitFlowNode();
   }
@@ -46,7 +40,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
 
-    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
     context.nextPhase(viewMock,
       new AlternativeEffectGunFlowState(gun).setChosenEffect(gun.getFirstEffect(), true)
     );
@@ -72,7 +66,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
 
-    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) gunLoader.getDecoratedGun("zx2");
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
 

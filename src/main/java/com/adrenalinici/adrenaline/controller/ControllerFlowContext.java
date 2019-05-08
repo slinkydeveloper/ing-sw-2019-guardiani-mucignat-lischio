@@ -12,15 +12,13 @@ public class ControllerFlowContext extends BaseFlowContext {
   private int remainingActions;
   private PlayerColor turnOfPlayer;
   private List<PlayerColor> killedPlayers;
-  private GunLoader loader;
 
-  public ControllerFlowContext(FlowOrchestrator orchestrator, GunLoader loader) {
-    this(orchestrator, null, loader);
+  public ControllerFlowContext(FlowOrchestrator orchestrator) {
+    this(orchestrator, null);
   }
 
-  public ControllerFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases, GunLoader loader) {
+  public ControllerFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
     super(orchestrator, initialPhases);
-    this.loader = loader;
     this.killedPlayers = new ArrayList<>();
   }
 
@@ -54,9 +52,5 @@ public class ControllerFlowContext extends BaseFlowContext {
   public ControllerFlowContext setKilledPlayers(List<PlayerColor> killedPlayers) {
     this.killedPlayers = killedPlayers;
     return this;
-  }
-
-  public GunLoader getGunLoader() {
-    return loader;
   }
 }

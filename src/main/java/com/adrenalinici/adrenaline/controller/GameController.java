@@ -18,9 +18,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   private GameModel gameModel;
   private FlowOrchestrator<ControllerFlowContext> flowOrchestrator;
-  private GunLoader gunLoader;
 
-  public GameController(List<? extends FlowNode> flowNodes, GameModel gameModel, GunLoader gunLoader) {
+  public GameController(List<? extends FlowNode> flowNodes, GameModel gameModel) {
     this.gameModel = gameModel;
     this.flowOrchestrator = new FlowOrchestratorImpl<>(
       flowNodes,
@@ -28,7 +27,6 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       this::endTurnCallback
     );
     this.startNewTurn(null, gameModel.getPlayers().get(0));
-    this.gunLoader = gunLoader;
   }
 
   @Override
@@ -52,7 +50,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   private void startNewTurn(GameView view, PlayerColor player) {
     this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
-      this.flowOrchestrator, Collections.singletonList(ControllerNodes.START_TURN.name()), gunLoader
+      this.flowOrchestrator,
+      Collections.singletonList(ControllerNodes.START_TURN.name())
     ).setTurnOfPlayer(player));
     if (view != null) view.showNextTurn(player);
   }

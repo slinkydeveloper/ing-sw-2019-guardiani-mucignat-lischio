@@ -12,8 +12,8 @@ public class TestControllerFlowContext extends ControllerFlowContext {
 
   List<String> loadedPhases;
 
-  public TestControllerFlowContext(List<String> loadedPhases, FlowOrchestrator orchestrator, List<String> initialPhases, GunLoader gunLoader) {
-    super(orchestrator, initialPhases, gunLoader);
+  public TestControllerFlowContext(List<String> loadedPhases, FlowOrchestrator orchestrator, List<String> initialPhases) {
+    super(orchestrator, initialPhases);
     this.loadedPhases = loadedPhases;
   }
 

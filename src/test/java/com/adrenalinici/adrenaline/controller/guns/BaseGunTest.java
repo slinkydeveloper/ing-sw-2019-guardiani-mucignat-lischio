@@ -32,7 +32,6 @@ public abstract class BaseGunTest {
   GameModel model;
   FlowOrchestrator<ControllerFlowContext> orchestrator;
   TestControllerFlowContext context;
-  GunLoader gunLoader;
 
   AtomicBoolean endCalled;
 
@@ -43,24 +42,17 @@ public abstract class BaseGunTest {
   public void setUp() {
     this.model = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate4PlayerDashboards());
     this.endCalled = new AtomicBoolean(false);
-    this.gunLoader = createGunLoader();
 
-    GunLoader loader = createGunLoader();
     List<FlowNode> nodes = new ArrayList<>();
     nodes.addAll(nodes());
-    nodes.addAll(loader.getAdditionalNodes(gunId()));
+    nodes.addAll(GunLoader.INSTANCE.getAdditionalNodes(gunId()));
 
     this.orchestrator = new FlowOrchestratorImpl<>(nodes, model, v -> endCalled.set(true));
     this.context = new TestControllerFlowContext(
       nodes.stream().map(FlowNode::id).collect(Collectors.toList()),
       this.orchestrator,
-      loader.getDecoratedGun(gunId()).getPhases(),
-      gunLoader
+      GunLoader.INSTANCE.getDecoratedGun(gunId()).getPhases()
     );
-  }
-
-  protected GunLoader createGunLoader() {
-    return new GunLoader(Collections.singletonList(gunFactory()));
   }
 
   protected abstract GunFactory gunFactory();

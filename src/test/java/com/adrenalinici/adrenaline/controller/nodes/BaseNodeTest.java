@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
 import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.Gun;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.adrenalinici.adrenaline.view.GameView;
 import org.junit.Before;
@@ -31,7 +32,6 @@ public abstract class BaseNodeTest {
   public GameModel model;
   public FlowOrchestrator<ControllerFlowContext> orchestrator;
   public TestControllerFlowContext context;
-  public GunLoader gunLoader;
 
   public AtomicBoolean endCalled;
 
@@ -42,7 +42,6 @@ public abstract class BaseNodeTest {
   public void setUp() {
     this.model = TestUtils.generateModel();
     this.endCalled = new AtomicBoolean(false);
-    this.gunLoader = createGunLoader();
 
     FlowNode node = nodeToTest();
     List<FlowNode> nodes = new ArrayList<>();
@@ -53,13 +52,8 @@ public abstract class BaseNodeTest {
     this.context = new TestControllerFlowContext(
       nodes.stream().map(FlowNode::id).collect(Collectors.toList()),
       this.orchestrator,
-      Collections.singletonList(node.id()),
-      gunLoader
+      Collections.singletonList(node.id())
     );
-  }
-
-  protected GunLoader createGunLoader() {
-    return new GunLoader(Arrays.asList(TestUtils.BASE_EFFECT_GUN_REVOLVER_FACTORY, TestUtils.BASE_EFFECT_GUN_RIFLE_FACTORY, TestUtils.BASE_EFFECT_GUN_SWORD_FACTORY));
   }
 
   public abstract FlowNode nodeToTest();
