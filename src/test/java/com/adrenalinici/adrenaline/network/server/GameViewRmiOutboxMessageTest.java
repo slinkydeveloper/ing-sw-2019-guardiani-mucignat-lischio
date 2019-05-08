@@ -14,13 +14,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
-public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrationTest {
+public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest {
 
   @Test
   public void showAvailableActionsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableActions(ACTIONS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Action>> actionsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableActions(actionsCaptor.capture());
@@ -32,7 +32,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableMovementsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableMovements(POSITIONS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableMovements(positionsCaptor.capture());
@@ -44,7 +44,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showNextTurnTest() throws IOException, InterruptedException {
     serverGameView.showNextTurn(PLAYER);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     verify(mockedClientView, times(1)).showNextTurn(playerCaptor.capture());
@@ -56,7 +56,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showReloadableGunsTest() throws IOException, InterruptedException {
     serverGameView.showReloadableGuns(GUNS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showReloadableGuns(gunsCaptor.capture());
@@ -68,7 +68,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showLoadedGunsTest() throws IOException, InterruptedException {
     serverGameView.showLoadedGuns(GUNS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showLoadedGuns(gunsCaptor.capture());
@@ -80,7 +80,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showBaseGunExtraEffectsTest() throws IOException, InterruptedException {
     serverGameView.showBaseGunExtraEffects(EFFECTS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Effect>> effectsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showBaseGunExtraEffects(effectsCaptor.capture());
@@ -92,7 +92,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableRespawnLocationsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableRespawnLocations(RESPAWN_LOCATIONS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<AmmoColor>> respawnLocationsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableRespawnLocations(respawnLocationsCaptor.capture());
@@ -104,7 +104,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableAlternativeEffectsGunTest() throws IOException, InterruptedException {
     serverGameView.showAvailableAlternativeEffectsGun(FIRST_EFFECT, SECOND_EFFECT);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<Effect> firstEffectCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> secondEffectCaptor = ArgumentCaptor.forClass(Effect.class);
@@ -118,7 +118,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showChoosePlayerToHitTest() throws IOException, InterruptedException {
     serverGameView.showChoosePlayerToHit(PLAYERS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showChoosePlayerToHit(playersCaptor.capture());
@@ -130,7 +130,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showChoosePlayerToMoveTest() throws IOException, InterruptedException {
     serverGameView.showChoosePlayerToMove(AVAILABLE_MOVEMENTS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<Map<PlayerColor, List<Position>>> availableMovementsCaptor = ArgumentCaptor.forClass(Map.class);
     verify(mockedClientView, times(1)).showChoosePlayerToMove(availableMovementsCaptor.capture());
@@ -142,7 +142,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableExtraEffectsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableExtraEffects(FIRST_EXTRA_EFFECT, SECOND_EXTRA_EFFECT);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<Effect> firstExtraEffectCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> secondExtraEffectCaptor = ArgumentCaptor.forClass(Effect.class);
@@ -156,7 +156,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableVenomGranadesTest() throws IOException, InterruptedException {
     serverGameView.showAvailableVenomGranades(PLAYER);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     verify(mockedClientView, times(1)).showAvailableVenomGranades(playerCaptor.capture());
@@ -168,7 +168,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailablePowerUpCardsTest() throws IOException, InterruptedException {
     serverGameView.showAvailablePowerUpCards(PLAYER);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     verify(mockedClientView, times(1)).showAvailablePowerUpCards(playerCaptor.capture());
@@ -180,7 +180,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableEnemyMovementsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableEnemyMovements(POSITIONS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableEnemyMovements(positionsCaptor.capture());
@@ -192,7 +192,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableGunsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableGuns(GUNS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableGuns(gunsCaptor.capture());
@@ -204,7 +204,7 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   public void showAvailableGunsToPickupTest() throws IOException, InterruptedException {
     serverGameView.showAvailableGunsToPickup(GUNS);
 
-    Thread.sleep(100);
+    Thread.sleep(500);
 
     ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());

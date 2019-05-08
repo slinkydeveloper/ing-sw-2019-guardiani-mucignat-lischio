@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.network.server;
 
 import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
+import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import org.junit.Test;
@@ -19,8 +20,28 @@ import static org.mockito.Mockito.*;
 public class GameViewSocketInboxMessageTest extends BaseGameViewSocketIntegrationTest {
 
   @Test
-  public void handshakeAndStartMatch() throws IOException, InterruptedException {
+  public void handshakeAndStartMatch() throws InterruptedException {
     List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView = new ArrayList<>();
+    doHandshakeAndStartMatch(receivedEventsFromView);
+  }
+
+  @Test
+  public void testSendViewEvent() throws IOException, InterruptedException {
+    List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView = new ArrayList<>();
+    doHandshakeAndStartMatch(receivedEventsFromView);
+    receivedEventsFromView.clear();
+
+    // Now the match is started, I can send a ViewEvent
+    mockedClientView.sendViewEvent(new ActionChosenEvent(Action.MOVE_MOVE_MOVE));
+
+    Thread.sleep(100);
+
+    assertThat(receivedEventsFromView)
+      .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent())
+        .isInstanceOfSatisfying(ActionChosenEvent.class, ace -> assertThat(ace.getAction()).isEqualTo(Action.MOVE_MOVE_MOVE)));
+  }
+
+  private void doHandshakeAndStartMatch(List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView) throws InterruptedException {
     serverGameView.registerObserver(receivedEventsFromView::add);
     serverGameView.getAvailablePlayers().remove(PlayerColor.GREEN);
     serverGameView.getAvailablePlayers().remove(PlayerColor.CYAN);
@@ -45,6 +66,6 @@ public class GameViewSocketInboxMessageTest extends BaseGameViewSocketIntegratio
       .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent()).isInstanceOf(NewTurnEvent.class));
   }
 
-  //TODO test event message
+
 
 }

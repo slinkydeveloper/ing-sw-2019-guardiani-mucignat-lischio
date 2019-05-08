@@ -61,7 +61,7 @@ public class BaseGameViewRmiIntegrationTest {
     clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy), "test-client-network-adapter");
     clientNetworkAdapter.start();
 
-    Thread.sleep(100);
+    Thread.sleep(500);
   }
 
   @After

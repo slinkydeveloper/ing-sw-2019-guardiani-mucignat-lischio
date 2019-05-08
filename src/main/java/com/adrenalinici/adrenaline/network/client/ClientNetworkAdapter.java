@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.util.Observer;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class ClientNetworkAdapter implements Observer<InboxMessage>, Runnable {
@@ -32,8 +33,7 @@ public abstract class ClientNetworkAdapter implements Observer<InboxMessage>, Ru
     try {
       initialize();
     } catch (IOException e) {
-      LOG.severe("Error while initializing " + this.getClass().getName());
-      e.printStackTrace();
+      LOG.log(Level.SEVERE, "Error while initializing " + this.getClass().getName(), e);
       return;
     }
     while (!Thread.currentThread().isInterrupted()) {
@@ -41,13 +41,14 @@ public abstract class ClientNetworkAdapter implements Observer<InboxMessage>, Ru
         OutboxMessage e = clientViewInbox.take();
         LOG.fine(String.format("Received new message from server: %s", e.getClass().getName()));
         proxy.handleNewServerMessage(e);
-      } catch (InterruptedException ex) { }
+      } catch (InterruptedException ex) {
+        Thread.currentThread().interrupt();
+      }
     }
     try {
       this.stop();
     } catch (IOException e) {
-      LOG.severe("Error while stopping " + this.getClass().getName());
-      e.printStackTrace();
+      LOG.log(Level.SEVERE, "Error while initializing " + this.getClass().getName(), e);
     }
   }
 

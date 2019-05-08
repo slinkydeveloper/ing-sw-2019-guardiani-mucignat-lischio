@@ -11,14 +11,12 @@ import com.adrenalinici.adrenaline.util.SerializationUtils;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ReceiverRunnable implements Runnable {
@@ -51,8 +49,9 @@ public class ReceiverRunnable implements Runnable {
           }
         }
       } catch (IOException e) {
-        LOG.severe("Error in client socket BroadcasterRunnable");
-        e.printStackTrace();
+        LOG.log(Level.SEVERE, "Error in client socket BroadcasterRunnable", e);
+      } catch (ClosedSelectorException e) {
+        Thread.currentThread().interrupt();
       }
     }
   }

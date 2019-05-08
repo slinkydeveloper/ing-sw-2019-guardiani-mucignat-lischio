@@ -1,8 +1,12 @@
 package com.adrenalinici.adrenaline.util;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SerializationUtils {
+
+  private static final Logger LOG = LogUtils.getLogger(SerializationUtils.class);
 
   public static byte[] serialize(Object o) {
     try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
@@ -11,7 +15,7 @@ public class SerializationUtils {
       out.flush();
       return bos.toByteArray();
     } catch (IOException e) {
-      e.printStackTrace();
+      LOG.log(Level.SEVERE, "Error while serializing " + o, e);
       return null;
     }
   }
@@ -22,7 +26,7 @@ public class SerializationUtils {
       ObjectInputStream in = new ObjectInputStream(bis);
       return (T) in.readObject();
     } catch (IOException | ClassNotFoundException e) {
-      e.printStackTrace();
+      LOG.log(Level.SEVERE, "Error while deserializing", e);
       return null;
     }
   }

@@ -10,14 +10,12 @@ import com.adrenalinici.adrenaline.util.SerializationUtils;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ReceiverRunnable extends BaseSocketRunnable {
@@ -48,14 +46,14 @@ public class ReceiverRunnable extends BaseSocketRunnable {
           }
           if (key.isReadable()) {
             handleRead(key);
-          }
-          if (key.isAcceptable()) {
+          } else if (key.isAcceptable()) {
             handleNewConnection((ServerSocketChannel) key.channel());
           }
         }
       } catch (IOException e) {
-        e.printStackTrace();
-        System.err.println("Error in NewConnectionAcceptRunnable");
+        LOG.log(Level.WARNING, "IOException in NewConnectionAcceptRunnable", e);
+      } catch (ClosedSelectorException e) {
+        Thread.currentThread().interrupt();
       }
     }
   }
@@ -63,15 +61,18 @@ public class ReceiverRunnable extends BaseSocketRunnable {
   private void handleRead(SelectionKey key) throws IOException {
     SocketChannel channel = (SocketChannel) key.channel();
     ByteBuffer buffer = ByteBuffer.allocate(20 * 1024); // 20kb
-    int numRead = channel.read(buffer);
     Socket socket = channel.socket();
     String connectionId = connectedClients.get(socket);
+    int numRead;
+    try {
+      numRead = channel.read(buffer);
+    } catch (IOException e) {
+      handleUserDisconnection(connectionId, socket, key, channel);
+      return;
+    }
 
     if (numRead == -1) {
-      channel.close();
-      key.cancel();
-      LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
-      this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
+      handleUserDisconnection(connectionId, socket, key, channel);
     } else {
       byte[] data = new byte[numRead];
       System.arraycopy(buffer.array(), 0, data, 0, numRead);
@@ -90,6 +91,14 @@ public class ReceiverRunnable extends BaseSocketRunnable {
     this.connectedClients.put(channel.socket(), connectionId);
     LOG.info(String.format("New connection from address %s | Connection id: %s", channel.socket().getInetAddress(), connectionId));
     this.viewInbox.offer(new InboxEntry(connectionId, new ConnectedPlayerMessage()));
+  }
+
+  private void handleUserDisconnection(String connectionId, Socket socket, SelectionKey key, SocketChannel channel) throws IOException {
+    channel.close();
+    key.cancel();
+    LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
+    this.connectedClients.remove(socket);
+    this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
   }
 
 }

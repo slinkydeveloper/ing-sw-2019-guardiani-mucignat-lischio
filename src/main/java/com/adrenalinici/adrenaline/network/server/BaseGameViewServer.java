@@ -45,7 +45,7 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
         InboxEntry e = inbox.take();
         LOG.fine(String.format("Received new message from %s: %s", e.getConnectionId(), e.getMessage().getClass().getName()));
         e.getMessage().onConnectedPlayerMessage(connectedPlayerInboxEntry -> {
-          broadcast(new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers)));
+          outbox.offer(new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers))); // No cache for this one!
         });
         e.getMessage().onChosenMyPlayerColorMessage(chosenPlayerColorInboxEntry -> {
           if (availablePlayers.contains(chosenPlayerColorInboxEntry.getColor())) {
@@ -71,7 +71,9 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
             notifyEvent(new DecoratedEvent<>(viewEventInboxEntry.getViewEvent(), this));
           }
         });
-      } catch (InterruptedException ex) { }
+      } catch (InterruptedException ex) {
+        Thread.currentThread().interrupt();
+      }
     }
   }
 
@@ -94,7 +96,7 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
 
   @Override
   public void onEvent(ModelEvent newValue) {
-    outbox.offer(new ModelEventMessage(newValue));
+    broadcast(new ModelEventMessage(newValue));
   }
 
   protected Map<String, PlayerColor> getConnectedPlayers() {

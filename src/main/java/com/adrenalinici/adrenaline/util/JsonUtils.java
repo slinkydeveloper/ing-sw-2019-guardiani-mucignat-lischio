@@ -17,10 +17,14 @@ import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.List;
 import java.util.function.BiPredicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class JsonUtils {
+
+  private static final Logger LOG = LogUtils.getLogger(JsonUtils.class);
 
   public static final ObjectMapper mapper = new ObjectMapper();
 
@@ -30,8 +34,7 @@ public class JsonUtils {
     try {
       return mapper.readTree(JsonUtils.class.getResourceAsStream("/" + filename));
     } catch (IOException e) {
-      System.err.println("You dumb, you miss file " + filename + " in classpath");
-      e.printStackTrace();
+      LOG.log(Level.SEVERE, "You dumb, you miss file " + filename + " in classpath", e);
       return null;
     }
   }
@@ -95,8 +98,7 @@ public class JsonUtils {
         return (boolean) scriptEngine.eval(serializedPredicate, bindings);
 
       } catch (ScriptException | ClassCastException e) {
-        System.err.println("You dumb!");
-        e.printStackTrace();
+        LOG.log(Level.SEVERE, "You dumb! The script is wrong! " + serializedPredicate, e);
         return false;
       }
     };

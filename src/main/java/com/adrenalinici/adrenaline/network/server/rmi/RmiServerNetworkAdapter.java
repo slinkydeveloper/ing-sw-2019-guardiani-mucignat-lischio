@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter;
+import com.adrenalinici.adrenaline.util.LogUtils;
 
 import java.io.IOException;
 import java.rmi.Naming;
@@ -21,10 +22,13 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements GameRmiServer {
 
   public static final int PORT = Integer.parseInt(System.getenv().getOrDefault("RMI_PORT", "9001"));
+  private static final Logger LOG = LogUtils.getLogger(RmiServerNetworkAdapter.class);
 
   private Map<String, String> addressToConnectionId;
   private Map<String, GameRmiClient> connectionIdToClient;
@@ -52,35 +56,35 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   public void stop() throws IOException {
     try {
       registry.unbind(GameRmiServer.class.getSimpleName());
-    } catch (NotBoundException e) {
-      e.printStackTrace();
-    }
+      UnicastRemoteObject.unexportObject(registry, true);
+    } catch (NotBoundException e) {}
     if (broadcasterThread != null)
       broadcasterThread.interrupt();
   }
 
   @Override
   public void acceptMessage(InboxMessage message, GameRmiClient client) throws RemoteException {
-    try {
-      viewInbox.offer(new InboxEntry(addressToConnectionId.get(RemoteServer.getClientHost()), message));
-    } catch (ServerNotActiveException e) {
-      e.printStackTrace();
-    }
+    viewInbox.offer(new InboxEntry(addressToConnectionId.get(getRemoteHost()), message));
   }
 
   @Override
   public void startConnection(GameRmiClient client) throws RemoteException {
+    String connectionAddress = getRemoteHost();
+    String connectionId = UUID.randomUUID().toString();
+    addressToConnectionId.put(connectionAddress, connectionId);
+    connectionIdToClient.put(connectionId, client);
+    viewInbox.offer(new InboxEntry(
+      addressToConnectionId.get(connectionAddress),
+      new ConnectedPlayerMessage()
+    ));
+  }
+
+  private String getRemoteHost() {
     try {
-      String connectionAddress = RemoteServer.getClientHost(); //TODO only host!!!
-      String connectionId = UUID.randomUUID().toString();
-      addressToConnectionId.put(connectionAddress, connectionId);
-      connectionIdToClient.put(connectionId, client);
-      viewInbox.offer(new InboxEntry(
-        addressToConnectionId.get(connectionAddress),
-        new ConnectedPlayerMessage()
-      ));
+      return RemoteServer.getClientHost(); //TODO only host!!!
     } catch (ServerNotActiveException e) {
-      e.printStackTrace();
+      LOG.log(Level.SEVERE, "Can't get client host", e);
+      throw new RuntimeException(e);
     }
   }
 }

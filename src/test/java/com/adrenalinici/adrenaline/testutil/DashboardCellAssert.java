@@ -24,23 +24,19 @@ public class DashboardCellAssert extends AbstractAssert<DashboardCellAssert, Das
   }
 
   public DashboardCellAssert extractingNorthCell() {
-    assertThat(actual.getNorthDashboardCell()).isPresent();
-    return new DashboardCellAssert(actual.getNorthDashboardCell().get());
+    return new DashboardCellAssert(actual.getNorthDashboardCell()).isNotNull();
   }
 
   public DashboardCellAssert extractingEastCell() {
-    assertThat(actual.getEastDashboardCell()).isPresent();
-    return new DashboardCellAssert(actual.getEastDashboardCell().get());
+    return new DashboardCellAssert(actual.getEastDashboardCell()).isNotNull();
   }
 
   public DashboardCellAssert extractingSouthCell() {
-    assertThat(actual.getSouthDashboardCell()).isPresent();
-    return new DashboardCellAssert(actual.getSouthDashboardCell().get());
+    return new DashboardCellAssert(actual.getSouthDashboardCell()).isNotNull();
   }
 
   public DashboardCellAssert extractingWestCell() {
-    assertThat(actual.getWestDashboardCell()).isPresent();
-    return new DashboardCellAssert(actual.getWestDashboardCell().get());
+    return new DashboardCellAssert(actual.getWestDashboardCell()).isNotNull();
   }
 
   public DashboardCellAssert hasNorthWall(DashboardCellBoundType bound) {
