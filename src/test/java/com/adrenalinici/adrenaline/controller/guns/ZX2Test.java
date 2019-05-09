@@ -7,9 +7,9 @@ import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlo
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.PlayerDashboard;
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -19,15 +19,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.testutil.MyConditions.gunWithId;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ZX2Test extends BaseGunTest {
-  @Override
-  protected GunFactory gunFactory() {
-    return new ZX2GunFactory();
-  }
 
   @Override
   protected List<FlowNode> nodes() {
@@ -52,7 +47,7 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    playerDashboard.addGun("zx2");
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -73,13 +68,12 @@ public class ZX2Test extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId("zx2"));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId("zx2"));
+      .containsExactly("zx2");
   }
 
   @Test
@@ -92,7 +86,7 @@ public class ZX2Test extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    playerDashboard.addGun("zx2");
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -107,7 +101,7 @@ public class ZX2Test extends BaseGunTest {
     context.handleEvent(new PlayerChosenEvent(null), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getMarks())
-      .containsExactly( PlayerColor.GREEN);
+      .containsExactly(PlayerColor.GREEN);
 
     assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
       .containsExactly(PlayerColor.GREEN);
@@ -115,14 +109,13 @@ public class ZX2Test extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId("zx2"));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId("zx2"));
+      .containsExactly("zx2");
 
   }
 

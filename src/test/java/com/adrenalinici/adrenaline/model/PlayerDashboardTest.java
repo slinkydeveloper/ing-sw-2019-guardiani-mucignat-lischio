@@ -1,10 +1,14 @@
 package com.adrenalinici.adrenaline.model;
 
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PowerUpCard;
+import com.adrenalinici.adrenaline.model.common.PowerUpType;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
 import org.junit.Test;
 
 import java.util.*;
 
-import static com.adrenalinici.adrenaline.testutil.MyAssertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 public class PlayerDashboardTest {

@@ -7,15 +7,13 @@ import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.controller.nodes.ChooseGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.AlternativeEffectGun;
-import com.adrenalinici.adrenaline.model.Gun;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -38,24 +36,20 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableGuns() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     orchestrator.startNewFlow(viewMock, context);
 
-    ArgumentCaptor<List<Gun>> gunsCaptor = ArgumentCaptor.forClass(List.class);
+    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(viewMock, times(1)).showAvailableGuns(gunsCaptor.capture());
     assertThat(gunsCaptor.getValue())
-      .hasOnlyOneElementSatisfying(g ->
-        assertThat(g)
-          .isInstanceOf(AlternativeEffectGun.class)
-          .hasFieldOrPropertyWithValue("id", "zx2")
-      );
+      .containsOnly("zx2");
   }
 
   @Test
   public void testChooseAlternativeEffectGun() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     orchestrator.startNewFlow(viewMock, context);
 
@@ -72,7 +66,7 @@ public class ChooseGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseBaseEffectGun() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("machine_gun"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("machine_gun");
 
     orchestrator.startNewFlow(viewMock, context);
 

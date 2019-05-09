@@ -3,8 +3,8 @@ package com.adrenalinici.adrenaline.controller.nodes;
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
-import com.adrenalinici.adrenaline.model.Action;
-import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.common.Action;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 

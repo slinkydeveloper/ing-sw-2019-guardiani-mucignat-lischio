@@ -1,8 +1,8 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.model.Dashboard;
-import com.adrenalinici.adrenaline.model.DashboardCell;
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.fat.Dashboard;
+import com.adrenalinici.adrenaline.model.fat.DashboardCell;
+import com.adrenalinici.adrenaline.model.common.Position;
 import org.assertj.core.api.AbstractAssert;
 
 import static org.assertj.core.api.Assertions.assertThat;

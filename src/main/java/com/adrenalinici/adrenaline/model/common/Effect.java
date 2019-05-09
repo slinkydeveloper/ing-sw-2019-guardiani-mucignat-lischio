@@ -1,13 +1,13 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.common;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Effect implements Serializable {
 
-  String id;
-  String name;
-  String description;
+  private String id;
+  private String name;
+  private String description;
 
   public Effect(String id, String name, String description) {
     this.id = id;

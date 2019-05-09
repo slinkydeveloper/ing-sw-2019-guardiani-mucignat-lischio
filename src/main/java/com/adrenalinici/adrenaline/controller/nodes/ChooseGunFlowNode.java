@@ -4,7 +4,7 @@ import com.adrenalinici.adrenaline.controller.*;
 import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
 import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowState;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
-import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 

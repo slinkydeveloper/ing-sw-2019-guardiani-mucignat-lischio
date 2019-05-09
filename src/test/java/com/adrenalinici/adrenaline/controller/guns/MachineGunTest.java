@@ -7,10 +7,10 @@ import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowState;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseBaseEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.AmmoColor;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.PlayerDashboard;
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.view.event.BaseGunEffectChosenEvent;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -20,15 +20,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.testutil.MyConditions.gunWithId;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MachineGunTest extends BaseGunTest {
-  @Override
-  protected GunFactory gunFactory() {
-    return new MachineGunGunFactory();
-  }
 
   @Override
   protected List<FlowNode> nodes() {
@@ -53,7 +48,7 @@ public class MachineGunTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    playerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -75,14 +70,13 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsExactly(gunId());
 
     assertThat(playerDashboard.getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.RED, AmmoColor.BLUE);
@@ -98,7 +92,7 @@ public class MachineGunTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    playerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -120,14 +114,13 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsExactly(gunId());
 
     assertThat(playerDashboard.getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.RED, AmmoColor.BLUE);
@@ -143,7 +136,7 @@ public class MachineGunTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    playerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -169,15 +162,14 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN));
 
-    assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+    assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsExactly(gunId());
 
     assertThat(playerDashboard.getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.RED, AmmoColor.YELLOW);
@@ -193,7 +185,7 @@ public class MachineGunTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    playerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -216,14 +208,14 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+      .doesNotContain(gunId());
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsOnly(gunId());
 
     assertThat(playerDashboard.getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.RED, AmmoColor.YELLOW);
@@ -239,7 +231,7 @@ public class MachineGunTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    playerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    playerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -265,15 +257,15 @@ public class MachineGunTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).isEmpty();
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.CYAN));
 
     assertThat(playerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+      .doesNotContain(gunId());
 
     assertThat(playerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsOnly(gunId());
 
     assertThat(playerDashboard.getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.RED);

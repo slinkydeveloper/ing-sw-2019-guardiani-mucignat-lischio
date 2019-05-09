@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
@@ -21,8 +21,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 
 public class BaseGameViewRmiIntegrationTest {
 

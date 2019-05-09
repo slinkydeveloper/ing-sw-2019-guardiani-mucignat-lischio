@@ -1,11 +1,13 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.fat;
 
+import com.adrenalinici.adrenaline.model.common.Gun;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
-import com.adrenalinici.adrenaline.util.Bag;
-import com.adrenalinici.adrenaline.util.ListUtils;
+import com.adrenalinici.adrenaline.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.*;
@@ -82,11 +84,11 @@ public class GameModel extends Observable<ModelEvent> {
     Position oldPosition = getPlayerPosition(player);
     DashboardCell oldCell = dashboard.getDashboardCell(oldPosition);
     oldCell.removePlayer(player);
-    notifyEvent(new DashboardCellUpdatedEvent(this, oldCell));
+    notifyEvent(new DashboardCellUpdatedEvent(this, oldPosition));
 
     DashboardCell newCell = dashboard.getDashboardCell(newPosition);
     newCell.addPlayer(player);
-    notifyEvent(new DashboardCellUpdatedEvent(this, newCell));
+    notifyEvent(new DashboardCellUpdatedEvent(this, newPosition));
   }
 
   public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
@@ -97,39 +99,32 @@ public class GameModel extends Observable<ModelEvent> {
           ac.getAmmoColor().forEach(playerDashboard::addAmmo);
           ac.getPowerUpCard().ifPresent(playerDashboard::addPowerUpCard);
           cell.setAmmoCard(null);
-          notifyEvent(new DashboardCellUpdatedEvent(this, cell));
-          notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+          notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
+          notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
         }
       );
   }
 
   public void acquireGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
-    playerDashboard.addLoadedGun(chosenGun);
+    playerDashboard.addGun(chosenGun.getId());
 
     RespawnDashboardCell cell = (RespawnDashboardCell) dashboard.getDashboardCell(getPlayerPosition(player));
-    cell.getAvailableGuns().remove(chosenGun);
-    List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
-    Bag<AmmoColor> requiredAmmoToPickupBag = Bag.from(chosenGun.getRequiredAmmoToPickup());
+    cell.getAvailableGuns().remove(chosenGun.getId());
 
     playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup());
 
-    notifyEvent(new DashboardCellUpdatedEvent(this, cell));
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+    notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
   }
 
   public void reloadGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
-    playerDashboard.addLoadedGun(chosenGun);
-    playerDashboard.removeUnloadedGun(chosenGun);
-    List<AmmoColor> playerAmmos = new ArrayList<>(playerDashboard.getAmmos());
-    Bag<AmmoColor> playerAmmosBag = Bag.from(playerAmmos);
-    Bag<AmmoColor> requiredAmmoToReloadBag = Bag.from(chosenGun.getRequiredAmmoToReload());
+    playerDashboard.reloadGun(chosenGun.getId());
 
     playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload());
 
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
   }
 
   private boolean hitter(PlayerColor killer, PlayerColor victim, int damages) {
@@ -153,9 +148,9 @@ public class GameModel extends Observable<ModelEvent> {
       victimPlayerDashboard.incrementSkullsNumber();
 
       if (victimPlayerDashboard.getCruelDamage().isPresent()) {
-        killScore.add(new AbstractMap.SimpleImmutableEntry<PlayerColor, Boolean>(killer, Boolean.TRUE));
+        killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.TRUE));
         markPlayer(victim, killer, 1);
-      } else killScore.add(new AbstractMap.SimpleImmutableEntry<PlayerColor, Boolean>(killer, Boolean.FALSE));
+      } else killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.FALSE));
       notifyEvent(new GameModelUpdatedEvent(this));
     }
 
@@ -164,12 +159,13 @@ public class GameModel extends Observable<ModelEvent> {
 
   private void marker(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
+    int killerMarksOnVictimPlayerDashboard = calculateKillerMarksOnVictimPlayerDashboard(killer, victim);
 
     victimPlayerDashboard.addMarks(
       Collections.nCopies(
-        marks > 3 - marksOnOtherPlayerDashboards ? 3 - marksOnOtherPlayerDashboards : marks,
-        killer)
+        marks > 3 - killerMarksOnVictimPlayerDashboard ? 3 - killerMarksOnVictimPlayerDashboard : marks,
+        killer
+      )
     );
   }
 
@@ -190,10 +186,9 @@ public class GameModel extends Observable<ModelEvent> {
    * @return true if victim was killed
    */
   public boolean hitPlayer(PlayerColor killer, PlayerColor victim, int damages) {
-    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     boolean killed = hitter(killer, victim, damages);
 
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
     return killed;
   }
 
@@ -208,10 +203,8 @@ public class GameModel extends Observable<ModelEvent> {
    * @param marks number of marks to add
    */
   public void markPlayer(PlayerColor killer, PlayerColor victim, int marks) {
-    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-
     marker(killer, victim, marks);
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
   }
 
   /**
@@ -234,12 +227,10 @@ public class GameModel extends Observable<ModelEvent> {
    * @return true if victim was killed
    */
   public boolean hitAndMarkPlayer(PlayerColor killer, PlayerColor victim, int damages, int marks) {
-    PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-
     boolean killed = hitter(killer, victim, damages);
     marker(killer, victim, marks);
 
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, victimPlayerDashboard));
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, victim));
     return killed;
   }
 
@@ -248,16 +239,40 @@ public class GameModel extends Observable<ModelEvent> {
    * @return number of player marks on other playerDashboards
    */
   public int calculateMarksOnOtherPlayerDashboards(PlayerColor player) {
-    List<PlayerColor> marksOnOtherPlayerDashboards = new ArrayList<>();
-    playerDashboards.stream()
+    return (int) playerDashboards
+      .stream()
       .filter(playerDashboard -> !playerDashboard.getPlayer().equals(player))
-      .forEach(playerDashboard ->
-        playerDashboard.getMarks().stream()
+      .mapToInt(playerDashboard ->
+        playerDashboard
+          .getMarks()
+          .stream()
           .filter(playerColor -> playerColor.equals(player))
-          .forEach(playerColor -> marksOnOtherPlayerDashboards.add(playerColor))
-      );
+          .collect(Collectors.toList())
+          .size()
+      ).count();
+  }
 
-    return marksOnOtherPlayerDashboards.size();
+  /**
+   * @param killer
+   * @param victim
+   * @return number of killer marks on victim dashboard
+   */
+  public int calculateKillerMarksOnVictimPlayerDashboard(PlayerColor killer, PlayerColor victim) {
+    return (int) getPlayerDashboard(victim)
+      .getMarks()
+      .stream()
+      .filter(playerColor -> playerColor.equals(killer)).count();
+    //.collect(Collectors.toList()).size();
+  }
+
+  public LightGameModel light() {
+    return new LightGameModel(
+      killScore,
+      remainingSkulls,
+      doubleKillScore,
+      dashboard.light(),
+      playerDashboards.stream().map(PlayerDashboard::light).collect(Collectors.toList())
+    );
   }
 
 }

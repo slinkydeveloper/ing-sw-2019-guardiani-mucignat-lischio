@@ -1,8 +1,7 @@
 package com.adrenalinici.adrenaline.util;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -19,12 +18,22 @@ public class Bag<T> {
     return this;
   }
 
+  public Bag<T> addAll(Collection<T> collection) {
+    collection.forEach(this::add);
+    return this;
+  }
+
+  public Bag<T> removeAll(Collection<T> collection) {
+    collection.forEach(this::remove);
+    return this;
+  }
+
   public int get(T item) {
     return bag.getOrDefault(item, 0);
   }
 
   public Bag<T> remove(T item) {
-    bag.merge(item, null, (oldValue, value) -> (oldValue - 1 == 0) ? null : oldValue - 1);
+    bag.merge(item, 0, (oldValue, value) -> (oldValue - 1 == 0) ? null : oldValue - 1);
     return this;
   }
 
@@ -45,6 +54,10 @@ public class Bag<T> {
       .flatMap(e -> IntStream.range(0, e.getValue()).mapToObj(i -> e.getKey()));
   }
 
+  public List<T> toList() {
+    return streamItems().collect(Collectors.toList());
+  }
+
   public int differentItems() {
     return this.bag.size();
   }
@@ -61,6 +74,14 @@ public class Bag<T> {
     Bag<T> b = new Bag<>();
     collection.forEach(b::add);
     return b;
+  }
+
+  public static <T> Bag<T> sum(Collection<T> c1, Collection<T> c2) {
+    return Bag.from(c1).addAll(c2);
+  }
+
+  public static <T> Bag<T> difference(Collection<T> c1, Collection<T> c2) {
+    return Bag.from(c1).removeAll(c2);
   }
 
 }

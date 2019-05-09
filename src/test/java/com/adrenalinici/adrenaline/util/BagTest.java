@@ -1,9 +1,10 @@
 package com.adrenalinici.adrenaline.util;
 
-import com.adrenalinici.adrenaline.model.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,6 +33,36 @@ public class BagTest {
     assertThat(ammoBag.contains(Arrays.asList(AmmoColor.RED, AmmoColor.RED, AmmoColor.RED, AmmoColor.RED))).isEqualTo(false);
     assertThat(ammoBag.contains(Arrays.asList(AmmoColor.RED, AmmoColor.RED, AmmoColor.BLUE, AmmoColor.RED, AmmoColor.YELLOW))).isEqualTo(false);
     assertThat(ammoBag.contains(Arrays.asList(AmmoColor.RED, AmmoColor.RED, AmmoColor.BLUE, AmmoColor.RED))).isEqualTo(true);
+  }
+
+  @Test
+  public void sumTest() {
+    Bag<AmmoColor> ammos = Bag.sum(
+      Arrays.asList(AmmoColor.YELLOW, AmmoColor.YELLOW, AmmoColor.RED),
+      Arrays.asList(AmmoColor.BLUE, AmmoColor.RED)
+    );
+    assertThat(ammos.get(AmmoColor.YELLOW)).isEqualTo(2);
+    assertThat(ammos.get(AmmoColor.BLUE)).isEqualTo(1);
+    assertThat(ammos.get(AmmoColor.RED)).isEqualTo(2);
+
+    List<AmmoColor> generatedAmmos = ammos.toList();
+    assertThat(generatedAmmos)
+      .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.YELLOW, AmmoColor.RED, AmmoColor.BLUE, AmmoColor.RED);
+  }
+
+  @Test
+  public void differenceTest() {
+    Bag<AmmoColor> ammos = Bag.difference(
+      Arrays.asList(AmmoColor.YELLOW, AmmoColor.YELLOW, AmmoColor.RED),
+      Arrays.asList(AmmoColor.YELLOW, AmmoColor.RED)
+    );
+    assertThat(ammos.get(AmmoColor.YELLOW)).isEqualTo(1);
+    assertThat(ammos.get(AmmoColor.BLUE)).isEqualTo(0);
+    assertThat(ammos.get(AmmoColor.RED)).isEqualTo(0);
+
+    List<AmmoColor> generatedAmmos = ammos.toList();
+    assertThat(generatedAmmos)
+      .containsExactlyInAnyOrder(AmmoColor.YELLOW);
   }
 
 }

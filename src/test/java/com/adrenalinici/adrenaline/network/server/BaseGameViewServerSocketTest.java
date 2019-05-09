@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;

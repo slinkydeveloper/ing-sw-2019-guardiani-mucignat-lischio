@@ -5,8 +5,8 @@ import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.Effect;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Effect;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
 import org.assertj.core.data.Index;
 import org.junit.Test;
@@ -21,7 +21,6 @@ import static org.mockito.Mockito.verify;
 @SuppressWarnings("unchecked")
 public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
 
-
   @Override
   public void setUp() {
     super.setUp();
@@ -35,7 +34,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testShowAvailableEffects() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     context.nextPhase(
       viewMock,
@@ -55,7 +54,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseEffectOne() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     context.nextPhase(
       viewMock,
@@ -75,7 +74,7 @@ public class ChooseAlternativeEffectGunNodeFlowTest extends BaseNodeTest {
   @Test
   public void testChooseEffectTwo() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
-    model.getPlayerDashboard(PlayerColor.GREEN).addLoadedGun(GunLoader.INSTANCE.getModelGun("zx2"));
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("zx2");
 
     context.nextPhase(
       viewMock,

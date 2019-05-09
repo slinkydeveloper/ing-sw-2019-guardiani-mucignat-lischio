@@ -1,11 +1,7 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.model.Action;
-import com.adrenalinici.adrenaline.view.GameView;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.adrenalinici.adrenaline.model.common.Action;
 
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Consumer;
 

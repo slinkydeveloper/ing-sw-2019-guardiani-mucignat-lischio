@@ -1,11 +1,10 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 import com.adrenalinici.adrenaline.network.outbox.ChooseMyPlayerMessage;
 import com.adrenalinici.adrenaline.network.outbox.ModelEventMessage;
-import com.adrenalinici.adrenaline.network.outbox.NextTurnMessage;
 import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.LogUtils;

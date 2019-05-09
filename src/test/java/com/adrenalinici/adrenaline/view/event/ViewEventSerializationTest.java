@@ -1,8 +1,9 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.Action;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.util.SerializationUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

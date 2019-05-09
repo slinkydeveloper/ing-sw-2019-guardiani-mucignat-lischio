@@ -7,7 +7,7 @@ import com.adrenalinici.adrenaline.controller.nodes.TestControllerFlowContext;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
-import com.adrenalinici.adrenaline.model.GameModel;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.adrenalinici.adrenaline.view.GameView;
 import org.junit.Before;
@@ -54,8 +54,6 @@ public abstract class BaseGunTest {
       GunLoader.INSTANCE.getDecoratedGun(gunId()).getPhases()
     );
   }
-
-  protected abstract GunFactory gunFactory();
 
   protected abstract List<FlowNode> nodes();
 

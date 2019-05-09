@@ -1,6 +1,6 @@
 package com.adrenalinici.adrenaline.network.outbox;
 
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.List;
 import java.util.function.Consumer;

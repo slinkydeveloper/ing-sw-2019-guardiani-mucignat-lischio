@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.network.server;
 
 import com.adrenalinici.adrenaline.model.*;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.network.outbox.*;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 
@@ -28,12 +29,12 @@ public class GameViewServer extends BaseGameViewServer {
   }
 
   @Override
-  public void showReloadableGuns(List<Gun> guns) {
+  public void showReloadableGuns(Set<String> guns) {
     broadcast(new ReloadableGunsMessage(guns));
   }
 
   @Override
-  public void showLoadedGuns(List<Gun> guns) {
+  public void showLoadedGuns(Set<String> guns) {
     broadcast(new LoadedGunsMessage(guns));
   }
 
@@ -83,12 +84,12 @@ public class GameViewServer extends BaseGameViewServer {
   }
 
   @Override
-  public void showAvailableGuns(List<Gun> guns) {
+  public void showAvailableGuns(Set<String> guns) {
     broadcast(new AvailableGunsMessage(guns));
   }
 
   @Override
-  public void showAvailableGunsToPickup(List<Gun> guns) {
+  public void showAvailableGunsToPickup(Set<String> guns) {
     broadcast(new AvailableGunsToPickupMessage(guns));
   }
 

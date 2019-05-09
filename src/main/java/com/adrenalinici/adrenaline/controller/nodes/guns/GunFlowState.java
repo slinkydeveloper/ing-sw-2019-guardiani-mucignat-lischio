@@ -2,7 +2,7 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedGun;
 import com.adrenalinici.adrenaline.flow.FlowState;
-import com.adrenalinici.adrenaline.model.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;

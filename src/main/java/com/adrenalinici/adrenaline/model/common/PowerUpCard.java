@@ -1,8 +1,9 @@
-package com.adrenalinici.adrenaline.model;
+package com.adrenalinici.adrenaline.model.common;
 
 import java.util.Objects;
 
 public class PowerUpCard {
+
   private AmmoColor ammoColor;
   private PowerUpType powerUpType;
 
@@ -32,4 +33,5 @@ public class PowerUpCard {
   public int hashCode() {
     return Objects.hash(ammoColor, powerUpType);
   }
+
 }
