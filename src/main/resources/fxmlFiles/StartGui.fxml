@@ -5,21 +5,22 @@
 
 
 
-<?import javafx.scene.layout.GridPane?>
-<GridPane fx:controller="com.adrenalinici.adrenaline.gui.controller.startGuiController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="549" vgap="805">
+<?import javafx.scene.layout.Pane?>
+<!--<GridPane fx:controller="com.adrenalinici.adrenaline.gui.controller.startGuiController"-->
+<!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="549" vgap="805">-->
 
-    <ImageView fitHeight="549.0" fitWidth="8.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="/images/DashboardAndPlayers/Adrenalina169.jpeg" />
-    </ImageView>
-</GridPane>
-<!--<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0"-->
-<!--      prefWidth="976.0" xmlns="http://javafx.com/javafx/8.0.171"-->
-<!--      fx:controller="startGuiController" xmlns:fx="http://javafx.com/fxml/1">-->
-<!--  <ImageView fitHeight="549.0" fitWidth="805.0" layoutX="90.0" pickOnBounds="true" preserveRatio="true">-->
-<!--        <image>-->
-<!--&lt;!&ndash;          <Image url="./../../../../../ing-sw-2019-guardiani-mucignat-lischio/src/main/resources/Images/DashboardAndPlayers/Adrenalina169.jpeg" />        &ndash;&gt;-->
-<!--          <Image url="../../../../../Images/DashboardAndPlayers/Adrenalina169.jpeg" />-->
-<!--        </image>-->
+<!--    <ImageView fitHeight="549.0" fitWidth="8.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">-->
+<!--      <Image url="/images/DashboardAndPlayers/Adrenalina169.jpeg" />-->
 <!--    </ImageView>-->
-<!--</Pane>-->
+<!--</GridPane>-->
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0"
+      prefWidth="976.0" fx:controller="com.adrenalinici.adrenaline.gui.controller.startGuiController"
+          xmlns:fx="http://javafx.com/fxml">
+ <ImageView fitHeight="549.0" fitWidth="976.0" pickOnBounds="true" preserveRatio="true">
+    <image>
+      <Image url="/images/DashboardAndPlayers/Adrenalina169.jpeg" />
+    </image>
+ </ImageView>
+</Pane>
