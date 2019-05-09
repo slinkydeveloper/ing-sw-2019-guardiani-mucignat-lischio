@@ -11,6 +11,9 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.DOOR;
+import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
+
 /**
  * Class representing game dashboard <br>
  * Each cell is determined by a tuple (line, cell), for example:
@@ -324,5 +327,36 @@ public class Dashboard {
     }
 
     return new LightDashboard(d);
+  }
+
+  public static Dashboard createSmallDashboard() {
+    return Dashboard.newBuilder()
+      .newEastCell(c -> c.setSouthType(DOOR).setEastType(OPEN).newPickupCell())
+      .newEastCell(c -> c.setWestType(OPEN).setWestType(OPEN).newPickupCell())
+      .newEastCell(c -> c.setWestType(OPEN).setSouthType(DOOR).newRespawnCell())
+      .newEmptyCell()
+      .newSouthLine()
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).newRespawnCell())
+      .newEastCell(c -> c.setEastType(OPEN).setSouthType(DOOR).setWestType(OPEN).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(DOOR).setWestType(OPEN).newPickupCell())
+      .newEastCell(c -> c.setSouthType(OPEN).setWestType(DOOR).newPickupCell())
+      .newSouthLine()
+      .newEmptyCell()
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).newPickupCell())
+      .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setWestType(DOOR).newRespawnCell())
+      .build();
+  }
+
+  public static Dashboard createMedium1Dashboard() {
+    return null;
+  }
+
+  public static Dashboard createMedium2Dashboard() {
+    return null;
+  }
+
+  public static Dashboard createLargeDashboard() {
+    return null;
   }
 }
