@@ -15,7 +15,9 @@
 <?import javafx.scene.shape.Sphere?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0"
+      fx:controller="com.adrenalinici.adrenaline.gui.controller.dasboardController"
+      xmlns:fx="http://javafx.com/fxml">
   <children>
     <GridPane layoutX="115.0" layoutY="107.0" prefHeight="387.0" prefWidth="509.0">
       <columnConstraints>
@@ -89,7 +91,7 @@
     </GridPane>
     <ImageView fitHeight="557.0" fitWidth="742.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
       <image>
-        <Image url="../images/DashboardAndPlayers/IMG_0580.jpeg" />
+        <Image url="/images/DashboardAndPlayers/IMG_0580.jpeg" />
       </image>
     </ImageView>
     <VBox layoutY="305.0" prefHeight="247.0" prefWidth="109.0">
@@ -193,7 +195,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="/images/DashboardAndPlayers/IMG_0567(6) (copia).jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="41.0" layoutY="22.0" prefHeight="21.0" prefWidth="141.0">
@@ -269,7 +271,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="/images/DashboardAndPlayers/IMG_0567(1).jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="53.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="20.0" prefWidth="73.0">
@@ -344,7 +346,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="/images/DashboardAndPlayers/IMG_0567 (1).jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="48.0" layoutY="24.0" prefHeight="14.0" prefWidth="134.0">
@@ -420,7 +422,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="/images/DashboardAndPlayers/IMG_0567 (1).jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="48.0" layoutY="27.0" prefHeight="14.0" prefWidth="134.0">
@@ -496,7 +498,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="/images/DashboardAndPlayers/IMG_0567(2).jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="41.0" layoutY="22.0" prefHeight="21.0" prefWidth="141.0">

@@ -17,7 +17,7 @@ public class StartGui extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
       Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/StartGui.fxml"));
-      //Parent root = FXMLLoader.load(getClass().getResource("StartGui"));
+
       primaryStage.setTitle("Adrenaline");
       primaryStage.setScene(new Scene(root));
       primaryStage.show();
