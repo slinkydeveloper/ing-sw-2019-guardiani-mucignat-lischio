@@ -22,10 +22,6 @@ import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboar
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ElectroscytheTest extends BaseGunTest {
-  @Override
-  protected GunFactory gunFactory() {
-    return new ElectroscytheGunFactory();
-  }
 
   @Override
   protected List<FlowNode> nodes() {

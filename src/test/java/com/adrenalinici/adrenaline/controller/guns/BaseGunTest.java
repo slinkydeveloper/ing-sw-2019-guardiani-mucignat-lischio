@@ -55,8 +55,6 @@ public abstract class BaseGunTest {
     );
   }
 
-  protected abstract GunFactory gunFactory();
-
   protected abstract List<FlowNode> nodes();
 
   protected abstract String gunId();

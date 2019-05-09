@@ -26,11 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MachineGunTest extends BaseGunTest {
 
   @Override
-  protected GunFactory gunFactory() {
-    return new MachineGunGunFactory();
-  }
-
-  @Override
   protected List<FlowNode> nodes() {
     return Arrays.asList(
       new ChooseBaseEffectForGunFlowNode(),

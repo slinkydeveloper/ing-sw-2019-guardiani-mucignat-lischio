@@ -23,10 +23,6 @@ import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboar
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ZX2Test extends BaseGunTest {
-  @Override
-  protected GunFactory gunFactory() {
-    return new ZX2GunFactory();
-  }
 
   @Override
   protected List<FlowNode> nodes() {
