@@ -6,11 +6,11 @@ import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.AmmoColor;
-import com.adrenalinici.adrenaline.model.PlayerColor;
-import com.adrenalinici.adrenaline.model.PlayerDashboard;
-import com.adrenalinici.adrenaline.model.Position;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
 import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
 import org.junit.Test;
 
@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.testutil.MyConditions.gunWithId;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,7 +49,7 @@ public class ElectroscytheTest extends BaseGunTest {
     model.getPlayerDashboard(PlayerColor.GRAY).addDamages(Collections.nCopies(10, PlayerColor.GREEN));
 
     PlayerDashboard killerPlayerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    killerPlayerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    killerPlayerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -73,14 +72,14 @@ public class ElectroscytheTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).containsExactly(PlayerColor.GRAY);
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(killerPlayerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+      .doesNotContain(gunId());
 
     assertThat(killerPlayerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsExactly(gunId());
 
   }
 
@@ -96,7 +95,7 @@ public class ElectroscytheTest extends BaseGunTest {
     model.getPlayerDashboard(PlayerColor.GRAY).addDamages(Collections.nCopies(9, PlayerColor.GREEN));
 
     PlayerDashboard killerPlayerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
-    killerPlayerDashboard.addLoadedGun(GunLoader.INSTANCE.getModelGun(gunId()));
+    killerPlayerDashboard.addGun(gunId());
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
@@ -121,13 +120,13 @@ public class ElectroscytheTest extends BaseGunTest {
     assertThat(context.getKilledPlayers()).containsExactly(PlayerColor.GRAY);
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY, model))
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW, model));
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(killerPlayerDashboard.getLoadedGuns())
-      .doNotHave(gunWithId(gunId()));
+      .doesNotContain(gunId());
 
     assertThat(killerPlayerDashboard.getUnloadedGuns())
-      .haveExactly(1, gunWithId(gunId()));
+      .containsExactly(gunId());
   }
 }
