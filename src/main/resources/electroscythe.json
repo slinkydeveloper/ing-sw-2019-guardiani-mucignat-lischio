@@ -10,12 +10,7 @@
     "description": " Deal 1 damage to every other player on your square.",
     "phases": [
       "apply_gun_effect_electroscythe_base"
-    ],
-    "phasesConfig": {
-      "apply_gun_effect_electroscythe_base": {
-        "distanceEval": "distance === 0"
-      }
-    }
+    ]
   },
   "secondEffect": {
     "id": "reaper",
@@ -24,14 +19,10 @@
     "phases": [
       "apply_gun_effect_electroscythe_reaper"
     ],
-    "phasesConfig": {
-      "apply_gun_effect_electroscythe_reaper": {
-        "distanceEval": "distance === 0"
-      }
-    },
     "cost": [
       "blue",
       "red"
     ]
   }
 }
+
