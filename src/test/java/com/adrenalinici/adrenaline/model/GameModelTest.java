@@ -229,13 +229,11 @@ public class GameModelTest {
 
     assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
       .isEqualTo(Collections.nCopies(3, PlayerColor.GREEN));
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getMarks())
+      .isEqualTo(Collections.nCopies(2, PlayerColor.GREEN));
 
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getMarks().size()).isEqualTo(0);
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
-
-    gameModel.getPlayerDashboard(PlayerColor.YELLOW).removeMarks(Collections.nCopies(3, PlayerColor.GREEN));
-    gameModel.getPlayerDashboard(PlayerColor.GRAY).addMarks(Collections.nCopies(2, PlayerColor.GREEN));
 
     receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
@@ -252,7 +250,6 @@ public class GameModelTest {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
       TestUtils.generate3PlayerDashboards());
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.singletonList(PlayerColor.GREEN));
-    gameModel.getPlayerDashboard(PlayerColor.GRAY).addMarks(Collections.singletonList(PlayerColor.GREEN));
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
@@ -262,7 +259,7 @@ public class GameModelTest {
     assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
       .isEqualTo(Collections.nCopies(12, PlayerColor.GREEN));
 
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks().size()).isEqualTo(2);
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getMarks().size()).isEqualTo(3);
     assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getMarks()).containsExactly(PlayerColor.YELLOW);
 
     assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
@@ -282,5 +279,22 @@ public class GameModelTest {
     gameModel.getPlayerDashboard(PlayerColor.GREEN).addMarks(Collections.singletonList(PlayerColor.GREEN));
 
     assertThat(gameModel.calculateMarksOnOtherPlayerDashboards(PlayerColor.GREEN)).isEqualTo(2);
+  }
+
+  @Test
+  public void calculateKillerMarksOnVictimDashboardTest() {
+    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
+      TestUtils.generate3PlayerDashboards());
+
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW)
+      .addMarks(
+        Arrays.asList(
+          PlayerColor.GREEN,
+          PlayerColor.GREEN,
+          PlayerColor.YELLOW)
+      );
+
+    assertThat(gameModel.calculateKillerMarksOnVictimPlayerDashboard(PlayerColor.GREEN, PlayerColor.YELLOW))
+      .isEqualTo(2);
   }
 }

@@ -159,12 +159,13 @@ public class GameModel extends Observable<ModelEvent> {
 
   private void marker(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
-    int marksOnOtherPlayerDashboards = calculateMarksOnOtherPlayerDashboards(killer);
+    int killerMarksOnVictimPlayerDashboard = calculateKillerMarksOnVictimPlayerDashboard(killer, victim);
 
     victimPlayerDashboard.addMarks(
       Collections.nCopies(
-        marks > 3 - marksOnOtherPlayerDashboards ? 3 - marksOnOtherPlayerDashboards : marks,
-        killer)
+        marks > 3 - killerMarksOnVictimPlayerDashboard ? 3 - killerMarksOnVictimPlayerDashboard : marks,
+        killer
+      )
     );
   }
 
@@ -249,6 +250,19 @@ public class GameModel extends Observable<ModelEvent> {
           .collect(Collectors.toList())
           .size()
       ).count();
+  }
+
+  /**
+   * @param killer
+   * @param victim
+   * @return number of killer marks on victim dashboard
+   */
+  public int calculateKillerMarksOnVictimPlayerDashboard(PlayerColor killer, PlayerColor victim) {
+    return (int) getPlayerDashboard(victim)
+      .getMarks()
+      .stream()
+      .filter(playerColor -> playerColor.equals(killer)).count();
+    //.collect(Collectors.toList()).size();
   }
 
   public LightGameModel light() {
