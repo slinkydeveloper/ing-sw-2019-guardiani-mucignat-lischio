@@ -6,16 +6,16 @@
 
 
 <?import javafx.scene.layout.GridPane?>
-<GridPane fx:controller="com.adrenalinici.adrenaline.controller.guiController.startGuiController"
+<GridPane fx:controller="com.adrenalinici.adrenaline.gui.controller.startGuiController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="549" vgap="805">
 
     <ImageView fitHeight="549.0" fitWidth="8.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="DashboardAndPlayers/Adrenalina169.jpeg" />
+      <Image url="/images/DashboardAndPlayers/Adrenalina169.jpeg" />
     </ImageView>
 </GridPane>
 <!--<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0"-->
 <!--      prefWidth="976.0" xmlns="http://javafx.com/javafx/8.0.171"-->
-<!--      fx:controller="com.adrenalinici.adrenaline.controller.guiController.startGuiController" xmlns:fx="http://javafx.com/fxml/1">-->
+<!--      fx:controller="startGuiController" xmlns:fx="http://javafx.com/fxml/1">-->
 <!--  <ImageView fitHeight="549.0" fitWidth="805.0" layoutX="90.0" pickOnBounds="true" preserveRatio="true">-->
 <!--        <image>-->
 <!--&lt;!&ndash;          <Image url="./../../../../../ing-sw-2019-guardiani-mucignat-lischio/src/main/resources/Images/DashboardAndPlayers/Adrenalina169.jpeg" />        &ndash;&gt;-->

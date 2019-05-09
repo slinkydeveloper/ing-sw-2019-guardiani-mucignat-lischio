@@ -89,7 +89,7 @@
     </GridPane>
     <ImageView fitHeight="557.0" fitWidth="742.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
       <image>
-        <Image url="DashboardAndPlayers/IMG_0580.jpeg" />
+        <Image url="../images/DashboardAndPlayers/IMG_0580.jpeg" />
       </image>
     </ImageView>
     <VBox layoutY="305.0" prefHeight="247.0" prefWidth="109.0">
@@ -193,7 +193,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="41.0" layoutY="22.0" prefHeight="21.0" prefWidth="141.0">
@@ -269,7 +269,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="53.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="20.0" prefWidth="73.0">
@@ -344,7 +344,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="48.0" layoutY="24.0" prefHeight="14.0" prefWidth="134.0">
@@ -420,7 +420,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="48.0" layoutY="27.0" prefHeight="14.0" prefWidth="134.0">
@@ -496,7 +496,7 @@
           <children>
             <ImageView fitHeight="65.0" fitWidth="200.0">
               <image>
-                <Image url="DashboardAndPlayers/IMG_0567.jpeg" />
+                <Image url="../images/DashboardAndPlayers/IMG_0567.jpeg" />
               </image>
             </ImageView>
             <GridPane layoutX="41.0" layoutY="22.0" prefHeight="21.0" prefWidth="141.0">

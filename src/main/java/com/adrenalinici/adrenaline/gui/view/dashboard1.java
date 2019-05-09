@@ -1,4 +1,4 @@
-package com.adrenalinici.adrenaline.view.guiView;
+package com.adrenalinici.adrenaline.gui.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
