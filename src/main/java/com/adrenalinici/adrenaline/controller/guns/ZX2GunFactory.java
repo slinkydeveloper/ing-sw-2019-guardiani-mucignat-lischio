@@ -17,14 +17,13 @@ public class ZX2GunFactory extends AlternativeEffectGunFactory {
 
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> BASE_EFFECT_APPLY = (state, model, context) -> {
     state.getChosenPlayersToHit().forEach(p -> {
-      boolean killed = model.hitAndMarkPlayer(context.getTurnOfPlayer(), p, 1, 2);
-      if (killed) context.getKilledPlayers().add(p);
-      state.getHitPlayers().add(p);
+      state.hitPlayer(p, 1);
+      state.markPlayer(p, 2);
     });
   };
 
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> SCANNER_EFFECT_APPLY = (state, model, context) -> {
-    state.getChosenPlayersToHit().forEach(p -> model.markPlayer(context.getTurnOfPlayer(), p, 1));
+    state.getChosenPlayersToHit().forEach(p -> state.markPlayer(p, 1));
   };
 
   @Override
