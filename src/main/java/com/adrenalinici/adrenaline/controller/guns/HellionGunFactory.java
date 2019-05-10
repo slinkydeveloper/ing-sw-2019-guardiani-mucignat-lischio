@@ -16,29 +16,27 @@ import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.apply
 public class HellionGunFactory extends AlternativeEffectGunFactory {
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> BASE_EFFECT_APPLY = (state, model, context) -> {
     state.getChosenPlayersToHit().forEach(victim -> {
-      boolean killed = model.hitAndMarkPlayer(context.getTurnOfPlayer(), victim, 1, 1);
-      if (killed) context.getKilledPlayers().add(victim);
-      state.getHitPlayers().add(victim);
+      state.hitPlayer(victim, 1);
+      state.markPlayer(victim, 1);
 
       model.getDashboard().getDashboardCell(model.getPlayerPosition(victim))
         .getPlayersInCell()
         .stream()
         .filter(otherPlayer -> !otherPlayer.equals(victim))
-        .forEach(p -> model.markPlayer(context.getTurnOfPlayer(), p, 1));
+        .forEach(p -> state.markPlayer(p, 1));
     });
   };
 
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> NANOTRACER_EFFECT_APPLY = (state, model, context) -> {
     state.getChosenPlayersToHit().forEach(victim -> {
-      boolean killed = model.hitAndMarkPlayer(context.getTurnOfPlayer(), victim, 1, 2);
-      if (killed) context.getKilledPlayers().add(victim);
-      state.getHitPlayers().add(victim);
+      state.hitPlayer(victim, 1);
+      state.markPlayer(victim, 2);
 
       model.getDashboard().getDashboardCell(model.getPlayerPosition(victim))
         .getPlayersInCell()
         .stream()
         .filter(otherPlayer -> !otherPlayer.equals(victim))
-        .forEach(p -> model.markPlayer(context.getTurnOfPlayer(), p, 2));
+        .forEach(p -> state.markPlayer(p, 2));
     });
   };
 
