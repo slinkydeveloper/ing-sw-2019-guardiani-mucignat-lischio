@@ -1,0 +1,26 @@
+[
+  {
+    "color": "RED",
+    "type": "VENOM_GRANADE"
+  },
+  {
+    "color": "YELLOW",
+    "type": "VENOM_GRANADE"
+  },
+  {
+    "color": "BLUE",
+    "type": "VENOM_GRANADE"
+  },
+  {
+    "color": "RED",
+    "type": "TELEPORT"
+  },
+  {
+    "color": "YELLOW",
+    "type": "TELEPORT"
+  },
+  {
+    "color": "BLUE",
+    "type": "TELEPORT"
+  }
+]

@@ -1,12 +1,11 @@
 package com.adrenalinici.adrenaline.util;
 
-import com.adrenalinici.adrenaline.model.common.AmmoColor;
-import com.adrenalinici.adrenaline.model.common.Effect;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -127,6 +126,18 @@ public class JsonUtils {
         }
       });
     return result;
+  }
+
+  public static List<PowerUpCard> loadPowerUpCards() {
+    ArrayNode node = (ArrayNode) getConfigurationJSONFromClasspath("powerup_cards.json");
+    return StreamUtils
+      .iteratorStream(node.elements())
+      .map(j -> (ObjectNode)j)
+      .map(j -> new PowerUpCard(
+        AmmoColor.valueOf(j.get("color").asText()),
+        PowerUpType.valueOf(j.get("type").asText())
+      ))
+      .collect(Collectors.toList());
   }
 
 }

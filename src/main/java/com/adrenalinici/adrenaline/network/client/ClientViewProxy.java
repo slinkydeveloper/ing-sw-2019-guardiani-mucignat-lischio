@@ -21,13 +21,12 @@ public class ClientViewProxy extends Observable<InboxMessage> {
     message.onReloadableGunsMessage(e -> view.showReloadableGuns(e.getGuns()));
     message.onLoadedGunsMessage(e -> view.showLoadedGuns(e.getGuns()));
     message.onBaseGunExtraEffectsMessage(e -> view.showBaseGunExtraEffects(e.getEffects()));
-    message.onAvailableRespawnLocationsMessage(e -> view.showAvailableRespawnLocations(e.getRespawnLocations()));
+    message.onAvailablePowerUpCardsForRespawnMessage(e -> view.showAvailablePowerUpCardsForRespawn(e.getPlayer(), e.getPowerUpCards()));
     message.onAvailableAlternativeEffectsGunMessage(e -> view.showAvailableAlternativeEffectsGun(e.getFirstEffect(), e.getSecondEffect()));
     message.onChoosePlayerToHitMessage(e -> view.showChoosePlayerToHit(e.getPlayers()));
     message.onChoosePlayerToMoveMessage(e -> view.showChoosePlayerToMove(e.getAvailableMovements()));
     message.onAvailableExtraEffectsMessage(e -> view.showAvailableExtraEffects(e.getFirstExtraEffect(), e.getSecondExtraEffect()));
     message.onAvailableVenomGranadesMessage(e -> view.showAvailableVenomGranades(e.getPlayer()));
-    message.onAvailablePowerUpCardsMessage(e -> view.showAvailablePowerUpCards(e.getPlayer()));
     message.onAvailableEnemyMovementsMessage(e -> view.showAvailableEnemyMovements(e.getPositions()));
     message.onAvailableGunsMessage(e -> view.showAvailableGuns(e.getGuns()));
     message.onAvailableGunsToPickupMessage(e -> view.showAvailableGunsToPickup(e.getGuns()));

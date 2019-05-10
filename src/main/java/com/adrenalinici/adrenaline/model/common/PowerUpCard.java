@@ -34,4 +34,11 @@ public class PowerUpCard {
     return Objects.hash(ammoColor, powerUpType);
   }
 
+  @Override
+  public String toString() {
+    return "PowerUpCard{" +
+      "ammoColor=" + ammoColor +
+      ", powerUpType=" + powerUpType +
+      '}';
+  }
 }

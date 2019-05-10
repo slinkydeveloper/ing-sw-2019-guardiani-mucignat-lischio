@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model.fat;
 
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
@@ -15,6 +16,7 @@ public interface DashboardCell extends Serializable {
     private DashboardCellBoundType southDashboardCellBoundType = DashboardCellBoundType.WALL;
     private DashboardCellBoundType eastDashboardCellBoundType = DashboardCellBoundType.WALL;
     private DashboardCellBoundType westDashboardCellBoundType = DashboardCellBoundType.WALL;
+    private CellColor color = CellColor.YELLOW;
     private final int cell;
     private final int line;
     private BaseDashboardCell.DashboardCellFactory cellFactory;
@@ -44,6 +46,11 @@ public interface DashboardCell extends Serializable {
       return this;
     }
 
+    public Builder cellColor(CellColor color) {
+      this.color = color;
+      return this;
+    }
+
     public void newPickupCell() {
       cellFactory = PickupDashboardCell::new;
     }
@@ -53,7 +60,7 @@ public interface DashboardCell extends Serializable {
     }
 
     protected DashboardCell build(Dashboard dashboardInstance) {
-      return cellFactory.create(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboardInstance);
+      return cellFactory.create(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, color, line, cell, dashboardInstance);
     }
 
   }
@@ -65,6 +72,8 @@ public interface DashboardCell extends Serializable {
   default Position getPosition() {
     return Position.of(getLine(), getCell());
   }
+
+  CellColor getCellColor();
 
   List<PlayerColor> getPlayersInCell();
 

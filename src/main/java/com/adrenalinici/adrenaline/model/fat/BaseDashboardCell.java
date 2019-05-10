@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model.fat;
 
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 
@@ -11,7 +12,7 @@ public abstract class BaseDashboardCell implements DashboardCell {
 
   @FunctionalInterface
   public interface DashboardCellFactory {
-    DashboardCell create(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int cell, int line, Dashboard dashboard);
+    DashboardCell create(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, CellColor cellColor, int cell, int line, Dashboard dashboard);
   }
 
   private final List<PlayerColor> playersInCell;
@@ -19,16 +20,18 @@ public abstract class BaseDashboardCell implements DashboardCell {
   private final DashboardCellBoundType southDashboardCellBoundType;
   private final DashboardCellBoundType eastDashboardCellBoundType;
   private final DashboardCellBoundType westDashboardCellBoundType;
+  private final CellColor cellColor;
   private final int line;
   private final int cell;
   private final Dashboard dashboard;
 
-  public BaseDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell, Dashboard dashboard) {
+  public BaseDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, CellColor cellColor, int line, int cell, Dashboard dashboard) {
     this.playersInCell = new ArrayList<>();
     this.northDashboardCellBoundType = northDashboardCellBoundType;
     this.southDashboardCellBoundType = southDashboardCellBoundType;
     this.eastDashboardCellBoundType = eastDashboardCellBoundType;
     this.westDashboardCellBoundType = westDashboardCellBoundType;
+    this.cellColor = cellColor;
     this.line = line;
     this.cell = cell;
     this.dashboard = dashboard;
@@ -37,6 +40,11 @@ public abstract class BaseDashboardCell implements DashboardCell {
   @Override
   public List<PlayerColor> getPlayersInCell() {
     return playersInCell;
+  }
+
+  @Override
+  public CellColor getCellColor() {
+    return cellColor;
   }
 
   @Override

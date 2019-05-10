@@ -121,7 +121,7 @@ public class GameModelTest {
     Dashboard dashboard = Dashboard.newBuilder().build();
     PowerUpCard powerUpCard = new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY);
     AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), powerUpCard);
-    PickupDashboardCell pickupDashboardCell = new PickupDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
+    PickupDashboardCell pickupDashboardCell = new PickupDashboardCell(OPEN, OPEN, OPEN, OPEN, CellColor.CYAN,0, 0, dashboard);
     pickupDashboardCell.setAmmoCard(ammoCard);
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
@@ -167,6 +167,8 @@ public class GameModelTest {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
       TestUtils.generate3PlayerDashboards());
 
+    gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
+
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
     boolean killed = gameModel.hitPlayer(PlayerColor.GREEN, PlayerColor.YELLOW, 9);
@@ -187,8 +189,10 @@ public class GameModelTest {
 
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
     assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent());
+    assertThat(receivedModelEvents).haveExactly(1, isDashboardCellUpdatedEvent(0, 0));
     assertThat(gameModel.getRemainingSkulls()).isEqualTo(7);
     assertThat(gameModel.getKillScore().get(0)).isEqualTo(new AbstractMap.SimpleEntry<>(PlayerColor.GREEN, Boolean.FALSE));
+    assertThat(gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).getPlayersInCell()).doesNotContain(PlayerColor.YELLOW);
   }
 
   @Test
@@ -196,6 +200,7 @@ public class GameModelTest {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
       TestUtils.generate3PlayerDashboards());
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Arrays.asList(PlayerColor.GREEN, PlayerColor.GREEN));
+    gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
@@ -214,6 +219,8 @@ public class GameModelTest {
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
     assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent());
+    assertThat(receivedModelEvents).haveExactly(1, isDashboardCellUpdatedEvent(0, 0));
+    assertThat(gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).getPlayersInCell()).doesNotContain(PlayerColor.YELLOW);
   }
 
   @Test
@@ -250,6 +257,7 @@ public class GameModelTest {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
       TestUtils.generate3PlayerDashboards());
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.singletonList(PlayerColor.GREEN));
+    gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
@@ -267,6 +275,8 @@ public class GameModelTest {
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
     assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
     assertThat(receivedModelEvents).haveExactly(1, isGameModelUpdatedEvent());
+    assertThat(receivedModelEvents).haveExactly(1, isDashboardCellUpdatedEvent(0, 0));
+    assertThat(gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).getPlayersInCell()).doesNotContain(PlayerColor.YELLOW);
   }
 
   @Test

@@ -25,7 +25,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
   @Test
   public void calculateAvailableGunsToPickupTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
-    RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, 0, 0, dashboard);
+    RespawnDashboardCell respawnDashboardCell = new RespawnDashboardCell(OPEN, OPEN, OPEN, OPEN, CellColor.CYAN, 0, 0, dashboard);
     Stream
       .of("test_revolver", "test_rifle", "test_sword")
       .forEach(respawnDashboardCell::addAvailableGun);
