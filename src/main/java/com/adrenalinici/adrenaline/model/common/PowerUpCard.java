@@ -1,8 +1,9 @@
 package com.adrenalinici.adrenaline.model.common;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PowerUpCard {
+public class PowerUpCard implements Serializable {
 
   private AmmoColor ammoColor;
   private PowerUpType powerUpType;

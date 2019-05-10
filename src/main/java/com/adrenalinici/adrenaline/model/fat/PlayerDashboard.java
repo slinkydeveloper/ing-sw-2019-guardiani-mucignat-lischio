@@ -234,7 +234,7 @@ public class PlayerDashboard {
           powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
         ).findFirst().get();
         removePowerUpCard(toRemove);
-        powerUpCards.add(toRemove);
+        //TODO must put card back to deck
       });
   }
 

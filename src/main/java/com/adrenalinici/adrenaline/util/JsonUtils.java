@@ -30,6 +30,8 @@ public class JsonUtils {
 
   public static JsonNode getConfigurationJSONFromClasspath(String filename) {
     try {
+      if (JsonUtils.class.getResourceAsStream("/" + filename) == null)
+        throw new IllegalStateException("You dumb, you miss file " + filename + " in classpath");
       return mapper.readTree(JsonUtils.class.getResourceAsStream("/" + filename));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "You dumb, you miss file " + filename + " in classpath", e);
