@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.testutil;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.GunFactory;
 import com.adrenalinici.adrenaline.controller.guns.BaseEffectGunFactory;
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.fat.Dashboard;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.adrenalinici.adrenaline.model.common.CellColor.*;
 import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.*;
 
 public class TestUtils {
@@ -20,33 +22,33 @@ public class TestUtils {
   public static Dashboard build3x3Dashboard() {
     return Dashboard.newBuilder()
       .newEastCell(c ->
-        c.setEastType(OPEN).setSouthType(DOOR).newRespawnCell()
+        c.setEastType(OPEN).setSouthType(DOOR).cellColor(CYAN).newRespawnCell()
       )
       .newEastCell(c ->
-        c.setWestType(OPEN).setEastType(DOOR).newPickupCell()
+        c.setWestType(OPEN).setEastType(DOOR).cellColor(CYAN).newPickupCell()
       )
       .newEastCell(c ->
-        c.setWestType(DOOR).setSouthType(OPEN).newPickupCell()
-      )
-      .newSouthLine()
-      .newEastCell(c ->
-        c.setNorthType(DOOR).setEastType(OPEN).setSouthType(DOOR).newPickupCell()
-      )
-      .newEastCell(c ->
-        c.setWestType(OPEN).setEastType(DOOR).newPickupCell()
-      )
-      .newEastCell(c ->
-        c.setNorthType(OPEN).setSouthType(DOOR).setWestType(DOOR).newRespawnCell()
+        c.setWestType(DOOR).setSouthType(OPEN).cellColor(YELLOW).newPickupCell()
       )
       .newSouthLine()
       .newEastCell(c ->
-        c.setNorthType(DOOR).setEastType(OPEN).newRespawnCell()
+        c.setNorthType(DOOR).setEastType(OPEN).setSouthType(DOOR).cellColor(GRAY).newPickupCell()
       )
       .newEastCell(c ->
-        c.setEastType(OPEN).setWestType(OPEN).newPickupCell()
+        c.setWestType(OPEN).setEastType(DOOR).cellColor(GRAY).newPickupCell()
       )
       .newEastCell(c ->
-        c.setNorthType(DOOR).setWestType(OPEN).newPickupCell()
+        c.setNorthType(OPEN).setSouthType(DOOR).setWestType(DOOR).cellColor(YELLOW).newRespawnCell()
+      )
+      .newSouthLine()
+      .newEastCell(c ->
+        c.setNorthType(DOOR).setEastType(OPEN).cellColor(RED).newRespawnCell()
+      )
+      .newEastCell(c ->
+        c.setEastType(OPEN).setWestType(OPEN).cellColor(RED).newPickupCell()
+      )
+      .newEastCell(c ->
+        c.setNorthType(DOOR).setWestType(OPEN).cellColor(RED).newPickupCell()
       ).build();
   }
 

@@ -25,11 +25,11 @@ public class GunLoaderTest {
     GunLoader.INSTANCE.getModelGun(MachineGunId());
     assertThat(GunLoader.getConfigs().get(ZX2Id()))
       .isEqualTo(
-        JsonUtils.getConfigurationJSONFromClasspath(ZX2Id() + ".json")
+        JsonUtils.getConfigurationJSONFromClasspath("guns/" + ZX2Id() + ".json")
       );
     assertThat(GunLoader.getConfigs().get(MachineGunId()))
       .isEqualTo(
-        JsonUtils.getConfigurationJSONFromClasspath(MachineGunId() + ".json")
+        JsonUtils.getConfigurationJSONFromClasspath("guns/" + MachineGunId() + ".json")
       );
 
     assertThat(GunLoader.INSTANCE.getGuns().get(ZX2Id())).isInstanceOf(AlternativeEffectGun.class);

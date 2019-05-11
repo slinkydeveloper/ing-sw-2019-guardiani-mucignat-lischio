@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.util.TriConsumer;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,10 +16,11 @@ import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.apply
 
 public class ElectroscytheGunFactory extends AlternativeEffectGunFactory {
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> BASE_EFFECT_APPLY = (state, model, context) -> {
-    model.getDashboard()
+    new ArrayList<>(model.getDashboard()
       .getDashboardCell(model.getPlayerPosition(context.getTurnOfPlayer()))
-      .getPlayersInCell().stream()
-      .filter(playerColor -> !playerColor.equals(context.getTurnOfPlayer()))
+      .getPlayersInCell())
+      .stream()
+      .filter(playerColor -> !context.getTurnOfPlayer().equals(playerColor))
       .forEach(victim -> {
         state.hitPlayer(victim, 1);
         }
@@ -26,10 +28,11 @@ public class ElectroscytheGunFactory extends AlternativeEffectGunFactory {
   };
 
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> REAPER_EFFECT_APPLY = (state, model, context) -> {
-    model.getDashboard()
+    new ArrayList<>(model.getDashboard()
       .getDashboardCell(model.getPlayerPosition(context.getTurnOfPlayer()))
-      .getPlayersInCell().stream()
-      .filter(playerColor -> !playerColor.equals(context.getTurnOfPlayer()))
+      .getPlayersInCell())
+      .stream()
+      .filter(playerColor -> !context.getTurnOfPlayer().equals(playerColor))
       .forEach(victim -> {
         state.hitPlayer(victim, 2);
         }

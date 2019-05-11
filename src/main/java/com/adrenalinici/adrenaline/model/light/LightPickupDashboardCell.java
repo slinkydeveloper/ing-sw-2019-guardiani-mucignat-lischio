@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.model.light;
 
 import com.adrenalinici.adrenaline.model.common.AmmoCard;
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.List;
@@ -10,8 +11,8 @@ public class LightPickupDashboardCell extends LightDashboardCell {
 
   private AmmoCard ammoCard;
 
-  public LightPickupDashboardCell(List<PlayerColor> playersInCell, AmmoCard ammoCard) {
-    super(playersInCell);
+  public LightPickupDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor, AmmoCard ammoCard) {
+    super(playersInCell, cellColor);
     this.ammoCard = ammoCard;
   }
 

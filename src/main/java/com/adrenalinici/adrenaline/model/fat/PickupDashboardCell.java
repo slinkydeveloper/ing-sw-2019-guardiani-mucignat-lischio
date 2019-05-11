@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.model.fat;
 
 import com.adrenalinici.adrenaline.model.common.AmmoCard;
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
 import com.adrenalinici.adrenaline.model.light.LightPickupDashboardCell;
 
@@ -11,8 +12,8 @@ public class PickupDashboardCell extends BaseDashboardCell {
 
   private AmmoCard ammoCard;
 
-  public PickupDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell, Dashboard dashboard) {
-    super(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboard);
+  public PickupDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, CellColor cellColor, int line, int cell, Dashboard dashboard) {
+    super(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, cellColor, line, cell, dashboard);
   }
 
   public Optional<AmmoCard> getAmmoCard() {
@@ -42,7 +43,7 @@ public class PickupDashboardCell extends BaseDashboardCell {
 
   @Override
   public LightDashboardCell light() {
-    return new LightPickupDashboardCell(getPlayersInCell(), ammoCard);
+    return new LightPickupDashboardCell(getPlayersInCell(), getCellColor(), ammoCard);
   }
 
 }

@@ -1,12 +1,11 @@
 package com.adrenalinici.adrenaline.util;
 
-import com.adrenalinici.adrenaline.model.common.AmmoColor;
-import com.adrenalinici.adrenaline.model.common.Effect;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -31,6 +30,8 @@ public class JsonUtils {
 
   public static JsonNode getConfigurationJSONFromClasspath(String filename) {
     try {
+      if (JsonUtils.class.getResourceAsStream("/" + filename) == null)
+        throw new IllegalStateException("You dumb, you miss file " + filename + " in classpath");
       return mapper.readTree(JsonUtils.class.getResourceAsStream("/" + filename));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "You dumb, you miss file " + filename + " in classpath", e);
@@ -127,6 +128,18 @@ public class JsonUtils {
         }
       });
     return result;
+  }
+
+  public static List<PowerUpCard> loadPowerUpCards() {
+    ArrayNode node = (ArrayNode) getConfigurationJSONFromClasspath("powerup_cards.json");
+    return StreamUtils
+      .iteratorStream(node.elements())
+      .map(j -> (ObjectNode)j)
+      .map(j -> new PowerUpCard(
+        AmmoColor.valueOf(j.get("color").asText()),
+        PowerUpType.valueOf(j.get("type").asText())
+      ))
+      .collect(Collectors.toList());
   }
 
 }

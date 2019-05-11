@@ -44,8 +44,8 @@ public class GameViewServer extends BaseGameViewServer {
   }
 
   @Override
-  public void showAvailableRespawnLocations(List<AmmoColor> respawnLocations) {
-    broadcast(new AvailableRespawnLocationsMessage(respawnLocations));
+  public void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards) {
+    broadcast(new AvailablePowerUpCardsForRespawnMessage(player, powerUpCards));
   }
 
   @Override
@@ -71,11 +71,6 @@ public class GameViewServer extends BaseGameViewServer {
   @Override
   public void showAvailableVenomGranades(PlayerColor player) {
     broadcast(new AvailableVenomGranadesMessage(player));
-  }
-
-  @Override
-  public void showAvailablePowerUpCards(PlayerColor player) {
-    broadcast(new AvailablePowerUpCardsMessage(player));
   }
 
   @Override

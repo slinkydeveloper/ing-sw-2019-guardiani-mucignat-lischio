@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model.light;
 
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.io.Serializable;
@@ -9,9 +10,11 @@ import java.util.function.Consumer;
 public abstract class LightDashboardCell implements Serializable {
 
   private final List<PlayerColor> playersInCell;
+  private final CellColor cellColor;
 
-  public LightDashboardCell(List<PlayerColor> playersInCell) {
+  public LightDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor) {
     this.playersInCell = playersInCell;
+    this.cellColor = cellColor;
   }
 
   public List<PlayerColor> getPlayersInCell() {

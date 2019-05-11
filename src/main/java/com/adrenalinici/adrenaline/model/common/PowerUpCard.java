@@ -1,8 +1,9 @@
 package com.adrenalinici.adrenaline.model.common;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class PowerUpCard {
+public class PowerUpCard implements Serializable {
 
   private AmmoColor ammoColor;
   private PowerUpType powerUpType;
@@ -34,4 +35,11 @@ public class PowerUpCard {
     return Objects.hash(ammoColor, powerUpType);
   }
 
+  @Override
+  public String toString() {
+    return "PowerUpCard{" +
+      "ammoColor=" + ammoColor +
+      ", powerUpType=" + powerUpType +
+      '}';
+  }
 }

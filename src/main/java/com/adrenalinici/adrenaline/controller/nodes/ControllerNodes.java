@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.controller.nodes;
 
 public enum ControllerNodes {
 
+  FIRST_TURN,
   START_TURN,
   PICKUP,
   RELOAD,

@@ -45,7 +45,7 @@ public abstract class BaseFlowContext implements FlowContext {
     FlowNode s = orchestrator.resolveState(stateId);
     actualNode = s;
     actualState = s.mapState(state);
-    s.onJump(state, view, getOrchestrator().getModel(), this);
+    actualNode.onJump(actualState, view, getOrchestrator().getModel(), this);
   }
 
   @Override

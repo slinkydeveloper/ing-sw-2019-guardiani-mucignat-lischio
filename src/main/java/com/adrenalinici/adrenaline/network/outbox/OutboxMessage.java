@@ -18,7 +18,7 @@ public interface OutboxMessage extends Serializable {
 
   default void onBaseGunExtraEffectsMessage(Consumer<BaseGunExtraEffectsMessage> c) {}
 
-  default void onAvailableRespawnLocationsMessage(Consumer<AvailableRespawnLocationsMessage> c) {}
+  default void onAvailablePowerUpCardsForRespawnMessage(Consumer<AvailablePowerUpCardsForRespawnMessage> c) {}
 
   default void onAvailableAlternativeEffectsGunMessage(Consumer<AvailableAlternativeEffectsGunMessage> c) {}
 
@@ -29,8 +29,6 @@ public interface OutboxMessage extends Serializable {
   default void onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage> c) {}
 
   default void onAvailableVenomGranadesMessage(Consumer<AvailableVenomGranadesMessage> c) {}
-
-  default void onAvailablePowerUpCardsMessage(Consumer<AvailablePowerUpCardsMessage> c) {}
 
   default void onAvailableEnemyMovementsMessage(Consumer<AvailableEnemyMovementsMessage> c) {}
 

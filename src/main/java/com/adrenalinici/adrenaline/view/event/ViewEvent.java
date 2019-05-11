@@ -25,4 +25,7 @@ public interface ViewEvent extends Serializable {
 
   default void onBaseGunEffectChosenEvent(Consumer<BaseGunEffectChosenEvent> consumer) {
   }
+
+  default void onPowerUpChosenEvent(Consumer<PowerUpCardChosenEvent> consumer) {
+  }
 }

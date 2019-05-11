@@ -18,6 +18,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   private GameModel gameModel;
   private FlowOrchestrator<ControllerFlowContext> flowOrchestrator;
+  private boolean firstTurn = true;
 
   public GameController(List<? extends FlowNode> flowNodes, GameModel gameModel) {
     this.gameModel = gameModel;
@@ -26,7 +27,13 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       this.gameModel,
       this::endTurnCallback
     );
-    this.startNewTurn(null, gameModel.getPlayers().get(0));
+  }
+
+  public void startMatch(GameView view) {
+    this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
+      this.flowOrchestrator,
+      Collections.singletonList(ControllerNodes.FIRST_TURN.name())
+    ));
   }
 
   @Override
@@ -44,8 +51,13 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   void endTurnCallback(GameView view) {
     //TODO P2 refill dashboard
     //TODO P2 somewhere maybe here should go the check if match finished
-    PlayerColor playerTurn = nextTurnPlayer();
-    startNewTurn(view, playerTurn);
+    if (firstTurn) {
+      firstTurn = false;
+      startNewTurn(view, gameModel.getPlayers().get(0));
+    } else {
+      PlayerColor playerTurn = nextTurnPlayer();
+      startNewTurn(view, playerTurn);
+    }
   }
 
   private void startNewTurn(GameView view, PlayerColor player) {

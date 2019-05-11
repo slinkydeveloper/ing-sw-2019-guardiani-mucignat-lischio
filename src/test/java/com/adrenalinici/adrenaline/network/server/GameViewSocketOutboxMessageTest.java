@@ -90,15 +90,17 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   }
 
   @Test
-  public void showAvailableRespawnLocationsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableRespawnLocations(RESPAWN_LOCATIONS);
+  public void showAvailablePowerUpCardsForRespawnTest() throws IOException, InterruptedException {
+    serverGameView.showAvailablePowerUpCardsForRespawn(PLAYER, POWER_UP_CARDS);
 
     Thread.sleep(100);
 
-    ArgumentCaptor<List<AmmoColor>> respawnLocationsCaptor = ArgumentCaptor.forClass(List.class);
-    verify(mockedClientView, times(1)).showAvailableRespawnLocations(respawnLocationsCaptor.capture());
+    ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
+    ArgumentCaptor<List<PowerUpCard>> powerUpCardsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(mockedClientView, times(1)).showAvailablePowerUpCardsForRespawn(playerCaptor.capture(), powerUpCardsCaptor.capture());
 
-    assertThat(respawnLocationsCaptor.getValue()).isEqualTo(RESPAWN_LOCATIONS);
+    assertThat(playerCaptor.getValue()).isEqualTo(PLAYER);
+    assertThat(powerUpCardsCaptor.getValue()).isEqualTo(POWER_UP_CARDS);
   }
 
   @Test
@@ -161,18 +163,6 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     verify(mockedClientView, times(1)).showAvailableVenomGranades(playerCaptor.capture());
-
-    assertThat(playerCaptor.getValue()).isEqualTo(PLAYER);
-  }
-
-  @Test
-  public void showAvailablePowerUpCardsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailablePowerUpCards(PLAYER);
-
-    Thread.sleep(100);
-
-    ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
-    verify(mockedClientView, times(1)).showAvailablePowerUpCards(playerCaptor.capture());
 
     assertThat(playerCaptor.getValue()).isEqualTo(PLAYER);
   }

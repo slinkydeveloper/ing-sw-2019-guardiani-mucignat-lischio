@@ -1,13 +1,14 @@
 package com.adrenalinici.adrenaline.model.fat;
 
-import com.adrenalinici.adrenaline.model.common.Gun;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
-import com.adrenalinici.adrenaline.model.common.Position;
+import com.adrenalinici.adrenaline.controller.CardDeck;
+import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
 import com.adrenalinici.adrenaline.model.light.LightGameModel;
+import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.*;
@@ -22,6 +23,9 @@ public class GameModel extends Observable<ModelEvent> {
   private List<PlayerColor> doubleKillScore;
   private Dashboard dashboard;
   private List<PlayerDashboard> playerDashboards;
+  private CardDeck<String> guns;
+  private CardDeck<PowerUpCard> powerUps;
+  private CardDeck<AmmoCard> ammoCards;
 
   public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
     this.remainingSkulls = remainingSkulls;
@@ -29,6 +33,8 @@ public class GameModel extends Observable<ModelEvent> {
     this.playerDashboards = playerDashboards;
     this.killScore = new ArrayList<>();
     this.doubleKillScore = new ArrayList<>();
+    this.guns = new CardDeck<>(GunLoader.getAvailableGuns());
+    this.powerUps = new CardDeck<>(JsonUtils.loadPowerUpCards());
   }
 
   public int getRemainingSkulls() {
@@ -65,7 +71,7 @@ public class GameModel extends Observable<ModelEvent> {
   }
 
   public PlayerDashboard getPlayerDashboard(PlayerColor player) {
-    return getPlayerDashboards().stream().filter(d -> player.equals(d.getPlayer())).findFirst().get();
+    return getPlayerDashboards().stream().filter(d -> player.equals(d.getPlayer())).findFirst().orElseThrow(() -> new IllegalStateException("Player not present " + player));
   }
 
   public boolean isFrenzyMode() {
@@ -118,6 +124,44 @@ public class GameModel extends Observable<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
   }
 
+  /**
+   * Acquire power up card from gun deck
+   *
+   * @param player
+   */
+  public void acquirePowerUpCard(PlayerColor player) {
+    getPlayerDashboard(player).addPowerUpCard(powerUps.getCard());
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
+  }
+
+  /**
+   * Respawn a player
+   *
+   * @param playerColor
+   * @param card
+   */
+  public void respawnPlayer(PlayerColor playerColor, PowerUpCard card) {
+    DashboardCell cell = dashboard
+      .stream()
+      .filter(c -> c.getCellColor().matchesAmmoColor(card.getAmmoColor()))
+      .findFirst()
+      .orElseThrow(() -> new IllegalStateException("Cannot find a cell with color " + card.getAmmoColor()));
+
+    cell.addPlayer(playerColor);
+    notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
+
+    getPlayerDashboard(playerColor).removePowerUpCard(card);
+    powerUps.addCard(card);
+    notifyEvent(new PlayerDashboardUpdatedEvent(this, playerColor));
+  }
+
+  /**
+   * Respawn player in dashboard position
+   *
+   * @param player
+   * @param chosenGun
+   */
+
   public void reloadGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.reloadGun(chosenGun.getId());
@@ -144,8 +188,14 @@ public class GameModel extends Observable<ModelEvent> {
     );
 
     if (victimPlayerDashboard.getKillDamage().isPresent()) {
+      // Player was killed
       decrementSkulls();
       victimPlayerDashboard.incrementSkullsNumber();
+
+      // Removed player from cell
+      Position killedPlayerPosition = getPlayerPosition(victim);
+      dashboard.getDashboardCell(killedPlayerPosition).removePlayer(victim);
+      notifyEvent(new DashboardCellUpdatedEvent(this, killedPlayerPosition));
 
       if (victimPlayerDashboard.getCruelDamage().isPresent()) {
         killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.TRUE));
@@ -275,4 +325,15 @@ public class GameModel extends Observable<ModelEvent> {
     );
   }
 
+  public CardDeck<String> gunsDeck() {
+    return guns;
+  }
+
+  public CardDeck<PowerUpCard> powerUpsDeck() {
+    return powerUps;
+  }
+
+  public CardDeck<AmmoCard> ammoCardDeck() {
+    return ammoCards;
+  }
 }

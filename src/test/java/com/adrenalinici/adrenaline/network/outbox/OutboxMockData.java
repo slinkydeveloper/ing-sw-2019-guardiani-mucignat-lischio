@@ -1,10 +1,6 @@
 package com.adrenalinici.adrenaline.network.outbox;
 
-import com.adrenalinici.adrenaline.model.common.Action;
-import com.adrenalinici.adrenaline.model.common.AmmoColor;
-import com.adrenalinici.adrenaline.model.common.Effect;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
-import com.adrenalinici.adrenaline.model.common.Position;
+import com.adrenalinici.adrenaline.model.common.*;
 
 import java.util.*;
 
@@ -20,7 +16,7 @@ public class OutboxMockData {
   public static final Effect SECOND_EXTRA_EFFECT = SECOND_EFFECT;
   public static final List<Effect> EFFECTS = Arrays.asList(FIRST_EFFECT, SECOND_EFFECT);
   public static final List<AmmoColor> AMMO_COLORS = Arrays.asList(AmmoColor.YELLOW, AmmoColor.BLUE);
-  public static final List<AmmoColor> RESPAWN_LOCATIONS = AMMO_COLORS;
+  public static final List<PowerUpCard> POWER_UP_CARDS = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.VENOM_GRANADE), new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY));
   public static final List<PlayerColor> PLAYERS = Arrays.asList(PlayerColor.YELLOW, PlayerColor.GREEN);
   public static final Map<PlayerColor, List<Position>> AVAILABLE_MOVEMENTS = new HashMap<>(); //TODO add some data
 

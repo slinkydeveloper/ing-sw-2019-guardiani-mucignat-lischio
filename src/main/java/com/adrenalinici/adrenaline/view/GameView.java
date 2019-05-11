@@ -1,11 +1,7 @@
 package com.adrenalinici.adrenaline.view;
 
-import com.adrenalinici.adrenaline.model.common.Action;
-import com.adrenalinici.adrenaline.model.common.AmmoColor;
-import com.adrenalinici.adrenaline.model.common.Effect;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
-import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.util.Observer;
 
 import java.util.List;
@@ -26,7 +22,7 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showBaseGunExtraEffects(List<Effect> effects);
 
-  void showAvailableRespawnLocations(List<AmmoColor> respawnLocations);
+  void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards);
 
   void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect);
 
@@ -37,8 +33,6 @@ public interface GameView extends Observer<ModelEvent> {
   void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect);
 
   void showAvailableVenomGranades(PlayerColor player);
-
-  void showAvailablePowerUpCards(PlayerColor player);
 
   void showAvailableEnemyMovements(List<Position> positions);
 

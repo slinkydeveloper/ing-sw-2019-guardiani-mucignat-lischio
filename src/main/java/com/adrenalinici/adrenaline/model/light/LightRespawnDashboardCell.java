@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model.light;
 
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
@@ -11,8 +12,8 @@ public class LightRespawnDashboardCell extends LightDashboardCell {
 
   private Set<Gun> availableGuns;
 
-  public LightRespawnDashboardCell(List<PlayerColor> playersInCell, Set<Gun> availableGuns) {
-    super(playersInCell);
+  public LightRespawnDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor, Set<Gun> availableGuns) {
+    super(playersInCell, cellColor);
     this.availableGuns = availableGuns;
   }
 

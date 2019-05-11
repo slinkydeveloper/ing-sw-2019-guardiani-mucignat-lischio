@@ -5,7 +5,10 @@ import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
+import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GunLoader {
 
@@ -69,7 +72,7 @@ public class GunLoader {
    */
   private static JsonNode getGunConfigJson(String id) {
     if (configs.containsKey(id)) return configs.get(id);
-    configs.put(id, JsonUtils.getConfigurationJSONFromClasspath(id + ".json"));
+    configs.put(id, JsonUtils.getConfigurationJSONFromClasspath("guns/" + id + ".json"));
     return configs.get(id);
   }
 
@@ -87,5 +90,15 @@ public class GunLoader {
 
   protected Map<String, List<ControllerFlowNode>> getNodes() {
     return nodes;
+  }
+
+  /**
+   * Resolve from guns directory all available guns
+   *
+   * @return
+   */
+  public static List<String> getAvailableGuns() {
+    String path = GunLoader.class.getResource("/guns").getPath();
+    return Arrays.stream(new File(path).listFiles()).map(File::getName).map(s -> s.replace(".json", "")).collect(Collectors.toList());
   }
 }

@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.model.fat;
 
 import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
 import com.adrenalinici.adrenaline.model.light.LightRespawnDashboardCell;
 
@@ -13,8 +14,8 @@ public class RespawnDashboardCell extends BaseDashboardCell {
 
   private Set<String> availableGuns;
 
-  public RespawnDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell, Dashboard dashboard) {
-    super(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell, dashboard);
+  public RespawnDashboardCell(DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, CellColor cellColor, int line, int cell, Dashboard dashboard) {
+    super(northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, cellColor, line, cell, dashboard);
     this.availableGuns = new HashSet<>();
   }
 
@@ -51,6 +52,7 @@ public class RespawnDashboardCell extends BaseDashboardCell {
   public LightDashboardCell light() {
     return new LightRespawnDashboardCell(
       getPlayersInCell(),
+      getCellColor(),
       availableGuns.stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet())
     );
   }
