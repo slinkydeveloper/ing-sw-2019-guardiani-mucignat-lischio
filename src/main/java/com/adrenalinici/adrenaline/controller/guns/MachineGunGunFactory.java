@@ -23,21 +23,13 @@ public class MachineGunGunFactory extends BaseEffectGunFactory {
     PlayerColor thirdPlayer = (state.getChosenPlayersToHit().size() == 3) ?
       state.getChosenPlayersToHit().get(2) : null;
     if (firstPlayer != null) {
-      gameModel.hitPlayer(
-        context.getTurnOfPlayer(),
-        firstPlayer,
-        state.isActivatedFirstExtraEffect() ? 2 : 1
-      );
+      state.hitPlayer(firstPlayer, state.isActivatedFirstExtraEffect() ? 2 : 1);
     }
     if (secondPlayer != null) {
-      gameModel.hitPlayer(
-        context.getTurnOfPlayer(),
-        secondPlayer,
-        state.isActivatedSecondExtraEffect() ? 2 : 1
-      );
+      state.hitPlayer(secondPlayer, state.isActivatedSecondExtraEffect() ? 2 : 1);
     }
     if (state.isActivatedSecondExtraEffect() && thirdPlayer != null) {
-      gameModel.hitPlayer(context.getTurnOfPlayer(), thirdPlayer, 1);
+      state.hitPlayer(thirdPlayer, 1);
     }
   };
 

@@ -26,6 +26,9 @@ public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlo
   @Override
   public void onJump(BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     consumer.accept(flowState, model, context);
+
+    flowState.applyHitAndMarkPlayers(model, context);
+
     // Remove ammos required for effect and unload the gun
     PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
     if (flowState.isActivatedFirstExtraEffect())

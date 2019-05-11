@@ -22,9 +22,7 @@ public class ElectroscytheGunFactory extends AlternativeEffectGunFactory {
       .stream()
       .filter(playerColor -> !context.getTurnOfPlayer().equals(playerColor))
       .forEach(victim -> {
-          boolean killed = model.hitPlayer(context.getTurnOfPlayer(), victim, 1);
-          if (killed) context.getKilledPlayers().add(victim);
-          state.getHitPlayers().add(victim);
+        state.hitPlayer(victim, 1);
         }
       );
   };
@@ -36,9 +34,7 @@ public class ElectroscytheGunFactory extends AlternativeEffectGunFactory {
       .stream()
       .filter(playerColor -> !context.getTurnOfPlayer().equals(playerColor))
       .forEach(victim -> {
-          boolean killed = model.hitPlayer(context.getTurnOfPlayer(), victim, 2);
-          if (killed) context.getKilledPlayers().add(victim);
-          state.getHitPlayers().add(victim);
+        state.hitPlayer(victim, 2);
         }
       );
   };
