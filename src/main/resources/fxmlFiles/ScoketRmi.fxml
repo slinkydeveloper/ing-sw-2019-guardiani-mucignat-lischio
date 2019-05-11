@@ -11,8 +11,9 @@
     </ImageView>
     <AnchorPane layoutX="388.0" layoutY="220.0" prefHeight="200.0" prefWidth="200.0">
       <children>
-        <Button id="socketBUttom" layoutX="69.0" layoutY="63.0" mnemonicParsing="false" text="Socket"/>
-        <Button id="rmiButtom" layoutX="78.0" layoutY="123.0" mnemonicParsing="false" text="Rmi"/>
+        <Button id="socketButton" layoutX="69.0" layoutY="63.0" mnemonicParsing="false" text="Socket" onAction="#socketClick">
+        </Button>
+        <Button id="rmiButton" layoutX="78.0" layoutY="123.0" mnemonicParsing="false" text="Rmi" onAction="#rmiClick"/>
       </children>
     </AnchorPane>
   </children>
