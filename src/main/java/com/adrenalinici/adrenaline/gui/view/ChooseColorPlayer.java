@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SocketRmi extends Application {
+public class ChooseColorPlayer extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,7 +16,7 @@ public class SocketRmi extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-      Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/ScoketRmi.fxml"));
+      Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/choosePlayerColor.fxml"));
       primaryStage.setTitle("choose socket/rmi");
       primaryStage.setScene(new Scene(root));
       primaryStage.show();
