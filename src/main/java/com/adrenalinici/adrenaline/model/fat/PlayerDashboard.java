@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.model.common.AmmoColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.PowerUpCard;
+import com.adrenalinici.adrenaline.model.common.PowerUpType;
 import com.adrenalinici.adrenaline.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.util.ListUtils;
@@ -236,6 +237,10 @@ public class PlayerDashboard {
         removePowerUpCard(toRemove);
         //TODO must put card back to deck
       });
+  }
+
+  public boolean hasVenomGrenade() {
+    return powerUpCards.stream().anyMatch(p -> p.getPowerUpType().equals(PowerUpType.TAGBACK_GRENADE));
   }
 
   public LightPlayerDashboard light() {

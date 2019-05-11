@@ -27,7 +27,6 @@ for ((name, command) in commands) {
     out.println("""
       |package com.adrenalinici.adrenaline.network.outbox;
       |
-      |import com.adrenalinici.adrenaline.model.*;
       |import com.adrenalinici.adrenaline.model.common.*;
       |
       |import java.util.*;
@@ -95,7 +94,6 @@ File("src/main/java/com/adrenalinici/adrenaline/network/server/GameViewServer.ja
   out.println("""
     |package com.adrenalinici.adrenaline.network.server;
     |
-    |import com.adrenalinici.adrenaline.model.*;
     |import com.adrenalinici.adrenaline.model.common.*;
     |import com.adrenalinici.adrenaline.network.outbox.*;
     |import com.adrenalinici.adrenaline.network.inbox.InboxEntry;

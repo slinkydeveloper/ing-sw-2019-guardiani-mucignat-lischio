@@ -288,6 +288,7 @@ public class GameModel extends Observable<ModelEvent> {
    * @param player
    * @return number of player marks on other playerDashboards
    */
+  @Deprecated
   public int calculateMarksOnOtherPlayerDashboards(PlayerColor player) {
     return (int) playerDashboards
       .stream()
@@ -312,7 +313,6 @@ public class GameModel extends Observable<ModelEvent> {
       .getMarks()
       .stream()
       .filter(playerColor -> playerColor.equals(killer)).count();
-    //.collect(Collectors.toList()).size();
   }
 
   public LightGameModel light() {

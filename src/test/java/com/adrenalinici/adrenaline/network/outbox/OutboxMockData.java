@@ -16,7 +16,7 @@ public class OutboxMockData {
   public static final Effect SECOND_EXTRA_EFFECT = SECOND_EFFECT;
   public static final List<Effect> EFFECTS = Arrays.asList(FIRST_EFFECT, SECOND_EFFECT);
   public static final List<AmmoColor> AMMO_COLORS = Arrays.asList(AmmoColor.YELLOW, AmmoColor.BLUE);
-  public static final List<PowerUpCard> POWER_UP_CARDS = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.VENOM_GRANADE), new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY));
+  public static final List<PowerUpCard> POWER_UP_CARDS = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.TAGBACK_GRENADE), new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY));
   public static final List<PlayerColor> PLAYERS = Arrays.asList(PlayerColor.YELLOW, PlayerColor.GREEN);
   public static final Map<PlayerColor, List<Position>> AVAILABLE_MOVEMENTS = new HashMap<>(); //TODO add some data
 

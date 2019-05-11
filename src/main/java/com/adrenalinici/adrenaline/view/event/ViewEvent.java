@@ -29,5 +29,5 @@ public interface ViewEvent extends Serializable {
   default void onPowerUpChosenEvent(Consumer<PowerUpCardChosenEvent> consumer) {
   }
 
-  default void onUseVenomGrenadeEvent(Consumer<UseVenomGrenadeEvent> consumer) {}
+  default void onUseVenomGrenadeEvent(Consumer<UseTagbackGrenadeEvent> consumer) {}
 }

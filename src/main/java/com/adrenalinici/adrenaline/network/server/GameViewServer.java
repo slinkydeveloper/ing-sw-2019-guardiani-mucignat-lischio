@@ -1,6 +1,5 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.network.outbox.*;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
@@ -69,16 +68,6 @@ public class GameViewServer extends BaseGameViewServer {
   }
 
   @Override
-  public void showAvailableVenomGranades(PlayerColor player) {
-    broadcast(new AvailableVenomGranadesMessage(player));
-  }
-
-  @Override
-  public void showAvailableEnemyMovements(List<Position> positions) {
-    broadcast(new AvailableEnemyMovementsMessage(positions));
-  }
-
-  @Override
   public void showAvailableGuns(Set<String> guns) {
     broadcast(new AvailableGunsMessage(guns));
   }
@@ -86,6 +75,11 @@ public class GameViewServer extends BaseGameViewServer {
   @Override
   public void showAvailableGunsToPickup(Set<String> guns) {
     broadcast(new AvailableGunsToPickupMessage(guns));
+  }
+
+  @Override
+  public void showAvailableTagbackGrenade(PlayerColor player, List<PowerUpCard> powerUpCards) {
+    broadcast(new AvailableTagbackGrenadeMessage(player, powerUpCards));
   }
 
 }

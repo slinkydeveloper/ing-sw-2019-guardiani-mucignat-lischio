@@ -32,15 +32,9 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect);
 
-  void showAvailableVenomGranades(PlayerColor player);
-
-  void showAvailablePowerUpCards(PlayerColor player);
-
   void showAvailableGuns(Set<String> guns);
 
   void showAvailableGunsToPickup(Set<String> guns);
 
-  void showAvailableGunsToPickup(List<Gun> availableGunsToPickup);
-
-  void showAvailableVenomGrenade(PlayerColor playerColor, int usableVenomGrenades, List<PowerUpCard> availableVenomGrenades);
+  void showAvailableTagbackGrenade(PlayerColor player, List<PowerUpCard> powerUpCards);
 }

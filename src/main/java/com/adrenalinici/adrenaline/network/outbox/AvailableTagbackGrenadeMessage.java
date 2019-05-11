@@ -6,12 +6,12 @@ import java.util.*;
 
 import java.util.function.Consumer;
 
-public class AvailablePowerUpCardsForRespawnMessage implements OutboxMessage {
+public class AvailableTagbackGrenadeMessage implements OutboxMessage {
 
   private PlayerColor player;
   private List<PowerUpCard> powerUpCards;
 
-  public AvailablePowerUpCardsForRespawnMessage(PlayerColor player, List<PowerUpCard> powerUpCards) {
+  public AvailableTagbackGrenadeMessage(PlayerColor player, List<PowerUpCard> powerUpCards) {
     this.player = player;
     this.powerUpCards = powerUpCards;
   }
@@ -21,6 +21,6 @@ public class AvailablePowerUpCardsForRespawnMessage implements OutboxMessage {
   public List<PowerUpCard> getPowerUpCards() { return this.powerUpCards; }
 
   @Override
-  public void onAvailablePowerUpCardsForRespawnMessage(Consumer<AvailablePowerUpCardsForRespawnMessage> c) { c.accept(this); }
+  public void onAvailableTagbackGrenadeMessage(Consumer<AvailableTagbackGrenadeMessage> c) { c.accept(this); }
 
 }

@@ -156,30 +156,6 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
   }
 
   @Test
-  public void showAvailableVenomGranadesTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableVenomGranades(PLAYER);
-
-    Thread.sleep(100);
-
-    ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
-    verify(mockedClientView, times(1)).showAvailableVenomGranades(playerCaptor.capture());
-
-    assertThat(playerCaptor.getValue()).isEqualTo(PLAYER);
-  }
-
-  @Test
-  public void showAvailableEnemyMovementsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableEnemyMovements(POSITIONS);
-
-    Thread.sleep(100);
-
-    ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
-    verify(mockedClientView, times(1)).showAvailableEnemyMovements(positionsCaptor.capture());
-
-    assertThat(positionsCaptor.getValue()).isEqualTo(POSITIONS);
-  }
-
-  @Test
   public void showAvailableGunsTest() throws IOException, InterruptedException {
     serverGameView.showAvailableGuns(GUNS);
 
@@ -201,6 +177,20 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
     verify(mockedClientView, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());
 
     assertThat(gunsCaptor.getValue()).isEqualTo(GUNS);
+  }
+
+  @Test
+  public void showAvailableTagbackGrenadeTest() throws IOException, InterruptedException {
+    serverGameView.showAvailableTagbackGrenade(PLAYER, POWER_UP_CARDS);
+
+    Thread.sleep(100);
+
+    ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
+    ArgumentCaptor<List<PowerUpCard>> powerUpCardsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(mockedClientView, times(1)).showAvailableTagbackGrenade(playerCaptor.capture(), powerUpCardsCaptor.capture());
+
+    assertThat(playerCaptor.getValue()).isEqualTo(PLAYER);
+    assertThat(powerUpCardsCaptor.getValue()).isEqualTo(POWER_UP_CARDS);
   }
 
 }
