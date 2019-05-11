@@ -47,7 +47,8 @@ public class ChooseBaseEffectForGunFlowNode implements ControllerFlowNode<BaseEf
   }
 
   private boolean canUseFirstExtraEffect(GameModel model, PlayerColor playerColor, BaseEffectGun gun) {
-    if (!gun.hasFirstExtraEffect() || gun.getFirstExtraEffectCost() == null || gun.getFirstExtraEffectCost().isEmpty())
+    if (!gun.hasFirstExtraEffect()) return false;
+    if (gun.getFirstExtraEffectCost() == null || gun.getFirstExtraEffectCost().isEmpty())
       return true;
     return model
       .getPlayerDashboard(playerColor)
@@ -56,7 +57,8 @@ public class ChooseBaseEffectForGunFlowNode implements ControllerFlowNode<BaseEf
   }
 
   private boolean canUseSecondExtraEffect(GameModel model, PlayerColor playerColor, BaseEffectGun gun) {
-    if (!gun.hasSecondExtraEffect() || gun.getSecondExtraEffectCost() == null || gun.getSecondExtraEffectCost().isEmpty())
+    if (!gun.hasSecondExtraEffect()) return false;
+    if (gun.getSecondExtraEffectCost() == null || gun.getSecondExtraEffectCost().isEmpty())
       return true;
     return model
       .getPlayerDashboard(playerColor)

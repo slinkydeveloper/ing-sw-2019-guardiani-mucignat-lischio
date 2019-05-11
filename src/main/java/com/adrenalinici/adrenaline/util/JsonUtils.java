@@ -51,7 +51,7 @@ public class JsonUtils {
   }
 
   public static Effect parseEffect(JsonNode node) {
-    return node == null ? null : new Effect(
+    return node == null || node.isNull() ? null : new Effect(
       node.get("id").asText(),
       node.get("name").asText(),
       node.get("description").asText()
