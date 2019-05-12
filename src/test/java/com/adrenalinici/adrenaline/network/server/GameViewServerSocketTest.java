@@ -9,6 +9,7 @@ import com.adrenalinici.adrenaline.network.outbox.ChooseMyPlayerMessage;
 import com.adrenalinici.adrenaline.network.outbox.ModelEventMessage;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
+import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
@@ -39,7 +40,7 @@ public class GameViewServerSocketTest extends BaseGameViewServerSocketTest {
 
   @Test
   public void startMatch() throws IOException, InterruptedException {
-    List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView = new ArrayList<>();
+    List<DecoratedEvent<ViewEvent, GameView>> receivedEventsFromView = new ArrayList<>();
     gameViewServer.registerObserver(receivedEventsFromView::add);
     gameViewServer.getAvailablePlayers().remove(PlayerColor.GREEN);
     gameViewServer.getAvailablePlayers().remove(PlayerColor.CYAN);
@@ -61,7 +62,7 @@ public class GameViewServerSocketTest extends BaseGameViewServerSocketTest {
   public void disconnection() throws IOException, InterruptedException {
     // Start a match like test before
 
-    List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView = new ArrayList<>();
+    List<DecoratedEvent<ViewEvent, GameView>> receivedEventsFromView = new ArrayList<>();
     gameViewServer.registerObserver(receivedEventsFromView::add);
     gameViewServer.getAvailablePlayers().remove(PlayerColor.GREEN);
     gameViewServer.getAvailablePlayers().remove(PlayerColor.CYAN);

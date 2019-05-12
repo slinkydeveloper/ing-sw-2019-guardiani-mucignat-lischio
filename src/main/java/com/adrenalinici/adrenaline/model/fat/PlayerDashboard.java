@@ -27,7 +27,7 @@ public class PlayerDashboard {
   public PlayerDashboard(PlayerColor player, boolean firstPlayer) {
     this.player = player;
     this.firstPlayer = firstPlayer;
-    this.powerUpCards = new ArrayList<>(powerUpCards);
+    this.powerUpCards = new ArrayList<>();
     this.ammos = new ArrayList<>();
     this.damages = new ArrayList<>();
     this.marks = new ArrayList<>();
@@ -271,11 +271,5 @@ public class PlayerDashboard {
       points,
       firstPlayer
     );
-  }
-
-  public static List<PlayerDashboard> createPlayerDashboards(int n) {
-    if (n < 3 || n > 5) throw new IllegalArgumentException();
-    List<PlayerDashboard> list = new ArrayList<>();
-    list.add(new PlayerDashboard(Pla))
   }
 }

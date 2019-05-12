@@ -48,7 +48,7 @@ public class BaseGameViewRmiIntegrationTest {
     serverGameView = new GameViewServer(inbox, outbox, new HashSet<>(Arrays.asList(playerColorList)));
     serverViewThread = new Thread(serverGameView, "game-view-server");
 
-    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outbox);
+    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outbox, 9001, "test");
 
     serverViewThread.start();
     serverNetworkAdapter.start();

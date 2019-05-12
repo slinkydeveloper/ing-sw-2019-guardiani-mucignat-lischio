@@ -1,16 +1,22 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
+import com.adrenalinici.adrenaline.controller.nodes.*;
+import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffectForGunFlowNode;
+import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseBaseEffectForGunFlowNode;
+import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.Observer;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +33,10 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       this.gameModel,
       this::endTurnCallback
     );
+  }
+
+  public GameController(GameModel model) {
+    this(loadNodes(), model);
   }
 
   public void startMatch(GameView view) {
@@ -70,6 +80,25 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   protected ControllerFlowContext getFlowContext() {
     return this.flowOrchestrator.getActualContext();
+  }
+
+  public static List<FlowNode> loadNodes() {
+    List<FlowNode> nodes = new ArrayList<>(Arrays.asList(
+      new ChooseActionFlowNode(),
+      new ChooseGunFlowNode(),
+      new ChooseMovementFlowNode(3),
+      new ChooseMovementFlowNode(1),
+      new FirstTurnFlowNode(),
+      new NewTurnFlowNode(),
+      new PickupFlowNode(),
+      new ReloadFlowNode(),
+      new RespawnFlowNode(),
+      new ChoosePlayersToHitFlowNode(),
+      new ChooseBaseEffectForGunFlowNode(),
+      new ChooseAlternativeEffectForGunFlowNode()
+    ));
+    nodes.addAll(GunLoader.INSTANCE.getAllAdditionalNodes());
+    return nodes;
   }
 
 }

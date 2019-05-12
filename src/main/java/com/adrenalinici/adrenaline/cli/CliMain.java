@@ -74,7 +74,7 @@ public class CliMain extends BaseClientGameView {
   }
 
   @Override
-  public void showAvailableRespawnLocations(List<AmmoColor> respawnLocations) {
+  public void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards) {
 
   }
 
@@ -100,11 +100,6 @@ public class CliMain extends BaseClientGameView {
 
   @Override
   public void showAvailableVenomGranades(PlayerColor player) {
-
-  }
-
-  @Override
-  public void showAvailablePowerUpCards(PlayerColor player) {
 
   }
 

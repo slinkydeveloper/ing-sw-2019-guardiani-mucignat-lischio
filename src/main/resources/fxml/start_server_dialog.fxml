@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adrenalinici.adrenaline.server.StartServerDialogController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="339.0" prefWidth="503.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Welcome to Adrenaline server" textAlignment="CENTER" />
+            <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Label text="Choose dashboard" />
+                  <ChoiceBox prefWidth="150.0" fx:id="dashboardChoiceBox" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Label text="Choose number of players" />
+                  <ChoiceBox prefWidth="150.0" fx:id="playersNumberChoiceBox" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Label text="Choose rule set" />
+                  <ChoiceBox prefWidth="150.0" fx:id="ruleSetChoiceBox" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Label text="Choose RMI Port"/>
+                  <TextField fx:id="rmiPortTextField"/>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <Label text="Choose Socket Port" />
+                  <TextField fx:id="socketPortTextField"/>
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" text="Start match" fx:id="startMatchButton"/>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+   </center>
+</BorderPane>

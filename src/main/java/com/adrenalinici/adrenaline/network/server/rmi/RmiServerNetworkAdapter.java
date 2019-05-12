@@ -27,26 +27,29 @@ import java.util.logging.Logger;
 
 public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements GameRmiServer {
 
-  public static final int PORT = Integer.parseInt(System.getenv().getOrDefault("RMI_PORT", "9001"));
   private static final Logger LOG = LogUtils.getLogger(RmiServerNetworkAdapter.class);
 
+  private int port;
   private Map<String, String> addressToConnectionId;
   private Map<String, GameRmiClient> connectionIdToClient;
 
   private Thread broadcasterThread;
   private Registry registry;
 
-  public RmiServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox) {
-    super(viewInbox, viewOutbox);
+  public RmiServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox, int port, String gameId) {
+    super(viewInbox, viewOutbox, gameId);
     this.addressToConnectionId = new ConcurrentHashMap<>();
     this.connectionIdToClient = new ConcurrentHashMap<>();
+    this.port = port;
   }
 
   @Override
   public void start() throws IOException {
-    Remote remoteObject = UnicastRemoteObject.exportObject(this, PORT);
-    registry = LocateRegistry.createRegistry(PORT);
+    Remote remoteObject = UnicastRemoteObject.exportObject(this, port);
+    registry = LocateRegistry.createRegistry(port);
     registry.rebind(GameRmiServer.class.getSimpleName(), remoteObject);
+
+    LOG.info(String.format("Started rmi registry for game %s on port %d", gameId, port));
 
     broadcasterThread = new Thread(new BroadcasterRunnable(connectionIdToClient, viewOutbox));
     broadcasterThread.start();
@@ -57,6 +60,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
     try {
       registry.unbind(GameRmiServer.class.getSimpleName());
       UnicastRemoteObject.unexportObject(registry, true);
+      LOG.info(String.format("Stopped rmi registry for game %s on port %d", gameId, port));
     } catch (NotBoundException e) {}
     if (broadcasterThread != null)
       broadcasterThread.interrupt();
@@ -81,7 +85,10 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
 
   private String getRemoteHost() {
     try {
-      return RemoteServer.getClientHost(); //TODO only host!!!
+      return RemoteServer.getClientHost();
+      //TODO only host!!! This can cause bugs on localhost!
+      // Thank you RMI for this beautiful API, I'm so happy that these things are not used
+      // anymore in production environments
     } catch (ServerNotActiveException e) {
       LOG.log(Level.SEVERE, "Can't get client host", e);
       throw new RuntimeException(e);

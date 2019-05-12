@@ -41,7 +41,7 @@ public class BaseGameViewServerSocketTest {
     gameViewServer = new GameViewServer(inbox, outbox, new HashSet<>(Arrays.asList(playerColorList)));
     viewThread = new Thread(gameViewServer, "game-view-server");
 
-    networkAdapter = new SocketServerNetworkAdapter(inbox, outbox);
+    networkAdapter = new SocketServerNetworkAdapter(inbox, outbox, 9000, "test");
 
     viewThread.start();
     networkAdapter.start();

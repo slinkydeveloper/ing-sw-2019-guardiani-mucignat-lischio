@@ -10,10 +10,12 @@ public abstract class ServerNetworkAdapter {
 
   protected BlockingQueue<InboxEntry> viewInbox;
   protected BlockingQueue<OutboxMessage> viewOutbox;
+  protected String gameId;
 
-  public ServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox) {
+  public ServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox, String gameId) {
     this.viewInbox = viewInbox;
     this.viewOutbox = viewOutbox;
+    this.gameId = gameId;
   }
 
   public abstract void start() throws IOException;

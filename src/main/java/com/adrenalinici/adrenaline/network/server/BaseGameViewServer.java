@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
-public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewEvent, BaseGameViewServer>> implements GameView, Runnable {
+public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewEvent, GameView>> implements GameView, Runnable {
 
   private static final Logger LOG = LogUtils.getLogger(BaseGameViewServer.class);
 

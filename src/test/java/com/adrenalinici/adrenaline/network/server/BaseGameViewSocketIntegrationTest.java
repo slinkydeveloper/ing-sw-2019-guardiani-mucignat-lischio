@@ -49,7 +49,7 @@ public class BaseGameViewSocketIntegrationTest {
     serverGameView = new GameViewServer(inbox, outbox, new HashSet<>(Arrays.asList(playerColorList)));
     serverViewThread = new Thread(serverGameView, "game-view-server");
 
-    serverNetworkAdapter = new SocketServerNetworkAdapter(inbox, outbox);
+    serverNetworkAdapter = new SocketServerNetworkAdapter(inbox, outbox, 9000, "test");
 
     serverViewThread.start();
     serverNetworkAdapter.start();
