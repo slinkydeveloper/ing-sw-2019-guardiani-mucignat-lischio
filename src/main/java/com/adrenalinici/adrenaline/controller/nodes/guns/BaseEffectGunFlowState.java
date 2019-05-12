@@ -1,64 +1,19 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
-import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.util.JsonUtils;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import static com.adrenalinici.adrenaline.util.JsonUtils.pointer;
+public interface BaseEffectGunFlowState extends GunFlowState {
+  DecoratedBaseEffectGun getChosenGun();
 
-public class BaseEffectGunFlowState extends GunFlowState {
+  boolean isActivatedFirstExtraEffect();
 
-  private boolean activatedFirstExtraEffect = false;
-  private boolean activatedSecondExtraEffect = false;
+  BaseEffectGunFlowState setActivatedFirstExtraEffect(boolean activatedFirstExtraEffect);
 
-  public BaseEffectGunFlowState(DecoratedBaseEffectGun chosenGun) {
-    super(chosenGun);
-  }
+  boolean isActivatedSecondExtraEffect();
 
-  public DecoratedBaseEffectGun getChosenGun() {
-    return (DecoratedBaseEffectGun) chosenGun;
-  }
-
-  public boolean isActivatedFirstExtraEffect() {
-    return activatedFirstExtraEffect;
-  }
-
-  public BaseEffectGunFlowState setActivatedFirstExtraEffect(boolean activatedFirstExtraEffect) {
-    this.activatedFirstExtraEffect = activatedFirstExtraEffect;
-    return this;
-  }
-
-  public boolean isActivatedSecondExtraEffect() {
-    return activatedSecondExtraEffect;
-  }
-
-  public BaseEffectGunFlowState setActivatedSecondExtraEffect(boolean activatedSecondExtraEffect) {
-    this.activatedSecondExtraEffect = activatedSecondExtraEffect;
-    return this;
-  }
+  BaseEffectGunFlowState setActivatedSecondExtraEffect(boolean activatedSecondExtraEffect);
 
   @Override
-  public ObjectNode resolvePhaseConfiguration(String phaseId) {
-    JsonNode gunWideConfig = JsonUtils.getConfigurationJSONFromClasspath("guns/" + chosenGun.getId() + ".json")
-      .at(pointer("phasesConfig", phaseId));
-
-    JsonNode firstExtraEffectWideConfig = activatedFirstExtraEffect ?
-      JsonUtils.getConfigurationJSONFromClasspath("guns/" + chosenGun.getId() + ".json").at(
-        pointer("firstExtraEffect", "phasesConfig", phaseId)
-      ) : null;
-    JsonNode secondExtraEffectWideConfig = activatedSecondExtraEffect ?
-      JsonUtils.getConfigurationJSONFromClasspath("guns/" + chosenGun.getId() + ".json").at(
-        pointer("secondExtraEffect", "phasesConfig", phaseId)
-      ) : null;
-
-    return JsonUtils.mergeConfigs(
-      gunWideConfig.isObject() ? (ObjectNode) gunWideConfig : null,
-      JsonUtils.mergeConfigs(
-        firstExtraEffectWideConfig != null && firstExtraEffectWideConfig.isObject() ? (ObjectNode) firstExtraEffectWideConfig : null,
-        secondExtraEffectWideConfig != null && secondExtraEffectWideConfig.isObject() ? (ObjectNode) secondExtraEffectWideConfig : null
-      )
-    );
-  }
+  ObjectNode resolvePhaseConfiguration(String phaseId);
 }

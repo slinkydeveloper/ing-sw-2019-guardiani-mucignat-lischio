@@ -1,5 +1,7 @@
 package com.adrenalinici.adrenaline.util;
 
+import com.adrenalinici.adrenaline.controller.nodes.guns.GunFlowState;
+import com.adrenalinici.adrenaline.flow.FlowState;
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.fasterxml.jackson.core.JsonPointer;
@@ -15,6 +17,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -103,6 +106,32 @@ public class JsonUtils {
       }
     };
   }
+
+  public static Predicate<FlowState> parseEnabledPredicate(String serializedPredicate) {
+    return (flowState) -> {
+      try {
+        Bindings bindings = scriptEngine.createBindings();
+        bindings.put("state", flowState);
+        return (boolean) scriptEngine.eval(serializedPredicate, bindings);
+
+      } catch (ScriptException | ClassCastException e) {
+        LOG.log(Level.SEVERE, "You dumb! The script is wrong! " + serializedPredicate, e);
+        return false;
+      }
+    };
+  }
+
+  public static Predicate<FlowState> resolveEnabledPredicate(String nodeId, GunFlowState flowState) {
+    JsonNode config = flowState.resolvePhaseConfiguration(nodeId);
+    if (config != null && config.has("enabled"))
+      return JsonUtils.parseEnabledPredicate(
+        flowState.resolvePhaseConfiguration(nodeId).get("enabled").asText()
+      );
+    else
+      return f -> false;
+  }
+
+  ;
 
   /**
    * This function merges two objects with following rules. When there are two conflicting keys:

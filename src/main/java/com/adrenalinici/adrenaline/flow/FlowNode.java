@@ -13,6 +13,10 @@ public interface FlowNode<S extends FlowState, C extends FlowContext> {
     return (S) oldState;
   }
 
+  default boolean skip(S newState, C context) {
+    return false;
+  }
+
   /**
    * onJump() called after flow.FlowNode called the first time
    *

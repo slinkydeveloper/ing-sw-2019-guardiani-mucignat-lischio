@@ -2,14 +2,13 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.controller.DecoratedEffect;
-import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import static com.adrenalinici.adrenaline.util.JsonUtils.pointer;
 
-public class AlternativeEffectGunFlowState extends GunFlowState {
+public class AlternativeEffectGunFlowState extends GunFlowStateImpl {
 
   private Boolean firstEffect;
   private DecoratedEffect chosenEffect;
