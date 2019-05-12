@@ -74,4 +74,20 @@ public class LightPlayerDashboard implements Serializable {
   public boolean isFirstPlayer() {
     return firstPlayer;
   }
+
+  @Override
+  public String toString() {
+    return "LightPlayerDashboard{" +
+      "player=" + player +
+      ", ammos=" + ammos +
+      ", damages=" + damages +
+      ", marks=" + marks +
+      ", loadedGuns=" + loadedGuns +
+      ", unloadedGuns=" + unloadedGuns +
+      ", powerUpCards=" + powerUpCards +
+      ", skullsNumber=" + skullsNumber +
+      ", points=" + points +
+      ", firstPlayer=" + firstPlayer +
+      '}';
+  }
 }

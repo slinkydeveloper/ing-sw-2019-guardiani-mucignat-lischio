@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.cli;
 
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
@@ -57,7 +58,11 @@ public class CliMain extends BaseClientGameView {
 
   @Override
   public void showAvailableActions(List<Action> actions) {
-
+    if (isMyTurn()) {
+      System.out.println(
+        String.format("Available actions: %s", actions.stream().map(Objects::toString).collect(Collectors.joining(", ")))
+      );
+    }
   }
 
   @Override
@@ -67,7 +72,8 @@ public class CliMain extends BaseClientGameView {
 
   @Override
   public void showNextTurn(PlayerColor player) {
-
+    this.setTurnOfPlayer(player);
+    System.out.println("Turn of " + player);
   }
 
   @Override
@@ -132,6 +138,10 @@ public class CliMain extends BaseClientGameView {
 
   @Override
   public void onEvent(ModelEvent newValue) {
+    showModel(newValue.getGameModel());
+  }
 
+  private void showModel(LightGameModel model) {
+    System.out.println(model.toString());
   }
 }

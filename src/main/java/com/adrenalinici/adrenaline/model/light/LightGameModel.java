@@ -41,4 +41,15 @@ public class LightGameModel implements Serializable {
   public List<LightPlayerDashboard> getPlayerDashboards() {
     return playerDashboards;
   }
+
+  @Override
+  public String toString() {
+    return "LightGameModel{" +
+      "killScore=" + killScore +
+      ", remainingSkulls=" + remainingSkulls +
+      ", doubleKillScore=" + doubleKillScore +
+      ", dashboard=" + dashboard +
+      ", playerDashboards=" + playerDashboards +
+      '}';
+  }
 }

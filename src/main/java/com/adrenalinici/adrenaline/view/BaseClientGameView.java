@@ -42,4 +42,8 @@ public abstract class BaseClientGameView extends Observable<InboxMessage> implem
     this.turnOfPlayer = turnOfPlayer;
     return this;
   }
+
+  public boolean isMyTurn() {
+    return this.turnOfPlayer == this.myPlayer;
+  }
 }
