@@ -22,16 +22,18 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
   private static final Logger LOG = LogUtils.getLogger(BaseGameViewServer.class);
 
   private final BlockingQueue<InboxEntry> inbox;
-  private final BlockingQueue<OutboxMessage> outbox;
+  private final BlockingQueue<OutboxMessage> outboxRmi;
+  private final BlockingQueue<OutboxMessage> outboxSocket;
   private final Map<String, PlayerColor> connectedPlayers;
   private final Set<PlayerColor> availablePlayers;
   private boolean matchStarted;
 
   private OutboxMessage lastSentCommand;
 
-  public BaseGameViewServer(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxMessage> outbox, Set<PlayerColor> availablePlayers) {
+  public BaseGameViewServer(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxMessage> outboxRmi, BlockingQueue<OutboxMessage> outboxSocket, Set<PlayerColor> availablePlayers) {
     this.inbox = inbox;
-    this.outbox = outbox;
+    this.outboxRmi = outboxRmi;
+    this.outboxSocket = outboxSocket;
     this.connectedPlayers = new HashMap<>();
     this.availablePlayers = availablePlayers;
     this.matchStarted = false;
@@ -44,7 +46,9 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
         InboxEntry e = inbox.take();
         LOG.fine(String.format("Received new message from %s: %s", e.getConnectionId(), e.getMessage().getClass().getName()));
         e.getMessage().onConnectedPlayerMessage(connectedPlayerInboxEntry -> {
-          outbox.offer(new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers))); // No cache for this one!
+          OutboxMessage message = new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers));
+          outboxRmi.offer(message); // No cache for this one!
+          outboxSocket.offer(message);
         });
         e.getMessage().onChosenMyPlayerColorMessage(chosenPlayerColorInboxEntry -> {
           if (availablePlayers.contains(chosenPlayerColorInboxEntry.getColor())) {
@@ -79,6 +83,7 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
   private void checkStartMatch() {
     if (this.availablePlayers.isEmpty()) {
       this.matchStarted = true;
+      LOG.info("Starting match");
       notifyEvent(new DecoratedEvent<>(new NewTurnEvent(), this));
     }
   }
@@ -90,7 +95,8 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
 
   void broadcast(OutboxMessage en) {
     this.lastSentCommand = en;
-    outbox.offer(en);
+    outboxSocket.offer(en);
+    outboxRmi.offer(en);
   }
 
   @Override

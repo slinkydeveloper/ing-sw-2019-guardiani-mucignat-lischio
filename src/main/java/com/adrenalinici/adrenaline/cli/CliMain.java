@@ -19,28 +19,40 @@ public class CliMain extends BaseClientGameView {
   Scanner scanner = new Scanner(System.in);
 
   public static void main(String[] args) {
-    String transport = System.getenv().getOrDefault("transport", "socket");
+
+    if (args.length < 3) {
+      System.err.println("Usage: adrenaline-cli socket|rmi HOST PORT");
+    }
+
+    String transport = args[0];
+    String host = args[1];
+    int port = Integer.parseInt(args[2]);
+
     CliMain cliMain = new CliMain();
     ClientViewProxy proxy = new ClientViewProxy(cliMain);
     ClientNetworkAdapter networkAdapter = null;
     if (transport.equals("socket")) {
-      networkAdapter = new SocketClientNetworkAdapter(proxy);
+      networkAdapter = new SocketClientNetworkAdapter(proxy, host, port);
     } else if (transport.equals("rmi")) {
-      networkAdapter = new RmiClientNetworkAdapter(proxy);
+      networkAdapter = new RmiClientNetworkAdapter(proxy, host, port);
     } else {
       System.out.println("Wrong transport!");
       System.exit(1);
     }
+    System.out.println(String.format("Transport %s to %s:%d initialized", transport, host, port));
     networkAdapter.run();
   }
 
   @Override
   public void showChooseMyPlayer(List<PlayerColor> colorList) {
-    AnsiConsole.out.println(
-      ansi().format("Choosable players: %s", colorList.stream().map(Objects::toString).collect(Collectors.joining(", ")))
-    );
-    String chosenPlayer = scanner.nextLine();
-    sendChosenMyPlayer(PlayerColor.valueOf(chosenPlayer));
+    if (getMyPlayer() == null) {
+      System.out.println(
+        String.format("Choosable players: %s", colorList.stream().map(Objects::toString).collect(Collectors.joining(", ")))
+      );
+      String chosenPlayer = scanner.nextLine();
+      setMyPlayer(PlayerColor.valueOf(chosenPlayer.trim()));
+      sendChosenMyPlayer(getMyPlayer());
+    }
   }
 
   @Override

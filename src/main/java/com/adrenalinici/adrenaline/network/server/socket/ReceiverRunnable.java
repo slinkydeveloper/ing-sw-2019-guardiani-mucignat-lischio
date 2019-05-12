@@ -77,7 +77,7 @@ public class ReceiverRunnable extends BaseSocketRunnable {
       byte[] data = new byte[numRead];
       System.arraycopy(buffer.array(), 0, data, 0, numRead);
       InboxMessage message = SerializationUtils.deserialize(data);
-      LOG.fine(String.format("Received inbox message %s from address %s (connection id %s)", message.getClass(), connectionId, socket.getInetAddress()));
+      LOG.info(String.format("Received inbox message %s from address %s (connection id %s)", message.getClass(), connectionId, socket.getInetAddress()));
       this.viewInbox.offer(new InboxEntry(connectionId, message));
     }
   }

@@ -5,12 +5,13 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.adrenalinici.adrenaline.server.TextAreaLogAppenderController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="com.adrenalinici.adrenaline.server.TextAreaLogAppenderController">
    <bottom>
       <HBox alignment="CENTER_LEFT" prefHeight="58.0" prefWidth="600.0" spacing="20" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Stop Server" fx:id="stopButton" />
+            <Button fx:id="stopButton" mnemonicParsing="false" text="Stop Server" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -18,6 +19,9 @@
       </HBox>
    </bottom>
    <center>
-      <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" fx:id="logArea"/>
+      <TextArea fx:id="logArea" editable="false" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="17.0" />
+         </font></TextArea>
    </center>
 </BorderPane>

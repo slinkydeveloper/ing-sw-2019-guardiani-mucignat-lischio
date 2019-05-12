@@ -68,6 +68,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
 
   @Override
   public void acceptMessage(InboxMessage message, GameRmiClient client) throws RemoteException {
+    LOG.info(String.format("Received message %s from %s", message, addressToConnectionId.get(getRemoteHost())));
     viewInbox.offer(new InboxEntry(addressToConnectionId.get(getRemoteHost()), message));
   }
 
@@ -77,6 +78,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
     String connectionId = UUID.randomUUID().toString();
     addressToConnectionId.put(connectionAddress, connectionId);
     connectionIdToClient.put(connectionId, client);
+    LOG.info(String.format("New connection from %s with %s", connectionAddress, connectionId));
     viewInbox.offer(new InboxEntry(
       addressToConnectionId.get(connectionAddress),
       new ConnectedPlayerMessage()

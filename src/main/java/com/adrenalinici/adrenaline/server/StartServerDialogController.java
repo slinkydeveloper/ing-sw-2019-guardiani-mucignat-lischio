@@ -44,7 +44,7 @@ public class StartServerDialogController {
   }
 
   public void onStartMatchClicked(MouseEvent e) {
-    if (dashboardChoiceBox.getValue() == null || playersNumberChoiceBox == null || ruleSetChoiceBox == null) {
+    if (dashboardChoiceBox.getValue() == null || playersNumberChoiceBox.getValue() == null || ruleSetChoiceBox.getValue() == null) {
       showErrorAlert();
     }
     String serializedRmiPort = rmiPortTextField.getText();
@@ -52,6 +52,7 @@ public class StartServerDialogController {
     try {
       int rmiPort = Integer.valueOf(serializedRmiPort);
       int socketPort = Integer.valueOf(serializedSocktPort);
+
       FXMLLoader loader = new FXMLLoader(
         getClass().getResource(
           "/fxml/log_show.fxml"
@@ -72,8 +73,10 @@ public class StartServerDialogController {
       controller.setBootstrapper(bootstrapper);
       bootstrapper.start();
       stage.show();
+      stage.setMaximized(true);
 
       ((Stage)this.startMatchButton.getScene().getWindow()).close();
+
     } catch (NumberFormatException e1) {
       showErrorAlert();
     } catch (IOException e2) {

@@ -29,7 +29,7 @@ public class BroadcasterRunnable extends BaseSocketRunnable {
     while(!Thread.currentThread().isInterrupted()) {
       try {
         OutboxMessage message = viewOutbox.take();
-        LOG.fine(String.format("Going to broadcast message %s", message.getClass()));
+        LOG.info(String.format("Going to broadcast message %s", message.getClass()));
         connectedClients.forEach((s, cid) -> {
           ByteBuffer byteBuffer = ByteBuffer.wrap(SerializationUtils.serialize(message));
           try {

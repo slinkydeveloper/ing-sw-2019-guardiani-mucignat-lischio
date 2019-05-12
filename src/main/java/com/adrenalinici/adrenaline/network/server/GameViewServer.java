@@ -9,8 +9,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class GameViewServer extends BaseGameViewServer {
 
-  public GameViewServer(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxMessage> outbox, Set<PlayerColor> availablePlayers) {
-    super(inbox, outbox, availablePlayers);
+  public GameViewServer(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxMessage> outboxRmi, BlockingQueue<OutboxMessage> outboxSocket, Set<PlayerColor> availablePlayers) {
+    super(inbox, outboxRmi, outboxSocket, availablePlayers);
   }
   @Override
   public void showAvailableActions(List<Action> actions) {

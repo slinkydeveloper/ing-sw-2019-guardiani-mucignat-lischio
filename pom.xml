@@ -76,7 +76,7 @@
         <configuration>
           <archive>
             <manifest>
-              <!--<mainClass>it.polimi.se2019.App</mainClass>-->
+              <mainClass>com.adrenalinici.adrenaline.cli.CliMain</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -115,6 +115,23 @@
         <configuration>
           <doclint>none</doclint>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <id>server</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>com.adrenalinici.adrenaline.server.ServerMain</mainClass>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

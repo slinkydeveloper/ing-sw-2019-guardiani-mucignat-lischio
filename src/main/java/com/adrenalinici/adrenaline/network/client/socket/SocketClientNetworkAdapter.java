@@ -16,28 +16,30 @@ import java.util.logging.Logger;
 
 public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
 
-  private static final String ADDRESS = System.getenv().getOrDefault("ADDRESS", "localhost");
-  private static final int PORT = Integer.parseInt(System.getenv().getOrDefault("SOCKET_PORT", "9000"));
   private static final Logger LOG = LogUtils.getLogger(SocketClientNetworkAdapter.class);
 
+  private String host;
+  private int port;
   private Thread receiverThread;
   private Thread senderThread;
   private SocketChannel channel;
   private Selector readSelector;
 
-  public SocketClientNetworkAdapter(ClientViewProxy proxy) {
+  public SocketClientNetworkAdapter(ClientViewProxy proxy, String host, int port) {
     super(proxy);
+    this.host = host;
+    this.port = port;
   }
 
   @Override
   public void initialize() throws IOException {
     readSelector = Selector.open();
 
-    this.channel = SocketChannel.open(new InetSocketAddress(ADDRESS, PORT));
+    this.channel = SocketChannel.open(new InetSocketAddress(host, port));
     this.channel.configureBlocking(false);
     this.channel.register(readSelector, SelectionKey.OP_READ);
 
-    LOG.info(String.format("Connected to %s:%d", ADDRESS, PORT));
+    LOG.info(String.format("Connected to %s:%d", host, port));
 
     this.receiverThread = new Thread(
       new ReceiverRunnable(readSelector, clientViewInbox),

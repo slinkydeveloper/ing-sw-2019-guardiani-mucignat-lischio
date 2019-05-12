@@ -38,7 +38,7 @@ public class BaseGameViewServerSocketTest {
     BlockingQueue<InboxEntry> inbox = new LinkedBlockingQueue<>();
     BlockingQueue<OutboxMessage> outbox = new LinkedBlockingQueue<>();
 
-    gameViewServer = new GameViewServer(inbox, outbox, new HashSet<>(Arrays.asList(playerColorList)));
+    gameViewServer = new GameViewServer(inbox, new LinkedBlockingQueue<>(), outbox, new HashSet<>(Arrays.asList(playerColorList)));
     viewThread = new Thread(gameViewServer, "game-view-server");
 
     networkAdapter = new SocketServerNetworkAdapter(inbox, outbox, 9000, "test");

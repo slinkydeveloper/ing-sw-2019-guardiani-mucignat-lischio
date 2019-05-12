@@ -7,10 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.logging.Handler;
-import java.util.logging.LogManager;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 public class TextAreaLogAppenderController extends Handler {
 
@@ -22,8 +19,9 @@ public class TextAreaLogAppenderController extends Handler {
   public void initialize() {
     Logger rootLogger = LogManager.getLogManager().getLogger("");
     rootLogger.addHandler(this);
-    logArea.setEditable(false);
+    this.setLevel(Level.FINE);
 
+    logArea.setEditable(false);
     stopButton.setOnMouseClicked(this::onStopClicked);
   }
 

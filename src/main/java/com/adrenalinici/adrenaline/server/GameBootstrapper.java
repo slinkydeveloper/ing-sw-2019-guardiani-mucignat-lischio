@@ -28,7 +28,8 @@ public class GameBootstrapper {
   private GameModel model;
   private GameController controller;
   private BlockingQueue<InboxEntry> inbox;
-  private BlockingQueue<OutboxMessage> outbox;
+  private BlockingQueue<OutboxMessage> outboxRmi;
+  private BlockingQueue<OutboxMessage> outboxSocket;
   private ServerNetworkAdapter rmiNetworkAdapter;
   private ServerNetworkAdapter socketNetworkAdapter;
   private GameViewServer serverGameView;
@@ -57,17 +58,18 @@ public class GameBootstrapper {
     this.model = choice.generate(dashboard, playerDashboards);
 
     this.inbox = new LinkedBlockingQueue<>();
-    this.outbox = new LinkedBlockingQueue<>();
+    this.outboxRmi = new LinkedBlockingQueue<>();
+    this.outboxSocket = new LinkedBlockingQueue<>();
 
-    this.serverGameView = new GameViewServer(inbox, outbox, new HashSet<>(model.getPlayers()));
+    this.serverGameView = new GameViewServer(inbox, outboxRmi, outboxSocket, new HashSet<>(model.getPlayers()));
     this.controller = new GameController(model);
     this.serverGameView.registerObserver(controller);
     this.model.registerObserver(this.serverGameView);
 
     this.serverRemoteViewThread = new Thread(serverGameView, "game-view-server-game-" + gameId);
 
-    this.rmiNetworkAdapter = new RmiServerNetworkAdapter(inbox, outbox, rmiPort, gameId);
-    this.socketNetworkAdapter = new SocketServerNetworkAdapter(inbox, outbox, socketPort, gameId);
+    this.rmiNetworkAdapter = new RmiServerNetworkAdapter(inbox, outboxRmi, rmiPort, gameId);
+    this.socketNetworkAdapter = new SocketServerNetworkAdapter(inbox, outboxSocket, socketPort, gameId);
 
     rmiNetworkAdapter.start();
     socketNetworkAdapter.start();

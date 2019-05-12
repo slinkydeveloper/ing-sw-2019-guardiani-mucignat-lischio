@@ -46,7 +46,7 @@ public class BaseGameViewSocketIntegrationTest {
     BlockingQueue<InboxEntry> inbox = new LinkedBlockingQueue<>();
     BlockingQueue<OutboxMessage> outbox = new LinkedBlockingQueue<>();
 
-    serverGameView = new GameViewServer(inbox, outbox, new HashSet<>(Arrays.asList(playerColorList)));
+    serverGameView = new GameViewServer(inbox, outbox, new LinkedBlockingQueue<>(), new HashSet<>(Arrays.asList(playerColorList)));
     serverViewThread = new Thread(serverGameView, "game-view-server");
 
     serverNetworkAdapter = new SocketServerNetworkAdapter(inbox, outbox, 9000, "test");
@@ -57,7 +57,7 @@ public class BaseGameViewSocketIntegrationTest {
     Thread.sleep(100);
 
     proxy = new ClientViewProxy(mockedClientView);
-    clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy), "test-client-network-adapter");
+    clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 9000), "test-client-network-adapter");
     clientNetworkAdapter.start();
 
     Thread.sleep(100);
