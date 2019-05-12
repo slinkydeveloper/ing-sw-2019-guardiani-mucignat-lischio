@@ -142,9 +142,10 @@ public class RespawnNodeFlowTest extends BaseNodeTest {
     orchestrator.handleEvent(new PowerUpCardChosenEvent(PlayerColor.GRAY, extractedPowerUpCardForGray), viewMock);
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isDashboardCellUpdatedEvent(cellPositionWhereGrayShouldRespawn.line(), cellPositionWhereGrayShouldRespawn.cell()));
-    assertThat(receivedModelEvents)
+      .haveExactly(1, isDashboardCellUpdatedEvent(cellPositionWhereGrayShouldRespawn.line(), cellPositionWhereGrayShouldRespawn.cell()))
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
+
+    receivedModelEvents.clear();
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getPowerUpCards()).isEmpty();
     assertThat(model.getDashboard().getPlayersPositions().get(PlayerColor.GRAY)).isEqualTo(cellPositionWhereGrayShouldRespawn);
@@ -152,8 +153,7 @@ public class RespawnNodeFlowTest extends BaseNodeTest {
     orchestrator.handleEvent(new PowerUpCardChosenEvent(PlayerColor.YELLOW, extractedPowerUpCardForYellow), viewMock);
 
     assertThat(receivedModelEvents)
-      .haveExactly(1, isDashboardCellUpdatedEvent(cellPositionWhereYellowShouldRespawn.line(), cellPositionWhereYellowShouldRespawn.cell()));
-    assertThat(receivedModelEvents)
+      .haveExactly(1, isDashboardCellUpdatedEvent(cellPositionWhereYellowShouldRespawn.line(), cellPositionWhereYellowShouldRespawn.cell()))
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getPowerUpCards()).isEmpty();
