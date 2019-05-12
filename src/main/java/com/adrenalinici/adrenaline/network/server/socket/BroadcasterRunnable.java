@@ -31,9 +31,13 @@ public class BroadcasterRunnable extends BaseSocketRunnable {
         OutboxMessage message = viewOutbox.take();
         LOG.info(String.format("Going to broadcast message %s", message.getClass()));
         connectedClients.forEach((s, cid) -> {
-          ByteBuffer byteBuffer = ByteBuffer.wrap(SerializationUtils.serialize(message));
           try {
-            s.getChannel().write(byteBuffer);
+            byte[] serialized = SerializationUtils.serialize(message);
+            ByteBuffer bufWithSize = ByteBuffer.allocate(serialized.length + 4);
+            bufWithSize.putInt(serialized.length);
+            bufWithSize.put(serialized);
+            bufWithSize.rewind();
+            s.getChannel().write(bufWithSize);
           } catch (IOException e) {
             LOG.log(Level.WARNING, "IOException while broadcasting message", e);
           }

@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
+import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -65,7 +66,7 @@ public class GameViewRmiInboxMessageTest extends BaseGameViewRmiIntegrationTest 
     assertThat(serverGameView.getAvailablePlayers()).doesNotContain(PlayerColor.YELLOW);
 
     assertThat(receivedEventsFromView)
-      .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent()).isInstanceOf(NewTurnEvent.class));
+      .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent()).isInstanceOf(StartMatchEvent.class));
   }
 
 }

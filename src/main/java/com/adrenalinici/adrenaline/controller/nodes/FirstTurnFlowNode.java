@@ -19,19 +19,13 @@ public class FirstTurnFlowNode implements StatelessControllerFlowNode {
   }
 
   @Override
-  public void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) { }
+  public void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
+    model.getPlayers().forEach(model::acquirePowerUpCard);
+    context.getKilledPlayers().addAll(model.getPlayers());
+    context.addPhases(RESPAWN_KILLED_PEOPLE.name());
+    context.nextPhase(view);
+  }
 
   @Override
-  public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    event.onNewTurnEvent(
-      e -> {
-        model.getPlayers().forEach(model::acquirePowerUpCard);
-
-        context.getKilledPlayers().addAll(model.getPlayers());
-
-        context.addPhases(RESPAWN_KILLED_PEOPLE.name());
-        context.nextPhase(view);
-      }
-    );
-  }
+  public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) { }
 }

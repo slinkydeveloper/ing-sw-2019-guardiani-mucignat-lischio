@@ -82,7 +82,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     if (view != null) view.showNextTurn(player);
   }
 
-  protected ControllerFlowContext getFlowContext() {
+  public ControllerFlowContext getFlowContext() {
     return this.flowOrchestrator.getActualContext();
   }
 

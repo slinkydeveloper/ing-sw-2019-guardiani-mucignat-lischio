@@ -13,6 +13,7 @@ import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
 import com.adrenalinici.adrenaline.view.event.PowerUpCardChosenEvent;
+import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,8 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.FIRST_TURN;
-import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.START_TURN;
+import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -57,11 +57,9 @@ public class GameControllerTest {
       status
     );
 
-    controller.startMatch(viewMock);
+    controller.onEvent(new DecoratedEvent<>(new StartMatchEvent(), viewMock));
 
-    assertThat(controller.getFlowContext().actualPhase()).isEqualTo(FIRST_TURN.name());
-
-    controller.onEvent(new DecoratedEvent<>(new NewTurnEvent(), viewMock));
+    assertThat(controller.getFlowContext().actualPhase()).isEqualTo(RESPAWN_KILLED_PEOPLE.name());
 
     ArgumentCaptor<PlayerColor> playerColorCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     ArgumentCaptor<List<PowerUpCard>> powerUpCardCaptor = ArgumentCaptor.forClass(List.class);

@@ -10,11 +10,12 @@ import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.LogUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 import com.adrenalinici.adrenaline.view.GameView;
-import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
+import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewEvent, GameView>> implements GameView, Runnable {
@@ -41,42 +42,48 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
 
   @Override
   public void run() {
-    while (!Thread.currentThread().isInterrupted()) {
-      try {
-        InboxEntry e = inbox.take();
-        LOG.fine(String.format("Received new message from %s: %s", e.getConnectionId(), e.getMessage().getClass().getName()));
-        e.getMessage().onConnectedPlayerMessage(connectedPlayerInboxEntry -> {
-          OutboxMessage message = new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers));
-          outboxRmi.offer(message); // No cache for this one!
-          outboxSocket.offer(message);
-        });
-        e.getMessage().onChosenMyPlayerColorMessage(chosenPlayerColorInboxEntry -> {
-          if (availablePlayers.contains(chosenPlayerColorInboxEntry.getColor())) {
-            availablePlayers.remove(chosenPlayerColorInboxEntry.getColor());
-            connectedPlayers.put(e.getConnectionId(), chosenPlayerColorInboxEntry.getColor());
-            if (!this.matchStarted)
-              checkStartMatch();
-            else
-              checkResumeMatch();
-          } else {
-            broadcast(new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers)));
-          }
-        });
-        e.getMessage().onDisconnectedPlayerMessage(disconnectedPlayerInboxEntry -> {
-          if (connectedPlayers.containsKey(e.getConnectionId()))
-            availablePlayers.add(connectedPlayers.remove(e.getConnectionId()));
-        });
-        e.getMessage().onViewEventMessage(viewEventInboxEntry -> {
-          if (!availablePlayers.isEmpty() || !this.matchStarted) { // Someone is disconnected or the match is not yet started
-            // > Drop message or enqueue? Notify client that match is paused?
-            // Noop for now
-          } else {
-            notifyEvent(new DecoratedEvent<>(viewEventInboxEntry.getViewEvent(), this));
-          }
-        });
-      } catch (InterruptedException ex) {
-        Thread.currentThread().interrupt();
+    try {
+      while (!Thread.currentThread().isInterrupted()) {
+        try {
+          InboxEntry e = inbox.take();
+          LOG.fine(String.format("Received new message from %s: %s", e.getConnectionId(), e.getMessage().getClass().getName()));
+          e.getMessage().onConnectedPlayerMessage(connectedPlayerInboxEntry -> {
+            OutboxMessage message = new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers));
+            outboxRmi.offer(message); // No cache for this one!
+            outboxSocket.offer(message);
+          });
+          e.getMessage().onChosenMyPlayerColorMessage(chosenPlayerColorInboxEntry -> {
+            if (availablePlayers.contains(chosenPlayerColorInboxEntry.getColor())) {
+              availablePlayers.remove(chosenPlayerColorInboxEntry.getColor());
+              connectedPlayers.put(e.getConnectionId(), chosenPlayerColorInboxEntry.getColor());
+              if (!this.matchStarted)
+                checkStartMatch();
+              else
+                checkResumeMatch();
+            } else {
+              broadcast(new ChooseMyPlayerMessage(new ArrayList<>(availablePlayers)));
+            }
+          });
+          e.getMessage().onDisconnectedPlayerMessage(disconnectedPlayerInboxEntry -> {
+            if (connectedPlayers.containsKey(e.getConnectionId())) {
+              LOG.info(String.format("Disconnected %s (connection id %s)", connectedPlayers.get(e.getConnectionId()), e.getConnectionId()));
+              availablePlayers.add(connectedPlayers.remove(e.getConnectionId()));
+            }
+          });
+          e.getMessage().onViewEventMessage(viewEventInboxEntry -> {
+            if (!availablePlayers.isEmpty() || !this.matchStarted) { // Someone is disconnected or the match is not yet started
+              // > Drop message or enqueue? Notify client that match is paused?
+              // Noop for now
+            } else {
+              notifyEvent(new DecoratedEvent<>(viewEventInboxEntry.getViewEvent(), this));
+            }
+          });
+        } catch (InterruptedException ex) {
+          Thread.currentThread().interrupt();
+        }
       }
+    } catch (Exception e) {
+      LOG.log(Level.SEVERE, "Uncaught exception that fuck up everything", e);
     }
   }
 
@@ -84,7 +91,7 @@ public abstract class BaseGameViewServer extends Observable<DecoratedEvent<ViewE
     if (this.availablePlayers.isEmpty()) {
       this.matchStarted = true;
       LOG.info("Starting match");
-      notifyEvent(new DecoratedEvent<>(new NewTurnEvent(), this));
+      notifyEvent(new DecoratedEvent<>(new StartMatchEvent(), this));
     }
   }
 

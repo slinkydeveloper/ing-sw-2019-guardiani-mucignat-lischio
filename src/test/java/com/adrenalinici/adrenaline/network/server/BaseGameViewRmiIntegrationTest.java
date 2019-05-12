@@ -54,7 +54,7 @@ public class BaseGameViewRmiIntegrationTest {
     serverViewThread.start();
     serverNetworkAdapter.start();
 
-    Thread.sleep(200);
+    Thread.sleep(1000);
 
     proxy = new ClientViewProxy(mockedClientView);
     clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy, "localhost", 9001), "test-client-network-adapter");

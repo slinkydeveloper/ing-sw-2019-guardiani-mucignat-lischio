@@ -58,17 +58,30 @@ public class ReceiverRunnable implements Runnable {
 
   private void handleRead(SelectionKey key) throws IOException {
     SocketChannel channel = (SocketChannel) key.channel();
-    ByteBuffer buffer = ByteBuffer.allocate(20 * 1024); // 20kb
-    int numRead = channel.read(buffer);
+    ByteBuffer sizeBuf = ByteBuffer.allocate(4);
+    int numRead = channel.read(sizeBuf);
 
     if (numRead == -1) {
       channel.close();
       key.cancel();
       LOG.severe("Server disconnected!");
-    } else {
-      byte[] data = new byte[numRead];
-      System.arraycopy(buffer.array(), 0, data, 0, numRead);
-      OutboxMessage message = SerializationUtils.deserialize(data);
+      return;
+    }
+    int size = sizeBuf.getInt(0);
+    ByteBuffer valueBuf = ByteBuffer.allocate(size);
+    numRead = channel.read(valueBuf);
+
+    if (numRead == -1) {
+      channel.close();
+      key.cancel();
+      LOG.severe("Server disconnected!");
+      return;
+    }
+
+    byte[] data = new byte[numRead];
+    System.arraycopy(valueBuf.array(), 0, data, 0, numRead);
+    OutboxMessage message = SerializationUtils.deserialize(data);
+    if (message != null) {
       LOG.fine(String.format("Received message from server %s", message.getClass()));
       this.clientViewInbox.offer(message);
     }

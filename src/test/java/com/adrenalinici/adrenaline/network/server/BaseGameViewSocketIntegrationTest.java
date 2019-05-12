@@ -54,7 +54,7 @@ public class BaseGameViewSocketIntegrationTest {
     serverViewThread.start();
     serverNetworkAdapter.start();
 
-    Thread.sleep(100);
+    Thread.sleep(1000);
 
     proxy = new ClientViewProxy(mockedClientView);
     clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 9000), "test-client-network-adapter");

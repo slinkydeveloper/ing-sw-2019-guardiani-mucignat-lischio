@@ -60,12 +60,13 @@ public class ReceiverRunnable extends BaseSocketRunnable {
 
   private void handleRead(SelectionKey key) throws IOException {
     SocketChannel channel = (SocketChannel) key.channel();
-    ByteBuffer buffer = ByteBuffer.allocate(20 * 1024); // 20kb
     Socket socket = channel.socket();
     String connectionId = connectedClients.get(socket);
+
+    ByteBuffer sizeBuf = ByteBuffer.allocate(4);
     int numRead;
     try {
-      numRead = channel.read(buffer);
+      numRead = channel.read(sizeBuf);
     } catch (IOException e) {
       handleUserDisconnection(connectionId, socket, key, channel);
       return;
@@ -73,13 +74,28 @@ public class ReceiverRunnable extends BaseSocketRunnable {
 
     if (numRead == -1) {
       handleUserDisconnection(connectionId, socket, key, channel);
-    } else {
-      byte[] data = new byte[numRead];
-      System.arraycopy(buffer.array(), 0, data, 0, numRead);
-      InboxMessage message = SerializationUtils.deserialize(data);
-      LOG.info(String.format("Received inbox message %s from address %s (connection id %s)", message.getClass(), connectionId, socket.getInetAddress()));
-      this.viewInbox.offer(new InboxEntry(connectionId, message));
+      return;
     }
+
+    int size = sizeBuf.getInt(0);
+    ByteBuffer valueBuf = ByteBuffer.allocate(size);
+    try {
+      numRead = channel.read(valueBuf);
+    } catch (IOException e) {
+      handleUserDisconnection(connectionId, socket, key, channel);
+      return;
+    }
+
+    if (numRead == -1) {
+      handleUserDisconnection(connectionId, socket, key, channel);
+      return;
+    }
+
+    byte[] data = new byte[numRead];
+    System.arraycopy(valueBuf.array(), 0, data, 0, numRead);
+    InboxMessage message = SerializationUtils.deserialize(data);
+    LOG.info(String.format("Received inbox message %s from address %s (connection id %s)", message.getClass(), connectionId, socket.getInetAddress()));
+    this.viewInbox.offer(new InboxEntry(connectionId, message));
   }
 
   private void handleNewConnection(ServerSocketChannel serverChannel) throws IOException {

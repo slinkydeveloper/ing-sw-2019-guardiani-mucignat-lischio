@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.adrenalinici.adrenaline.model.common.CellColor.*;
 import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.DOOR;
 import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
 
@@ -218,7 +219,7 @@ public class Dashboard {
   }
 
   public Stream<DashboardCell> stream() {
-    return Arrays.stream(dashboardCells).flatMap(Arrays::stream);
+    return Arrays.stream(dashboardCells).flatMap(Arrays::stream).filter(Objects::nonNull);
   }
 
   public boolean calculateIfVisible(Position from, Position to) {
@@ -322,7 +323,8 @@ public class Dashboard {
 
     for (int i = 0; i < lines(); i++) {
       for (int j = 0; j < cells(); j++) {
-        d[i][j] = dashboardCells[i][j].light();
+        if (dashboardCells[i][j] == null) d[i][j] = null;
+        else d[i][j] = dashboardCells[i][j].light();
       }
     }
 
@@ -331,20 +333,20 @@ public class Dashboard {
 
   public static Dashboard createSmallDashboard() {
     return Dashboard.newBuilder()
-      .newEastCell(c -> c.setSouthType(DOOR).setEastType(OPEN).newPickupCell())
-      .newEastCell(c -> c.setWestType(OPEN).setWestType(OPEN).newPickupCell())
-      .newEastCell(c -> c.setWestType(OPEN).setSouthType(DOOR).newRespawnCell())
+      .newEastCell(c -> c.setSouthType(DOOR).setEastType(OPEN).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setWestType(OPEN).setWestType(OPEN).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setWestType(OPEN).setSouthType(DOOR).cellColor(CYAN).newRespawnCell())
       .newEmptyCell()
       .newSouthLine()
-      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).newRespawnCell())
-      .newEastCell(c -> c.setEastType(OPEN).setSouthType(DOOR).setWestType(OPEN).newPickupCell())
-      .newEastCell(c -> c.setNorthType(DOOR).setEastType(DOOR).setWestType(OPEN).newPickupCell())
-      .newEastCell(c -> c.setSouthType(OPEN).setWestType(DOOR).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(RED).newRespawnCell())
+      .newEastCell(c -> c.setEastType(OPEN).setSouthType(DOOR).setWestType(OPEN).cellColor(RED).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(DOOR).setWestType(OPEN).cellColor(RED).newPickupCell())
+      .newEastCell(c -> c.setSouthType(OPEN).setWestType(DOOR).cellColor(YELLOW).newPickupCell())
       .newSouthLine()
       .newEmptyCell()
-      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).newPickupCell())
-      .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).newPickupCell())
-      .newEastCell(c -> c.setNorthType(OPEN).setWestType(DOOR).newRespawnCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).cellColor(YELLOW).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setWestType(DOOR).cellColor(YELLOW).newRespawnCell())
       .build();
   }
 

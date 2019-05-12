@@ -82,4 +82,11 @@ public class GameBootstrapper {
     this.socketNetworkAdapter.stop();
   }
 
+  public GameController getController() {
+    return controller;
+  }
+
+  public GameModel getModel() {
+    return model;
+  }
 }

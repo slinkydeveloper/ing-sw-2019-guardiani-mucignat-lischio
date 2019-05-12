@@ -8,12 +8,13 @@ import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
 import com.adrenalinici.adrenaline.view.BaseClientGameView;
-import org.fusesource.jansi.AnsiConsole;
+import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
+import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
+import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
+import com.adrenalinici.adrenaline.view.event.PowerUpCardChosenEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class CliMain extends BaseClientGameView {
 
@@ -62,6 +63,8 @@ public class CliMain extends BaseClientGameView {
       System.out.println(
         String.format("Available actions: %s", actions.stream().map(Objects::toString).collect(Collectors.joining(", ")))
       );
+      String chosenAction = scanner.nextLine();
+      sendViewEvent(new ActionChosenEvent(Action.valueOf(chosenAction)));
     }
   }
 
@@ -69,8 +72,10 @@ public class CliMain extends BaseClientGameView {
   public void showAvailableMovements(List<Position> positions) {
     if (isMyTurn()) {
       System.out.println(
-        String.format("Available movements: %s", positions.stream().map(Objects::toString).collect(Collectors.joining(", ")))
+        String.format("Available movements: %s", positions.stream().map(Objects::toString).collect(Collectors.joining(", "))) + "\n Insert index: "
       );
+      String chosenIndex = scanner.nextLine();
+      sendViewEvent(new MovementChosenEvent(positions.get(Integer.parseInt(chosenIndex))));
     }
   }
 
@@ -78,6 +83,7 @@ public class CliMain extends BaseClientGameView {
   public void showNextTurn(PlayerColor player) {
     this.setTurnOfPlayer(player);
     System.out.println("Turn of " + player);
+    this.sendViewEvent(new NewTurnEvent());
   }
 
   @Override
@@ -97,7 +103,14 @@ public class CliMain extends BaseClientGameView {
 
   @Override
   public void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards) {
-
+    if (player.equals(getMyPlayer())) {
+      System.out.println(
+        String.format("Available power up cards : %s", powerUpCards.stream().map(Objects::toString).collect(Collectors.joining(", "))) + "\n Insert index: "
+      );
+      String chosenIndex = scanner.nextLine();
+      System.out.println("Chosen Power up card: " + powerUpCards.get(Integer.parseInt(chosenIndex)));
+      sendViewEvent(new PowerUpCardChosenEvent(getMyPlayer(), powerUpCards.get(Integer.parseInt(chosenIndex))));
+    }
   }
 
   @Override
@@ -121,16 +134,6 @@ public class CliMain extends BaseClientGameView {
   }
 
   @Override
-  public void showAvailableVenomGranades(PlayerColor player) {
-
-  }
-
-  @Override
-  public void showAvailableEnemyMovements(List<Position> positions) {
-
-  }
-
-  @Override
   public void showAvailableGuns(Set<String> guns) {
 
   }
@@ -141,11 +144,17 @@ public class CliMain extends BaseClientGameView {
   }
 
   @Override
+  public void showAvailableTagbackGrenade(PlayerColor player, List<PowerUpCard> powerUpCards) {
+
+  }
+
+  @Override
   public void onEvent(ModelEvent newValue) {
+    System.out.println("Model updated! " + newValue);
     showModel(newValue.getGameModel());
   }
 
   private void showModel(LightGameModel model) {
-    System.out.println(model.toString());
+
   }
 }
