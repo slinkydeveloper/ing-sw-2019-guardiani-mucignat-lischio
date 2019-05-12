@@ -47,7 +47,7 @@ public class TagbackGrenadeFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.YELLOW);
 
-    GunFlowState gunState = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
+    GunFlowState gunState = new BaseEffectGunFlowStateImpl((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
     gunState.hitPlayer(PlayerColor.GRAY, 1);
     gunState.hitPlayer(PlayerColor.YELLOW, 1);
 
@@ -74,7 +74,7 @@ public class TagbackGrenadeFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
 
-    GunFlowState gunState = new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
+    GunFlowState gunState = new BaseEffectGunFlowStateImpl((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
     gunState.hitPlayer(PlayerColor.GRAY, 1);
     gunState.hitPlayer(PlayerColor.YELLOW, 1);
 
