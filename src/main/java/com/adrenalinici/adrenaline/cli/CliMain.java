@@ -67,7 +67,11 @@ public class CliMain extends BaseClientGameView {
 
   @Override
   public void showAvailableMovements(List<Position> positions) {
-
+    if (isMyTurn()) {
+      System.out.println(
+        String.format("Available movements: %s", positions.stream().map(Objects::toString).collect(Collectors.joining(", ")))
+      );
+    }
   }
 
   @Override

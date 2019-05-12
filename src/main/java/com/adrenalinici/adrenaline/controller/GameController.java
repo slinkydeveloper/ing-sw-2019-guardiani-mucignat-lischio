@@ -48,7 +48,11 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   @Override
   public void onEvent(DecoratedEvent<ViewEvent, GameView> event) {
-    flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
+    if (event.getInnerEvent().isStartMatchEvent()) {
+      startMatch(event.getEventSource());
+    } else {
+      flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
+    }
   }
 
   private PlayerColor nextTurnPlayer() {
