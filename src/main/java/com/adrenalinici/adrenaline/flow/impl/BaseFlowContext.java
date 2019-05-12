@@ -42,10 +42,13 @@ public abstract class BaseFlowContext implements FlowContext {
   @SuppressWarnings("unchecked")
   @Override
   public void jump(String stateId, GameView view, FlowState state) {
-    FlowNode s = orchestrator.resolveState(stateId);
-    actualNode = s;
-    actualState = s.mapState(state);
-    actualNode.onJump(actualState, view, getOrchestrator().getModel(), this);
+    actualNode = orchestrator.resolveState(stateId);
+    FlowState newState = actualNode.mapState(state);
+    if (actualNode.skip(newState, this)) this.nextPhase(view, state);
+    else {
+      actualState = newState;
+      actualNode.onJump(actualState, view, getOrchestrator().getModel(), this);
+    }
   }
 
   @Override

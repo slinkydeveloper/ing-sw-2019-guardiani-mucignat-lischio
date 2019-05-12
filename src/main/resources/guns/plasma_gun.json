@@ -1,0 +1,42 @@
+{
+  "name": "Plasma Gun",
+  "note": "The two moves have no ammo cost. You don't have to be able to see your target when you play the card. For example, you can move 2 squares and shoot a target you now see. You cannot use 1 move before shooting and 1 move after.",
+  "firstAmmo": "blue",
+  "extraAmmo": [
+    "yellow"
+  ],
+  "phases": [
+    "BASE_GUN_START",
+    "gun_movement_2",
+    "CHOOSE_PLAYER_TO_HIT",
+    "apply_gun_effect_plasma_gun_base",
+    "gun_movement_2"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 1,
+      "distanceEval": "visible === true"
+    },
+    "gun_movement_2": {
+      "enabled": "state.isActivatedFirstExtraEffect()"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Deal 2 damage to 1 target you can see."
+  },
+  "firstExtraEffect": {
+    "id": "phase_glide",
+    "name": "Phase Glide",
+    "description": "Move 1 or 2 squares. This effect can be used either before or after the basic effect."
+  },
+  "secondExtraEffect": {
+    "id": "charged_shot",
+    "name": "Charged shot",
+    "description": "Deal 1 additional damage to your target.",
+    "cost": [
+      "blue"
+    ]
+  }
+}

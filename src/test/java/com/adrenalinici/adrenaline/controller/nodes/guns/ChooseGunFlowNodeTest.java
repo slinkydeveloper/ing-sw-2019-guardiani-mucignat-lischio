@@ -1,8 +1,5 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
-import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.controller.guns.MachineGunGunFactory;
-import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.controller.nodes.ChooseGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
@@ -12,7 +9,6 @@ import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,7 +72,7 @@ public class ChooseGunFlowNodeTest extends BaseNodeTest {
       .isEqualTo(ControllerNodes.BASE_GUN_START.name());
 
     assertThat(context.getActualState())
-      .isInstanceOf(BaseEffectGunFlowState.class);
+      .isInstanceOf(BaseEffectGunFlowStateImpl.class);
 
   }
 

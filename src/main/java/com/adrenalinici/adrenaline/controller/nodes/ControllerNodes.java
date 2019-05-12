@@ -19,6 +19,10 @@ public enum ControllerNodes {
     return "movement_" + distance;
   }
 
+  public static String gunMovement(int distance) {
+    return "gun_movement_" + distance;
+  }
+
   public static String applyGunEffect(String gunId, String effectId) {
     return "apply_gun_effect_" + gunId + "_" + effectId;
   }

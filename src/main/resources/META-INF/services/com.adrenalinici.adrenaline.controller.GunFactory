@@ -2,3 +2,4 @@ com.adrenalinici.adrenaline.controller.guns.MachineGunGunFactory
 com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory
 com.adrenalinici.adrenaline.controller.guns.ElectroscytheGunFactory
 com.adrenalinici.adrenaline.controller.guns.HellionGunFactory
+com.adrenalinici.adrenaline.controller.guns.PlasmaGunGunFactory
