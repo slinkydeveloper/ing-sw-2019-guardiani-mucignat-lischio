@@ -51,7 +51,7 @@ public class JsonUtils {
   }
 
   public static Effect parseEffect(JsonNode node) {
-    return node == null ? null : new Effect(
+    return node == null || node.isNull() ? null : new Effect(
       node.get("id").asText(),
       node.get("name").asText(),
       node.get("description").asText()
@@ -150,12 +150,21 @@ public class JsonUtils {
       parent.fieldNames().forEachRemaining(s -> result.set(s, parent.get(s)));
     if (child != null)
       child.fieldNames().forEachRemaining(s -> {
+        if (s.startsWith("+") && result.has(s.substring(1)) && result.get(s.substring(1)).isNumber()) { //se result ha il field o ha la sub
+          result.set(s.substring(1), JsonNodeFactory.instance.numberNode(result.get(s.substring(1)).asDouble() + child.get(s).asDouble()));
+        } else {
+          result.set(s, child.get(s));
+        }
+
+      });
+
+    /*child.fieldNames().forEachRemaining(s -> {
         if (child.get(s).isNumber() && result.has(s) && result.get(s).isNumber()) {
           result.set(s, JsonNodeFactory.instance.numberNode(result.get(s).asDouble() + child.get(s).asDouble()));
         } else {
           result.set(s, child.get(s));
         }
-      });
+      });*/
     return result;
   }
 

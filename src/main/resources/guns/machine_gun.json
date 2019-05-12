@@ -35,7 +35,7 @@
     "description": "Deal 1 additional damage to the second target and/or deal 1 damage to a different target you can see.",
     "phasesConfig": {
       "CHOOSE_PLAYER_TO_HIT": {
-        "hittablePlayersNumber": 1
+        "+hittablePlayersNumber": 1
       }
     },
     "cost": [

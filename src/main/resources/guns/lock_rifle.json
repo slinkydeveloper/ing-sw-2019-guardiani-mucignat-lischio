@@ -1,0 +1,36 @@
+{
+  "name": "Lock Rifle",
+  "firstAmmo": "blue",
+  "extraAmmo": [
+    "blue"
+  ],
+  "phases": [
+    "BASE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT",
+    "apply_gun_effect_lock_rifle_base"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 1,
+      "distanceEval": "visible === true"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Deal 2 damage and 1 mark to 1 target you can see."
+  },
+  "firstExtraEffect": {
+    "id": "lock",
+    "name": "Second lock",
+    "description": "Deal 1 mark to a different target you can see.",
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "+hittablePlayersNumber": 1
+      }
+    },
+    "cost": [
+      "red"
+    ]
+  }
+}

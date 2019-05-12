@@ -229,7 +229,7 @@ public class Dashboard {
     Set<DashboardCell> nextScan = new HashSet<>();
     toScan.add(startingCell);
 
-    for (int i = 0; ; i++) {
+    for (int i = 0; i < lines() * cells(); i++) {
       for (DashboardCell c : toScan) {
         if (!c.hasNorthWall() &&
           c.hasNorthDashboardCell() &&
@@ -267,6 +267,7 @@ public class Dashboard {
       toScan.addAll(nextScan);
       nextScan.clear();
     }
+    throw new IllegalStateException("player position not found");
   }
 
   public LightDashboard light() {
