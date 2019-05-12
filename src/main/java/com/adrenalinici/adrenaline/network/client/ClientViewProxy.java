@@ -26,10 +26,9 @@ public class ClientViewProxy extends Observable<InboxMessage> {
     message.onChoosePlayerToHitMessage(e -> view.showChoosePlayerToHit(e.getPlayers()));
     message.onChoosePlayerToMoveMessage(e -> view.showChoosePlayerToMove(e.getAvailableMovements()));
     message.onAvailableExtraEffectsMessage(e -> view.showAvailableExtraEffects(e.getFirstExtraEffect(), e.getSecondExtraEffect()));
-    message.onAvailableVenomGranadesMessage(e -> view.showAvailableVenomGranades(e.getPlayer()));
-    message.onAvailableEnemyMovementsMessage(e -> view.showAvailableEnemyMovements(e.getPositions()));
     message.onAvailableGunsMessage(e -> view.showAvailableGuns(e.getGuns()));
     message.onAvailableGunsToPickupMessage(e -> view.showAvailableGunsToPickup(e.getGuns()));
+    message.onAvailableTagbackGrenadeMessage(e -> view.showAvailableTagbackGrenade(e.getPlayer(), e.getPowerUpCards()));
     message.onModelEventMessage(e -> view.onEvent(e.getModelEvent()));
     message.onChooseMyPlayerMessage(e -> view.showChooseMyPlayer(e.getPlayerColors()));
   }

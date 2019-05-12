@@ -28,13 +28,11 @@ public interface OutboxMessage extends Serializable {
 
   default void onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage> c) {}
 
-  default void onAvailableVenomGranadesMessage(Consumer<AvailableVenomGranadesMessage> c) {}
-
-  default void onAvailableEnemyMovementsMessage(Consumer<AvailableEnemyMovementsMessage> c) {}
-
   default void onAvailableGunsMessage(Consumer<AvailableGunsMessage> c) {}
 
   default void onAvailableGunsToPickupMessage(Consumer<AvailableGunsToPickupMessage> c) {}
+
+  default void onAvailableTagbackGrenadeMessage(Consumer<AvailableTagbackGrenadeMessage> c) {}
 
   default void onModelEventMessage(Consumer<ModelEventMessage> c) {}
 

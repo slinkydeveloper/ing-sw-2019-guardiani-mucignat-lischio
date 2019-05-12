@@ -40,6 +40,10 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
           case MOVE_PICKUP:
             context.addPhases(movement(1), PICKUP.name());
             break;
+          case SHOOT:
+            context.addPhases(CHOOSE_GUN.name(), USE_SCOPE.name());
+            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name());
+            break;
         }
         context.nextPhase(view);
       }

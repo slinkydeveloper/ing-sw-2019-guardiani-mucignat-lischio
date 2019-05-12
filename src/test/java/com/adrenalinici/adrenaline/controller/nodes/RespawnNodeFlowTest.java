@@ -1,21 +1,17 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.flow.FlowNode;
-import com.adrenalinici.adrenaline.model.common.*;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
+import com.adrenalinici.adrenaline.model.common.PowerUpCard;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
-import com.adrenalinici.adrenaline.model.fat.Dashboard;
-import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
-import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
-import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import com.adrenalinici.adrenaline.view.event.PowerUpCardChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
-import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isDashboardCellUpdatedEvent;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.isPlayerDashboardUpdateEvent;
 import static org.assertj.core.api.Assertions.assertThat;

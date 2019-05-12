@@ -18,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
-public class ChooseBaseEffectGunNodeFlowTest extends BaseNodeTest {
+public class ChooseBaseEffectGunFlowNodeTest extends BaseNodeTest {
 
   @Override
   public void setUp() {

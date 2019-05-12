@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.model.common;
 
 public enum PowerUpType {
-  VENOM_GRANADE,
+  TAGBACK_GRENADE,
   SCOPE,
   TELEPORT,
   KINETIC_RAY
