@@ -1,0 +1,25 @@
+{
+  "name": "Heatseeker",
+  "note": "Yes, this can only hit targets you cannot see.",
+  "firstAmmo": "red",
+  "extraAmmo": [
+    "red",
+    "yellow"
+  ],
+  "phases": [
+    "BASE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT",
+    "apply_gun_effect_heatseeker_base"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 1,
+      "distanceEval": "visible != true"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Base effect",
+    "description": "Choose 1 target you cannot see and deal 3 damage to it."
+  }
+}
