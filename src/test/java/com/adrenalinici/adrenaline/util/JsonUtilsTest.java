@@ -45,7 +45,7 @@ public class JsonUtilsTest {
       .put("specificBla", "c")
       .put("blaOverride", "b")
       .put("number2", 2)
-      .put("sum", 2);
+      .put("+sum", 2);
 
     ObjectNode result = JsonUtils.mergeConfigs(parent, child);
 

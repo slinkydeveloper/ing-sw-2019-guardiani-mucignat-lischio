@@ -26,8 +26,7 @@
     "description": "Deal 1 mark to a different target you can see.",
     "phasesConfig": {
       "CHOOSE_PLAYER_TO_HIT": {
-        "hittablePlayersNumber": 1,
-        "distanceEval": "visible === true"
+        "+hittablePlayersNumber": 1
       }
     },
     "cost": [

@@ -79,4 +79,55 @@ public class LockRifleTest extends BaseGunTest {
     assertThat(killerPlayerDashboard.getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.RED, AmmoColor.BLUE);
   }
+
+  @Test
+  public void testWithSecondLockEffect() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.CYAN);
+
+
+    PlayerDashboard killerPlayerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
+    killerPlayerDashboard.addGun(gunId());
+
+    List<ModelEvent> receivedModelEvents = new ArrayList<>();
+    model.registerObserver(receivedModelEvents::add);
+
+    context.nextPhase(
+      viewMock,
+      new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
+    );
+    context.handleEvent(new BaseGunEffectChosenEvent(true, false), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+
+    assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
+      .isEqualTo(Collections.nCopies(2, PlayerColor.GREEN));
+
+    assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getMarks())
+      .containsExactly(PlayerColor.GREEN);
+
+    assertThat(context.getKilledPlayers()).isEmpty();
+
+    assertThat(receivedModelEvents)
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
+
+    assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getDamages().isEmpty()).isTrue();
+    assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getMarks())
+      .containsExactly(PlayerColor.GREEN);
+
+    assertThat(receivedModelEvents)
+      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
+
+    assertThat(killerPlayerDashboard.getLoadedGuns()).isEmpty();
+
+    assertThat(killerPlayerDashboard.getUnloadedGuns())
+      .containsExactly(gunId());
+
+    assertThat(killerPlayerDashboard.getAmmos())
+      .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.BLUE);
+  }
 }
