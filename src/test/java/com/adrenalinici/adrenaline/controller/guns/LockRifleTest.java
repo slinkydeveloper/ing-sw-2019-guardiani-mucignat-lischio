@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.controller.guns;
 import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowState;
+import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowStateImpl;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseBaseEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
@@ -55,7 +56,7 @@ public class LockRifleTest extends BaseGunTest {
 
     context.nextPhase(
       viewMock,
-      new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
+      new BaseEffectGunFlowStateImpl((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
     );
     context.handleEvent(new BaseGunEffectChosenEvent(false, false), viewMock);
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
@@ -98,7 +99,7 @@ public class LockRifleTest extends BaseGunTest {
 
     context.nextPhase(
       viewMock,
-      new BaseEffectGunFlowState((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
+      new BaseEffectGunFlowStateImpl((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
     );
     context.handleEvent(new BaseGunEffectChosenEvent(true, false), viewMock);
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
