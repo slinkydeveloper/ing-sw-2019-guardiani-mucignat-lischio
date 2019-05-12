@@ -4,6 +4,7 @@ com.adrenalinici.adrenaline.controller.guns.ElectroscytheGunFactory
 com.adrenalinici.adrenaline.controller.guns.HellionGunFactory
 com.adrenalinici.adrenaline.controller.guns.LockRifleGunFactory
 com.adrenalinici.adrenaline.controller.guns.PlasmaGunGunFactory
+com.adrenalinici.adrenaline.controller.guns.WhisperGunFactory
 com.adrenalinici.adrenaline.testutil.BaseEffectGunSwordFactory
 com.adrenalinici.adrenaline.testutil.BaseEffectGunRifleFactory
 com.adrenalinici.adrenaline.testutil.BaseEffectGunRevolverFactory
