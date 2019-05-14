@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,117 +12,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Sphere?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0"
-      fx:controller="com.adrenalinici.adrenaline.gui.controller.dasboardController"
-      xmlns:fx="http://javafx.com/fxml">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <GridPane layoutX="115.0" layoutY="107.0" prefHeight="387.0" prefWidth="509.0">
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="123.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="137.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="132.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.0" minWidth="10.0" prefWidth="129.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints maxHeight="277.0" minHeight="10.0" prefHeight="121.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="256.0" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="123.0" minHeight="0.0" prefHeight="123.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-      <children>
-        <AnchorPane id="yellowCell1" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-          <children>
-            <Button id="pickUpYellow" layoutX="31.0" layoutY="70.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="bluCell2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
-          <children>
-            <Button id="pickUpBlu" layoutX="78.0" layoutY="21.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="31.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="bluCell1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-          <children>
-            <Button id="respawnBlu" layoutX="47.0" layoutY="16.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="73.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="redCell1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
-          <children>
-            <Button id="pickUpRed" layoutX="56.0" layoutY="78.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="41.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="redCell2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-          <children>
-            <Button id="respawnRed" layoutX="76.0" layoutY="78.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="31.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="violetCell2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-          <children>
-            <Button id="pickUpViolet1" layoutX="89.0" layoutY="54.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="31.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="violetCell1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-          <children>
-            <Button id="pickUpViolet2" layoutX="72.0" layoutY="65.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="48.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="yellowCell2" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-          <children>
-            <Button id="respawnYellow" layoutX="21.0" layoutY="19.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="41.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="whiteCell1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-          <children>
-            <Button id="pickUpWhite1" layoutX="95.0" layoutY="61.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="31.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="whiteCell2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-          <children>
-            <Button id="pickUpWhite2" layoutX="82.0" layoutY="59.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="31.0" text="Button" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="whiteCell3" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-          <children>
-            <Button id="pickUpWhite3" layoutX="58.0" layoutY="60.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="31.0" text="Button" />
-          </children>
-        </AnchorPane>
-      </children>
-    </GridPane>
-    <ImageView fitHeight="557.0" fitWidth="742.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fitHeight="549.0" fitWidth="704.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
       <image>
-        <Image url="/images/DashboardAndPlayers/wrongDashboard.jpeg" />
+        <Image url="/images/DashboardAndPlayers/dashboardProvvisoria.jpeg" />
       </image>
     </ImageView>
-    <VBox layoutY="305.0" prefHeight="247.0" prefWidth="109.0">
-      <children>
-        <AnchorPane id="yellowGun1" prefHeight="84.0" prefWidth="109.0" />
-        <AnchorPane id="yellowGun2" prefHeight="84.0" prefWidth="109.0" />
-        <AnchorPane id="yellowGun3" prefHeight="83.0" prefWidth="109.0" />
-      </children>
-    </VBox>
-    <VBox layoutX="633.0" layoutY="193.0" prefHeight="239.0" prefWidth="109.0">
-      <children>
-        <AnchorPane id="redGun1" prefHeight="81.0" prefWidth="109.0" />
-        <AnchorPane id="redGun2" prefHeight="84.0" prefWidth="109.0" />
-        <AnchorPane id="redGun3" prefHeight="81.0" prefWidth="109.0" />
-      </children>
-    </VBox>
-    <HBox layoutX="114.0" prefHeight="100.0" prefWidth="241.0">
-      <children>
-        <AnchorPane id="bluGun1" prefHeight="100.0" prefWidth="78.0" />
-        <AnchorPane id="bluGun2" prefHeight="100.0" prefWidth="83.0" />
-        <AnchorPane id="bluGun3" prefHeight="100.0" prefWidth="80.0" />
-      </children>
-    </HBox>
-    <AnchorPane id="Guns" layoutX="20.0" layoutY="139.0" prefHeight="123.0" prefWidth="83.0" />
-    <AnchorPane id="AmmoCards" layoutX="23.0" layoutY="24.0" prefHeight="83.0" prefWidth="63.0" />
-    <AnchorPane id="DoubleKIll" layoutX="657.0" layoutY="107.0" prefHeight="46.0" prefWidth="41.0">
-      <children>
-        <Sphere id="doubleKIll" layoutX="21.0" layoutY="23.0" radius="7.0" />
-      </children>
-    </AnchorPane>
-    <GridPane layoutX="438.0" layoutY="12.0" prefHeight="54.0" prefWidth="259.0">
+    <GridPane layoutX="50.0" layoutY="39.0" prefHeight="44.0" prefWidth="241.0">
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -137,371 +38,174 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
-        <Sphere id="kill7" radius="7.0">
-          <GridPane.margin>
-            <Insets left="10.0" />
-          </GridPane.margin>
-        </Sphere>
-        <Sphere id="kill6" radius="7.0" GridPane.columnIndex="1">
-          <GridPane.margin>
-            <Insets left="10.0" />
-          </GridPane.margin>
-        </Sphere>
-        <Sphere id="kill5" radius="7.0" GridPane.columnIndex="2">
-          <GridPane.margin>
-            <Insets left="10.0" />
-          </GridPane.margin>
-        </Sphere>
-        <Sphere id="kill4" radius="7.0" GridPane.columnIndex="3">
-          <GridPane.margin>
-            <Insets left="10.0" />
-          </GridPane.margin>
-        </Sphere>
-        <Sphere id="kill3" radius="7.0" GridPane.columnIndex="4">
-          <GridPane.margin>
-            <Insets left="10.0" />
-          </GridPane.margin>
-        </Sphere>
-        <Sphere id="kill2" radius="7.0" GridPane.columnIndex="5">
-          <GridPane.margin>
-            <Insets left="10.0" />
-          </GridPane.margin>
-        </Sphere>
-        <Sphere id="kill1" radius="7.0" GridPane.columnIndex="6">
+        <Sphere fx:id="mark0" radius="5.0">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere id="kill0" radius="7.0" GridPane.columnIndex="7">
+        <Sphere fx:id="killColor0" radius="5.0">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark1" radius="5.0" GridPane.columnIndex="1">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor1" radius="5.0" GridPane.columnIndex="1">
           <GridPane.margin>
             <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark2" radius="5.0" GridPane.columnIndex="2">
+          <GridPane.margin>
+            <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor2" radius="5.0" GridPane.columnIndex="2">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark3" radius="5.0" GridPane.columnIndex="3">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor3" radius="5.0" GridPane.columnIndex="3">
+          <GridPane.margin>
+            <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark4" radius="5.0" GridPane.columnIndex="4">
+          <GridPane.margin>
+            <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor4" radius="5.0" GridPane.columnIndex="4">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark5" radius="5.0" GridPane.columnIndex="5">
+          <GridPane.margin>
+            <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor5" radius="5.0" GridPane.columnIndex="5">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark6" radius="5.0" GridPane.columnIndex="6">
+          <GridPane.margin>
+            <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor6" radius="5.0" GridPane.columnIndex="6">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="mark7" radius="5.0" GridPane.columnIndex="7">
+          <GridPane.margin>
+            <Insets left="7.0" />
+          </GridPane.margin>
+        </Sphere>
+        <Sphere fx:id="killColor7" radius="5.0" GridPane.columnIndex="7">
+          <GridPane.margin>
+            <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
       </children>
     </GridPane>
-    <GridPane layoutX="762.0" layoutY="170.0" prefHeight="349.0" prefWidth="198.0">
+    <AnchorPane layoutX="32.0" layoutY="100.0" prefHeight="63.0" prefWidth="68.0">
+      <children>
+        <Sphere fx:id="doubleKill2" layoutX="14.0" layoutY="37.0" radius="5.0" />
+        <Sphere fx:id="doubleKill4" layoutX="19.0" layoutY="19.0" radius="5.0" />
+        <Sphere fx:id="doubleKill3" layoutX="54.0" layoutY="19.0" radius="5.0" />
+        <Sphere fx:id="doubleKill1" layoutX="54.0" layoutY="37.0" radius="5.0" />
+        <Sphere fx:id="doubleKill0" layoutX="34.0" layoutY="14.0" radius="5.0" />
+      </children>
+    </AnchorPane>
+    <GridPane layoutX="116.0" layoutY="118.0" prefHeight="370.0" prefWidth="483.0">
       <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
-        <AnchorPane prefHeight="112.0" prefWidth="200.0" GridPane.rowIndex="1">
+        <AnchorPane fx:id="cyanCell00" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" />
+        <AnchorPane fx:id="cyanCell10" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+        <AnchorPane fx:id="cyanCell20" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+        <AnchorPane fx:id="greenCell30" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+        <AnchorPane fx:id="redCell01" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+        <AnchorPane fx:id="redCell11" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <AnchorPane fx:id="yellowCell21" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <AnchorPane fx:id="bluCell31" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <AnchorPane fx:id="bluCell32" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <AnchorPane fx:id="bluCell22" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <AnchorPane fx:id="grayCell12" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      </children>
+    </GridPane>
+    <VBox layoutY="203.0" prefHeight="230.0" prefWidth="109.0">
+      <children>
+        <AnchorPane fx:id="redGun0" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane fx:id="redGun1" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane fx:id="redGun2" onMouseClicked="#chooseGun" prefHeight="77.0" prefWidth="109.0" />
+      </children>
+    </VBox>
+    <VBox layoutX="610.0" layoutY="308.0" prefHeight="230.0" prefWidth="98.0">
+      <children>
+        <AnchorPane fx:id="yellowGun0" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane fx:id="yellowGun1" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane fx:id="yellowGun2" onMouseClicked="#chooseGun" prefHeight="77.0" prefWidth="109.0" />
+      </children>
+    </VBox>
+    <HBox layoutX="371.0" prefHeight="108.0" prefWidth="231.0">
+      <children>
+        <AnchorPane fx:id="cyanGun0" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="77.0" />
+        <AnchorPane fx:id="cyanGun1" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="77.0" />
+        <AnchorPane fx:id="cyanGun2" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="76.0" />
+      </children>
+    </HBox>
+    <AnchorPane fx:id="ammo" layoutX="629.0" layoutY="32.0" onMouseClicked="#pickUpAmmo" prefHeight="84.0" prefWidth="57.0" />
+    <GridPane layoutX="710.0" layoutY="2.0" prefHeight="542.0" prefWidth="267.0">
+      <columnConstraints>
+        <ColumnConstraints />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+      <children>
+        <DialogPane prefHeight="135.0" prefWidth="267.0" GridPane.columnIndex="1" />
+        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
           <children>
-            <ImageView fitHeight="65.0" fitWidth="200.0">
-              <image>
-                <Image url="/images/DashboardAndPlayers/IMG_0567(6) (copia).jpeg" />
-              </image>
-            </ImageView>
-            <GridPane layoutX="41.0" layoutY="22.0" prefHeight="21.0" prefWidth="141.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="colorKillGray11" radius="5.0" GridPane.columnIndex="11" />
-                <Sphere id="colorKillGray10" radius="5.0" GridPane.columnIndex="10" />
-                <Sphere id="colorKillGray9" radius="5.0" GridPane.columnIndex="9" />
-                <Sphere id="colorKillGray8" radius="5.0" GridPane.columnIndex="8" />
-                <Sphere id="colorKillGray7" radius="5.0" GridPane.columnIndex="7" />
-                <Sphere id="colorKillGray6" radius="5.0" GridPane.columnIndex="6" />
-                <Sphere id="colorKillGray5" radius="5.0" GridPane.columnIndex="5" />
-                <Sphere id="colorKillGray4" radius="5.0" GridPane.columnIndex="4" />
-                <Sphere id="colorKillGray3" radius="5.0" GridPane.columnIndex="3" />
-                <Sphere id="colorKillGray2" radius="5.0" GridPane.columnIndex="2" />
-                <Sphere id="colorKillGray1" radius="5.0" GridPane.columnIndex="1" />
-                <Sphere id="colorKillGray0" radius="5.0" />
-              </children>
-            </GridPane>
-            <GridPane layoutX="47.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="20.0" prefWidth="73.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="4.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="grayMark00" radius="2.0" />
-                <Sphere id="grayMark10" radius="2.0" GridPane.columnIndex="1" />
-                <Sphere id="grayMark20" radius="2.0" GridPane.columnIndex="2" />
-                <Sphere id="grayMark30" radius="2.0" GridPane.columnIndex="3" />
-                <Sphere id="grayMark60" radius="2.0" GridPane.columnIndex="6" />
-                <Sphere id="grayMark01" radius="2.0" GridPane.rowIndex="1" />
-                <Sphere id="grayMark11" radius="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Sphere id="grayMark21" radius="2.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Sphere id="grayMark31" radius="2.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <Sphere id="grayMark61" radius="2.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                <Sphere id="grayMark40" radius="2.0" GridPane.columnIndex="4" />
-                <Sphere id="grayMark41" radius="2.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <Sphere id="grayMark50" radius="2.0" GridPane.columnIndex="5" />
-                <Sphere id="grayMark51" radius="2.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <Sphere id="grayMark70" radius="2.0" GridPane.columnIndex="7" />
-                <Sphere id="grayMark71" radius="2.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-              </children>
-            </GridPane>
+            <AnchorPane fx:id="gun0" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="84.0" />
+            <AnchorPane fx:id="gun1" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="85.0" />
+            <AnchorPane fx:id="gun2" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="87.0" />
           </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="93.0" prefWidth="200.0" GridPane.rowIndex="2">
+        </HBox>
+        <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="267.0" text="show other players " GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
           <children>
-            <ImageView fitHeight="65.0" fitWidth="200.0">
-              <image>
-                <Image url="/images/DashboardAndPlayers/green.jpeg" />
-              </image>
-            </ImageView>
-            <GridPane layoutX="53.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="20.0" prefWidth="73.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="greenMark00" radius="2.0" />
-                <Sphere id="greenMark10" radius="2.0" GridPane.columnIndex="1" />
-                <Sphere id="greenMark20" radius="2.0" GridPane.columnIndex="2" />
-                <Sphere id="greenMark30" radius="2.0" GridPane.columnIndex="3" />
-                <Sphere id="greenMark60" radius="2.0" GridPane.columnIndex="6" />
-                <Sphere id="greenMark11" radius="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Sphere id="greenMark21" radius="2.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Sphere id="greenMark31" radius="2.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <Sphere id="greenMark61" radius="2.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                <Sphere id="greenMark40" radius="2.0" GridPane.columnIndex="4" />
-                <Sphere id="41" radius="2.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <Sphere id="greenMark50" radius="2.0" GridPane.columnIndex="5" />
-                <Sphere id="greenMark51" radius="2.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <Sphere id="greenMark70" radius="2.0" GridPane.columnIndex="7" />
-                <Sphere id="greenMark71" radius="2.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-              </children>
-            </GridPane>
-            <GridPane layoutX="50.0" layoutY="23.0" prefHeight="20.0" prefWidth="141.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="colorKillGreen11" radius="5.0" GridPane.columnIndex="11" />
-                <Sphere id="colorKillGreen10" radius="5.0" GridPane.columnIndex="10" />
-                <Sphere id="colorKillGreen9" radius="5.0" GridPane.columnIndex="9" />
-                <Sphere id="colorKillGreen8" radius="5.0" GridPane.columnIndex="8" />
-                <Sphere id="colorKillGreen7" radius="5.0" GridPane.columnIndex="7" />
-                <Sphere id="colorKillGreen6" radius="5.0" GridPane.columnIndex="6" />
-                <Sphere id="colorKillGreen5" radius="5.0" GridPane.columnIndex="5" />
-                <Sphere id="colorKillGreen4" radius="5.0" GridPane.columnIndex="4" />
-                <Sphere id="colorKillGreen3" radius="5.0" GridPane.columnIndex="3" />
-                <Sphere id="colorKillGreen2" radius="5.0" GridPane.columnIndex="2" />
-                <Sphere id="colorKillGreen1" radius="5.0" GridPane.columnIndex="1" />
-                <Sphere id="colorKillGreen0" radius="5.0" />
-              </children>
-            </GridPane>
-          </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="126.0" prefWidth="200.0" GridPane.rowIndex="3">
-          <children>
-            <ImageView fitHeight="65.0" fitWidth="200.0">
-              <image>
-                <Image url="/images/DashboardAndPlayers/purple.jpeg" />
-              </image>
-            </ImageView>
-            <GridPane layoutX="48.0" layoutY="24.0" prefHeight="14.0" prefWidth="134.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="colorKillCyan11" radius="5.0" GridPane.columnIndex="11" />
-                <Sphere id="colorKillCyan10" radius="5.0" GridPane.columnIndex="10" />
-                <Sphere id="colorKillCyan9" radius="5.0" GridPane.columnIndex="9" />
-                <Sphere id="colorKillCyan8" radius="5.0" GridPane.columnIndex="8" />
-                <Sphere id="colorKillCyan7" radius="5.0" GridPane.columnIndex="7" />
-                <Sphere id="colorKillCyan6" radius="5.0" GridPane.columnIndex="6" />
-                <Sphere id="colorKillCyan5" radius="5.0" GridPane.columnIndex="5" />
-                <Sphere id="colorKillCyan4" radius="5.0" GridPane.columnIndex="4" />
-                <Sphere id="colorKillCyan3" radius="5.0" GridPane.columnIndex="3" />
-                <Sphere id="colorKillCyan2" radius="5.0" GridPane.columnIndex="2" />
-                <Sphere id="colorKillCyan1" radius="5.0" GridPane.columnIndex="1" />
-                <Sphere id="colorKillCyan0" radius="5.0" />
-              </children>
-            </GridPane>
-            <GridPane layoutX="47.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="20.0" prefWidth="73.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="cyanMark00" radius="2.0" />
-                <Sphere id="cyanMark10" radius="2.0" GridPane.columnIndex="1" />
-                <Sphere id="cyanMark20" radius="2.0" GridPane.columnIndex="2" />
-                <Sphere id="cyanMark30" radius="2.0" GridPane.columnIndex="3" />
-                <Sphere id="cyanMark60" radius="2.0" GridPane.columnIndex="6" />
-                <Sphere id="cyanMark01" radius="2.0" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark11" radius="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark21" radius="2.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark31" radius="2.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark61" radius="2.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark40" radius="2.0" GridPane.columnIndex="4" />
-                <Sphere id="cyanMark40" radius="2.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark50" radius="2.0" GridPane.columnIndex="5" />
-                <Sphere id="cyanMark51" radius="2.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <Sphere id="cyanMark70" radius="2.0" GridPane.columnIndex="7" />
-                <Sphere id="cyanMark71" radius="2.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-              </children>
-            </GridPane>
-          </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="79.0" prefWidth="200.0" GridPane.rowIndex="4">
-          <children>
-            <ImageView fitHeight="65.0" fitWidth="200.0">
-              <image>
-                <Image url="/images/DashboardAndPlayers/purple.jpeg" />
-              </image>
-            </ImageView>
-            <GridPane layoutX="48.0" layoutY="27.0" prefHeight="14.0" prefWidth="134.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="colorKillPurple11" radius="5.0" GridPane.columnIndex="11" />
-                <Sphere id="colorKillPurple10" radius="5.0" GridPane.columnIndex="10" />
-                <Sphere id="colorKillPurple9" radius="5.0" GridPane.columnIndex="9" />
-                <Sphere id="colorKillPurple8" radius="5.0" GridPane.columnIndex="8" />
-                <Sphere id="colorKillPurple7" radius="5.0" GridPane.columnIndex="7" />
-                <Sphere id="colorKillPurple6" radius="5.0" GridPane.columnIndex="6" />
-                <Sphere id="colorKillPurple5" radius="5.0" GridPane.columnIndex="5" />
-                <Sphere id="colorKillPurple4" radius="5.0" GridPane.columnIndex="4" />
-                <Sphere id="colorKillPurple3" radius="5.0" GridPane.columnIndex="3" />
-                <Sphere id="colorKillPurple2" radius="5.0" GridPane.columnIndex="2" />
-                <Sphere id="colorKillPurple1" radius="5.0" GridPane.columnIndex="1" />
-                <Sphere id="colorKillPurple0" radius="5.0" />
-              </children>
-            </GridPane>
-            <GridPane layoutX="53.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="20.0" prefWidth="73.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-              <children>
-                <Sphere id="purpleMark00" radius="2.0" />
-                <Sphere id="purpleMark10" radius="2.0" GridPane.columnIndex="1" />
-                <Sphere id="purpleMark20" radius="2.0" GridPane.columnIndex="2" />
-                <Sphere id="purpleMark30" radius="2.0" GridPane.columnIndex="3" />
-                <Sphere id="purpleMark60" radius="2.0" GridPane.columnIndex="6" />
-                <Sphere id="purpleMark01" radius="2.0" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark11" radius="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark21" radius="2.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark31" radius="2.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark61" radius="2.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark40" radius="2.0" GridPane.columnIndex="4" />
-                <Sphere id="purpleMark41" radius="2.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark50" radius="2.0" GridPane.columnIndex="5" />
-                <Sphere id="purpleMark51" radius="2.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <Sphere id="purpleMark70" radius="2.0" GridPane.columnIndex="7" />
-                <Sphere id="purpleMark71" radius="2.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-              </children>
-            </GridPane>
-          </children>
-        </AnchorPane>
-        <AnchorPane prefHeight="112.0" prefWidth="200.0">
-          <children>
-            <ImageView fitHeight="65.0" fitWidth="200.0">
+            <ImageView fitHeight="108.0" fitWidth="265.0" pickOnBounds="true" preserveRatio="true">
               <image>
                 <Image url="/images/DashboardAndPlayers/yellow.jpeg" />
               </image>
             </ImageView>
-            <GridPane layoutX="41.0" layoutY="22.0" prefHeight="21.0" prefWidth="141.0">
+            <GridPane layoutX="64.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="175.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -520,62 +224,65 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <children>
-                <Sphere id="colorKillYellow11" radius="5.0" GridPane.columnIndex="11" />
-                <Sphere id="colorKillYellow10" radius="5.0" GridPane.columnIndex="10" />
-                <Sphere id="colorKillYellow9" radius="5.0" GridPane.columnIndex="9" />
-                <Sphere id="colorKillYellow8" radius="5.0" GridPane.columnIndex="8" />
-                <Sphere id="colorKillYellow7" radius="5.0" GridPane.columnIndex="7" />
-                <Sphere id="colorKillYellow6" radius="5.0" GridPane.columnIndex="6" />
-                <Sphere id="colorKillYellow5" radius="5.0" GridPane.columnIndex="5" />
-                <Sphere id="colorKillYellow4" radius="5.0" GridPane.columnIndex="4" />
-                <Sphere id="colorKillYellow3" radius="5.0" GridPane.columnIndex="3" />
-                <Sphere id="colorKillYellow2" radius="5.0" GridPane.columnIndex="2" />
-                <Sphere id="colorKillYellow1" radius="5.0" GridPane.columnIndex="1" />
-                <Sphere id="colorKillYellow0" radius="5.0" />
+                <Sphere radius="4.0" />
+                <Sphere radius="4.0" GridPane.columnIndex="1" />
+                <Sphere radius="4.0" GridPane.columnIndex="3" />
+                <Sphere radius="4.0" GridPane.columnIndex="2" />
+                <Sphere radius="4.0" GridPane.columnIndex="4" />
+                <Sphere radius="4.0" GridPane.columnIndex="7" />
+                <Sphere radius="4.0" GridPane.columnIndex="5" />
+                <Sphere radius="4.0" GridPane.columnIndex="6" />
+                <Sphere radius="4.0" GridPane.columnIndex="8" />
+                <Sphere radius="4.0" GridPane.columnIndex="9" />
+                <Sphere radius="4.0" GridPane.columnIndex="10" />
+                <Sphere radius="4.0" GridPane.columnIndex="11" />
               </children>
             </GridPane>
-            <GridPane layoutX="45.0" layoutY="2.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="4.0" prefWidth="80.0">
+            <AnchorPane layoutX="12.0" layoutY="6.0" prefHeight="17.0" prefWidth="241.0">
+              <children>
+                <Sphere layoutX="48.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="39.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="30.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="22.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="14.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="73.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="57.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="65.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="83.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="91.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="108.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="117.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="126.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="135.0" layoutY="8.0" radius="4.0" />
+                <Sphere layoutX="100.0" layoutY="8.0" radius="4.0" />
+              </children>
+            </AnchorPane>
+            <GridPane layoutY="69.0" prefHeight="68.0" prefWidth="87.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <children>
-                <Sphere id="yellowMark00" radius="2.0" />
-                <Sphere id="yellowMark10" radius="2.0" GridPane.columnIndex="1" />
-                <Sphere id="yellowMark20" radius="2.0" GridPane.columnIndex="2" />
-                <Sphere id="yellowMark30" radius="2.0" GridPane.columnIndex="3" />
-                <Sphere id="yellowMark60" radius="2.0" GridPane.columnIndex="6" />
-                <Sphere id="yellowMark01" radius="2.0" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark11" radius="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark21" radius="2.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark31" radius="2.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark61" radius="2.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark40" radius="2.0" GridPane.columnIndex="4" />
-                <Sphere id="yellowMark41" radius="2.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark50" radius="2.0" GridPane.columnIndex="5" />
-                <Sphere id="yellowMark51" radius="2.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                <Sphere id="yellowMark70" radius="2.0" GridPane.columnIndex="7" />
-                <Sphere id="yellowMark71" radius="2.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                <Circle fx:id="redAmmo0" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                <Circle fx:id="redAmmo1" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" />
+                <Circle fx:id="redAmmo2" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" />
+                <Circle fx:id="cyanAmmo0" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
+                <Circle fx:id="cyanAmmo1" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Circle fx:id="cyanAmmo2" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Circle fx:id="yellowAmmo0" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
+                <Circle fx:id="yellowAmmo1" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Circle fx:id="yellowAmmo2" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
               </children>
             </GridPane>
           </children>
         </AnchorPane>
       </children>
     </GridPane>
-    <AnchorPane layoutX="761.0" layoutY="24.0" prefHeight="123.0" prefWidth="200.0">
-      <children>
-        <TextArea id="infoTextArea " prefHeight="123.0" prefWidth="200.0" />
-      </children>
-    </AnchorPane>
   </children>
 </Pane>
