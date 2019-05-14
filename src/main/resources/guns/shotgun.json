@@ -1,0 +1,43 @@
+{
+  "name": "Shotgun",
+  "firstAmmo": "yellow",
+  "phases": [
+    "ALTERNATIVE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT"
+  ],
+  "extraAmmo": [
+    "yellow"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 3 damage to 1 target on your square. If you want, you may then move the target 1 square.",
+    "phases": [
+      "apply_gun_effect_shotgun_base",
+      "gun_enemy_movement_1"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "distance === 0"
+      },
+      "gun_enemy_movement_1": {
+        "enabled": "state.isFirstEffect()"
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "long",
+    "name": "Long barrel mode",
+    "description": "Deal 2 damage to 1 target on any square exactly one move away.",
+    "phases": [
+      "apply_gun_effect_shotgun_long"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "distance === 1"
+      }
+    }
+  }
+}

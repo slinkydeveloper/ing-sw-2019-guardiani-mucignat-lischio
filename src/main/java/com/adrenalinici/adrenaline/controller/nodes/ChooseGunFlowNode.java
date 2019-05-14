@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.*;
-import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
+import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowStateImpl;
 import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowStateImpl;
 import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
@@ -28,7 +28,7 @@ public class ChooseGunFlowNode implements StatelessControllerFlowNode {
           DecoratedAlternativeEffectGun decorated = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE
           .getDecoratedGun(alternativeEffectGun.getId());
           context.addPhases(decorated.getPhases().toArray(new String[0]));
-        context.nextPhase(view, new AlternativeEffectGunFlowState(decorated));
+          context.nextPhase(view, new AlternativeEffectGunFlowStateImpl(decorated));
       }, baseEffectGun -> {
           DecoratedBaseEffectGun decorated = (DecoratedBaseEffectGun) GunLoader.INSTANCE
             .getDecoratedGun(baseEffectGun.getId());

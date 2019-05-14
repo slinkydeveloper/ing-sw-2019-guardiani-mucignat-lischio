@@ -2,7 +2,6 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.common.Effect;
@@ -11,8 +10,6 @@ import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
 import org.assertj.core.data.Index;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -38,7 +35,7 @@ public class ChooseAlternativeEffectGunFlowNodeTest extends BaseNodeTest {
 
     context.nextPhase(
       viewMock,
-      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+      new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
     );
 
     ArgumentCaptor<Effect> effectOneCaptor = ArgumentCaptor.forClass(Effect.class);
@@ -58,7 +55,7 @@ public class ChooseAlternativeEffectGunFlowNodeTest extends BaseNodeTest {
 
     context.nextPhase(
       viewMock,
-      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+      new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
     );
     context.handleEvent(new AlternativeGunEffectChosenEvent(false), viewMock);
 
@@ -78,7 +75,7 @@ public class ChooseAlternativeEffectGunFlowNodeTest extends BaseNodeTest {
 
     context.nextPhase(
       viewMock,
-      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
+      new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2"))
     );
     context.handleEvent(new AlternativeGunEffectChosenEvent(true), viewMock);
 

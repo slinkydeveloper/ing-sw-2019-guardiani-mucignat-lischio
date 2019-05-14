@@ -30,4 +30,7 @@ public interface ViewEvent extends Serializable {
   }
 
   default void onUseVenomGrenadeEvent(Consumer<UseTagbackGrenadeEvent> consumer) {}
+
+  default void onEnemyMovementChosenEvent(Consumer<EnemyMovementChosenEvent> consumer) {
+  }
 }
