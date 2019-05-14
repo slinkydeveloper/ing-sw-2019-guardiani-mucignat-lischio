@@ -2,7 +2,6 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.controller.guns.ZX2GunFactory;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
@@ -11,7 +10,6 @@ import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +39,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
 
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
     context.nextPhase(viewMock,
-      new AlternativeEffectGunFlowState(gun).setChosenEffect(gun.getFirstEffect(), true)
+      new AlternativeEffectGunFlowStateImpl(gun).setChosenEffect(gun.getFirstEffect(), true)
     );
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
@@ -70,7 +68,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
 
     context.nextPhase(viewMock,
-      new AlternativeEffectGunFlowState(gun).setChosenEffect(gun.getSecondEffect(), false)
+      new AlternativeEffectGunFlowStateImpl(gun).setChosenEffect(gun.getSecondEffect(), false)
     );
 
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);

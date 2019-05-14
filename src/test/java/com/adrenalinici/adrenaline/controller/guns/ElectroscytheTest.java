@@ -1,9 +1,8 @@
 package com.adrenalinici.adrenaline.controller.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
-import com.adrenalinici.adrenaline.controller.GunFactory;
 import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowState;
+import com.adrenalinici.adrenaline.controller.nodes.guns.AlternativeEffectGunFlowStateImpl;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.common.AmmoColor;
@@ -52,7 +51,7 @@ public class ElectroscytheTest extends BaseGunTest {
 
     context.nextPhase(
       viewMock,
-      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
+      new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
     );
     assertThat(context.getKilledPlayers().isEmpty()).isTrue();
     context.handleEvent(new AlternativeGunEffectChosenEvent(false), viewMock);
@@ -98,7 +97,7 @@ public class ElectroscytheTest extends BaseGunTest {
 
     context.nextPhase(
       viewMock,
-      new AlternativeEffectGunFlowState((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
+      new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun(gunId()))
     );
     assertThat(context.getKilledPlayers().isEmpty()).isTrue();
     context.handleEvent(new AlternativeGunEffectChosenEvent(true), viewMock);

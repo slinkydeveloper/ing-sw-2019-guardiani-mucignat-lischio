@@ -6,3 +6,4 @@ com.adrenalinici.adrenaline.controller.guns.LockRifleGunFactory
 com.adrenalinici.adrenaline.controller.guns.PlasmaGunGunFactory
 com.adrenalinici.adrenaline.controller.guns.WhisperGunFactory
 com.adrenalinici.adrenaline.controller.guns.HeatseekerGunFactory
+com.adrenalinici.adrenaline.controller.guns.ShotgunGunFactory

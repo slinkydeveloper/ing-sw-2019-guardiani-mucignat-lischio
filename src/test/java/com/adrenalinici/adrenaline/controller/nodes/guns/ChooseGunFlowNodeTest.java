@@ -55,7 +55,7 @@ public class ChooseGunFlowNodeTest extends BaseNodeTest {
       .isEqualTo(ControllerNodes.ALTERNATIVE_GUN_START.name());
 
     assertThat(context.getActualState())
-      .isInstanceOf(AlternativeEffectGunFlowState.class);
+      .isInstanceOf(AlternativeEffectGunFlowStateImpl.class);
 
   }
 
