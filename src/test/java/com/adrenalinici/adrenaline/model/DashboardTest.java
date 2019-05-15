@@ -104,6 +104,27 @@ public class DashboardTest {
   }
 
   @Test
+  public void testCalculateMovementsInOneDirection() {
+    Dashboard d = TestUtils.build3x3Dashboard();
+
+    assertThat(d.calculateMovementsInOneDirection(Position.of(0, 0), 2))
+      .containsOnly(
+        new Position(0, 0),
+        new Position(0, 1),
+        new Position(0, 2),
+        new Position(1, 0),
+        new Position(2, 0)
+      );
+
+    assertThat(d.calculateMovementsInOneDirection(Position.of(1, 1), 2))
+      .containsOnly(
+        new Position(1, 0),
+        new Position(1, 1),
+        new Position(1, 2)
+      );
+  }
+
+  @Test
   public void testGetPlayersPositions() {
     Dashboard d = TestUtils.build3x3Dashboard();
 

@@ -106,10 +106,18 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunC
   @Override
   public void onJump(GunChooseEnemyMovementFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     Position actualEnemyPosition = model.getPlayerPosition(flowState.enemyToMove);
-    view.showAvailableMovements(
-      model.getDashboard().calculateMovements(actualEnemyPosition, distance)
-    );
-
+    //controllo qual è l'id dell'arma e se corrisponde ad uno di quelli che vogliono
+    // il movimento in una direzione chiamo showavailablemovements con una nuova funzione
+    // del model che calcola i movimenti in direzione
+    if (flowState.getChosenGun().getId().equals("sledgehammer")) {
+      view.showAvailableMovements(
+        model.getDashboard().calculateMovementsInOneDirection(actualEnemyPosition, distance)
+      );
+    } else {
+      view.showAvailableMovements(
+        model.getDashboard().calculateMovements(actualEnemyPosition, distance)
+      );
+    }
   }
 
   @Override
