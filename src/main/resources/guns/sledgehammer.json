@@ -1,0 +1,44 @@
+{
+  "name": "Sledgehammer",
+  "firstAmmo": "yellow",
+  "note": " Remember that moves go through doors, but not walls.",
+  "phases": [
+    "ALTERNATIVE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 2 damage to 1 target on your square.",
+    "phases": [
+      "apply_gun_effect_sledgehammer_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "distance === 0"
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "pulverize",
+    "name": "Pulverize mode",
+    "description": "Deal 3 damage to 1 target on your square, then move that target 0, 1, or 2 squares in one direction.",
+    "phases": [
+      "apply_gun_effect_sledgehammer_pulverize",
+      "gun_enemy_movement_2"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "distance === 0"
+      },
+      "gun_enemy_movement_2": {
+        "enabled": "!state.isFirstEffect()"
+      }
+    },
+    "cost": [
+      "red"
+    ]
+  }
+}

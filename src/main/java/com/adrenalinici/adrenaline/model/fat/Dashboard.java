@@ -119,6 +119,50 @@ public class Dashboard {
     return dashboardCells[0].length;
   }
 
+
+  /**
+   * This method calculates the positions in which a player can move,
+   * doing only movements in a given direction (e.g. if range is 2
+   * it can do two step north but not one north and then one east).
+   *
+   * @param position
+   * @param range    of the distance covered by the movement
+   * @return
+   */
+  public List<Position> calculateMovementsInOneDirection(Position position, int range) {
+    DashboardCell startingCellOptional = getDashboardCell(position);
+    if (startingCellOptional == null) return Collections.emptyList();
+
+    Set<DashboardCell> result = new HashSet<>();
+    result.add(startingCellOptional);
+
+    DashboardCell cell = getDashboardCell(position);
+    for (int i = 0; i < range && !cell.hasNorthWall() && cell.hasNorthDashboardCell(); i++) {
+      cell = cell.getNorthDashboardCell();
+      result.add(cell);
+    }
+
+    cell = getDashboardCell(position);
+    for (int i = 0; i < range && !cell.hasEastWall() && cell.hasEastDashboardCell(); i++) {
+      cell = cell.getEastDashboardCell();
+      result.add(cell);
+    }
+
+    cell = getDashboardCell(position);
+    for (int i = 0; i < range && !cell.hasSouthWall() && cell.hasSouthDashboardCell(); i++) {
+      cell = cell.getSouthDashboardCell();
+      result.add(cell);
+    }
+
+    cell = getDashboardCell(position);
+    for (int i = 0; i < range && !cell.hasWestWall() && cell.hasWestDashboardCell(); i++) {
+      cell = cell.getWestDashboardCell();
+      result.add(cell);
+    }
+
+    return result.stream().map(c -> new Position(c.getLine(), c.getCell())).collect(Collectors.toList());
+  }
+
   public List<Position> calculateMovements(Position position, int range) {
     DashboardCell startingCellOptional = getDashboardCell(position);
     if (startingCellOptional == null) return Collections.emptyList();
