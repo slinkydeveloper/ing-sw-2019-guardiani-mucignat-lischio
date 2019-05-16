@@ -47,7 +47,12 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     event.onPlayerChosenEvent(playerChosenEvent -> {
       if (playerChosenEvent.getPlayerColor() == null) context.nextPhase(view, flowState);
       else {
-        flowState.getChosenPlayersToHit().add(playerChosenEvent.getPlayerColor());
+        if (flowState.getChosenGun().getId().equals("tractor_beam")) {
+          flowState.getChosenPlayersToHit().add(playerChosenEvent.getPlayerColor());
+          flowState.hitPlayer(flowState.getChosenPlayersToHit().get(0), 0);
+        } else {
+          flowState.getChosenPlayersToHit().add(playerChosenEvent.getPlayerColor());
+        }
         context.replayNode(view);
       }
     });

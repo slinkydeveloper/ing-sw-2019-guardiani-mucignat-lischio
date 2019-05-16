@@ -1,0 +1,49 @@
+{
+  "name": "Tractor Beam",
+  "firstAmmo": "blue",
+  "note": "You can move a target even if you can't see it. The target ends up in a place where you can see and damage it. The moves do not have to be in the same direction.",
+  "phases": [
+    "ALTERNATIVE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Move a target 0, 1, or 2 squares to a square you can see, and give it 1 damage.",
+    "phases": [
+      "gun_enemy_movement_2",
+      "apply_gun_effect_tractor_beam_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": true
+      },
+      "gun_enemy_movement_2": {
+        "enabled": true
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "punisher",
+    "name": "Punisher mode",
+    "description": "Choose a target 0, 1, or 2 moves away from you. Move the target to your square and deal 3 damage to it.",
+    "phases": [
+      "apply_gun_effect_tractor_beam_punisher",
+      "gun_enemy_movement_2"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 1,
+        "distanceEval": "distance <= 2"
+      },
+      "gun_enemy_movement_2": {
+        "enabled": true
+      }
+    },
+    "cost": [
+      "red",
+      "yellow"
+    ]
+  }
+}

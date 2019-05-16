@@ -8,3 +8,4 @@ com.adrenalinici.adrenaline.controller.guns.WhisperGunFactory
 com.adrenalinici.adrenaline.controller.guns.HeatseekerGunFactory
 com.adrenalinici.adrenaline.controller.guns.ShotgunGunFactory
 com.adrenalinici.adrenaline.controller.guns.SledgehammerGunFactory
+com.adrenalinici.adrenaline.controller.guns.TractorBeamGunFactory
