@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.util.JsonUtils;
@@ -10,8 +11,7 @@ import com.adrenalinici.adrenaline.util.TriPredicate;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.util.ListUtils.notIn;
@@ -28,15 +28,33 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
       context.nextPhase(view, flowState);
     } else {
       TriPredicate<PlayerColor, PlayerColor, GameModel> predicate = resolveDistanceEvalPredicate(flowState);
-      List<PlayerColor> hittable =
-        model
-          .getPlayers()
-          .stream()
-          .filter(notIn(flowState.getChosenPlayersToHit()))
-          .filter(notIn(context.getKilledPlayers()))
-          .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
-          .filter(p -> predicate.test(context.getTurnOfPlayer(), p, model))
-          .collect(Collectors.toList());
+      List<PlayerColor> hittable;
+      if (flowState.getChosenGun().getId().equals("shockwave")) {
+        Set<Position> positionsToFilter = new HashSet<>();
+        flowState.getChosenPlayersToHit()
+          .forEach(player -> positionsToFilter.add(model.getPlayerPosition(player)));
+
+        hittable =
+          model
+            .getPlayers()
+            .stream()
+            .filter(notIn(flowState.getChosenPlayersToHit()))
+            .filter(notIn(context.getKilledPlayers()))
+            .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(player -> !positionsToFilter.contains(model.getPlayerPosition(player)))
+            .collect(Collectors.toList());
+      } else {
+        hittable =
+          model
+            .getPlayers()
+            .stream()
+            .filter(notIn(flowState.getChosenPlayersToHit()))
+            .filter(notIn(context.getKilledPlayers()))
+            .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(p -> predicate.test(context.getTurnOfPlayer(), p, model))
+            .collect(Collectors.toList());
+      }
+
       if (hittable.isEmpty()) context.nextPhase(view, flowState);
       else view.showChoosePlayerToHit(hittable);
     }
