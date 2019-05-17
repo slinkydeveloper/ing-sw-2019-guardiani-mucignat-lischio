@@ -1,0 +1,33 @@
+{
+  "name": "Shockwave",
+  "firstAmmo": "yellow",
+  "phases": [
+    "ALTERNATIVE_GUN_START"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Choose up to 3 targets on different squares, each exactly 1 move away. Deal 1 damage to each target.",
+    "phases": [
+      "CHOOSE_PLAYER_TO_HIT",
+      "apply_gun_effect_shockwave_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 3,
+        "distanceEval": "distance === 1"
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "tsunami",
+    "name": "Tsunami mode",
+    "description": "Deal 1 damage to all targets that are exactly 1 move away.",
+    "phases": [
+      "apply_gun_effect_shockwave_tsunami"
+    ],
+    "cost": [
+      "yellow"
+    ]
+  }
+}
