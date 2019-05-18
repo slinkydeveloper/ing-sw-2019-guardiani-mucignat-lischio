@@ -120,11 +120,6 @@ public class TractorBeamTest extends BaseGunTest {
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
-    context.handleEvent(
-      new EnemyMovementChosenEvent(model.getPlayerPosition(PlayerColor.GREEN), PlayerColor.GRAY),
-      viewMock
-    );
-
     assertThat(model.getPlayerPosition(PlayerColor.GRAY))
       .isEqualTo(Position.of(0, 1));
 

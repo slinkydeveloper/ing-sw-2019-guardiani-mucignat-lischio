@@ -22,7 +22,8 @@
         "distanceEval": "distance === 0"
       },
       "gun_enemy_movement_1": {
-        "enabled": "state.isFirstEffect()"
+        "enabled": "state.isFirstEffect()",
+        "mode": null
       }
     }
   },

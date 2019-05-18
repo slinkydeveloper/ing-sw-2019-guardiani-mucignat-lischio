@@ -14,73 +14,7 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.gunEnemyMovement;
 
-public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunChooseEnemyMovementFlowNode.GunChooseEnemyMovementFlowState> {
-
-  public static class GunChooseEnemyMovementFlowState implements AlternativeEffectGunFlowState {
-    PlayerColor enemyToMove;
-    AlternativeEffectGunFlowState originalFlowState;
-
-    public GunChooseEnemyMovementFlowState(AlternativeEffectGunFlowState originalFlowState, PlayerColor enemyToMove) {
-      this.originalFlowState = originalFlowState;
-      this.enemyToMove = enemyToMove;
-    }
-
-    @Override
-    public List<PlayerColor> getChosenPlayersToHit() {
-      return originalFlowState.getChosenPlayersToHit();
-    }
-
-    @Override
-    public Map<PlayerColor, Integer> getHitPlayers() {
-      return originalFlowState.getHitPlayers();
-    }
-
-    @Override
-    public Map<PlayerColor, Integer> getMarkPlayers() {
-      return originalFlowState.getMarkPlayers();
-    }
-
-    @Override
-    public void hitPlayer(PlayerColor color, int damages) {
-      originalFlowState.hitPlayer(color, damages);
-    }
-
-    @Override
-    public void markPlayer(PlayerColor color, int marks) {
-      originalFlowState.markPlayer(color, marks);
-    }
-
-    @Override
-    public DecoratedAlternativeEffectGun getChosenGun() {
-      return originalFlowState.getChosenGun();
-    }
-
-    @Override
-    public void applyHitAndMarkPlayers(GameModel model, ControllerFlowContext context) {
-      originalFlowState.applyHitAndMarkPlayers(model, context);
-    }
-
-    @Override
-    public DecoratedEffect getChosenEffect() {
-      return originalFlowState.getChosenEffect();
-    }
-
-    @Override
-    public AlternativeEffectGunFlowState setChosenEffect(DecoratedEffect chosenEffect, boolean chosenEffectIsFirstEffect) {
-      return originalFlowState.setChosenEffect(chosenEffect, chosenEffectIsFirstEffect);
-    }
-
-    @Override
-    public boolean isFirstEffect() {
-      return originalFlowState.isFirstEffect();
-    }
-
-    @Override
-    public ObjectNode resolvePhaseConfiguration(String phaseId) {
-      return originalFlowState.resolvePhaseConfiguration(phaseId);
-    }
-  }
-
+public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunFlowState> {
   int distance;
 
   public GunChooseEnemyMovementFlowNode(int distance) {
@@ -92,25 +26,16 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunC
     return gunEnemyMovement(distance);
   }
 
-  @Override
-  public GunChooseEnemyMovementFlowState mapState(FlowState oldState) {
-    if (oldState instanceof GunChooseEnemyMovementFlowNode.GunChooseEnemyMovementFlowState)
-      return (GunChooseEnemyMovementFlowNode.GunChooseEnemyMovementFlowState) oldState;
-
-    return new GunChooseEnemyMovementFlowNode.GunChooseEnemyMovementFlowState(
-      (AlternativeEffectGunFlowState) oldState,
-      new ArrayList<>(((AlternativeEffectGunFlowState) oldState).getHitPlayers().keySet()).get(0)
-    );
-  }
 
   @Override
-  public void onJump(GunChooseEnemyMovementFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    Position actualEnemyPosition = model.getPlayerPosition(flowState.enemyToMove);
-    if (flowState.getChosenGun().getId().equals("sledgehammer")) {
+  public void onJump(GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
+    PlayerColor enemy = new ArrayList<>(flowState.getHitPlayers().keySet()).get(0);
+    Position actualEnemyPosition = model.getPlayerPosition(enemy);
+    if (resolveMovementModeConfiguration(flowState).equals("only one direction")) {
       view.showAvailableMovements(
         model.getDashboard().calculateMovementsInOneDirection(actualEnemyPosition, distance)
       );
-    } else if (flowState.getChosenGun().getId().equals("tractor_beam")) {
+    } else if (resolveMovementModeConfiguration(flowState).equals("only visible squares")) {
       view.showAvailableMovements(
         model.getDashboard().calculateMovements(actualEnemyPosition, distance)
           .stream()
@@ -127,7 +52,7 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunC
   }
 
   @Override
-  public void handleEvent(ViewEvent event, GunChooseEnemyMovementFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
+  public void handleEvent(ViewEvent event, GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onEnemyMovementChosenEvent(
       e -> {
         if (
@@ -139,5 +64,9 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunC
         context.nextPhase(view, flowState);
       }
     );
+  }
+
+  private String resolveMovementModeConfiguration(GunFlowState flowState) {
+    return flowState.resolvePhaseConfiguration(id()).get("mode").asText();
   }
 }

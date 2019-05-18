@@ -23,6 +23,7 @@ public class TractorBeamGunFactory extends AlternativeEffectGunFactory {
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> PUNISHER_EFFECT_APPLY = (state, model, context) -> {
     state.getChosenPlayersToHit().forEach(p -> {
       state.hitPlayer(p, 3);
+      model.movePlayerInDashboard(model.getPlayerPosition(context.getTurnOfPlayer()), p);
     });
   };
 
