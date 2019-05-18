@@ -43,10 +43,11 @@ public class GunChooseEnemyMovementFlowNodeTest extends BaseNodeTest {
     AlternativeEffectGunFlowState alternativeEffectGunFlowState =
       new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("shotgun"));
     alternativeEffectGunFlowState.setChosenEffect(alternativeEffectGunFlowState.getChosenGun().getFirstEffect(), true);
+    alternativeEffectGunFlowState.hitPlayer(PlayerColor.YELLOW, 1);
 
     context.nextPhase(
       viewMock,
-      new GunChooseEnemyMovementFlowNode.GunChooseEnemyMovementFlowState(alternativeEffectGunFlowState, PlayerColor.YELLOW)
+      alternativeEffectGunFlowState
     );
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);

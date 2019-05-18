@@ -34,7 +34,9 @@
         "distanceEval": "distance === 0"
       },
       "gun_enemy_movement_2": {
-        "enabled": "!state.isFirstEffect()"
+        "enabled": "!state.isFirstEffect()",
+        "mode": "only one direction"
+
       }
     },
     "cost": [

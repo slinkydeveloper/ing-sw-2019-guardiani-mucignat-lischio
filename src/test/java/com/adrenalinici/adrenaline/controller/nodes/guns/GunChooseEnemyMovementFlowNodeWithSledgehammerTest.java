@@ -43,10 +43,11 @@ public class GunChooseEnemyMovementFlowNodeWithSledgehammerTest extends BaseNode
     AlternativeEffectGunFlowState alternativeEffectGunFlowState =
       new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("sledgehammer"));
     alternativeEffectGunFlowState.setChosenEffect(alternativeEffectGunFlowState.getChosenGun().getSecondEffect(), false);
+    alternativeEffectGunFlowState.hitPlayer(PlayerColor.YELLOW, 1);
 
     context.nextPhase(
       viewMock,
-      new GunChooseEnemyMovementFlowNode.GunChooseEnemyMovementFlowState(alternativeEffectGunFlowState, PlayerColor.YELLOW)
+      alternativeEffectGunFlowState
     );
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
