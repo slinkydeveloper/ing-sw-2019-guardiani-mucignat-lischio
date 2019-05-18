@@ -5,6 +5,7 @@ import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -24,5 +25,18 @@ public class LightRespawnDashboardCell extends LightDashboardCell {
   @Override
   public void visit(Consumer<LightRespawnDashboardCell> visitRespawnDashboardCell, Consumer<LightPickupDashboardCell> visitPickupDashboardCell) {
     visitRespawnDashboardCell.accept(this);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    LightRespawnDashboardCell that = (LightRespawnDashboardCell) o;
+    return Objects.equals(availableGuns, that.availableGuns);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(availableGuns);
   }
 }

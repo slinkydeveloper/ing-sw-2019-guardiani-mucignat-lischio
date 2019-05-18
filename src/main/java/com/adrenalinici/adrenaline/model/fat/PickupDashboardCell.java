@@ -5,6 +5,7 @@ import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
 import com.adrenalinici.adrenaline.model.light.LightPickupDashboardCell;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -21,7 +22,12 @@ public class PickupDashboardCell extends BaseDashboardCell {
   }
 
   public void setAmmoCard(AmmoCard ammoCard) {
+    Objects.requireNonNull(ammoCard);
     this.ammoCard = ammoCard;
+  }
+
+  public void removeAmmoCard() {
+    this.ammoCard = null;
   }
 
   @Override

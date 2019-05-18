@@ -2,11 +2,13 @@ package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.util.JsonUtils;
+import com.adrenalinici.adrenaline.util.StreamUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
-import java.net.URL;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,7 +100,20 @@ public class GunLoader {
    * @return
    */
   public static List<String> getAvailableGuns() {
-    String path = GunLoader.class.getResource("/guns").getPath();
-    return Arrays.stream(new File(path).listFiles()).map(File::getName).map(s -> s.replace(".json", "")).collect(Collectors.toList());
+    try {
+      return
+        StreamUtils.enumerationStream(ClassLoader.getSystemResources("guns"))
+          .map(path -> {
+            try {
+              return path.toURI();
+            } catch (URISyntaxException e) {
+              return null; // Shame on you Java for this API
+            }
+          })
+          .flatMap(path -> Arrays.stream(new File(path).listFiles()))
+          .map(File::getName).map(s -> s.replace(".json", "")).collect(Collectors.toList());
+    } catch (IOException e) {
+      return null;
+    }
   }
 }

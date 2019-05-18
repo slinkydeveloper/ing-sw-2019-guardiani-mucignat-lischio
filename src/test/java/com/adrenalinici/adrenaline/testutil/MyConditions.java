@@ -1,6 +1,5 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
@@ -8,7 +7,12 @@ import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
+import com.adrenalinici.adrenaline.model.fat.DashboardCell;
+import com.adrenalinici.adrenaline.model.fat.PickupDashboardCell;
+import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
 import org.assertj.core.api.Condition;
+
+import java.util.function.Predicate;
 
 public class MyConditions {
 
@@ -37,5 +41,13 @@ public class MyConditions {
       "Gun must have id " + id);
   }
 
+  public static Predicate<DashboardCell> EMPTY_CELL_PREDICATE = e -> (
+      (e instanceof RespawnDashboardCell && ((RespawnDashboardCell)e).getAvailableGuns().isEmpty()) ||
+      (e instanceof PickupDashboardCell && !((PickupDashboardCell)e).getAmmoCard().isPresent())
+    );
+
+  public static Condition<DashboardCell> emptyDashboardCell() {
+    return new Condition<>(EMPTY_CELL_PREDICATE, "Dashboard cell must be empty");
+  }
 
 }

@@ -1,10 +1,12 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
-import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
-import com.adrenalinici.adrenaline.model.fat.*;
+import com.adrenalinici.adrenaline.model.fat.Dashboard;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
+import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
 import com.adrenalinici.adrenaline.view.event.GunChosenEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -91,8 +93,12 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     model.getPlayerDashboard(PlayerColor.GREEN)
       .removeAmmos(Arrays.asList(AmmoColor.BLUE, AmmoColor.YELLOW, AmmoColor.RED));
 
-    PowerUpCard powerUpCard = new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY);
-    AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), powerUpCard);
+    assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getAmmos())
+      .isEmpty();
+    assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getPowerUpCards())
+      .isEmpty();
+
+    AmmoCard ammoCard = new AmmoCard(new HashSet<>(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW)), true);
     model.getDashboard().getDashboardCell(Position.of(0, 1))
       .visit(
         null,
@@ -110,12 +116,12 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(0, 1));
     assertThat(receivedModelEvents)
-      .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
+      .haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.GREEN));
 
     assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getAmmos())
       .containsExactlyInAnyOrder(AmmoColor.YELLOW, AmmoColor.RED);
     assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getPowerUpCards())
-      .containsExactly(powerUpCard);
+      .isNotEmpty();
 
     checkEndCalled();
   }

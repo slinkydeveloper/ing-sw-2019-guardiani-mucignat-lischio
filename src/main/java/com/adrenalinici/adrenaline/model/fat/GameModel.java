@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.model.fat;
 
-import com.adrenalinici.adrenaline.controller.CardDeck;
 import com.adrenalinici.adrenaline.controller.GunLoader;
+import com.adrenalinici.adrenaline.model.CardDeck;
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.DashboardCellUpdatedEvent;
 import com.adrenalinici.adrenaline.model.event.GameModelUpdatedEvent;
@@ -35,6 +35,7 @@ public class GameModel extends Observable<ModelEvent> {
     this.doubleKillScore = new ArrayList<>();
     this.guns = new CardDeck<>(GunLoader.getAvailableGuns());
     this.powerUps = new CardDeck<>(JsonUtils.loadPowerUpCards());
+    this.ammoCards = new CardDeck<>(JsonUtils.loadAmmoCards());
   }
 
   public int getRemainingSkulls() {
@@ -103,8 +104,9 @@ public class GameModel extends Observable<ModelEvent> {
       .ifPresent(
         ac -> {
           ac.getAmmoColor().forEach(playerDashboard::addAmmo);
-          ac.getPowerUpCard().ifPresent(playerDashboard::addPowerUpCard);
-          cell.setAmmoCard(null);
+          if (ac.isPickPowerUp())
+            this.acquirePowerUpCard(player);
+          cell.removeAmmoCard();
           notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
           notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
         }
@@ -313,6 +315,23 @@ public class GameModel extends Observable<ModelEvent> {
       .getMarks()
       .stream()
       .filter(playerColor -> playerColor.equals(killer)).count();
+  }
+
+  /**
+   * Mutates the internal dashboard refilling, if needed, {@link RespawnDashboardCell} with guns and {@link PickupDashboardCell} with ammo cards
+   */
+  public void refillDashboard() {
+    dashboard.stream().forEach(dc -> {
+      dc.visit(rpc -> {
+        while (rpc.getAvailableGuns().size() < 3 && !gunsDeck().isEmpty()) {
+          rpc.addAvailableGun(gunsDeck().getCard());
+        }
+      }, pdc -> {
+        if (!pdc.getAmmoCard().isPresent() && !ammoCardDeck().isEmpty()) {
+          pdc.setAmmoCard(ammoCardDeck().getCard());
+        }
+      });
+    });
   }
 
   public LightGameModel light() {
