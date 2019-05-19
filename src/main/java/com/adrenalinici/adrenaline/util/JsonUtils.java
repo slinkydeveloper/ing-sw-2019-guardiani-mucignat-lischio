@@ -178,7 +178,7 @@ public class JsonUtils {
       .map(list -> {
         boolean pickPowerUp = list.remove("POWER_UP");
         return new AmmoCard(
-          list.stream().map(AmmoColor::valueOf).collect(Collectors.toSet()),
+          list.stream().map(AmmoColor::valueOf).collect(Collectors.toList()),
           pickPowerUp
         );
       })
