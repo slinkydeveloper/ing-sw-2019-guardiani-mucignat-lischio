@@ -450,7 +450,7 @@
             </AnchorPane>
           </children>
         </AnchorPane>
-        <Button mnemonicParsing="false" prefHeight="111.0" prefWidth="488.0" text="Dashboard" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Button mnemonicParsing="false" prefHeight="111.0" prefWidth="488.0" text="Dashboard" GridPane.columnIndex="1" GridPane.rowIndex="2" onMouseClicked="#backToDashboard"/>
       </children>
     </GridPane>
   </children>

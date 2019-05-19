@@ -16,8 +16,9 @@
 <?import javafx.scene.shape.Sphere?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0"  fx:controller="com.adrenalinici.adrenaline.gui.controller.dasboardController"
-      xmlns:fx="http://javafx.com/fxml"">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0"
+      prefWidth="976.0" fx:controller="com.adrenalinici.adrenaline.gui.controller.dasboardController"
+      xmlns:fx="http://javafx.com/fxml" >
   <children>
     <ImageView fitHeight="549.0" fitWidth="704.0" layoutX="6.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
       <image>
@@ -39,82 +40,82 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
-        <Sphere fx:id="mark0" radius="5.0">
+        <Sphere id="mark0" radius="5.0">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor0" radius="5.0">
+        <Sphere id="killColor0" radius="5.0">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark1" radius="5.0" GridPane.columnIndex="1">
+        <Sphere id="mark1" radius="5.0" GridPane.columnIndex="1">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor1" radius="5.0" GridPane.columnIndex="1">
+        <Sphere id="killColor1" radius="5.0" GridPane.columnIndex="1">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark2" radius="5.0" GridPane.columnIndex="2">
+        <Sphere id="mark2" radius="5.0" GridPane.columnIndex="2">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor2" radius="5.0" GridPane.columnIndex="2">
+        <Sphere id="killColor2" radius="5.0" GridPane.columnIndex="2">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark3" radius="5.0" GridPane.columnIndex="3">
+        <Sphere id="mark3" radius="5.0" GridPane.columnIndex="3">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor3" radius="5.0" GridPane.columnIndex="3">
+        <Sphere id="killColor3" radius="5.0" GridPane.columnIndex="3">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark4" radius="5.0" GridPane.columnIndex="4">
+        <Sphere id="mark4" radius="5.0" GridPane.columnIndex="4">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor4" radius="5.0" GridPane.columnIndex="4">
+        <Sphere id="killColor4" radius="5.0" GridPane.columnIndex="4">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark5" radius="5.0" GridPane.columnIndex="5">
+        <Sphere id="mark5" radius="5.0" GridPane.columnIndex="5">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor5" radius="5.0" GridPane.columnIndex="5">
+        <Sphere id="killColor5" radius="5.0" GridPane.columnIndex="5">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark6" radius="5.0" GridPane.columnIndex="6">
+        <Sphere id="mark6" radius="5.0" GridPane.columnIndex="6">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor6" radius="5.0" GridPane.columnIndex="6">
+        <Sphere id="killColor6" radius="5.0" GridPane.columnIndex="6">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="mark7" radius="5.0" GridPane.columnIndex="7">
+        <Sphere id="mark7" radius="5.0" GridPane.columnIndex="7">
           <GridPane.margin>
             <Insets left="7.0" />
           </GridPane.margin>
         </Sphere>
-        <Sphere fx:id="killColor7" radius="5.0" GridPane.columnIndex="7">
+        <Sphere id="killColor7" radius="5.0" GridPane.columnIndex="7">
           <GridPane.margin>
             <Insets bottom="20.0" left="7.0" />
           </GridPane.margin>
@@ -123,11 +124,11 @@
     </GridPane>
     <AnchorPane layoutX="32.0" layoutY="100.0" prefHeight="63.0" prefWidth="68.0">
       <children>
-        <Sphere fx:id="doubleKill2" layoutX="14.0" layoutY="37.0" radius="5.0" />
-        <Sphere fx:id="doubleKill4" layoutX="19.0" layoutY="19.0" radius="5.0" />
-        <Sphere fx:id="doubleKill3" layoutX="54.0" layoutY="19.0" radius="5.0" />
-        <Sphere fx:id="doubleKill1" layoutX="54.0" layoutY="37.0" radius="5.0" />
-        <Sphere fx:id="doubleKill0" layoutX="34.0" layoutY="14.0" radius="5.0" />
+        <Sphere id="doubleKill2" layoutX="14.0" layoutY="37.0" radius="5.0" />
+        <Sphere id="doubleKill4" layoutX="19.0" layoutY="19.0" radius="5.0" />
+        <Sphere id="doubleKill3" layoutX="54.0" layoutY="19.0" radius="5.0" />
+        <Sphere id="doubleKill1" layoutX="54.0" layoutY="37.0" radius="5.0" />
+        <Sphere id="doubleKill0" layoutX="34.0" layoutY="14.0" radius="5.0" />
       </children>
     </AnchorPane>
     <GridPane layoutX="116.0" layoutY="118.0" prefHeight="370.0" prefWidth="483.0">
@@ -143,41 +144,41 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
       <children>
-        <AnchorPane fx:id="cyanCell00" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" />
-        <AnchorPane fx:id="cyanCell10" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-        <AnchorPane fx:id="cyanCell20" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
-        <AnchorPane fx:id="greenCell30" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
-        <AnchorPane fx:id="redCell01" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-        <AnchorPane fx:id="redCell11" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <AnchorPane fx:id="yellowCell21" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-        <AnchorPane fx:id="bluCell31" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-        <AnchorPane fx:id="bluCell32" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-        <AnchorPane fx:id="bluCell22" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <AnchorPane fx:id="grayCell12" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <AnchorPane id="cyanCell00" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" />
+        <AnchorPane id="cyanCell10" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+        <AnchorPane id="cyanCell20" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+        <AnchorPane id="greenCell30" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" />
+        <AnchorPane id="redCell01" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+        <AnchorPane id="redCell11" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <AnchorPane id="yellowCell21" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <AnchorPane id="bluCell31" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+        <AnchorPane id="bluCell32" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <AnchorPane id="bluCell22" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <AnchorPane id="grayCell12" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       </children>
     </GridPane>
     <VBox layoutY="203.0" prefHeight="230.0" prefWidth="109.0">
       <children>
-        <AnchorPane fx:id="redGun0" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
-        <AnchorPane fx:id="redGun1" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
-        <AnchorPane fx:id="redGun2" onMouseClicked="#chooseGun" prefHeight="77.0" prefWidth="109.0" />
+        <AnchorPane id="redGun0" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane id="redGun1" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane id="redGun2" onMouseClicked="#chooseGun" prefHeight="77.0" prefWidth="109.0" />
       </children>
     </VBox>
     <VBox layoutX="610.0" layoutY="308.0" prefHeight="230.0" prefWidth="98.0">
       <children>
-        <AnchorPane fx:id="yellowGun0" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
-        <AnchorPane fx:id="yellowGun1" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
-        <AnchorPane fx:id="yellowGun2" onMouseClicked="#chooseGun" prefHeight="77.0" prefWidth="109.0" />
+        <AnchorPane id="yellowGun0" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane id="yellowGun1" onMouseClicked="#chooseGun" prefHeight="75.0" prefWidth="109.0" />
+        <AnchorPane id="yellowGun2" onMouseClicked="#chooseGun" prefHeight="77.0" prefWidth="109.0" />
       </children>
     </VBox>
     <HBox layoutX="371.0" prefHeight="108.0" prefWidth="231.0">
       <children>
-        <AnchorPane fx:id="cyanGun0" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="77.0" />
-        <AnchorPane fx:id="cyanGun1" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="77.0" />
-        <AnchorPane fx:id="cyanGun2" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="76.0" />
+        <AnchorPane id="cyanGun0" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="77.0" />
+        <AnchorPane id="cyanGun1" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="77.0" />
+        <AnchorPane id="cyanGun2" onMouseClicked="#chooseGun" prefHeight="108.0" prefWidth="76.0" />
       </children>
     </HBox>
-    <AnchorPane fx:id="ammo" layoutX="629.0" layoutY="32.0" onMouseClicked="#pickUpAmmo" prefHeight="84.0" prefWidth="57.0" />
+    <AnchorPane id="ammo" layoutX="629.0" layoutY="32.0" onMouseClicked="#pickUpAmmo" prefHeight="84.0" prefWidth="57.0" />
     <GridPane layoutX="710.0" layoutY="2.0" prefHeight="542.0" prefWidth="267.0">
       <columnConstraints>
         <ColumnConstraints />
@@ -193,12 +194,12 @@
         <DialogPane prefHeight="135.0" prefWidth="267.0" GridPane.columnIndex="1" />
         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
           <children>
-            <AnchorPane fx:id="gun0" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="84.0" />
-            <AnchorPane fx:id="gun1" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="85.0" />
-            <AnchorPane fx:id="gun2" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="87.0" />
+            <AnchorPane id="gun0" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="84.0" />
+            <AnchorPane id="gun1" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="85.0" />
+            <AnchorPane id="gun2" onMouseClicked="#cangheGun" prefHeight="135.0" prefWidth="87.0" />
           </children>
         </HBox>
-        <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="267.0" text="show other players " GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button mnemonicParsing="false" prefHeight="79.0" prefWidth="267.0" text="show other players " GridPane.columnIndex="1" GridPane.rowIndex="3" onMouseClicked="#otherPlayers"/>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="136.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
           <children>
             <ImageView fitHeight="108.0" fitWidth="265.0" pickOnBounds="true" preserveRatio="true">
@@ -270,15 +271,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <children>
-                <Circle fx:id="redAmmo0" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                <Circle fx:id="redAmmo1" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" />
-                <Circle fx:id="redAmmo2" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" />
-                <Circle fx:id="cyanAmmo0" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
-                <Circle fx:id="cyanAmmo1" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Circle fx:id="cyanAmmo2" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Circle fx:id="yellowAmmo0" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
-                <Circle fx:id="yellowAmmo1" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Circle fx:id="yellowAmmo2" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <Circle id="redAmmo0" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                <Circle id="redAmmo1" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" />
+                <Circle id="redAmmo2" fill="#ff281f" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" />
+                <Circle id="cyanAmmo0" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
+                <Circle id="cyanAmmo1" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Circle id="cyanAmmo2" fill="#2421ff" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Circle id="yellowAmmo0" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
+                <Circle id="yellowAmmo1" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Circle id="yellowAmmo2" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
               </children>
             </GridPane>
           </children>

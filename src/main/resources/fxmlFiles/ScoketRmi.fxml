@@ -14,8 +14,8 @@
         <Image url="/images/DashboardAndPlayers/wallpaper.jpeg"/>
       </image>
     </ImageView>
-    <Button layoutX="457.0" layoutY="231.0" mnemonicParsing="false" text="SOCKET"/>
-    <Button layoutX="471.0" layoutY="291.0" mnemonicParsing="false" text="RMI"/>
+    <Button layoutX="457.0" layoutY="231.0" mnemonicParsing="false" text="SOCKET" onAction="#socketNetwork"/>
+    <Button layoutX="471.0" layoutY="291.0" mnemonicParsing="false" text="RMI" onAction="#rmiNetwork"/>
     <TextField layoutX="407.0" layoutY="348.0"/>
     <TextField layoutX="407.0" layoutY="397.0"/>
   </children>

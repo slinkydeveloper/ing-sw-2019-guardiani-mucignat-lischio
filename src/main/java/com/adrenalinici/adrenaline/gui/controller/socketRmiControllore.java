@@ -1,10 +1,17 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class socketRmiControllore {
 
@@ -13,20 +20,32 @@ public class socketRmiControllore {
   @FXML
   private Button rmiButton;
 
-  @FXML
-  public void socketClick(javafx.event.ActionEvent actionEvent) {
-    // TODO mettere la rete socket e passare alla schermata successiva
-    if (actionEvent.getSource().equals(socketButton)){
-      System.out.println("socket button was played");
+
+  public void socketNetwork(ActionEvent actionEvent) {
+    Pane nextNode = new Pane();
+    try {
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/choosePlayerColor.fxml"));
+    } catch (IOException e) {
+      Thread.currentThread().interrupt();
     }
+    Scene scene = new Scene(nextNode);
+    Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+    window.setScene(scene);
+    window.show();
   }
 
 
-
-  public void rmiClick(javafx.event.ActionEvent actionEvent) {
-    // TODO mettere la rete socket e passare alla schermata successiva
-    if (actionEvent.getSource().equals(rmiButton)){
-      System.out.println("socket button was played");
+  public void rmiNetwork(ActionEvent actionEvent) {
+    Pane nextNode = new Pane();
+    try {
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/choosePlayerColor.fxml"));
+    } catch (IOException e) {
+      Thread.currentThread().interrupt();
     }
+    Scene scene = new Scene(nextNode);
+    Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+    window.setScene(scene);
+    window.show();
   }
+
 }
