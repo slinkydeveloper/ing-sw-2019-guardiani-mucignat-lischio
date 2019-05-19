@@ -35,7 +35,7 @@
       },
       "gun_enemy_movement_2": {
         "enabled": "!state.isFirstEffect()",
-        "mode": "only one direction"
+        "mode": "only_one_direction"
 
       }
     },
