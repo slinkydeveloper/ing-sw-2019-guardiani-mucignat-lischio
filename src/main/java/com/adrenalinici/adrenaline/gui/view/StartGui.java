@@ -1,10 +1,14 @@
 package com.adrenalinici.adrenaline.gui.view;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.awt.*;
+import java.io.BufferedWriter;
 import java.io.IOException;
 
 
@@ -22,6 +26,5 @@ public class StartGui extends Application {
       primaryStage.setScene(new Scene(root));
       primaryStage.show();
     }
-
 
 }

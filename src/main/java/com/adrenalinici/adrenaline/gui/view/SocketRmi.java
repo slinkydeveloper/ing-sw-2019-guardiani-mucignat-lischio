@@ -10,11 +10,12 @@ import java.io.IOException;
 
 public class SocketRmi extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
-    @Override
+  public static void main(String[] args) {
+    launch(args);
+  }
+
+  @Override
     public void start(Stage primaryStage) throws IOException {
       Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/ScoketRmi.fxml"));
       primaryStage.setTitle("choose socket/rmi");
