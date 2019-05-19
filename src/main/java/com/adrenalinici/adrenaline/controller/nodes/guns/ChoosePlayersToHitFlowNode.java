@@ -16,7 +16,11 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.util.ListUtils.notIn;
 
+//TODO javadoc
 public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowState> {
+  public static String DIFFERENT_CELL = "cell_different_from_previous";
+  public static final String DEFAULT = "default";
+
   @Override
   public String id() {
     return ControllerNodes.CHOOSE_PLAYER_TO_HIT.name();
@@ -29,7 +33,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     } else {
       TriPredicate<PlayerColor, PlayerColor, GameModel> predicate = resolveDistanceEvalPredicate(flowState);
       List<PlayerColor> hittable;
-      if (flowState.getChosenGun().getId().equals("shockwave")) {
+      if (resolveHittablePlayersRestriction(flowState).equals(DIFFERENT_CELL)) {
         Set<Position> positionsToFilter = new HashSet<>();
         flowState.getChosenPlayersToHit()
           .forEach(player -> positionsToFilter.add(model.getPlayerPosition(player)));
@@ -65,12 +69,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     event.onPlayerChosenEvent(playerChosenEvent -> {
       if (playerChosenEvent.getPlayerColor() == null) context.nextPhase(view, flowState);
       else {
-        if (flowState.getChosenGun().getId().equals("tractor_beam")) {
-          flowState.getChosenPlayersToHit().add(playerChosenEvent.getPlayerColor());
-          flowState.hitPlayer(flowState.getChosenPlayersToHit().get(0), 0);
-        } else {
-          flowState.getChosenPlayersToHit().add(playerChosenEvent.getPlayerColor());
-        }
+        flowState.getChosenPlayersToHit().add(playerChosenEvent.getPlayerColor());
         context.replayNode(view);
       }
     });
@@ -84,5 +83,12 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     return JsonUtils.parseDistanceEvalPredicate(
       flowState.resolvePhaseConfiguration(id()).get("distanceEval").asText()
     );
+  }
+
+  private String resolveHittablePlayersRestriction(GunFlowState flowState) {
+    if (!flowState.resolvePhaseConfiguration(id()).has("restriction"))
+      return DEFAULT;
+
+    return flowState.resolvePhaseConfiguration(id()).get("restriction").asText();
   }
 }

@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
-public class GunChooseEnemyMovementFlowNodeWithSledgehammerTest extends BaseNodeTest {
+public class GunChooseEnemyMovementFlowNodeOneDirectionModeTest extends BaseNodeTest {
   @Override
   @Before
   public void setUp() {
@@ -43,7 +43,7 @@ public class GunChooseEnemyMovementFlowNodeWithSledgehammerTest extends BaseNode
     AlternativeEffectGunFlowState alternativeEffectGunFlowState =
       new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("sledgehammer"));
     alternativeEffectGunFlowState.setChosenEffect(alternativeEffectGunFlowState.getChosenGun().getSecondEffect(), false);
-    alternativeEffectGunFlowState.hitPlayer(PlayerColor.YELLOW, 1);
+    alternativeEffectGunFlowState.getChosenPlayersToHit().add(PlayerColor.YELLOW);
 
     context.nextPhase(
       viewMock,
