@@ -106,6 +106,7 @@ public class GameModel extends Observable<ModelEvent> {
           ac.getAmmoColor().forEach(playerDashboard::addAmmo);
           if (ac.isPickPowerUp())
             this.acquirePowerUpCard(player);
+          this.ammoCards.addCard(ac);
           cell.removeAmmoCard();
           notifyEvent(new DashboardCellUpdatedEvent(this, cell.getPosition()));
           notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
@@ -132,8 +133,10 @@ public class GameModel extends Observable<ModelEvent> {
    * @param player
    */
   public void acquirePowerUpCard(PlayerColor player) {
-    getPlayerDashboard(player).addPowerUpCard(powerUps.getCard());
-    notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
+    if (!powerUps.isEmpty()) {
+      getPlayerDashboard(player).addPowerUpCard(powerUps.getCard());
+      notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
+    }
   }
 
   /**

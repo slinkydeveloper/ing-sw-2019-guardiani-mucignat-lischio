@@ -1,18 +1,18 @@
 package com.adrenalinici.adrenaline.model.common;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public final class AmmoCard {
-  private final Set<AmmoColor> ammoColor;
+  private final List<AmmoColor> ammoColor;
   private final boolean pickPowerUp;
 
-  public AmmoCard(Set<AmmoColor> ammoColor, boolean pickPowerUp) {
+  public AmmoCard(List<AmmoColor> ammoColor, boolean pickPowerUp) {
     this.ammoColor = ammoColor;
     this.pickPowerUp = pickPowerUp;
   }
 
-  public Set<AmmoColor> getAmmoColor() {
+  public List<AmmoColor> getAmmoColor() {
     return ammoColor;
   }
 
