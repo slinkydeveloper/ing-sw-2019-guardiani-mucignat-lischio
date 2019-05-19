@@ -122,7 +122,7 @@ public class GameModelTest {
   public void acquireAmmoCardTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
 
-    AmmoCard ammoCard = new AmmoCard(new HashSet<>(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW)), true);
+    AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), true);
     PickupDashboardCell pickupDashboardCell = new PickupDashboardCell(OPEN, OPEN, OPEN, OPEN, CellColor.CYAN,0, 0, dashboard);
     pickupDashboardCell.setAmmoCard(ammoCard);
 

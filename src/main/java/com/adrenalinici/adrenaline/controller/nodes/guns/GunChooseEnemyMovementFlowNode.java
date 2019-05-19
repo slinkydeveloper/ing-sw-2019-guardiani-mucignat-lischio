@@ -1,18 +1,12 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
-import com.adrenalinici.adrenaline.controller.*;
-import com.adrenalinici.adrenaline.flow.FlowState;
+import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.util.JsonUtils;
-import com.adrenalinici.adrenaline.util.TriPredicate;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
-import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.gunEnemyMovement;

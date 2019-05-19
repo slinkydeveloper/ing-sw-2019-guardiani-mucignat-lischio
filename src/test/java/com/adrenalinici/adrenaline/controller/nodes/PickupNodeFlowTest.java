@@ -98,7 +98,7 @@ public class PickupNodeFlowTest extends BaseNodeTest {
     assertThat(model.getPlayerDashboard(PlayerColor.GREEN).getPowerUpCards())
       .isEmpty();
 
-    AmmoCard ammoCard = new AmmoCard(new HashSet<>(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW)), true);
+    AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), true);
     model.getDashboard().getDashboardCell(Position.of(0, 1))
       .visit(
         null,
