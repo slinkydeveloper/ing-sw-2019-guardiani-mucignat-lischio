@@ -3,6 +3,8 @@ package com.adrenalinici.adrenaline.model.light;
 import com.adrenalinici.adrenaline.model.common.Position;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class LightDashboard implements Serializable {
 
@@ -30,5 +32,9 @@ public class LightDashboard implements Serializable {
 
   public int cells() {
     return dashboardCells[0].length;
+  }
+
+  public Stream<LightDashboardCell> stream() {
+    return Arrays.stream(dashboardCells).flatMap(Arrays::stream);
   }
 }

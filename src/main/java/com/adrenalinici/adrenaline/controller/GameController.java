@@ -4,8 +4,8 @@ import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
-import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.Observer;
 import com.adrenalinici.adrenaline.view.GameView;
@@ -49,8 +49,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   }
 
   void endTurnCallback(GameView view) {
-    //TODO P2 refill dashboard
-    //TODO P2 somewhere maybe here should go the check if match finished
+    gameModel.refillDashboard();
+    //TODO P2 somewhere maybe here we should check if match is finished
     if (firstTurn) {
       firstTurn = false;
       startNewTurn(view, gameModel.getPlayers().get(0));

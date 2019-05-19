@@ -170,4 +170,19 @@ public class JsonUtils {
       .collect(Collectors.toList());
   }
 
+  public static List<AmmoCard> loadAmmoCards() {
+    ArrayNode node = (ArrayNode) getConfigurationJSONFromClasspath("ammo_cards.json");
+    return StreamUtils
+      .iteratorStream(node.elements())
+      .map(j -> StreamUtils.iteratorStream(j.elements()).map(JsonNode::asText).collect(Collectors.toList()))
+      .map(list -> {
+        boolean pickPowerUp = list.remove("POWER_UP");
+        return new AmmoCard(
+          list.stream().map(AmmoColor::valueOf).collect(Collectors.toList()),
+          pickPowerUp
+        );
+      })
+      .collect(Collectors.toList());
+  }
+
 }

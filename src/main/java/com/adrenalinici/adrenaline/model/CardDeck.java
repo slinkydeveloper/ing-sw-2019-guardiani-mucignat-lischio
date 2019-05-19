@@ -1,9 +1,8 @@
-package com.adrenalinici.adrenaline.controller;
+package com.adrenalinici.adrenaline.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class CardDeck<T> {
 
@@ -12,6 +11,10 @@ public class CardDeck<T> {
   public CardDeck(List<T> queue) {
     this.queue = new ArrayList<>(queue);
     Collections.shuffle(queue);
+  }
+
+  public boolean isEmpty() {
+    return queue.isEmpty();
   }
 
   public T getCard() {

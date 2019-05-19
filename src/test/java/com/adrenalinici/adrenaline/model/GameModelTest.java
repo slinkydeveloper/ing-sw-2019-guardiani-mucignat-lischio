@@ -4,10 +4,12 @@ import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.fat.*;
+import com.adrenalinici.adrenaline.model.light.LightDashboardCell;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType.OPEN;
 import static com.adrenalinici.adrenaline.testutil.MyConditions.*;
@@ -119,10 +121,11 @@ public class GameModelTest {
   @Test
   public void acquireAmmoCardTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
-    PowerUpCard powerUpCard = new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY);
-    AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), powerUpCard);
+
+    AmmoCard ammoCard = new AmmoCard(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW), true);
     PickupDashboardCell pickupDashboardCell = new PickupDashboardCell(OPEN, OPEN, OPEN, OPEN, CellColor.CYAN,0, 0, dashboard);
     pickupDashboardCell.setAmmoCard(ammoCard);
+
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
@@ -135,13 +138,14 @@ public class GameModelTest {
       .containsExactlyInAnyOrderElementsOf(Arrays.asList(AmmoColor.BLUE, AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.YELLOW));
 
     assertThat(playerDashboard.getPowerUpCards())
-      .containsExactlyInAnyOrderElementsOf(Arrays.asList(
-        new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY),
-        new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE),
-        new PowerUpCard(AmmoColor.YELLOW, PowerUpType.KINETIC_RAY)
-      ));
+    .contains(
+      new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY),
+      new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE)
+    )
+    .hasSize(3);
+
     assertThat(receivedModelEvents).haveExactly(1, isDashboardCellUpdatedEvent(0, 0));
-    assertThat(receivedModelEvents).haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
+    assertThat(receivedModelEvents).haveExactly(2, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
   }
 
   @Test
@@ -306,5 +310,38 @@ public class GameModelTest {
 
     assertThat(gameModel.calculateKillerMarksOnVictimPlayerDashboard(PlayerColor.GREEN, PlayerColor.YELLOW))
       .isEqualTo(2);
+  }
+
+  @Test
+  public void refillDashboard() {
+    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
+      TestUtils.generate3PlayerDashboards());
+
+    // Refill a new dashboard
+    gameModel.refillDashboard();
+
+    assertThat(gameModel.getDashboard().stream())
+      .noneMatch(EMPTY_CELL_PREDICATE); // All cells must have something
+
+    // I generate the list of all cells excluding the central one that we are going to mutate
+    List<LightDashboardCell> cellsBeforeMutation = gameModel.getDashboard().light().stream().collect(Collectors.toList());
+    cellsBeforeMutation.remove(4); // Cell at position (1, 1)
+
+    // Remove some stuff
+    PickupDashboardCell cell = (PickupDashboardCell) gameModel.getDashboard().getDashboardCell(Position.of(1, 1));
+    cell.removeAmmoCard();
+
+    // Refill again
+    gameModel.refillDashboard();
+
+    assertThat(gameModel.getDashboard().stream())
+      .noneMatch(EMPTY_CELL_PREDICATE); // All cells must have something
+
+    List<LightDashboardCell> cellsAfterMutation = gameModel.getDashboard().light().stream().collect(Collectors.toList());
+    cellsAfterMutation.remove(4); // Cell at position (1, 1)
+
+    assertThat(cellsBeforeMutation)
+      .containsAll(cellsAfterMutation);
+
   }
 }

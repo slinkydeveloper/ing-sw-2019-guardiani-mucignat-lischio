@@ -2,23 +2,22 @@ package com.adrenalinici.adrenaline.model.common;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public final class AmmoCard {
   private final List<AmmoColor> ammoColor;
-  private final PowerUpCard powerUpCard;
+  private final boolean pickPowerUp;
 
-  public AmmoCard(List<AmmoColor> ammoColor, PowerUpCard powerUpCard) {
+  public AmmoCard(List<AmmoColor> ammoColor, boolean pickPowerUp) {
     this.ammoColor = ammoColor;
-    this.powerUpCard = powerUpCard;
+    this.pickPowerUp = pickPowerUp;
   }
 
   public List<AmmoColor> getAmmoColor() {
     return ammoColor;
   }
 
-  public Optional<PowerUpCard> getPowerUpCard() {
-    return Optional.ofNullable(this.powerUpCard);
+  public boolean isPickPowerUp() {
+    return pickPowerUp;
   }
 
   @Override
@@ -26,12 +25,12 @@ public final class AmmoCard {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     AmmoCard ammoCard = (AmmoCard) o;
-    return Objects.equals(ammoColor, ammoCard.ammoColor) &&
-      Objects.equals(powerUpCard, ammoCard.powerUpCard);
+    return pickPowerUp == ammoCard.pickPowerUp &&
+      Objects.equals(ammoColor, ammoCard.ammoColor);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ammoColor, powerUpCard);
+    return Objects.hash(ammoColor, pickPowerUp);
   }
 }

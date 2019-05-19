@@ -24,6 +24,7 @@ public class RespawnDashboardCell extends BaseDashboardCell {
   }
 
   public void addAvailableGun(String gun) {
+    if (availableGuns.size() == 3) throw new IllegalStateException("Already 3 guns in this cell");
     availableGuns.add(gun);
   }
 
