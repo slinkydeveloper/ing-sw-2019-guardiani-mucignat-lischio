@@ -22,9 +22,10 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
 
   @Override
   public void onJump(VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    if (context.getRemainingActions() == 0)
+    if (context.getRemainingActions() == 0) {
+      context.addPhases(RELOAD.name(), RESPAWN_KILLED_PEOPLE.name());
       context.nextPhase(view);
-    else
+    } else
       view.showAvailableActions(calculateAvailableActions());
   }
 
@@ -35,14 +36,14 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
         context.decrementRemainingActions();
         switch (e.getAction()) {
           case MOVE_MOVE_MOVE:
-            context.addPhases(movement(3));
+            context.addPhases(movement(3), id());
             break;
           case MOVE_PICKUP:
-            context.addPhases(movement(1), PICKUP.name());
+            context.addPhases(movement(1), PICKUP.name(), id());
             break;
           case SHOOT:
             context.addPhases(CHOOSE_GUN.name(), USE_SCOPE.name());
-            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name());
+            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
             break;
         }
         context.nextPhase(view);

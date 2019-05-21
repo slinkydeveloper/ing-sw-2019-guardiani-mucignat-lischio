@@ -29,7 +29,12 @@ public class SenderRunnable implements Runnable {
       try {
         InboxMessage message = clientViewOutbox.take();
         LOG.fine(String.format("Going to send message %s", message.getClass()));
-        channel.write(ByteBuffer.wrap(SerializationUtils.serialize(message)));
+        byte[] serialized = SerializationUtils.serialize(message);
+        ByteBuffer bufWithSize = ByteBuffer.allocate(4 + serialized.length);
+        bufWithSize.putInt(serialized.length);
+        bufWithSize.put(serialized);
+        bufWithSize.rewind();
+        channel.write(bufWithSize);
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       } catch (IOException e) {

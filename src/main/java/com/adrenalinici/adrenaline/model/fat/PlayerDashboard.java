@@ -24,6 +24,21 @@ public class PlayerDashboard {
   private int points;
   private boolean firstPlayer;
 
+  public PlayerDashboard(PlayerColor player, boolean firstPlayer) {
+    this.player = player;
+    this.firstPlayer = firstPlayer;
+    this.powerUpCards = new ArrayList<>();
+    this.ammos = new ArrayList<>();
+    this.damages = new ArrayList<>();
+    this.marks = new ArrayList<>();
+    this.guns = new HashMap<>();
+    this.skullsNumber = 0;
+    this.points = 0;
+    addAmmo(AmmoColor.RED);
+    addAmmo(AmmoColor.BLUE);
+    addAmmo(AmmoColor.YELLOW);
+  }
+
   public PlayerDashboard(PlayerColor player, boolean firstPlayer, List<PowerUpCard> powerUpCards) {
     this.player = player;
     this.firstPlayer = firstPlayer;

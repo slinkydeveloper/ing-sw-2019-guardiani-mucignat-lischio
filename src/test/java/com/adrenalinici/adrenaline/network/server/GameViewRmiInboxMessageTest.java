@@ -3,8 +3,10 @@ package com.adrenalinici.adrenaline.network.server;
 import com.adrenalinici.adrenaline.model.common.Action;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
+import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
+import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -22,13 +24,13 @@ public class GameViewRmiInboxMessageTest extends BaseGameViewRmiIntegrationTest 
 
   @Test
   public void handshakeAndStartMatch() throws IOException, InterruptedException {
-    List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView = new ArrayList<>();
+    List<DecoratedEvent<ViewEvent, GameView>> receivedEventsFromView = new ArrayList<>();
     doHandshakeAndStartMatch(receivedEventsFromView);
   }
 
   @Test
   public void testSendViewEvent() throws IOException, InterruptedException {
-    List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView = new ArrayList<>();
+    List<DecoratedEvent<ViewEvent, GameView>> receivedEventsFromView = new ArrayList<>();
     doHandshakeAndStartMatch(receivedEventsFromView);
     receivedEventsFromView.clear();
 
@@ -42,7 +44,7 @@ public class GameViewRmiInboxMessageTest extends BaseGameViewRmiIntegrationTest 
         .isInstanceOfSatisfying(ActionChosenEvent.class, ace -> assertThat(ace.getAction()).isEqualTo(Action.MOVE_MOVE_MOVE)));
   }
 
-  private void doHandshakeAndStartMatch(List<DecoratedEvent<ViewEvent, BaseGameViewServer>> receivedEventsFromView) throws InterruptedException {
+  private void doHandshakeAndStartMatch(List<DecoratedEvent<ViewEvent, GameView>> receivedEventsFromView) throws InterruptedException {
     serverGameView.registerObserver(receivedEventsFromView::add);
     serverGameView.getAvailablePlayers().remove(PlayerColor.GREEN);
     serverGameView.getAvailablePlayers().remove(PlayerColor.CYAN);
@@ -64,7 +66,7 @@ public class GameViewRmiInboxMessageTest extends BaseGameViewRmiIntegrationTest 
     assertThat(serverGameView.getAvailablePlayers()).doesNotContain(PlayerColor.YELLOW);
 
     assertThat(receivedEventsFromView)
-      .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent()).isInstanceOf(NewTurnEvent.class));
+      .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent()).isInstanceOf(StartMatchEvent.class));
   }
 
 }

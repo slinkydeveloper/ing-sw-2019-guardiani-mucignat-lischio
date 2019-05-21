@@ -55,6 +55,13 @@ public class GunLoader {
     return nodes.get(id);
   }
 
+  public List<ControllerFlowNode> getAllAdditionalNodes() {
+    return getAvailableGuns()
+      .stream()
+      .flatMap(id -> this.getAdditionalNodes(id).stream())
+      .collect(Collectors.toList());
+  }
+
   private GunFactory resolveGunFactory(String id) {
     return factories
       .stream()

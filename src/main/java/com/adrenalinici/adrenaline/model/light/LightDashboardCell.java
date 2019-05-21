@@ -22,4 +22,12 @@ public abstract class LightDashboardCell implements Serializable {
   }
 
   public abstract void visit(Consumer<LightRespawnDashboardCell> visitRespawnDashboardCell, Consumer<LightPickupDashboardCell> visitPickupDashboardCell);
+
+  @Override
+  public String toString() {
+    return "LightDashboardCell{" +
+      "playersInCell=" + playersInCell +
+      ", cellColor=" + cellColor +
+      '}';
+  }
 }

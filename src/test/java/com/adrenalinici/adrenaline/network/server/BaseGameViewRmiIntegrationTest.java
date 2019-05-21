@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -45,18 +46,18 @@ public class BaseGameViewRmiIntegrationTest {
     BlockingQueue<InboxEntry> inbox = new LinkedBlockingQueue<>();
     BlockingQueue<OutboxMessage> outbox = new LinkedBlockingQueue<>();
 
-    serverGameView = new GameViewServer(inbox, outbox, new HashSet<>(Arrays.asList(playerColorList)));
+    serverGameView = new GameViewServer(inbox, outbox, new LinkedBlockingQueue<>(), new HashSet<>(Arrays.asList(playerColorList)));
     serverViewThread = new Thread(serverGameView, "game-view-server");
 
-    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outbox);
+    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outbox, 9001, "test");
 
     serverViewThread.start();
     serverNetworkAdapter.start();
 
-    Thread.sleep(200);
+    Thread.sleep(1000);
 
     proxy = new ClientViewProxy(mockedClientView);
-    clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy), "test-client-network-adapter");
+    clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy, "localhost", 9001), "test-client-network-adapter");
     clientNetworkAdapter.start();
 
     Thread.sleep(500);

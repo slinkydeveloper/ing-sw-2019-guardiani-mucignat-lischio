@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller;
 
-import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
+import com.adrenalinici.adrenaline.controller.nodes.*;
+import com.adrenalinici.adrenaline.controller.nodes.guns.*;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
@@ -11,6 +12,8 @@ import com.adrenalinici.adrenaline.util.Observer;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,6 +32,10 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     );
   }
 
+  public GameController(GameModel model) {
+    this(loadNodes(), model);
+  }
+
   public void startMatch(GameView view) {
     this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
       this.flowOrchestrator,
@@ -38,7 +45,11 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   @Override
   public void onEvent(DecoratedEvent<ViewEvent, GameView> event) {
-    flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
+    if (event.getInnerEvent().isStartMatchEvent()) {
+      startMatch(event.getEventSource());
+    } else {
+      flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
+    }
   }
 
   private PlayerColor nextTurnPlayer() {
@@ -68,8 +79,33 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     if (view != null) view.showNextTurn(player);
   }
 
-  protected ControllerFlowContext getFlowContext() {
+  public ControllerFlowContext getFlowContext() {
     return this.flowOrchestrator.getActualContext();
+  }
+
+  public static List<FlowNode> loadNodes() {
+    List<FlowNode> nodes = new ArrayList<>(Arrays.asList(
+      new ChooseActionFlowNode(),
+      new ChooseGunFlowNode(),
+      new ChooseMovementFlowNode(1),
+      new ChooseMovementFlowNode(2),
+      new ChooseMovementFlowNode(3),
+      new ChooseMovementFlowNode(4),
+      new FirstTurnFlowNode(),
+      new NewTurnFlowNode(),
+      new PickupFlowNode(),
+      new ReloadFlowNode(),
+      new RespawnFlowNode(),
+      new ChoosePlayersToHitFlowNode(),
+      new ChooseBaseEffectForGunFlowNode(),
+      new ChooseAlternativeEffectForGunFlowNode(),
+      new GunChooseMovementFlowNode(1),
+      new GunChooseMovementFlowNode(2),
+      new GunChooseEnemyMovementFlowNode(1),
+      new GunChooseEnemyMovementFlowNode(2)
+    ));
+    nodes.addAll(GunLoader.INSTANCE.getAllAdditionalNodes());
+    return nodes;
   }
 
 }

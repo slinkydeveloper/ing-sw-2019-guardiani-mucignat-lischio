@@ -34,6 +34,13 @@ public class LightDashboard implements Serializable {
     return dashboardCells[0].length;
   }
 
+  @Override
+  public String toString() {
+    return "LightDashboard{" +
+      "dashboardCells=" + Arrays.toString(dashboardCells) +
+      '}';
+  }
+
   public Stream<LightDashboardCell> stream() {
     return Arrays.stream(dashboardCells).flatMap(Arrays::stream);
   }

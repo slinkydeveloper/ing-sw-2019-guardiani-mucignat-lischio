@@ -19,17 +19,18 @@ import java.util.logging.Logger;
 
 public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
 
-  public static final int PORT = Integer.parseInt(System.getenv().getOrDefault("SOCKET_PORT", "9000"));
   private static final Logger LOG = LogUtils.getLogger(SocketServerNetworkAdapter.class);
 
+  private int port;
   private Thread receiverThread;
   private Thread broadcasterThread;
   private ServerSocketChannel serverChannel;
   private Map<Socket, String> connectedClients;
   private Selector readSelector;
 
-  public SocketServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox) {
-    super(viewInbox, viewOutbox);
+  public SocketServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox, int port, String gameId) {
+    super(viewInbox, viewOutbox, gameId);
+    this.port = port;
   }
 
   @Override
@@ -40,19 +41,19 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
     // Configure socket server and register channel to selector
     this.serverChannel = ServerSocketChannel.open();
     this.serverChannel.configureBlocking(false);
-    this.serverChannel.socket().bind(new InetSocketAddress(PORT));
+    this.serverChannel.socket().bind(new InetSocketAddress(port));
     this.serverChannel.register(readSelector, SelectionKey.OP_ACCEPT);
 
-    LOG.info("Started socket server on port " + PORT);
+    LOG.info(String.format("Started socket server for game %s on port %d", gameId, port));
 
     this.receiverThread = new Thread(
       new ReceiverRunnable(connectedClients, readSelector, viewInbox),
-      "socket-receiver"
+      "socket-receiver-" + gameId
     );
     this.receiverThread.start();
     this.broadcasterThread = new Thread(
       new BroadcasterRunnable(connectedClients, viewOutbox),
-      "socket-broadcaster"
+      "socket-broadcaster-" + gameId
     );
     this.broadcasterThread.start();
   }
@@ -67,5 +68,6 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
       readSelector.close();
     if (serverChannel != null && serverChannel.isOpen())
       serverChannel.close();
+    LOG.info(String.format("Stopped socket server for game %s on port %d", gameId, port));
   }
 }
