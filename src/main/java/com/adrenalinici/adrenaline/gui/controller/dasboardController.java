@@ -11,7 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
-
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.shape.Polygon;
+import javafx.stage.Stage;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -167,7 +171,9 @@ public class dasboardController {
   @FXML
   private Polygon player1;//TODO capisci come gestire i polygon
 
-
+  //TODO doublekill
+  //TODO kill con colorPLayer e marcatura
+  //TODO come gestisco il colore ??
 
 
   @FXML
@@ -190,6 +196,16 @@ public class dasboardController {
   }
 
   public void respawnAction(ActionEvent actionEvent) {
+    // cancellare il polygon e metterne uno nuovo in un'alta cella
+    Polygon respawnPlayer = new Polygon();
+    respawnPlayer.getPoints().addAll(new Double[]{
+      30.0, 30.0,
+      20.0, 10.0,
+      10.0, 20.0 });
+    respawnPlayer.setFill(Color.PINK);
+    cyanCell20.getChildren().add(respawnPlayer);
+    cyanCell00.getChildren().remove(player1);
+
   }
 
   // immetto le ammo nel controller

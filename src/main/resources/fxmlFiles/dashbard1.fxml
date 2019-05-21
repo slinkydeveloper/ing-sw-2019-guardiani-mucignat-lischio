@@ -146,7 +146,7 @@
       <children>
         <AnchorPane fx:id="cyanCell00" onMouseClicked="#possibleMove" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Polygon id="player" fx:id="#player1" fill="#ff1fa3" layoutX="64.0" layoutY="74.0" stroke="BLACK" strokeMiterLimit="5.0" strokeType="INSIDE">
+                  <Polygon id="player" fill="#ff1fa3" layoutX="64.0" layoutY="74.0" stroke="BLACK" strokeMiterLimit="5.0" strokeType="INSIDE">
                     <points>
                       <Double fx:value="-50.0" />
                       <Double fx:value="40.0" />
@@ -292,6 +292,15 @@
                 <Circle fx:id="yellowAmmo2" fill="#fcff21" onMouseClicked="#useAmmos" radius="7.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
               </children>
             </GridPane>
+                  <SplitMenuButton layoutX="99.0" layoutY="82.0" mnemonicParsing="false" text="SplitMenuButton">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="3 red" />
+                      <MenuItem mnemonicParsing="false" text="3 blu " />
+                        <MenuItem mnemonicParsing="false" text="3 yellow" />
+                        <MenuItem mnemonicParsing="false" text="1-1-1" />
+                        <MenuItem mnemonicParsing="false" text="others" />
+                    </items>
+                  </SplitMenuButton>
           </children>
         </AnchorPane>
             <SplitMenuButton mnemonicParsing="false" text="action game">
