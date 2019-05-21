@@ -24,7 +24,7 @@ public class SocketRmiControllore {
   public void socketNetwork(ActionEvent actionEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/choosePlayerColor.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choosePlayerColor.fxml"));
     } catch (IOException e) {
       Thread.currentThread().interrupt();
     }
@@ -38,7 +38,7 @@ public class SocketRmiControllore {
   public void rmiNetwork(ActionEvent actionEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/choosePlayerColor.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choosePlayerColor.fxml"));
     } catch (IOException e) {
       Thread.currentThread().interrupt();
     }

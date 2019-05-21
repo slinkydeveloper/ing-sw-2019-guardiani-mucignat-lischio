@@ -52,7 +52,7 @@ public class DasboardController {
   public void otherPlayers(javafx.scene.input.MouseEvent mouseEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/otherPlayers.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/otherPlayers.fxml"));
     } catch (IOException e) {
       Thread.currentThread().interrupt();
     }

@@ -16,7 +16,7 @@ public class Dashboard1 extends Application {
 
   public void start(Stage primaryStage) throws IOException {
 
-    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/dashbard1.fxml"));
+    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashbard1.fxml"));
     primaryStage.setTitle("Adrenaline");
     primaryStage.setScene(new Scene(root));
     primaryStage.show();

@@ -6,7 +6,7 @@
 
 
 <?import javafx.scene.layout.Pane?>
-<!--<GridPane fx:controller="com.adrenalinici.adrenaline.gui.controller.startGuiController"-->
+<!--<GridPane fx:controller="com.adrenalinici.adrenaline.gui.controller.StartGuiController"-->
 <!--          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="549" vgap="805">-->
 
 <!--    <ImageView fitHeight="549.0" fitWidth="8.0" layoutX="9.0" pickOnBounds="true" preserveRatio="true">-->
@@ -17,7 +17,7 @@
 
 <?import javafx.scene.control.Button?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0"
-      prefWidth="976.0" fx:controller="com.adrenalinici.adrenaline.gui.controller.startGuiController"
+      prefWidth="976.0" fx:controller="com.adrenalinici.adrenaline.gui.controller.StartGuiController"
       xmlns:fx="http://javafx.com/fxml">
  <ImageView fitHeight="549.0" fitWidth="976.0" pickOnBounds="true" preserveRatio="true">
     <image>

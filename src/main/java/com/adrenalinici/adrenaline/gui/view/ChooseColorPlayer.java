@@ -16,7 +16,7 @@ public class ChooseColorPlayer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-      Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/choosePlayerColor.fxml"));
+      Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choosePlayerColor.fxml"));
       primaryStage.setTitle("choose socket/rmi");
       primaryStage.setScene(new Scene(root));
       primaryStage.show();

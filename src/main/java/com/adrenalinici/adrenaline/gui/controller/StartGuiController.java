@@ -19,7 +19,7 @@ import java.net.ConnectException;
 import java.util.Objects;
 
 
-public class startGuiController {
+public class StartGuiController {
   @FXML
   private Button startButton;
 
@@ -27,7 +27,7 @@ public class startGuiController {
   public void changeSceneRmiSocket(ActionEvent actionEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/ScoketRmi.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ScoketRmi.fxml"));
     } catch (IOException e) {
       Thread.currentThread().interrupt();
     }

@@ -13,7 +13,7 @@ public class OtherPlayersController {
   public void backToDashboard(MouseEvent mouseEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/dashbard1.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashbard1.fxml"));
     } catch (IOException e) {
       Thread.currentThread().interrupt();
     }
