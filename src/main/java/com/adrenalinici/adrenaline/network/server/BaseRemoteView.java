@@ -1,0 +1,112 @@
+package com.adrenalinici.adrenaline.network.server;
+
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.network.inbox.ViewEventMessage;
+import com.adrenalinici.adrenaline.network.outbox.ModelEventMessage;
+import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
+import com.adrenalinici.adrenaline.util.DecoratedEvent;
+import com.adrenalinici.adrenaline.util.LogUtils;
+import com.adrenalinici.adrenaline.util.Observable;
+import com.adrenalinici.adrenaline.view.GameView;
+import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
+import com.adrenalinici.adrenaline.view.event.ViewEvent;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
+
+public abstract class BaseRemoteView extends Observable<DecoratedEvent<ViewEvent, GameView>> implements GameView {
+
+  private static final Logger LOG = LogUtils.getLogger(BaseRemoteView.class);
+
+  private final String matchId;
+  private final ServerContext context;
+  private final Map<String, PlayerColor> connectedPlayers;
+  private final Set<PlayerColor> availablePlayers;
+  private boolean matchStarted;
+
+  private OutboxMessage lastSentCommand;
+
+  public BaseRemoteView(String matchId, ServerContext context, Set<PlayerColor> availablePlayers) {
+    this.matchId = matchId;
+    this.context = context;
+    this.connectedPlayers = new HashMap<>();
+    this.availablePlayers = availablePlayers;
+    this.matchStarted = false;
+  }
+
+  public Map<String, PlayerColor> getConnectedPlayers() {
+    return connectedPlayers;
+  }
+
+  public Set<PlayerColor> getAvailablePlayers() {
+    return availablePlayers;
+  }
+
+  public boolean isMatchStarted() {
+    return matchStarted;
+  }
+
+  public String getMatchId() {
+    return matchId;
+  }
+
+  @Override
+  public void onEvent(ModelEvent newValue) {
+    broadcast(new ModelEventMessage(newValue));
+  }
+
+  public void notifyDisconnectedPlayer(String connectionId) {
+    if (connectedPlayers.containsKey(connectionId)) {
+      LOG.info(String.format("Disconnected %s (connection id %s)", connectedPlayers.get(connectionId), connectionId));
+      availablePlayers.add(connectedPlayers.remove(connectionId));
+    }
+  }
+
+  public boolean notifyNewPlayer(String connectionId, PlayerColor color) {
+    if (availablePlayers.contains(color)) {
+      availablePlayers.remove(color);
+      connectedPlayers.put(connectionId, color);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public void checkMatchStatus() {
+    if (!this.matchStarted)
+      checkStartMatch();
+    else
+      checkResumeMatch();
+  }
+
+  public void notifyViewEvent(ViewEventMessage message) {
+    if (!availablePlayers.isEmpty() || !this.matchStarted) { // Someone is disconnected or the match is not yet started
+      // > Drop message or enqueue? Notify client that match is paused?
+      // Noop for now
+    } else {
+      notifyEvent(new DecoratedEvent<>(message.getViewEvent(), this));
+    }
+  }
+
+  void broadcast(OutboxMessage en) {
+    lastSentCommand = en;
+    context.broadcastToMatch(matchId, en);
+  }
+
+  private void checkStartMatch() {
+    if (this.availablePlayers.isEmpty()) {
+      this.matchStarted = true;
+      LOG.info("Starting match");
+      notifyEvent(new DecoratedEvent<>(new StartMatchEvent(), this));
+    }
+  }
+
+  private void checkResumeMatch() {
+    if (this.availablePlayers.isEmpty())
+      broadcast(lastSentCommand);
+  }
+
+}

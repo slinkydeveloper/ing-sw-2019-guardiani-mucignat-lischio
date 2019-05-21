@@ -4,12 +4,18 @@ import com.adrenalinici.adrenaline.model.common.PlayerColor;
 
 import java.util.function.Consumer;
 
-public class ChosenMyPlayerColorMessage implements InboxMessage {
+public class ChosenMatchMessage implements InboxMessage {
 
+  private String matchId;
   private PlayerColor color;
 
-  public ChosenMyPlayerColorMessage(PlayerColor color) {
+  public ChosenMatchMessage(String matchId, PlayerColor color) {
+    this.matchId = matchId;
     this.color = color;
+  }
+
+  public String getMatchId() {
+    return matchId;
   }
 
   public PlayerColor getColor() {
@@ -17,7 +23,7 @@ public class ChosenMyPlayerColorMessage implements InboxMessage {
   }
 
   @Override
-  public void onChosenMyPlayerColorMessage(Consumer<ChosenMyPlayerColorMessage> consumer) {
+  public void onChosenMatchMessage(Consumer<ChosenMatchMessage> consumer) {
     consumer.accept(this);
   }
 }

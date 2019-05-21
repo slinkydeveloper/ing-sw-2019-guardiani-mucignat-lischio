@@ -1,4 +1,4 @@
-package com.adrenalinici.adrenaline.server;
+package com.adrenalinici.adrenaline.model.common;
 
 import com.adrenalinici.adrenaline.model.fat.Dashboard;
 

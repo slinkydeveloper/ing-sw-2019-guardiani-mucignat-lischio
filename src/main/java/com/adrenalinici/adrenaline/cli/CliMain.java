@@ -46,14 +46,27 @@ public class CliMain extends BaseClientGameView {
   }
 
   @Override
-  public void showChooseMyPlayer(List<PlayerColor> colorList) {
+  public void showAvailableMatchesAndPlayers(Map<String, Set<PlayerColor>> matches) {
     if (getMyPlayer() == null) {
-      System.out.println(
-        String.format("Choosable players: %s", colorList.stream().map(Objects::toString).collect(Collectors.joining(", ")))
+      System.out.println("Available matches");
+      matches.forEach((matchId, availablePlayers) ->
+        System.out.println(String.format("Match %s: %s", matchId, availablePlayers.stream().map(Objects::toString).collect(Collectors.joining(", "))))
       );
-      String chosenPlayer = scanner.nextLine();
-      setMyPlayer(PlayerColor.valueOf(chosenPlayer.trim()));
-      sendChosenMyPlayer(getMyPlayer());
+    }
+    String command = scanner.nextLine();
+    //TODO I did in this way just because I'm lazy to do something better
+    // @peppelischio offers himself as volunteer to improve it and all this shitty class <3
+    String[] commandChunks = command.trim().split("\\s");
+    if ("new".equals(commandChunks[0].toLowerCase())) {
+      String matchId = commandChunks[1];
+      DashboardChoice dashboard = DashboardChoice.valueOf(commandChunks[2].trim().toUpperCase());
+      PlayersChoice players = PlayersChoice.valueOf(commandChunks[3].trim().toUpperCase());
+      RulesChoice rules = RulesChoice.valueOf(commandChunks[4].trim().toUpperCase());
+      sendStartNewMatch(matchId, dashboard, players, rules);
+    } else {
+      String matchId = commandChunks[1];
+      PlayerColor color = PlayerColor.valueOf(commandChunks[2].trim().toUpperCase());
+      sendChosenMatch(matchId, color);
     }
   }
 

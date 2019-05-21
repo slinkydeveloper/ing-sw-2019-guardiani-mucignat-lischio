@@ -3,18 +3,21 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
+import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.adrenalinici.adrenaline.util.TriPredicate;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.adrenalinici.adrenaline.util.ListUtils.notIn;
+import static com.adrenalinici.adrenaline.util.CollectionUtils.notIn;
 
 //TODO javadoc
 public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowState> {

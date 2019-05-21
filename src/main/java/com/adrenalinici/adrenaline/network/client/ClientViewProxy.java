@@ -1,7 +1,7 @@
 package com.adrenalinici.adrenaline.network.client;
 
 import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
-import com.adrenalinici.adrenaline.network.outbox.*;
+import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.util.Observable;
 import com.adrenalinici.adrenaline.view.BaseClientGameView;
 
@@ -30,6 +30,6 @@ public class ClientViewProxy extends Observable<InboxMessage> {
     message.onAvailableGunsToPickupMessage(e -> view.showAvailableGunsToPickup(e.getGuns()));
     message.onAvailableTagbackGrenadeMessage(e -> view.showAvailableTagbackGrenade(e.getPlayer(), e.getPowerUpCards()));
     message.onModelEventMessage(e -> view.onEvent(e.getModelEvent()));
-    message.onChooseMyPlayerMessage(e -> view.showChooseMyPlayer(e.getPlayerColors()));
+    message.onAvailableMatchesMessage(e -> view.showAvailableMatchesAndPlayers(e.getMatchesRemainingPlayers()));
   }
 }

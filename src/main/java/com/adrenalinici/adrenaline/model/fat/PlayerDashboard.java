@@ -7,7 +7,7 @@ import com.adrenalinici.adrenaline.model.common.PowerUpCard;
 import com.adrenalinici.adrenaline.model.common.PowerUpType;
 import com.adrenalinici.adrenaline.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.util.Bag;
-import com.adrenalinici.adrenaline.util.ListUtils;
+import com.adrenalinici.adrenaline.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -73,7 +73,7 @@ public class PlayerDashboard {
   }
 
   public void removeAmmos(List<AmmoColor> ammos) {
-    ListUtils.difference(this.ammos, ammos);
+    CollectionUtils.difference(this.ammos, ammos);
   }
 
   public List<AmmoColor> getAmmos() {
@@ -239,9 +239,9 @@ public class PlayerDashboard {
    * @param ammos
    */
   public void removeAmmosIncludingPowerups(List<AmmoColor> ammos) {
-    List<AmmoColor> ammosToGetFromPowerUp = ListUtils.differencePure(ammos, getAmmos());
+    List<AmmoColor> ammosToGetFromPowerUp = CollectionUtils.differencePure(ammos, getAmmos());
 
-    List<AmmoColor> ammosToRemove = ListUtils.differencePure(ammos, ammosToGetFromPowerUp);
+    List<AmmoColor> ammosToRemove = CollectionUtils.differencePure(ammos, ammosToGetFromPowerUp);
     removeAmmos(ammosToRemove);
 
     if (!ammosToGetFromPowerUp.isEmpty())
