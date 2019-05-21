@@ -16,6 +16,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -28,19 +29,19 @@ public class DasboardController {
   private Polygon player;
 
   @FXML
-  public void possibleMove(MouseEvent event){
+  public void possibleMove(MouseEvent event) {
     //TODO
   }
 
   public void possibleMove(javafx.scene.input.MouseEvent mouseEvent) {
-    
+
   }
 
   public void chooseGun(javafx.scene.input.MouseEvent mouseEvent) {
   }
 
   public void pickUpAmmo(javafx.scene.input.MouseEvent mouseEvent) {
-    
+
   }
 
   public void cangheGun(javafx.scene.input.MouseEvent mouseEvent) {
@@ -181,9 +182,9 @@ public class DasboardController {
   @FXML
   private AnchorPane cyanCell10;
   @FXML
-  private  AnchorPane CyanCell20;
+  private AnchorPane CyanCell20;
 
-  public void moveAction(ActionEvent actionEvent) throws NullPointerException{
+  public void moveAction(ActionEvent actionEvent) throws NullPointerException {
 
   }
 
@@ -201,7 +202,7 @@ public class DasboardController {
     respawnPlayer.getPoints().addAll(new Double[]{
       30.0, 30.0,
       20.0, 10.0,
-      10.0, 20.0 });
+      10.0, 20.0});
     respawnPlayer.setFill(Color.PINK);
     cyanCell20.getChildren().add(respawnPlayer);
     cyanCell00.getChildren().remove(player1);
@@ -209,7 +210,6 @@ public class DasboardController {
   }
 
   // immetto le ammo nel controller
-
 
 
   public void useAmmoForGun(ActionEvent actionEvent) {

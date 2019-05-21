@@ -36,6 +36,6 @@ public class StartGuiController {
     window.setScene(scene);
     window.show();
   }
-  }
+}
 
 
