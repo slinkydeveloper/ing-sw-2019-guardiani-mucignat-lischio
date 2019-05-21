@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0" fx:controller="com.adrenalinici.adrenaline.gui.controller.chooseColorPlayerController"
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0" fx:controller="com.adrenalinici.adrenaline.gui.controller.ChooseColorPlayerController"
       xmlns:fx="http://javafx.com/fxml">
   <children>
     <ImageView fitHeight="549.0" fitWidth="976.0" pickOnBounds="true" preserveRatio="true">

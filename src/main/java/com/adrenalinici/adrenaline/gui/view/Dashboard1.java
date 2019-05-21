@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class dashboard1 extends Application {
+public class Dashboard1 extends Application {
 
     public static void main(String[] args) {
         launch(args);

@@ -22,7 +22,7 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.security.Policy;
 
-public class dasboardController {
+public class DasboardController {
 
   @FXML
   private Polygon player;

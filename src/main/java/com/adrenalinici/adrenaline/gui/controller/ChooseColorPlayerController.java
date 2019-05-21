@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class chooseColorPlayerController {
+public class ChooseColorPlayerController {
 
   public void goToDashboard(ActionEvent actionEvent) throws  IOException{
     Pane nextNode = new Pane();
