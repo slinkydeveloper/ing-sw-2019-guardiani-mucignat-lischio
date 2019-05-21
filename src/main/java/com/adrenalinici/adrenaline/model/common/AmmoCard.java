@@ -1,9 +1,10 @@
 package com.adrenalinici.adrenaline.model.common;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public final class AmmoCard {
+public final class AmmoCard implements Serializable {
   private final List<AmmoColor> ammoColor;
   private final boolean pickPowerUp;
 
