@@ -162,6 +162,16 @@ public class CliMain extends BaseClientGameView {
   }
 
   @Override
+  public void showAvailableRooms(Set<CellColor> rooms) {
+
+  }
+
+  @Override
+  public void showAvailableCellsToHit(Set<Position> cells) {
+
+  }
+
+  @Override
   public void onEvent(ModelEvent newValue) {
     System.out.println("Model updated! " + newValue);
     showModel(newValue.getGameModel());

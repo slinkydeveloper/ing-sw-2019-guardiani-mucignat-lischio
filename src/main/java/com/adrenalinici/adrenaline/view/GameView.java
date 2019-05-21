@@ -37,4 +37,8 @@ public interface GameView extends Observer<ModelEvent> {
   void showAvailableGunsToPickup(Set<String> guns);
 
   void showAvailableTagbackGrenade(PlayerColor player, List<PowerUpCard> powerUpCards);
+
+  void showAvailableRooms(Set<CellColor> rooms);
+
+  void showAvailableCellsToHit(Set<Position> cells);
 }

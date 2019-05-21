@@ -1,6 +1,8 @@
 package com.adrenalinici.adrenaline.model.common;
 
-public enum CellColor {
+import java.io.Serializable;
+
+public enum CellColor implements Serializable {
   CYAN(AmmoColor.BLUE),
   RED(AmmoColor.RED),
   YELLOW(AmmoColor.YELLOW),

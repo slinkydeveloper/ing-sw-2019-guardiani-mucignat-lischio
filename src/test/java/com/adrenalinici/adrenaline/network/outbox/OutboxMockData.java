@@ -19,5 +19,6 @@ public class OutboxMockData {
   public static final List<PowerUpCard> POWER_UP_CARDS = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.TAGBACK_GRENADE), new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY));
   public static final List<PlayerColor> PLAYERS = Arrays.asList(PlayerColor.YELLOW, PlayerColor.GREEN);
   public static final Map<PlayerColor, List<Position>> AVAILABLE_MOVEMENTS = new HashMap<>(); //TODO add some data
-
+  public static final Set<CellColor> ROOMS = new HashSet<>(Arrays.asList(CellColor.YELLOW, CellColor.GREEN));
+  public static final Set<Position> CELLS = new HashSet<>(Arrays.asList(Position.of(0, 0), Position.of(0, 1)));
 }
