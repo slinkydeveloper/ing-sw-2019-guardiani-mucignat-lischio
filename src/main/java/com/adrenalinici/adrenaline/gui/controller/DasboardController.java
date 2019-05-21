@@ -174,7 +174,7 @@ public class DasboardController {
   public void otherPlayers(MouseEvent mouseEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/otherPlayers.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/other_players.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
       ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");

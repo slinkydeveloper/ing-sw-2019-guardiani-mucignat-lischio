@@ -15,18 +15,18 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SocketRmiControllore {
-  private static final Logger LOG = LogUtils.getLogger(SocketRmiControllore.class);
+public class SocketRmiController {
+  private static final Logger LOG = LogUtils.getLogger(SocketRmiController.class);
   @FXML
   private Button socketButton;
   @FXML
   private Button rmiButton;
 
 
-  public void socketNetwork(ActionEvent actionEvent) {
+  public void clickedSocketNetworkButton(ActionEvent actionEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choosePlayerColor.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choose_player_color.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
       ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");
@@ -38,10 +38,10 @@ public class SocketRmiControllore {
   }
 
 
-  public void rmiNetwork(ActionEvent actionEvent) {
+  public void clickedRmiNetworkButton(ActionEvent actionEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choosePlayerColor.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/choose_player_color.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
       ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");

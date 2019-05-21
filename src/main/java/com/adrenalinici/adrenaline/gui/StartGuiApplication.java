@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class StartGui extends Application {
+public class StartGuiApplication extends Application {
 
   public static void main(String[] args) {
     launch(args);
@@ -17,7 +17,7 @@ public class StartGui extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/StartGui.fxml"));
+    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/start_gui.fxml"));
 
     primaryStage.setTitle("Adrenaline");
     primaryStage.setScene(new Scene(root));

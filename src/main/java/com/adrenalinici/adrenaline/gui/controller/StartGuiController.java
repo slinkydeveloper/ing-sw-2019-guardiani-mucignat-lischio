@@ -29,7 +29,7 @@ public class StartGuiController {
   public void changeSceneRmiSocket(ActionEvent actionEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ScoketRmi.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/socket_rmi.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
       ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");

@@ -20,7 +20,7 @@ public class OtherPlayersController {
   public void backToDashboard(MouseEvent mouseEvent) {
     Pane nextNode = new Pane();
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashbard1.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/dashbard_1.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
       ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");

@@ -7,15 +7,15 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="com.adrenalinici.adrenaline.gui.controller.SocketRmiControllore">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="976.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="com.adrenalinici.adrenaline.gui.controller.SocketRmiController">
   <children>
     <ImageView fitHeight="551.0" fitWidth="976.0" layoutY="-7.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="/images/DashboardAndPlayers/wallpaper.jpeg" />
       </image>
     </ImageView>
-    <Button layoutX="457.0" layoutY="231.0" mnemonicParsing="false" onAction="#socketNetwork" text="SOCKET" />
-    <Button layoutX="471.0" layoutY="291.0" mnemonicParsing="false" onAction="#rmiNetwork" text="RMI" />
+    <Button layoutX="457.0" layoutY="231.0" mnemonicParsing="false" onAction="#clickedSocketNetworkButton" text="SOCKET" />
+    <Button layoutX="471.0" layoutY="291.0" mnemonicParsing="false" onAction="#clickedRmiNetworkButton" text="RMI" />
     <TextField layoutX="407.0" layoutY="348.0" />
     <TextField layoutX="407.0" layoutY="397.0" />
       <Label layoutX="293.0" layoutY="353.0" text="Porta" />
