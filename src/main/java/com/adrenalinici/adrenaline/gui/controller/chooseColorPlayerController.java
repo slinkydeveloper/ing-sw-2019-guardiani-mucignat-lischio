@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class chooseColorPlayerController {
-  public void goToDashboard(ActionEvent actionEvent) {
+
+  public void goToDashboard(ActionEvent actionEvent) throws  IOException{
     Pane nextNode = new Pane();
     try {
       nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxmlFiles/dashbard1.fxml"));

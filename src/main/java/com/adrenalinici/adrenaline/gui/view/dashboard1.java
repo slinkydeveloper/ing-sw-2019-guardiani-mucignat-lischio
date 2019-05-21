@@ -20,4 +20,5 @@ public class dashboard1 extends Application {
     primaryStage.setTitle("Adrenaline");
     primaryStage.setScene(new Scene(root));
     primaryStage.show();
-  }}
+  }
+}
