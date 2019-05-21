@@ -1,27 +1,29 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
 
-import com.adrenalinici.adrenaline.gui.view.SocketRmi;
+import com.adrenalinici.adrenaline.gui.ErrorUtils;
+import com.adrenalinici.adrenaline.util.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
 import java.io.IOException;
-import java.net.ConnectException;
-import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class StartGuiController {
+
+  private static final Logger LOG = LogUtils.getLogger(StartGuiController.class);
   @FXML
   private Button startButton;
+
 
 
   public void changeSceneRmiSocket(ActionEvent actionEvent) {
@@ -29,7 +31,8 @@ public class StartGuiController {
     try {
       nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ScoketRmi.fxml"));
     } catch (IOException e) {
-      Thread.currentThread().interrupt();
+      LOG.log(Level.SEVERE, "Cannot find fxml", e);
+      ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");
     }
     Scene scene = new Scene(nextNode);
     Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

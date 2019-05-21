@@ -1,67 +1,29 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
+import com.adrenalinici.adrenaline.gui.ErrorUtils;
+import com.adrenalinici.adrenaline.util.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.shape.Polygon;
-import javafx.stage.Stage;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.security.Policy;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DasboardController {
 
-  @FXML
-  private Polygon player;
-
-  @FXML
-  public void possibleMove(MouseEvent event) {
-    //TODO
-  }
-
-  public void possibleMove(javafx.scene.input.MouseEvent mouseEvent) {
-
-  }
-
-  public void chooseGun(javafx.scene.input.MouseEvent mouseEvent) {
-  }
-
-  public void pickUpAmmo(javafx.scene.input.MouseEvent mouseEvent) {
-
-  }
-
-  public void cangheGun(javafx.scene.input.MouseEvent mouseEvent) {
-  }
-
-  public void useAmmos(javafx.scene.input.MouseEvent mouseEvent) {
-  }
-
-  public void otherPlayers(javafx.scene.input.MouseEvent mouseEvent) {
-    Pane nextNode = new Pane();
-    try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/otherPlayers.fxml"));
-    } catch (IOException e) {
-      Thread.currentThread().interrupt();
-    }
-    Scene scene = new Scene(nextNode);
-    Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-    window.setScene(scene);
-    window.show();
-  }
+  private static final Logger LOG = LogUtils.getLogger(DasboardController.class);
 
   @FXML
   private AnchorPane gun0;
@@ -174,7 +136,7 @@ public class DasboardController {
 
   //TODO doublekill
   //TODO kill con colorPLayer e marcatura
-  //TODO come gestisco il colore ??
+  //TODO haw i can do it??
 
 
   @FXML
@@ -183,6 +145,47 @@ public class DasboardController {
   private AnchorPane cyanCell10;
   @FXML
   private AnchorPane CyanCell20;
+
+  @FXML
+  private Polygon player;
+
+  @FXML
+  public void possibleMove(MouseEvent event) {
+    //TODO
+  }
+
+
+  public void chooseGun(MouseEvent mouseEvent) {
+    //TODO
+  }
+
+  public void pickUpAmmo(MouseEvent mouseEvent) {
+   //TODO
+  }
+
+  public void changeGun(MouseEvent mouseEvent) {
+    //TODO
+  }
+
+  public void useAmmos(MouseEvent mouseEvent) {
+    //TODO
+  }
+
+  public void otherPlayers(MouseEvent mouseEvent) {
+    Pane nextNode = new Pane();
+    try {
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/otherPlayers.fxml"));
+    } catch (IOException e) {
+      LOG.log(Level.SEVERE, "Cannot find fxml", e);
+      ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");
+    }
+    Scene scene = new Scene(nextNode);
+    Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+    window.setScene(scene);
+    window.show();
+  }
+
+
 
   public void moveAction(ActionEvent actionEvent) throws NullPointerException {
 
@@ -197,19 +200,19 @@ public class DasboardController {
   }
 
   public void respawnAction(ActionEvent actionEvent) {
-    // cancellare il polygon e metterne uno nuovo in un'alta cella
+    // eliminate player1 and respawn it in another cell
     Polygon respawnPlayer = new Polygon();
-    respawnPlayer.getPoints().addAll(new Double[]{
+    respawnPlayer.getPoints().addAll(
       30.0, 30.0,
       20.0, 10.0,
-      10.0, 20.0});
+      10.0, 20.0);
     respawnPlayer.setFill(Color.PINK);
     cyanCell20.getChildren().add(respawnPlayer);
     cyanCell00.getChildren().remove(player1);
 
   }
 
-  // immetto le ammo nel controller
+  // TODO how many ammos i can use ? add function
 
 
   public void useAmmoForGun(ActionEvent actionEvent) {
