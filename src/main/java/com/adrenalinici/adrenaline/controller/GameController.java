@@ -1,15 +1,12 @@
 package com.adrenalinici.adrenaline.controller;
 
 import com.adrenalinici.adrenaline.controller.nodes.*;
-import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffectForGunFlowNode;
-import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseBaseEffectForGunFlowNode;
-import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
+import com.adrenalinici.adrenaline.controller.nodes.guns.*;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.Observer;
 import com.adrenalinici.adrenaline.view.GameView;
@@ -90,8 +87,10 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     List<FlowNode> nodes = new ArrayList<>(Arrays.asList(
       new ChooseActionFlowNode(),
       new ChooseGunFlowNode(),
-      new ChooseMovementFlowNode(3),
       new ChooseMovementFlowNode(1),
+      new ChooseMovementFlowNode(2),
+      new ChooseMovementFlowNode(3),
+      new ChooseMovementFlowNode(4),
       new FirstTurnFlowNode(),
       new NewTurnFlowNode(),
       new PickupFlowNode(),
@@ -99,7 +98,11 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       new RespawnFlowNode(),
       new ChoosePlayersToHitFlowNode(),
       new ChooseBaseEffectForGunFlowNode(),
-      new ChooseAlternativeEffectForGunFlowNode()
+      new ChooseAlternativeEffectForGunFlowNode(),
+      new GunChooseMovementFlowNode(1),
+      new GunChooseMovementFlowNode(2),
+      new GunChooseEnemyMovementFlowNode(1),
+      new GunChooseEnemyMovementFlowNode(2)
     ));
     nodes.addAll(GunLoader.INSTANCE.getAllAdditionalNodes());
     return nodes;
