@@ -1,11 +1,9 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.common.Action;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
-import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
 import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import org.junit.Test;
@@ -14,9 +12,11 @@ import org.mockito.ArgumentCaptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
@@ -37,7 +37,7 @@ public class GameViewRmiInboxMessageTest extends BaseGameViewRmiIntegrationTest 
     // Now the match is started, I can send a ViewEvent
     mockedClientView.sendViewEvent(new ActionChosenEvent(Action.MOVE_MOVE_MOVE));
 
-    Thread.sleep(500);
+    sleep();
 
     assertThat(receivedEventsFromView)
       .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent())
@@ -45,25 +45,32 @@ public class GameViewRmiInboxMessageTest extends BaseGameViewRmiIntegrationTest 
   }
 
   private void doHandshakeAndStartMatch(List<DecoratedEvent<ViewEvent, GameView>> receivedEventsFromView) throws InterruptedException {
-    serverGameView.registerObserver(receivedEventsFromView::add);
-    serverGameView.getAvailablePlayers().remove(PlayerColor.GREEN);
-    serverGameView.getAvailablePlayers().remove(PlayerColor.CYAN);
-    serverGameView.getConnectedPlayers().put("aaa", PlayerColor.GREEN);
-    serverGameView.getConnectedPlayers().put("bbb", PlayerColor.CYAN);
+    reset(mockedClientView);
 
-    Thread.sleep(500);
+    mockedClientView.sendStartNewMatch("test-match-2", DashboardChoice.SMALL, PlayersChoice.THREE, RulesChoice.SIMPLE);
 
-    ArgumentCaptor<List<PlayerColor>> availablePlayers = ArgumentCaptor.forClass(List.class);
-    verify(mockedClientView, times(1)).showChooseMyPlayer(availablePlayers.capture());
+    sleep();
 
-    Thread.sleep(500);
+    ArgumentCaptor<Map<String, Set<PlayerColor>>> availableMatches = ArgumentCaptor.forClass(Map.class);
+    verify(mockedClientView).showAvailableMatchesAndPlayers(availableMatches.capture());
 
-    mockedClientView.sendChosenMyPlayer(PlayerColor.YELLOW);
+    assertThat(serverMessageRouter.getContext().getMatches().get("test-match-2"))
+      .isNotNull();
 
-    Thread.sleep(500);
+    RemoteView remoteView = serverMessageRouter.getContext().getMatches().get("test-match-2");
 
-    assertThat(serverGameView.getConnectedPlayers()).containsValue(PlayerColor.YELLOW);
-    assertThat(serverGameView.getAvailablePlayers()).doesNotContain(PlayerColor.YELLOW);
+    remoteView.registerObserver(receivedEventsFromView::add);
+    remoteView.getAvailablePlayers().remove(PlayerColor.GREEN);
+    remoteView.getAvailablePlayers().remove(PlayerColor.PURPLE);
+    remoteView.getConnectedPlayers().put("aaa", PlayerColor.GREEN);
+    remoteView.getConnectedPlayers().put("bbb", PlayerColor.PURPLE);
+
+    mockedClientView.sendChosenMatch("test-match-2", PlayerColor.YELLOW);
+
+    sleep();
+
+    assertThat(remoteView.getConnectedPlayers()).containsValue(PlayerColor.YELLOW);
+    assertThat(remoteView.getAvailablePlayers()).doesNotContain(PlayerColor.YELLOW);
 
     assertThat(receivedEventsFromView)
       .hasOnlyOneElementSatisfying(d -> assertThat(d.getInnerEvent()).isInstanceOf(StartMatchEvent.class));

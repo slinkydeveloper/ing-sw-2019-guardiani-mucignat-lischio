@@ -1,13 +1,13 @@
 package com.adrenalinici.adrenaline.network.server;
 
-import com.adrenalinici.adrenaline.model.*;
 import com.adrenalinici.adrenaline.model.common.*;
-import com.adrenalinici.adrenaline.network.outbox.*;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.adrenalinici.adrenaline.network.outbox.OutboxMockData.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,11 +17,20 @@ import static org.mockito.Mockito.verify;
 @SuppressWarnings("unchecked")
 public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest {
 
+  @Override
+  public void setUp() throws IOException, InterruptedException {
+    super.setUp();
+
+    mockedClientView.sendChosenMatch("test-match", PlayerColor.YELLOW);
+
+    sleep(2);
+  }
+
   @Test
   public void showAvailableActionsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableActions(ACTIONS);
+    remoteView.showAvailableActions(ACTIONS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<List<Action>> actionsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableActions(actionsCaptor.capture());
@@ -31,9 +40,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailableMovementsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableMovements(POSITIONS);
+    remoteView.showAvailableMovements(POSITIONS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showAvailableMovements(positionsCaptor.capture());
@@ -43,9 +52,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showNextTurnTest() throws IOException, InterruptedException {
-    serverGameView.showNextTurn(PLAYER);
+    remoteView.showNextTurn(PLAYER);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     verify(mockedClientView, times(1)).showNextTurn(playerCaptor.capture());
@@ -55,9 +64,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showReloadableGunsTest() throws IOException, InterruptedException {
-    serverGameView.showReloadableGuns(GUNS);
+    remoteView.showReloadableGuns(GUNS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showReloadableGuns(gunsCaptor.capture());
@@ -67,9 +76,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showLoadedGunsTest() throws IOException, InterruptedException {
-    serverGameView.showLoadedGuns(GUNS);
+    remoteView.showLoadedGuns(GUNS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showLoadedGuns(gunsCaptor.capture());
@@ -79,9 +88,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showBaseGunExtraEffectsTest() throws IOException, InterruptedException {
-    serverGameView.showBaseGunExtraEffects(EFFECTS);
+    remoteView.showBaseGunExtraEffects(EFFECTS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<List<Effect>> effectsCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showBaseGunExtraEffects(effectsCaptor.capture());
@@ -91,9 +100,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailablePowerUpCardsForRespawnTest() throws IOException, InterruptedException {
-    serverGameView.showAvailablePowerUpCardsForRespawn(PLAYER, POWER_UP_CARDS);
+    remoteView.showAvailablePowerUpCardsForRespawn(PLAYER, POWER_UP_CARDS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     ArgumentCaptor<List<PowerUpCard>> powerUpCardsCaptor = ArgumentCaptor.forClass(List.class);
@@ -105,9 +114,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailableAlternativeEffectsGunTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableAlternativeEffectsGun(FIRST_EFFECT, SECOND_EFFECT);
+    remoteView.showAvailableAlternativeEffectsGun(FIRST_EFFECT, SECOND_EFFECT);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Effect> firstEffectCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> secondEffectCaptor = ArgumentCaptor.forClass(Effect.class);
@@ -119,9 +128,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showChoosePlayerToHitTest() throws IOException, InterruptedException {
-    serverGameView.showChoosePlayerToHit(PLAYERS);
+    remoteView.showChoosePlayerToHit(PLAYERS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
     verify(mockedClientView, times(1)).showChoosePlayerToHit(playersCaptor.capture());
@@ -131,9 +140,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showChoosePlayerToMoveTest() throws IOException, InterruptedException {
-    serverGameView.showChoosePlayerToMove(AVAILABLE_MOVEMENTS);
+    remoteView.showChoosePlayerToMove(AVAILABLE_MOVEMENTS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Map<PlayerColor, List<Position>>> availableMovementsCaptor = ArgumentCaptor.forClass(Map.class);
     verify(mockedClientView, times(1)).showChoosePlayerToMove(availableMovementsCaptor.capture());
@@ -143,9 +152,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailableExtraEffectsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableExtraEffects(FIRST_EXTRA_EFFECT, SECOND_EXTRA_EFFECT);
+    remoteView.showAvailableExtraEffects(FIRST_EXTRA_EFFECT, SECOND_EXTRA_EFFECT);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Effect> firstExtraEffectCaptor = ArgumentCaptor.forClass(Effect.class);
     ArgumentCaptor<Effect> secondExtraEffectCaptor = ArgumentCaptor.forClass(Effect.class);
@@ -157,9 +166,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailableGunsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableGuns(GUNS);
+    remoteView.showAvailableGuns(GUNS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showAvailableGuns(gunsCaptor.capture());
@@ -169,9 +178,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailableGunsToPickupTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableGunsToPickup(GUNS);
+    remoteView.showAvailableGunsToPickup(GUNS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showAvailableGunsToPickup(gunsCaptor.capture());
@@ -181,9 +190,9 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showAvailableTagbackGrenadeTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableTagbackGrenade(PLAYER, POWER_UP_CARDS);
+    remoteView.showAvailableTagbackGrenade(PLAYER, POWER_UP_CARDS);
 
-    Thread.sleep(500);
+    sleep();
 
     ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
     ArgumentCaptor<List<PowerUpCard>> powerUpCardsCaptor = ArgumentCaptor.forClass(List.class);

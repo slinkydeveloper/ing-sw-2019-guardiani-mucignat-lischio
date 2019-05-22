@@ -1,10 +1,13 @@
 package com.adrenalinici.adrenaline.network.server;
 
+import com.adrenalinici.adrenaline.model.common.DashboardChoice;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.PlayersChoice;
+import com.adrenalinici.adrenaline.model.common.RulesChoice;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
-import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
+import com.adrenalinici.adrenaline.network.outbox.OutboxEntry;
 import com.adrenalinici.adrenaline.network.server.rmi.RmiServerNetworkAdapter;
 import com.adrenalinici.adrenaline.view.BaseClientGameView;
 import org.junit.After;
@@ -15,13 +18,11 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.reset;
 
 public class BaseGameViewRmiIntegrationTest {
 
@@ -33,39 +34,59 @@ public class BaseGameViewRmiIntegrationTest {
   Thread clientNetworkAdapter;
 
   RmiServerNetworkAdapter serverNetworkAdapter;
-  GameViewServer serverGameView;
-  Thread serverViewThread;
+  ServerMessageRouter serverMessageRouter;
+  Thread serverMessageRouterThread;
   final PlayerColor[] playerColorList = {
     PlayerColor.GREEN,
     PlayerColor.YELLOW,
     PlayerColor.CYAN
   };
 
+  RemoteView remoteView;
+
   @Before
   public void setUp() throws IOException, InterruptedException {
     BlockingQueue<InboxEntry> inbox = new LinkedBlockingQueue<>();
-    BlockingQueue<OutboxMessage> outbox = new LinkedBlockingQueue<>();
+    BlockingQueue<OutboxEntry> outboxRmi = new LinkedBlockingQueue<>();
+    BlockingQueue<OutboxEntry> outboxSocket = new LinkedBlockingQueue<>();
 
-    serverGameView = new GameViewServer(inbox, outbox, new LinkedBlockingQueue<>(), new HashSet<>(Arrays.asList(playerColorList)));
-    serverViewThread = new Thread(serverGameView, "game-view-server");
+    serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket);
+    serverMessageRouterThread = new Thread(serverMessageRouter, "server-message-router-test");
 
-    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outbox, 9001, "test");
+    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outboxRmi, 9001);
 
-    serverViewThread.start();
+    serverMessageRouterThread.start();
     serverNetworkAdapter.start();
 
-    Thread.sleep(1000);
+    sleep(4);
 
     proxy = new ClientViewProxy(mockedClientView);
     clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy, "localhost", 9001), "test-client-network-adapter");
     clientNetworkAdapter.start();
 
-    Thread.sleep(500);
+    sleep();
+
+    mockedClientView.sendStartNewMatch("test-match", DashboardChoice.SMALL, PlayersChoice.THREE, RulesChoice.SIMPLE);
+
+    sleep(4);
+
+    remoteView = serverMessageRouter.getContext().getMatches().get("test-match");
+    assertThat(remoteView).isNotNull();
+
+    reset(mockedClientView);
+  }
+
+  void sleep(int times) throws InterruptedException {
+    Thread.sleep(times * 200);
+  }
+
+  void sleep() throws InterruptedException {
+    sleep(1);
   }
 
   @After
   public void tearDown() throws IOException {
-    serverViewThread.interrupt();
+    serverMessageRouterThread.interrupt();
     serverNetworkAdapter.stop();
     clientNetworkAdapter.interrupt();
   }

@@ -4,12 +4,11 @@ import com.adrenalinici.adrenaline.network.client.rmi.GameRmiClient;
 import com.adrenalinici.adrenaline.network.inbox.ConnectedPlayerMessage;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
-import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
+import com.adrenalinici.adrenaline.network.outbox.OutboxEntry;
 import com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter;
 import com.adrenalinici.adrenaline.util.LogUtils;
 
 import java.io.IOException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -33,11 +32,11 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   private Map<String, String> addressToConnectionId;
   private Map<String, GameRmiClient> connectionIdToClient;
 
-  private Thread broadcasterThread;
+  private Thread senderThread;
   private Registry registry;
 
-  public RmiServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox, int port, String gameId) {
-    super(viewInbox, viewOutbox, gameId);
+  public RmiServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxEntry> viewOutbox, int port) {
+    super(viewInbox, viewOutbox);
     this.addressToConnectionId = new ConcurrentHashMap<>();
     this.connectionIdToClient = new ConcurrentHashMap<>();
     this.port = port;
@@ -49,10 +48,10 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
     registry = LocateRegistry.createRegistry(port);
     registry.rebind(GameRmiServer.class.getSimpleName(), remoteObject);
 
-    LOG.info(String.format("Started rmi registry for game %s on port %d", gameId, port));
+    LOG.info(String.format("Started rmi registry on port %d", port));
 
-    broadcasterThread = new Thread(new BroadcasterRunnable(connectionIdToClient, viewOutbox));
-    broadcasterThread.start();
+    senderThread = new Thread(new SenderRunnable(connectionIdToClient, viewOutbox), "rmi-sender");
+    senderThread.start();
   }
 
   @Override
@@ -60,10 +59,10 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
     try {
       registry.unbind(GameRmiServer.class.getSimpleName());
       UnicastRemoteObject.unexportObject(registry, true);
-      LOG.info(String.format("Stopped rmi registry for game %s on port %d", gameId, port));
+      LOG.info(String.format("Stopped rmi registry on port %d", port));
     } catch (NotBoundException e) {}
-    if (broadcasterThread != null)
-      broadcasterThread.interrupt();
+    if (senderThread != null)
+      senderThread.interrupt();
   }
 
   @Override

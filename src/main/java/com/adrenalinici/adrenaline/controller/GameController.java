@@ -108,4 +108,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     return nodes;
   }
 
+  public GameModel getGameModel() {
+    return gameModel;
+  }
 }

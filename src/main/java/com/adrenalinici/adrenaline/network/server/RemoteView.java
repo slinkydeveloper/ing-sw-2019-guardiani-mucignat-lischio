@@ -2,16 +2,17 @@ package com.adrenalinici.adrenaline.network.server;
 
 import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.network.outbox.*;
-import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 
-import java.util.*;
-import java.util.concurrent.BlockingQueue;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class GameViewServer extends BaseGameViewServer {
+public class RemoteView extends BaseRemoteView {
 
-  public GameViewServer(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxMessage> outboxRmi, BlockingQueue<OutboxMessage> outboxSocket, Set<PlayerColor> availablePlayers) {
-    super(inbox, outboxRmi, outboxSocket, availablePlayers);
+  public RemoteView(String matchId, ServerContext context, Set<PlayerColor> availablePlayers) {
+    super(matchId, context, availablePlayers);
   }
+
   @Override
   public void showAvailableActions(List<Action> actions) {
     broadcast(new AvailableActionsMessage(actions));

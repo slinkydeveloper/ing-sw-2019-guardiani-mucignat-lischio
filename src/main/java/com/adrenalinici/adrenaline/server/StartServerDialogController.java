@@ -1,42 +1,23 @@
 package com.adrenalinici.adrenaline.server;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class StartServerDialogController {
 
-  @FXML private ChoiceBox<DashboardChoice> dashboardChoiceBox;
-  @FXML private ChoiceBox<PlayersChoice> playersNumberChoiceBox;
-  @FXML private ChoiceBox<RulesChoice> ruleSetChoiceBox;
   @FXML private TextField rmiPortTextField;
   @FXML private TextField socketPortTextField;
   @FXML private Button startMatchButton;
 
   public void initialize() {
-    dashboardChoiceBox.setItems(
-      FXCollections.observableArrayList(DashboardChoice.values())
-    );
-    dashboardChoiceBox.setValue(DashboardChoice.SMALL);
-    playersNumberChoiceBox.setItems(
-      FXCollections.observableArrayList(PlayersChoice.values())
-    );
-    playersNumberChoiceBox.setValue(PlayersChoice.THREE);
-    ruleSetChoiceBox.setItems(
-      FXCollections.observableArrayList(RulesChoice.values())
-    );
-    ruleSetChoiceBox.setValue(RulesChoice.COMPLETE);
-
     rmiPortTextField.setText("9001");
     socketPortTextField.setText("9000");
 
@@ -44,9 +25,6 @@ public class StartServerDialogController {
   }
 
   public void onStartMatchClicked(MouseEvent e) {
-    if (dashboardChoiceBox.getValue() == null || playersNumberChoiceBox.getValue() == null || ruleSetChoiceBox.getValue() == null) {
-      showErrorAlert();
-    }
     String serializedRmiPort = rmiPortTextField.getText();
     String serializedSocktPort = socketPortTextField.getText();
     try {
@@ -64,9 +42,6 @@ public class StartServerDialogController {
 
       TextAreaLogAppenderController controller = loader.getController();
       GameBootstrapper bootstrapper = new GameBootstrapper(
-        dashboardChoiceBox.getValue(),
-        playersNumberChoiceBox.getValue(),
-        ruleSetChoiceBox.getValue(),
         rmiPort,
         socketPort
       );

@@ -1,8 +1,7 @@
 package com.adrenalinici.adrenaline.network.server.socket;
 
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
-import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
-import com.adrenalinici.adrenaline.network.server.BaseGameViewServer;
+import com.adrenalinici.adrenaline.network.outbox.OutboxEntry;
 import com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter;
 import com.adrenalinici.adrenaline.util.LogUtils;
 
@@ -23,20 +22,19 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
 
   private int port;
   private Thread receiverThread;
-  private Thread broadcasterThread;
+  private Thread senderThread;
   private ServerSocketChannel serverChannel;
-  private Map<Socket, String> connectedClients;
   private Selector readSelector;
 
-  public SocketServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxMessage> viewOutbox, int port, String gameId) {
-    super(viewInbox, viewOutbox, gameId);
+  public SocketServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxEntry> viewOutbox, int port) {
+    super(viewInbox, viewOutbox);
     this.port = port;
   }
 
   @Override
   public void start() throws IOException {
     readSelector = Selector.open();
-    this.connectedClients = new ConcurrentHashMap<>();
+    Map<Socket, String> connectedClients = new ConcurrentHashMap<>();
 
     // Configure socket server and register channel to selector
     this.serverChannel = ServerSocketChannel.open();
@@ -44,30 +42,30 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
     this.serverChannel.socket().bind(new InetSocketAddress(port));
     this.serverChannel.register(readSelector, SelectionKey.OP_ACCEPT);
 
-    LOG.info(String.format("Started socket server for game %s on port %d", gameId, port));
+    LOG.info(String.format("Started socket server on port %d", port));
 
     this.receiverThread = new Thread(
       new ReceiverRunnable(connectedClients, readSelector, viewInbox),
-      "socket-receiver-" + gameId
+      "socket-receiver"
     );
     this.receiverThread.start();
-    this.broadcasterThread = new Thread(
-      new BroadcasterRunnable(connectedClients, viewOutbox),
-      "socket-broadcaster-" + gameId
+    this.senderThread = new Thread(
+      new SenderRunnable(connectedClients, viewOutbox),
+      "socket-sender"
     );
-    this.broadcasterThread.start();
+    this.senderThread.start();
   }
 
   @Override
   public void stop() throws IOException {
     if (receiverThread != null)
       receiverThread.interrupt();
-    if (broadcasterThread != null)
-      broadcasterThread.interrupt();
+    if (senderThread != null)
+      senderThread.interrupt();
     if (readSelector != null && readSelector.isOpen())
       readSelector.close();
     if (serverChannel != null && serverChannel.isOpen())
       serverChannel.close();
-    LOG.info(String.format("Stopped socket server for game %s on port %d", gameId, port));
+    LOG.info(String.format("Stopped socket server on port %d", port));
   }
 }

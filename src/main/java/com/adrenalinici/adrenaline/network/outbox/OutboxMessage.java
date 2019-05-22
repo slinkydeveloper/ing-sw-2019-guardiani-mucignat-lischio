@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.network.outbox;
 
 import java.io.Serializable;
-
 import java.util.function.Consumer;
 
 public interface OutboxMessage extends Serializable {
@@ -36,6 +35,6 @@ public interface OutboxMessage extends Serializable {
 
   default void onModelEventMessage(Consumer<ModelEventMessage> c) {}
 
-  default void onChooseMyPlayerMessage(Consumer<ChooseMyPlayerMessage> c) {}
+  default void onAvailableMatchesMessage(Consumer<AvailableMatchesMessage> c) {}
 
 }
