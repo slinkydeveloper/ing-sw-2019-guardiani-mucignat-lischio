@@ -204,9 +204,9 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
   @Test
   public void showAvailableRoomsTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableRooms(ROOMS);
+    remoteView.showAvailableRooms(ROOMS);
 
-    Thread.sleep(100);
+    sleep();
 
     ArgumentCaptor<Set<CellColor>> roomsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showAvailableRooms(roomsCaptor.capture());
@@ -216,9 +216,9 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
 
   @Test
   public void showAvailableCellsToHitTest() throws IOException, InterruptedException {
-    serverGameView.showAvailableCellsToHit(CELLS);
+    remoteView.showAvailableCellsToHit(CELLS);
 
-    Thread.sleep(100);
+    sleep();
 
     ArgumentCaptor<Set<Position>> cellsCaptor = ArgumentCaptor.forClass(Set.class);
     verify(mockedClientView, times(1)).showAvailableCellsToHit(cellsCaptor.capture());

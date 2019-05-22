@@ -83,4 +83,13 @@ public class RemoteView extends BaseRemoteView {
     broadcast(new AvailableTagbackGrenadeMessage(player, powerUpCards));
   }
 
+  @Override
+  public void showAvailableRooms(Set<CellColor> rooms) {
+    broadcast(new AvailableRoomsMessage(rooms));
+  }
+
+  @Override
+  public void showAvailableCellsToHit(Set<Position> cells) {
+    broadcast(new AvailableCellsToHitMessage(cells));
+  }
 }
