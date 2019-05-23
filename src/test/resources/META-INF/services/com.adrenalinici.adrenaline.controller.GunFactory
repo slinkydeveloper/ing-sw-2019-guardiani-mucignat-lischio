@@ -11,6 +11,7 @@ com.adrenalinici.adrenaline.controller.guns.SledgehammerGunFactory
 com.adrenalinici.adrenaline.controller.guns.TractorBeamGunFactory
 com.adrenalinici.adrenaline.controller.guns.ShockwaveGunFactory
 com.adrenalinici.adrenaline.controller.guns.FurnaceGunFactory
+com.adrenalinici.adrenaline.controller.guns.ThorGunFactory
 com.adrenalinici.adrenaline.testutil.BaseEffectGunSwordFactory
 com.adrenalinici.adrenaline.testutil.BaseEffectGunRifleFactory
 com.adrenalinici.adrenaline.testutil.BaseEffectGunRevolverFactory
