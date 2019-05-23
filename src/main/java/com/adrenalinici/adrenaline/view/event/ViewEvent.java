@@ -37,4 +37,10 @@ public interface ViewEvent extends Serializable {
 
   default void onEnemyMovementChosenEvent(Consumer<EnemyMovementChosenEvent> consumer) {
   }
+
+  default void onRoomChosenEvent(Consumer<RoomChosenEvent> consumer) {
+  }
+
+  default void onCellToHitChosenEvent(Consumer<CellToHitChosenEvent> consumer) {
+  }
 }

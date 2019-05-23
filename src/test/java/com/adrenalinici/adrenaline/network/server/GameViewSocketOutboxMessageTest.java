@@ -202,4 +202,28 @@ public class GameViewSocketOutboxMessageTest extends BaseGameViewSocketIntegrati
     assertThat(powerUpCardsCaptor.getValue()).isEqualTo(POWER_UP_CARDS);
   }
 
+  @Test
+  public void showAvailableRoomsTest() throws IOException, InterruptedException {
+    remoteView.showAvailableRooms(ROOMS);
+
+    sleep();
+
+    ArgumentCaptor<Set<CellColor>> roomsCaptor = ArgumentCaptor.forClass(Set.class);
+    verify(mockedClientView, times(1)).showAvailableRooms(roomsCaptor.capture());
+
+    assertThat(roomsCaptor.getValue()).isEqualTo(ROOMS);
+  }
+
+  @Test
+  public void showAvailableCellsToHitTest() throws IOException, InterruptedException {
+    remoteView.showAvailableCellsToHit(CELLS);
+
+    sleep();
+
+    ArgumentCaptor<Set<Position>> cellsCaptor = ArgumentCaptor.forClass(Set.class);
+    verify(mockedClientView, times(1)).showAvailableCellsToHit(cellsCaptor.capture());
+
+    assertThat(cellsCaptor.getValue()).isEqualTo(CELLS);
+  }
+
 }
