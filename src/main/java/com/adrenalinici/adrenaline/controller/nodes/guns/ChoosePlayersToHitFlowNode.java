@@ -65,7 +65,6 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .filter(newEnemy ->
               model.getDashboard().calculateIfVisible(model.getPlayerPosition(newEnemy), model.getPlayerPosition(previousEnemy))
             )
-            //.filter(newEnemy -> predicate.test(previousEnemy, newEnemy, model))
             .collect(Collectors.toList());
 
       } else {
