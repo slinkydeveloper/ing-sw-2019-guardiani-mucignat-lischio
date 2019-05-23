@@ -9,6 +9,8 @@ import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlowState> {
+  public static String FIRST_EXTRA_IS_ON = "first_extra_is_on";
+  public static final String DEFAULT = "default";
 
   private String nodeId;
   private TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext> consumer;
@@ -33,12 +35,21 @@ public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlo
     PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
     if (flowState.isActivatedFirstExtraEffect())
       dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getFirstExtraEffectCost());
-    if (flowState.isActivatedSecondExtraEffect())
+    if (flowState.isActivatedSecondExtraEffect() && !resolveEffectRestriction(flowState).equals(FIRST_EXTRA_IS_ON)) {
       dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getSecondExtraEffectCost());
+    }
+
     dashboard.unloadGun(flowState.getChosenGun().getId());
     context.nextPhase(view, flowState);
   }
 
   @Override
   public void handleEvent(ViewEvent event, BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) { }
+
+  private String resolveEffectRestriction(GunFlowState flowState) {
+    if (!flowState.resolvePhaseConfiguration(id()).has("applying_restriction"))
+      return DEFAULT;
+
+    return flowState.resolvePhaseConfiguration(id()).get("applying_restriction").asText();
+  }
 }

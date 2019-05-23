@@ -1,9 +1,11 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
+import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
+import com.adrenalinici.adrenaline.model.common.AmmoColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
@@ -36,6 +38,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.CYAN);
 
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
     context.nextPhase(viewMock,
@@ -62,6 +65,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
 
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
 
@@ -86,4 +90,45 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     checkEndCalled();
   }
 
+  @Test
+  public void testForThorRestrictions() {
+    //GameModel model1 = new GameModel(8, build3x3Dashboard(), generate4PlayerDashboards());
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
+    model.getPlayerDashboard(PlayerColor.GREEN).addAmmo(AmmoColor.BLUE);
+    assertThat(model.getDashboard().calculateIfVisible(Position.of(2, 2), Position.of(2, 1)))
+      .isTrue();
+
+    DecoratedBaseEffectGun gun = (DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("thor");
+    BaseEffectGunFlowStateImpl baseEffectGunFlowState = new BaseEffectGunFlowStateImpl(gun);
+    baseEffectGunFlowState.setActivatedFirstExtraEffect(true).setActivatedSecondExtraEffect(true);
+
+    ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
+
+    context.nextPhase(
+      viewMock,
+      baseEffectGunFlowState
+    );
+
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.CYAN), viewMock);
+
+    verify(viewMock, times(3)).showChoosePlayerToHit(playersCaptor.capture());
+    assertThat(playersCaptor.getAllValues().get(0))
+      .containsExactlyInAnyOrder(PlayerColor.GRAY);
+    assertThat(playersCaptor.getAllValues().get(1))
+      .containsExactlyInAnyOrder(PlayerColor.YELLOW);
+    assertThat(playersCaptor.getAllValues().get(2))
+      .containsExactlyInAnyOrder(PlayerColor.CYAN);
+
+    assertThat(((BaseEffectGunFlowState) context.getActualState()).getChosenPlayersToHit())
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW, PlayerColor.CYAN);
+
+    checkEndCalled();
+  }
 }
