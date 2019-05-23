@@ -22,6 +22,7 @@ import static com.adrenalinici.adrenaline.util.CollectionUtils.notIn;
 //TODO javadoc
 public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowState> {
   public static String DIFFERENT_CELL = "cell_different_from_previous";
+  public static String VISIBLE_FROM_PREVIOUS_ENEMY = "visible_from_previous_enemy";
   public static final String DEFAULT = "default";
 
   @Override
@@ -36,6 +37,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
     } else {
       TriPredicate<PlayerColor, PlayerColor, GameModel> predicate = resolveDistanceEvalPredicate(flowState);
       List<PlayerColor> hittable;
+
       if (resolveHittablePlayersRestriction(flowState).equals(DIFFERENT_CELL)) {
         Set<Position> positionsToFilter = new HashSet<>();
         flowState.getChosenPlayersToHit()
@@ -50,6 +52,22 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
             .filter(player -> !positionsToFilter.contains(model.getPlayerPosition(player)))
             .collect(Collectors.toList());
+
+      } else if (resolveHittablePlayersRestriction(flowState).equals(VISIBLE_FROM_PREVIOUS_ENEMY) && !flowState.getChosenPlayersToHit().isEmpty()) {
+        PlayerColor previousEnemy = flowState.getChosenPlayersToHit().get(flowState.getChosenPlayersToHit().size() - 1);
+        hittable = //players that are visible from last chosen enemy position
+          model
+            .getPlayers()
+            .stream()
+            .filter(notIn(flowState.getChosenPlayersToHit()))
+            .filter(notIn(context.getKilledPlayers()))
+            .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(newEnemy ->
+              model.getDashboard().calculateIfVisible(model.getPlayerPosition(newEnemy), model.getPlayerPosition(previousEnemy))
+            )
+            //.filter(newEnemy -> predicate.test(previousEnemy, newEnemy, model))
+            .collect(Collectors.toList());
+
       } else {
         hittable =
           model

@@ -1,14 +1,9 @@
 package com.adrenalinici.adrenaline.testutil;
 
-import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
-import com.adrenalinici.adrenaline.controller.GunFactory;
-import com.adrenalinici.adrenaline.controller.guns.BaseEffectGunFactory;
-import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.fat.Dashboard;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -106,4 +101,7 @@ public class TestUtils {
     return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards());
   }
 
+  public static GameModel generateModelWith4Players() {
+    return new GameModel(8, build3x3Dashboard(), generate4PlayerDashboards());
+  }
 }

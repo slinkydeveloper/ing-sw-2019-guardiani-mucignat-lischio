@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
-import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import com.adrenalinici.adrenaline.flow.impl.FlowOrchestratorImpl;
@@ -15,7 +14,6 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,7 +37,7 @@ public abstract class BaseNodeTest {
 
   @Before
   public void setUp() {
-    this.model = TestUtils.generateModel();
+    this.model = TestUtils.generateModelWith4Players();
     this.endCalled = new AtomicBoolean(false);
 
     FlowNode node = nodeToTest();
