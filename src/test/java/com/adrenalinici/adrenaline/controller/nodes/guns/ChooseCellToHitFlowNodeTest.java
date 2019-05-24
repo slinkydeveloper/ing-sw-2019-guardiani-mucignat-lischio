@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedAlternativeEffectGun;
+import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.nodes.BaseNodeTest;
 import com.adrenalinici.adrenaline.flow.FlowNode;
@@ -57,6 +58,44 @@ public class ChooseCellToHitFlowNodeTest extends BaseNodeTest {
     context.handleEvent(new CellToHitChosenEvent(Position.of(0, 1)), viewMock);
 
     assertThat(alternativeEffectGunFlowState.getChosenPlayersToHit())
+      .containsExactlyInAnyOrder(PlayerColor.YELLOW, PlayerColor.GRAY);
+
+    checkEndCalled();
+  }
+
+  @Test
+  public void testShowVisibleCells() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("grenade_launcher");
+
+    BaseEffectGunFlowState baseEffectGunFlowState =
+      new BaseEffectGunFlowStateImpl((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("grenade_launcher"));
+    baseEffectGunFlowState.setActivatedFirstExtraEffect(true);
+
+    context.nextPhase(
+      viewMock,
+      baseEffectGunFlowState
+    );
+
+    ArgumentCaptor<Set<Position>> positionsCaptor = ArgumentCaptor.forClass(Set.class);
+    verify(viewMock, times(1)).showAvailableCellsToHit(positionsCaptor.capture());
+    assertThat(positionsCaptor.getValue())
+      .containsOnly(
+        new Position(0, 0),
+        new Position(0, 1),
+        new Position(0, 2),
+        new Position(1, 0),
+        new Position(2, 0)
+
+      );
+
+    context.handleEvent(new CellToHitChosenEvent(Position.of(0, 1)), viewMock);
+
+    assertThat(baseEffectGunFlowState.getChosenPlayersToHit())
       .containsExactlyInAnyOrder(PlayerColor.YELLOW, PlayerColor.GRAY);
 
     checkEndCalled();

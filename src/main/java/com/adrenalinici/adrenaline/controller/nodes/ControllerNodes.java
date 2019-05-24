@@ -15,7 +15,8 @@ public enum ControllerNodes {
   USE_TAGBACK_GRENADE,
   USE_SCOPE,
   CHOOSE_ROOM,
-  CHOOSE_CELL;
+  CHOOSE_CELL,
+  APPLY_GRENADE_LAUNCHER;
 
   public static String movement(int distance) {
     return "movement_" + distance;

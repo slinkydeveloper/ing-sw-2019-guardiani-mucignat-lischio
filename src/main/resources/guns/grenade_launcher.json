@@ -1,0 +1,42 @@
+{
+  "name": "Grenade launcher",
+  "note": "For example, you can shoot a target, move it onto a square with other targets, then damage everyone including the first target. Or you can deal 2 to a main target, 1 to everyone else on that square, then move the main target. Or you can deal 1 to an isolated target and 1 to everyone on a different square. If you target your own square, you will not be moved or damaged.",
+  "firstAmmo": "red",
+  "phases": [
+    "BASE_GUN_START",
+    "CHOOSE_PLAYER_TO_HIT",
+    "gun_enemy_movement_1",
+    "APPLY_GRENADE_LAUNCHER"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 1,
+      "distanceEval": "visible === true"
+    },
+    "gun_enemy_movement_1": {
+      "enabled": "true"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Deal 1 damage to 1 target you can see. Then you may move the target 1 square."
+  },
+  "firstExtraEffect": {
+    "id": "focus",
+    "name": "Focus shot",
+    "description": "Deal 1 additional damage to the first target.",
+    "phases": [
+      "CHOOSE_CELL",
+      "APPLY_GRENADE_LAUNCHER"
+    ],
+    "phasesConfig": {
+      "CHOOSE_CELL": {
+        "cellsDistanceEval": "visible === true"
+      }
+    },
+    "cost": [
+      "red"
+    ]
+  }
+}
