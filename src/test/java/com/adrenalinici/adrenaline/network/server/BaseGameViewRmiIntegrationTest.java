@@ -53,7 +53,7 @@ public class BaseGameViewRmiIntegrationTest {
     serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket);
     serverMessageRouterThread = new Thread(serverMessageRouter, "server-message-router-test");
 
-    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outboxRmi, 9001);
+    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outboxRmi, 3001);
 
     serverMessageRouterThread.start();
     serverNetworkAdapter.start();
@@ -61,7 +61,7 @@ public class BaseGameViewRmiIntegrationTest {
     sleep(4);
 
     proxy = new ClientViewProxy(mockedClientView);
-    clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy, "localhost", 9001), "test-client-network-adapter");
+    clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy, "localhost", 3001), "test-client-network-adapter");
     clientNetworkAdapter.start();
 
     sleep();
