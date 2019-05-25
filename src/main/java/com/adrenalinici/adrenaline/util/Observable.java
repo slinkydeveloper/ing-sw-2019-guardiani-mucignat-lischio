@@ -1,33 +1,11 @@
 package com.adrenalinici.adrenaline.util;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface Observable<T> {
+  void registerObserver(Observer<T> observer);
 
-public class Observable<T> {
-  private List<Observer<T>> listeners;
+  void unregisterObserver(Observer<T> observer);
 
-  public Observable() {
-    super();
-    listeners = new ArrayList<>();
-  }
+  void cleanObservers();
 
-  public void registerObserver(Observer<T> observer) {
-    listeners.add(observer);
-  }
-
-  public void unregisterObserver(Observer<T> observer) {
-    listeners.remove(observer);
-  }
-
-  public void cleanObservers() {
-    listeners.clear();
-  }
-
-  public void notifyEvent(T value) {
-    for (Observer<T> listener : listeners) {
-      if (listener != null) {
-        listener.onEvent(value);
-      }
-    }
-  }
+  void notifyEvent(T value);
 }

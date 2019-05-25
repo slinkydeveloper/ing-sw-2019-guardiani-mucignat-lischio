@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -21,18 +20,17 @@ import java.util.logging.Logger;
 public class StartGuiController {
 
   private static final Logger LOG = LogUtils.getLogger(StartGuiController.class);
-  @FXML
-  private Button startButton;
 
-
+  @FXML private Button startButton;
 
   public void changeSceneRmiSocket(ActionEvent actionEvent) {
-    Pane nextNode = new Pane();
+    Pane nextNode;
     try {
-      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/socket_rmi.fxml"));
+      nextNode = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/connect_match.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
       ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");
+      return;
     }
     Scene scene = new Scene(nextNode);
     Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

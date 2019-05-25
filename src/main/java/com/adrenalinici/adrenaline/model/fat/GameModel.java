@@ -9,7 +9,7 @@ import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.event.PlayerDashboardUpdatedEvent;
 import com.adrenalinici.adrenaline.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.util.JsonUtils;
-import com.adrenalinici.adrenaline.util.Observable;
+import com.adrenalinici.adrenaline.util.ObservableImpl;
 
 import java.util.*;
 import java.util.AbstractMap.SimpleImmutableEntry;
@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 
 import static java.util.Map.Entry;
 
-public class GameModel extends Observable<ModelEvent> {
+public class GameModel extends ObservableImpl<ModelEvent> {
   private final static List<Integer> POINTS_FOR_KILL = Arrays.asList(8, 6, 4, 2);
   private final static List<Integer> POINTS_FOR_KILL_FRENZY_MODE = Arrays.asList(2);
 

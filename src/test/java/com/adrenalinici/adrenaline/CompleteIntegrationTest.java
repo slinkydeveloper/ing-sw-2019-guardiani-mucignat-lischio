@@ -1,13 +1,13 @@
 package com.adrenalinici.adrenaline;
 
+import com.adrenalinici.adrenaline.cli.BaseCliGameView;
+import com.adrenalinici.adrenaline.cli.CliGameViewProxy;
 import com.adrenalinici.adrenaline.controller.GameController;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.model.common.*;
-import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.server.RemoteView;
 import com.adrenalinici.adrenaline.server.GameBootstrapper;
-import com.adrenalinici.adrenaline.view.BaseClientGameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
 import com.adrenalinici.adrenaline.view.event.PowerUpCardChosenEvent;
@@ -28,11 +28,11 @@ public class CompleteIntegrationTest {
   @Rule
   public MockitoRule mockitoRule = MockitoJUnit.rule();
   @Spy
-  BaseClientGameView player1View;
+  BaseCliGameView player1View;
   @Spy
-  BaseClientGameView player2View;
+  BaseCliGameView player2View;
   @Spy
-  BaseClientGameView player3View;
+  BaseCliGameView player3View;
 
   GameBootstrapper bootstrapper = new GameBootstrapper(3000, 3001);
 
@@ -85,14 +85,14 @@ public class CompleteIntegrationTest {
 
   }
 
-  private void startPlayer(BaseClientGameView mockedClientView) throws InterruptedException {
-    ClientViewProxy proxy = new ClientViewProxy(mockedClientView);
+  private void startPlayer(BaseCliGameView mockedClientView) throws InterruptedException {
+    CliGameViewProxy proxy = new CliGameViewProxy(mockedClientView);
     Thread clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 3001));
     clientNetworkAdapter.start();
     Thread.sleep(100);
   }
 
-  private void respawn(GameController controller, BaseClientGameView mockedClientView) {
+  private void respawn(GameController controller, BaseCliGameView mockedClientView) {
     PowerUpCard card = controller.getGameModel().getPlayerDashboard(mockedClientView.getMyPlayer()).getPowerUpCards().get(0);
     mockedClientView.sendViewEvent(new PowerUpCardChosenEvent(mockedClientView.getMyPlayer(), card));
   }

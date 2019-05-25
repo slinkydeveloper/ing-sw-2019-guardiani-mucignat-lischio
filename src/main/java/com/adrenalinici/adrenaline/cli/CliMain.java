@@ -4,11 +4,8 @@ import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
-import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
-import com.adrenalinici.adrenaline.network.outbox.InfoType;
-import com.adrenalinici.adrenaline.view.BaseClientGameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
@@ -17,7 +14,7 @@ import com.adrenalinici.adrenaline.view.event.PowerUpCardChosenEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CliMain extends BaseClientGameView {
+public class CliMain extends BaseCliGameView {
 
   Scanner scanner = new Scanner(System.in);
 
@@ -32,7 +29,7 @@ public class CliMain extends BaseClientGameView {
     int port = Integer.parseInt(args[2]);
 
     CliMain cliMain = new CliMain();
-    ClientViewProxy proxy = new ClientViewProxy(cliMain);
+    CliGameViewProxy proxy = new CliGameViewProxy(cliMain);
     ClientNetworkAdapter networkAdapter = null;
     if (transport.equals("socket")) {
       networkAdapter = new SocketClientNetworkAdapter(proxy, host, port);
