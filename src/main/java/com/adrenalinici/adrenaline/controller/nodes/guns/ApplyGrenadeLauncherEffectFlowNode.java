@@ -5,16 +5,13 @@ import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
-import com.adrenalinici.adrenaline.util.TriConsumer;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 public class ApplyGrenadeLauncherEffectFlowNode implements ControllerFlowNode<BaseEffectGunFlowState> {
-  private TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext> consumer;
   private boolean beenHere;
 
-  public ApplyGrenadeLauncherEffectFlowNode(TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext> consumer) {
-    this.consumer = consumer;
+  public ApplyGrenadeLauncherEffectFlowNode() {
     this.beenHere = false;
   }
 
@@ -28,7 +25,10 @@ public class ApplyGrenadeLauncherEffectFlowNode implements ControllerFlowNode<Ba
 
 
     if (!flowState.isActivatedFirstExtraEffect() || beenHere) {
-      consumer.accept(flowState, model, context);
+      flowState.getChosenPlayersToHit().forEach(
+        p -> flowState.hitPlayer(p, 1)
+      );
+
       flowState.applyHitAndMarkPlayers(model, context);
 
       // Remove ammos required for effect and unload the gun
