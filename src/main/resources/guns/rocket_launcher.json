@@ -1,0 +1,46 @@
+{
+  "name": "Rocket Launcher",
+  "note": "If you use the rocket jump before the basic effect, you consider only your new square when determining if a target is legal. You can even move off a square so you can shoot someone on it. If you use the fragmenting warhead, you deal damage to everyone on the target's square before you move the target – your target will take 3 damage total.",
+  "firstAmmo": "red",
+  "extraAmmo": [
+    "red"
+  ],
+  "phases": [
+    "BASE_GUN_START",
+    "gun_movement_2",
+    "CHOOSE_PLAYER_TO_HIT",
+    "apply_gun_effect_rocket_launcher_base",
+    "gun_enemy_movement_1",
+    "gun_movement_2"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 1,
+      "distanceEval": "visible === true && distance >= 1"
+    },
+    "gun_movement_2": {
+      "enabled": "state.isActivatedFirstExtraEffect()"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Deal 2 damage to 1 target you can see that is not on your square. Then you may move the target 1 square."
+  },
+  "firstExtraEffect": {
+    "id": "jump",
+    "name": "Rocket jump",
+    "description": "Move 1 or 2 squares. This effect can be used either before or after the basic effect.",
+    "cost": [
+      "blue"
+    ]
+  },
+  "secondExtraEffect": {
+    "id": "fragmenting",
+    "name": "Fragmenting warhead",
+    "description": "During the basic effect, deal 1 damage to every player on your target's original square – including the target, even if you move it.",
+    "cost": [
+      "yellow"
+    ]
+  }
+}
