@@ -12,9 +12,6 @@
     "CHOOSE_PLAYER_TO_HIT": {
       "hittablePlayersNumber": 1,
       "distanceEval": "visible === true"
-    },
-    "gun_enemy_movement_1": {
-      "enabled": "true"
     }
   },
   "baseEffect": {

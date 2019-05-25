@@ -150,7 +150,7 @@ public class JsonUtils {
         flowState.resolvePhaseConfiguration(nodeId).get("enabled").asText()
       );
     else
-      return f -> false;
+      return f -> true;
   }
 
   /**
