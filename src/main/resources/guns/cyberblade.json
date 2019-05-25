@@ -1,0 +1,55 @@
+{
+  "name": "Cyberblade",
+  "note": " Combining all effects allows you to move onto a square and whack 2 people; or whack somebody, move, and whack somebody else; or whack 2 people and then move.",
+  "firstAmmo": "yellow",
+  "extraAmmo": [
+    "red"
+  ],
+  "phases": [
+    "BASE_GUN_START",
+    "gun_movement_1",
+    "CHOOSE_PLAYER_TO_HIT",
+    "apply_gun_effect_cyberblade_base",
+    "gun_movement_1"
+  ],
+  "phasesConfig": {
+    "CHOOSE_PLAYER_TO_HIT": {
+      "hittablePlayersNumber": 1,
+      "distanceEval": "distance === 0"
+    },
+    "gun_movement_1": {
+      "enabled": "state.isActivatedFirstExtraEffect()"
+    },
+    "apply_gun_effect_cyberblade_base": {
+      "applying_restriction": "skip_if_extra_on"
+    }
+  },
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Deal 2 damage to 1 target on your square."
+  },
+  "firstExtraEffect": {
+    "id": "shadowstep",
+    "name": "Shadow Step",
+    "description": "Move 1 square before or after the basic effect."
+  },
+  "secondExtraEffect": {
+    "id": "slice",
+    "name": "Slice and Dice",
+    "description": "Deal 2 damage to a different target on your square. The shadowstep may be used before or after this effect.",
+    "phases": [
+      "CHOOSE_PLAYER_TO_HIT",
+      "apply_gun_effect_cyberblade_slice",
+      "gun_movement_1"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "+hittablePlayersNumber": 1
+      }
+    },
+    "cost": [
+      "yellow"
+    ]
+  }
+}
