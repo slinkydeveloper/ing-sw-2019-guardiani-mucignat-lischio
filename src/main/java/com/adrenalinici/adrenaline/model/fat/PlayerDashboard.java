@@ -22,13 +22,11 @@ public class PlayerDashboard {
   private List<PowerUpCard> powerUpCards;
   private int skullsNumber;
   private int points;
-  private boolean firstPlayer;
   private boolean flipped;
   private int timesKilled;
 
-  public PlayerDashboard(PlayerColor player, boolean firstPlayer) {
+  public PlayerDashboard(PlayerColor player) {
     this.player = player;
-    this.firstPlayer = firstPlayer;
     this.powerUpCards = new ArrayList<>();
     this.ammos = new ArrayList<>();
     this.damages = new ArrayList<>();
@@ -43,9 +41,8 @@ public class PlayerDashboard {
     addAmmo(AmmoColor.YELLOW);
   }
 
-  public PlayerDashboard(PlayerColor player, boolean firstPlayer, List<PowerUpCard> powerUpCards) {
+  public PlayerDashboard(PlayerColor player, List<PowerUpCard> powerUpCards) {
     this.player = player;
-    this.firstPlayer = firstPlayer;
     this.powerUpCards = new ArrayList<>(powerUpCards);
     this.ammos = new ArrayList<>();
     this.damages = new ArrayList<>();
@@ -231,10 +228,6 @@ public class PlayerDashboard {
     return points;
   }
 
-  public boolean isFirstPlayer() {
-    return firstPlayer;
-  }
-
   /**
    * Checks if dashboard is flipped, so point scheme for frenzy mode should be used
    *
@@ -295,7 +288,6 @@ public class PlayerDashboard {
       powerUpCards,
       skullsNumber,
       points,
-      firstPlayer,
       this.flipped,
       this.timesKilled
     );

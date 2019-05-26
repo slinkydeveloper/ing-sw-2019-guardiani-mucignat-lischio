@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GameModelTest {
   @Test
   public void addKillScoreTest() {
-    GameModel gameModel = new GameModel(8, null, null);
+    GameModel gameModel = new GameModel(8, null, null, false);
     gameModel.addKillScore(PlayerColor.CYAN, false);
     assertThat(gameModel.getKillScore()).hasSize(1);
     assertThat(gameModel.getKillScore().get(0).getKey()).isEqualTo(PlayerColor.CYAN);
@@ -27,7 +27,7 @@ public class GameModelTest {
 
   @Test
   public void inizializationTest() {
-    GameModel gameModel = new GameModel(8, null, null);
+    GameModel gameModel = new GameModel(8, null, null, false);
     assertThat(gameModel.getRemainingSkulls()).isEqualTo(8);
     assertThat(gameModel.getKillScore().isEmpty()).isTrue();
     assertThat(gameModel.getDoubleKillScore().isEmpty()).isTrue();
@@ -38,7 +38,7 @@ public class GameModelTest {
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redTeleport);
-    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, false, powerUpCards);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, powerUpCards);
     playerDashboard.addAmmo(AmmoColor.RED);
 
     Dashboard dashboard = TestUtils.build3x3Dashboard();
@@ -47,7 +47,7 @@ public class GameModelTest {
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
     respawnDashboardCell.addAvailableGun("test_sword");
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
-    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
 
     gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("test_sword"));
     assertThat(playerDashboard.getAmmos())
@@ -66,7 +66,7 @@ public class GameModelTest {
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard blueTeleport = new PowerUpCard(AmmoColor.BLUE, PowerUpType.TELEPORT);
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redKineticRay, redTeleport, blueTeleport);
-    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, false, powerUpCards);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, powerUpCards);
     playerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE));
 
     Dashboard dashboard = TestUtils.build3x3Dashboard();
@@ -75,7 +75,7 @@ public class GameModelTest {
     respawnDashboardCell.addPlayer(PlayerColor.GREEN);
     respawnDashboardCell.addAvailableGun("test_sword");
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
-    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
     assertThat(playerDashboard.getAmmos().isEmpty()).isTrue();
 
     gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("test_sword"));
@@ -91,7 +91,7 @@ public class GameModelTest {
     PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
     PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redTeleport);
-    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, false, powerUpCards);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, powerUpCards);
     playerDashboard.addAmmo(AmmoColor.RED);
 
     Dashboard dashboard = TestUtils.build3x3Dashboard();
@@ -102,7 +102,7 @@ public class GameModelTest {
     respawnDashboardCell.addAvailableGun("test_revolver");
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
 
-    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
 
@@ -127,9 +127,9 @@ public class GameModelTest {
     pickupDashboardCell.setAmmoCard(ammoCard);
 
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
-    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, powerUpCards);
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
-    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
     gameModel.acquireAmmoCard(pickupDashboardCell, PlayerColor.YELLOW);
@@ -151,7 +151,7 @@ public class GameModelTest {
   @Test
   public void hitPlayerTest() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     gameModel.registerObserver(receivedModelEvents::add);
@@ -169,7 +169,7 @@ public class GameModelTest {
   @Test
   public void hitPlayerWithKillDamageTest() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
 
     gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
     gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GRAY);
@@ -214,7 +214,7 @@ public class GameModelTest {
 
   @Test
   public void hitPlayerWithCruelDamageAndMarksTest() {
-    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate3PlayerDashboards());
+    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate3PlayerDashboards(), true);
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Arrays.asList(PlayerColor.GREEN, PlayerColor.GREEN));
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).setFlipped(true);
 
@@ -241,13 +241,13 @@ public class GameModelTest {
 
     assertThat(gameModel.getPlayerDashboard(PlayerColor.YELLOW).getPoints()).isEqualTo(0);
     assertThat(gameModel.getPlayerDashboard(PlayerColor.GRAY).getPoints()).isEqualTo(0);
-    assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getPoints()).isEqualTo(5 + 1); // flipped + first blood!
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getPoints()).isEqualTo(2 + 1); // flipped + first blood!
   }
 
   @Test
   public void markPlayerTest() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.nCopies(3, PlayerColor.GREEN));
 
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
@@ -276,7 +276,7 @@ public class GameModelTest {
   @Test
   public void hitAndMarkPlayerTest() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.singletonList(PlayerColor.GREEN));
     gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
 
@@ -309,7 +309,7 @@ public class GameModelTest {
   @Test
   public void calculateMarksOnOtherPlayerDashboardsTest() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
 
     gameModel.getPlayerDashboard(PlayerColor.YELLOW).addMarks(Collections.singletonList(PlayerColor.GREEN));
     gameModel.getPlayerDashboard(PlayerColor.GRAY).addMarks(Arrays.asList(PlayerColor.GREEN, PlayerColor.YELLOW));
@@ -321,7 +321,7 @@ public class GameModelTest {
   @Test
   public void calculateKillerMarksOnVictimDashboardTest() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
 
     gameModel.getPlayerDashboard(PlayerColor.YELLOW)
       .addMarks(
@@ -338,7 +338,7 @@ public class GameModelTest {
   @Test
   public void refillDashboard() {
     GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
-      TestUtils.generate3PlayerDashboards());
+      TestUtils.generate3PlayerDashboards(), true);
 
     // Refill a new dashboard
     gameModel.refillDashboard();
@@ -366,5 +366,22 @@ public class GameModelTest {
     assertThat(cellsBeforeMutation)
       .containsAll(cellsAfterMutation);
 
+  }
+
+  @Test
+  public void activateFrenzyMode() {
+    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
+      TestUtils.generate4PlayerDashboards(), true);
+
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).addDamages(Arrays.asList(PlayerColor.GREEN));
+
+    gameModel.activateFrenzyMode(PlayerColor.YELLOW);
+
+    assertThat(gameModel.isFrenzyModeFinished(PlayerColor.YELLOW)).isTrue();
+
+    assertThat(gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor.YELLOW)).isFalse();
+    assertThat(gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor.CYAN)).isFalse();
+    assertThat(gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor.GREEN)).isTrue();
+    assertThat(gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor.GRAY)).isTrue();
   }
 }

@@ -172,6 +172,11 @@ public class CliMain extends BaseClientGameView {
   }
 
   @Override
+  public void showRanking(List<Map.Entry<PlayerColor, Integer>> ranking) {
+
+  }
+
+  @Override
   public void onEvent(ModelEvent newValue) {
     System.out.println("Model updated! " + newValue);
     showModel(newValue.getGameModel());

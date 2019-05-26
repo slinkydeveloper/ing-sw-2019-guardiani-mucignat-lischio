@@ -21,7 +21,7 @@ import static java.util.Map.Entry;
 
 public class GameModel extends Observable<ModelEvent> {
   private final static List<Integer> POINTS_FOR_KILL = Arrays.asList(8, 6, 4, 2);
-  private final static List<Integer> POINTS_FOR_KILL_FRENZY_MODE = Arrays.asList(5);
+  private final static List<Integer> POINTS_FOR_KILL_FRENZY_MODE = Arrays.asList(2);
 
   private List<Map.Entry<PlayerColor, Boolean>> killScore;
   private int remainingSkulls;
@@ -170,10 +170,24 @@ public class GameModel extends Observable<ModelEvent> {
     return mustActivateFrenzyMode;
   }
 
-  public boolean isAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
+  public boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
     int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivedWithPlayerTurn);
     int indexThisTurnPlayer = getPlayers().indexOf(thisTurnPlayer);
-    return indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0;
+    return indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0 || indexThisTurnPlayer == 0;
+  }
+
+  public void assignEndGamePoints() {
+    playerDashboards.forEach(pd -> {
+      assignPoints(pd);
+      pd.removeAllDamages();
+    });
+  }
+
+  public List<Map.Entry<PlayerColor, Integer>> getRanking() {
+    return getPlayerDashboards()
+      .stream()
+      .map(p -> new SimpleImmutableEntry<>(p.getPlayer(), p.getPoints()))
+      .collect(Collectors.toList());
   }
 
   /**

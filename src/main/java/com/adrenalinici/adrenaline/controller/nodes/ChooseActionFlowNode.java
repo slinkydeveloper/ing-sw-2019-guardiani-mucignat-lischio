@@ -26,7 +26,7 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
       context.addPhases(RELOAD.name(), RESPAWN_KILLED_PEOPLE.name());
       context.nextPhase(view);
     } else
-      view.showAvailableActions(calculateAvailableActions());
+      view.showAvailableActions(calculateAvailableActions(context));
   }
 
   @Override
@@ -45,14 +45,41 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
             context.addPhases(CHOOSE_GUN.name(), USE_SCOPE.name());
             context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
             break;
+          case MOVE_MOVE_PICKUP:
+            context.addPhases(movement(2), PICKUP.name(), id());
+            break;
+          case MOVE_SHOOT:
+            context.addPhases(movement(1), CHOOSE_GUN.name(), USE_SCOPE.name());
+            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+            break;
+          case MOVE_RELOAD_SHOOT:
+            context.addPhases(movement(1), RELOAD.name(), CHOOSE_GUN.name(), USE_SCOPE.name());
+            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+            break;
+          case MOVE_MOVE_MOVE_MOVE:
+            context.addPhases(movement(4), id());
+            break;
+          case MOVE_MOVE_RELOAD_SHOOT:
+            context.addPhases(movement(2), RELOAD.name(), CHOOSE_GUN.name(), USE_SCOPE.name());
+            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+            break;
+          case MOVE_MOVE_MOVE_PICKUP:
+            context.addPhases(movement(3), PICKUP.name(), id());
+            break;
         }
         context.nextPhase(view);
       }
     );
   }
 
-  private List<Action> calculateAvailableActions() {
-    //TODO P2 based on turn of player
+  private List<Action> calculateAvailableActions(ControllerFlowContext context) {
+    if (context.isFrenzyMode()) {
+      if (context.isFirstPlayerOrAfterFirstPlayerInFrenzyMode()) {
+        return Arrays.asList(Action.MOVE_MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_PICKUP);
+      } else {
+        return Arrays.asList(Action.MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_MOVE, Action.MOVE_MOVE_PICKUP);
+      }
+    }
     return Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
   }
 }

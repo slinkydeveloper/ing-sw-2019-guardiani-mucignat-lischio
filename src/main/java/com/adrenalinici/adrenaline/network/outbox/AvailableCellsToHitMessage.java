@@ -13,13 +13,9 @@ public class AvailableCellsToHitMessage implements OutboxMessage {
     this.cells = cells;
   }
 
-  public Set<Position> getCells() {
-    return this.cells;
-  }
+  public Set<Position> getCells() { return this.cells; }
 
   @Override
-  public void onAvailableCellsToHitMessage(Consumer<AvailableCellsToHitMessage> c) {
-    c.accept(this);
-  }
+  public void onAvailableCellsToHitMessage(Consumer<AvailableCellsToHitMessage> c) { c.accept(this); }
 
 }

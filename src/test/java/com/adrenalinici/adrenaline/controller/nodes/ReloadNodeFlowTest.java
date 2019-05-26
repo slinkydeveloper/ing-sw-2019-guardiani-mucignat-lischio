@@ -1,6 +1,5 @@
 package com.adrenalinici.adrenaline.controller.nodes;
 
-import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.common.AmmoColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
@@ -34,7 +33,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
   public void calculateAvailableGunsToReloadTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
-    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, powerUpCards);
     Stream
       .of("test_revolver", "test_rifle", "test_sword")
       .forEach(id -> {
@@ -42,7 +41,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
         playerDashboard.unloadGun(id);
       });
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
-    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
     ReloadFlowNode node = new ReloadFlowNode();
     assertThat(node.calculateReloadableGuns(gameModel, PlayerColor.YELLOW))
       .contains("test_sword", "test_revolver")

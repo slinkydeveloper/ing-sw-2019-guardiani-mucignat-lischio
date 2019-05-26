@@ -7,9 +7,8 @@ import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
-import java.util.stream.IntStream;
-
-import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.*;
+import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.CHOOSE_ACTION;
+import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.START_TURN;
 
 public class NewTurnFlowNode implements StatelessControllerFlowNode {
 
@@ -26,7 +25,7 @@ public class NewTurnFlowNode implements StatelessControllerFlowNode {
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onNewTurnEvent(
       e -> {
-        int remainingActions = calculateRemainingActions();
+        int remainingActions = calculateRemainingActions(context);
         context.setRemainingActions(remainingActions);
 
         context.addPhases(CHOOSE_ACTION.name());
@@ -35,8 +34,7 @@ public class NewTurnFlowNode implements StatelessControllerFlowNode {
     );
   }
 
-  private int calculateRemainingActions() {
-    //TODO based on turn of player
-    return 2;
+  private int calculateRemainingActions(ControllerFlowContext context) {
+    return context.isFrenzyMode() && context.isFirstPlayerOrAfterFirstPlayerInFrenzyMode() ? 1 : 2;
   }
 }

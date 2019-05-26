@@ -10,9 +10,9 @@ public enum PlayersChoice {
     @Override
     public List<PlayerDashboard> generate() {
       return Arrays.asList(
-        new PlayerDashboard(PlayerColor.GREEN, true),
-        new PlayerDashboard(PlayerColor.YELLOW, false),
-        new PlayerDashboard(PlayerColor.PURPLE, false)
+        new PlayerDashboard(PlayerColor.GREEN),
+        new PlayerDashboard(PlayerColor.YELLOW),
+        new PlayerDashboard(PlayerColor.PURPLE)
       );
     }
   },
@@ -20,10 +20,10 @@ public enum PlayersChoice {
     @Override
     public List<PlayerDashboard> generate() {
       return Arrays.asList(
-        new PlayerDashboard(PlayerColor.GREEN, true),
-        new PlayerDashboard(PlayerColor.YELLOW, false),
-        new PlayerDashboard(PlayerColor.PURPLE, false),
-        new PlayerDashboard(PlayerColor.GRAY, false)
+        new PlayerDashboard(PlayerColor.GREEN),
+        new PlayerDashboard(PlayerColor.YELLOW),
+        new PlayerDashboard(PlayerColor.PURPLE),
+        new PlayerDashboard(PlayerColor.GRAY)
       );
     }
   },
@@ -31,11 +31,11 @@ public enum PlayersChoice {
     @Override
     public List<PlayerDashboard> generate() {
       return Arrays.asList(
-        new PlayerDashboard(PlayerColor.GREEN, true),
-        new PlayerDashboard(PlayerColor.YELLOW, false),
-        new PlayerDashboard(PlayerColor.PURPLE, false),
-        new PlayerDashboard(PlayerColor.GRAY, false),
-        new PlayerDashboard(PlayerColor.CYAN, false)
+        new PlayerDashboard(PlayerColor.GREEN),
+        new PlayerDashboard(PlayerColor.YELLOW),
+        new PlayerDashboard(PlayerColor.PURPLE),
+        new PlayerDashboard(PlayerColor.GRAY),
+        new PlayerDashboard(PlayerColor.CYAN)
       );
     }
   };

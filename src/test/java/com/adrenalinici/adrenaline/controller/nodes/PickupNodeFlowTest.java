@@ -32,9 +32,9 @@ public class PickupNodeFlowTest extends BaseNodeTest {
       .of("test_revolver", "test_rifle", "test_sword")
       .forEach(respawnDashboardCell::addAvailableGun);
     List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
-    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, false, powerUpCards);
+    PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, powerUpCards);
     List<PlayerDashboard> playerDashboardList = Collections.singletonList(playerDashboard);
-    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList);
+    GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
 
     PickupFlowNode node = new PickupFlowNode();
     assertThat(node.calculateAvailableGunsToPickup(gameModel, respawnDashboardCell, PlayerColor.YELLOW))

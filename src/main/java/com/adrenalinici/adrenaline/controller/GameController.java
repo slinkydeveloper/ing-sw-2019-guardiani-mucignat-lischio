@@ -74,12 +74,12 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
           // Frenzy mode finished
           endMatchCallback(view);
         } else {
-          startNewFrenzyTurn(view, playerTurn, gameModel.isAfterFirstPlayerInFrenzyMode(playerTurn));
+          startNewFrenzyTurn(view, playerTurn, gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(playerTurn));
         }
       } else if (gameModel.isMustActivateFrenzyMode()) {
         // Frenzy mode still not activated, but it must be
         gameModel.activateFrenzyMode(nextTurnPlayer());
-        startNewFrenzyTurn(view, playerTurn, gameModel.isAfterFirstPlayerInFrenzyMode(playerTurn));
+        startNewFrenzyTurn(view, playerTurn, gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(playerTurn));
       } else {
         // No frenzy mode, close match
         endMatchCallback(view);
@@ -92,7 +92,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   }
 
   void endMatchCallback(GameView view) {
-
+    gameModel.assignEndGamePoints();
+    view.showRanking(gameModel.getRanking());
   }
 
   private void startNewTurn(GameView view, PlayerColor player) {
@@ -103,7 +104,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     if (view != null) view.showNextTurn(player);
   }
 
-  private void startNewFrenzyTurn(GameView view, PlayerColor player, boolean isAfterFirstPlayerInFrenzyMode) {
+  private void startNewFrenzyTurn(GameView view, PlayerColor player, boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode) {
     this.flowOrchestrator.startNewFlow(view,
       new ControllerFlowContext(
         this.flowOrchestrator,
@@ -111,7 +112,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       )
         .setTurnOfPlayer(player)
         .setFrenzyMode(true)
-        .setAfterFirstPlayerInFrenzyMode(isAfterFirstPlayerInFrenzyMode)
+        .setFirstPlayerOrAfterFirstPlayerInFrenzyMode(isFirstPlayerOrAfterFirstPlayerInFrenzyMode)
     );
     if (view != null) view.showNextTurn(player);
   }
