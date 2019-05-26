@@ -21,8 +21,10 @@ public class LightPlayerDashboard implements Serializable {
   private int skullsNumber;
   private int points;
   private boolean firstPlayer;
+  private boolean flipped;
+  private int timesKilled;
 
-  public LightPlayerDashboard(PlayerColor player, List<AmmoColor> ammos, List<PlayerColor> damages, List<PlayerColor> marks, Set<Gun> loadedGuns, Set<Gun> unloadedGuns, List<PowerUpCard> powerUpCards, int skullsNumber, int points, boolean firstPlayer) {
+  public LightPlayerDashboard(PlayerColor player, List<AmmoColor> ammos, List<PlayerColor> damages, List<PlayerColor> marks, Set<Gun> loadedGuns, Set<Gun> unloadedGuns, List<PowerUpCard> powerUpCards, int skullsNumber, int points, boolean firstPlayer, boolean flipped, int timesKilled) {
     this.player = player;
     this.ammos = ammos;
     this.damages = damages;
@@ -33,6 +35,8 @@ public class LightPlayerDashboard implements Serializable {
     this.skullsNumber = skullsNumber;
     this.points = points;
     this.firstPlayer = firstPlayer;
+    this.flipped = flipped;
+    this.timesKilled = timesKilled;
   }
 
   public PlayerColor getPlayer() {
@@ -73,6 +77,14 @@ public class LightPlayerDashboard implements Serializable {
 
   public boolean isFirstPlayer() {
     return firstPlayer;
+  }
+
+  public boolean isFlipped() {
+    return flipped;
+  }
+
+  public int getTimesKilled() {
+    return timesKilled;
   }
 
   @Override

@@ -13,11 +13,16 @@ import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.*;
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.Map.Entry;
 
 public class GameModel extends Observable<ModelEvent> {
+  private final static List<Integer> POINTS_FOR_KILL = Arrays.asList(8, 6, 4, 2);
+  private final static List<Integer> POINTS_FOR_KILL_FRENZY_MODE = Arrays.asList(5);
+
   private List<Map.Entry<PlayerColor, Boolean>> killScore;
   private int remainingSkulls;
   private List<PlayerColor> doubleKillScore;
@@ -192,7 +197,9 @@ public class GameModel extends Observable<ModelEvent> {
       Collections.nCopies(killerMarksOnVictimDashboard, killer)
     );
 
-    if (victimPlayerDashboard.getKillDamage().isPresent()) {
+    boolean killed = victimPlayerDashboard.getKillDamage().isPresent();
+
+    if (killed) {
       // Player was killed
       decrementSkulls();
       victimPlayerDashboard.incrementSkullsNumber();
@@ -202,14 +209,56 @@ public class GameModel extends Observable<ModelEvent> {
       dashboard.getDashboardCell(killedPlayerPosition).removePlayer(victim);
       notifyEvent(new DashboardCellUpdatedEvent(this, killedPlayerPosition));
 
+      // Add kill score to dashboard
       if (victimPlayerDashboard.getCruelDamage().isPresent()) {
         killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.TRUE));
         markPlayer(victim, killer, 1);
       } else killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.FALSE));
       notifyEvent(new GameModelUpdatedEvent(this));
+
+      // Add points to killers
+      assignPoints(victimPlayerDashboard);
+
+      // Reset victim player dashboard
+      victimPlayerDashboard.removeAllDamages();
+
+      victimPlayerDashboard.incrementTimesKilled();
     }
 
-    return victimPlayerDashboard.getKillDamage().isPresent();
+    return killed;
+  }
+
+  private void assignPoints(PlayerDashboard victimPlayerDashboard) {
+    Map<PlayerColor, Integer> pointsToAssign = new HashMap<>();
+
+    // First blood
+    pointsToAssign.put(victimPlayerDashboard.getFirstDamage().get(), 1);
+
+    // Ordered players based on damages
+    List<PlayerColor> orderedKillers = victimPlayerDashboard
+      .getDamages()
+      .stream()
+      .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+      .entrySet()
+      .stream()
+      .sorted((e1, e2) -> -Long.compare(e1.getValue(), e2.getValue()))
+      .map(Map.Entry::getKey)
+      .collect(Collectors.toList());
+
+    // Choose what point scheme we should use
+    List<Integer> pointScheme = (victimPlayerDashboard.isFlipped()) ? POINTS_FOR_KILL_FRENZY_MODE : POINTS_FOR_KILL;
+
+    IntStream.range(0, orderedKillers.size())
+      .map(i -> i + victimPlayerDashboard.getTimesKilled())
+      .forEach(i ->
+        pointsToAssign.merge(orderedKillers.get(i), (i < pointScheme.size()) ? pointScheme.get(i) : 1, Integer::sum)
+      );
+
+    pointsToAssign.forEach((pc, p) -> {
+      getPlayerDashboard(pc).addPoints(p);
+      notifyEvent(new PlayerDashboardUpdatedEvent(this, pc));
+    });
+
   }
 
   private void marker(PlayerColor killer, PlayerColor victim, int marks) {
