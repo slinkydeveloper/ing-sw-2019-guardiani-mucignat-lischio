@@ -12,6 +12,8 @@ public class ControllerFlowContext extends BaseFlowContext {
   private int remainingActions;
   private PlayerColor turnOfPlayer;
   private List<PlayerColor> killedPlayers;
+  private boolean isFrenzyMode;
+  private boolean isAfterFirstPlayerInFrenzyMode;
 
   public ControllerFlowContext(FlowOrchestrator orchestrator) {
     this(orchestrator, null);
@@ -20,7 +22,11 @@ public class ControllerFlowContext extends BaseFlowContext {
   public ControllerFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
     super(orchestrator, initialPhases);
     this.killedPlayers = new ArrayList<>();
+    this.isFrenzyMode = false;
+    this.isAfterFirstPlayerInFrenzyMode = false;
   }
+
+
 
   public int getRemainingActions() {
     return remainingActions;
@@ -51,6 +57,24 @@ public class ControllerFlowContext extends BaseFlowContext {
 
   public ControllerFlowContext setKilledPlayers(List<PlayerColor> killedPlayers) {
     this.killedPlayers = killedPlayers;
+    return this;
+  }
+
+  public boolean isFrenzyMode() {
+    return isFrenzyMode;
+  }
+
+  public ControllerFlowContext setFrenzyMode(boolean frenzyMode) {
+    isFrenzyMode = frenzyMode;
+    return this;
+  }
+
+  public boolean isAfterFirstPlayerInFrenzyMode() {
+    return isAfterFirstPlayerInFrenzyMode;
+  }
+
+  public ControllerFlowContext setAfterFirstPlayerInFrenzyMode(boolean afterFirstPlayerInFrenzyMode) {
+    isAfterFirstPlayerInFrenzyMode = afterFirstPlayerInFrenzyMode;
     return this;
   }
 }

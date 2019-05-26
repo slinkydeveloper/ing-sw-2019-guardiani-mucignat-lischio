@@ -31,8 +31,10 @@ public class GameModel extends Observable<ModelEvent> {
   private CardDeck<String> guns;
   private CardDeck<PowerUpCard> powerUps;
   private CardDeck<AmmoCard> ammoCards;
+  private PlayerColor frenzyModeActivedWithPlayerTurn;
+  private boolean mustActivateFrenzyMode;
 
-  public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
+  public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards, boolean mustActivateFrenzyMode) {
     this.remainingSkulls = remainingSkulls;
     this.dashboard = dashboard;
     this.playerDashboards = playerDashboards;
@@ -41,6 +43,7 @@ public class GameModel extends Observable<ModelEvent> {
     this.guns = new CardDeck<>(GunLoader.getAvailableGuns());
     this.powerUps = new CardDeck<>(JsonUtils.loadPowerUpCards());
     this.ammoCards = new CardDeck<>(JsonUtils.loadAmmoCards());
+    this.mustActivateFrenzyMode = mustActivateFrenzyMode;
   }
 
   public int getRemainingSkulls() {
@@ -80,7 +83,7 @@ public class GameModel extends Observable<ModelEvent> {
     return getPlayerDashboards().stream().filter(d -> player.equals(d.getPlayer())).findFirst().orElseThrow(() -> new IllegalStateException("Player not present " + player));
   }
 
-  public boolean isFrenzyMode() {
+  public boolean noRemainingSkulls() {
     return remainingSkulls == 0;
   }
 
@@ -142,6 +145,35 @@ public class GameModel extends Observable<ModelEvent> {
       getPlayerDashboard(player).addPowerUpCard(powerUps.getCard());
       notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
     }
+  }
+
+  /**
+   * Activate frenzy mode: flips player dashboards when possible, register newTurn
+   */
+  public void activateFrenzyMode(PlayerColor newTurnOfPlayer) {
+    this.frenzyModeActivedWithPlayerTurn = newTurnOfPlayer;
+
+    playerDashboards.forEach(pd -> {
+      if (pd.getDamages().isEmpty()) pd.setFlipped(true);
+    });
+  }
+
+  public boolean isFrenzyModeFinished(PlayerColor nextTurnPlayer) {
+    return this.frenzyModeActivedWithPlayerTurn == nextTurnPlayer;
+  }
+
+  public boolean isFrenzyModeActivated() {
+    return frenzyModeActivedWithPlayerTurn != null;
+  }
+
+  public boolean isMustActivateFrenzyMode() {
+    return mustActivateFrenzyMode;
+  }
+
+  public boolean isAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
+    int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivedWithPlayerTurn);
+    int indexThisTurnPlayer = getPlayers().indexOf(thisTurnPlayer);
+    return indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0;
   }
 
   /**
