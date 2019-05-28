@@ -53,7 +53,7 @@ public class BaseGameViewSocketIntegrationTest {
     serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket);
     serverMessageRouterThread = new Thread(serverMessageRouter, "server-message-router-test");
 
-    serverNetworkAdapter = new SocketServerNetworkAdapter(inbox, outboxSocket, 3000);
+    serverNetworkAdapter = new SocketServerNetworkAdapter(inbox, outboxSocket, 4000);
 
     serverMessageRouterThread.start();
     serverNetworkAdapter.start();
@@ -61,7 +61,7 @@ public class BaseGameViewSocketIntegrationTest {
     sleep(5);
 
     proxy = new ClientViewProxy(mockedClientView);
-    clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 3000), "test-client-network-adapter");
+    clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 4000), "test-client-network-adapter");
     clientNetworkAdapter.start();
 
     sleep();
