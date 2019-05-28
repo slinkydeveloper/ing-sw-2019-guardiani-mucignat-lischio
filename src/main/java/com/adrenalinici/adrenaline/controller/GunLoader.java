@@ -118,7 +118,9 @@ public class GunLoader {
             }
           })
           .flatMap(path -> Arrays.stream(new File(path).listFiles()))
-          .map(File::getName).map(s -> s.replace(".json", "")).collect(Collectors.toList());
+          .map(File::getName)
+          .map(s -> s.replace(".json", ""))
+          .collect(Collectors.toList());
     } catch (IOException e) {
       return null;
     }
