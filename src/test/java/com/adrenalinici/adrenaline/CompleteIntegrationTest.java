@@ -34,7 +34,7 @@ public class CompleteIntegrationTest {
   @Spy
   BaseClientGameView player3View;
 
-  GameBootstrapper bootstrapper = new GameBootstrapper(9001, 9000);
+  GameBootstrapper bootstrapper = new GameBootstrapper(3000, 3001);
 
   @Test
   public void oneTurnForEachPlayer() throws IOException, InterruptedException {
@@ -87,7 +87,7 @@ public class CompleteIntegrationTest {
 
   private void startPlayer(BaseClientGameView mockedClientView) throws InterruptedException {
     ClientViewProxy proxy = new ClientViewProxy(mockedClientView);
-    Thread clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 9000));
+    Thread clientNetworkAdapter = new Thread(new SocketClientNetworkAdapter(proxy, "localhost", 3001));
     clientNetworkAdapter.start();
     Thread.sleep(100);
   }
