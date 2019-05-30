@@ -15,3 +15,4 @@ com.adrenalinici.adrenaline.controller.guns.ThorGunFactory
 com.adrenalinici.adrenaline.controller.guns.CyberbladeGunFactory
 com.adrenalinici.adrenaline.controller.guns.GrenadeLauncherGunFactory
 com.adrenalinici.adrenaline.controller.guns.RocketLauncherGunFactory
+com.adrenalinici.adrenaline.controller.guns.RailgunGunFactory
