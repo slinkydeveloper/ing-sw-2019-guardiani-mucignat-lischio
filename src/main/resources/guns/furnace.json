@@ -23,6 +23,11 @@
     "phases": [
       "CHOOSE_CELL",
       "apply_gun_effect_furnace_cozy"
-    ]
+    ],
+    "phasesConfig": {
+      "CHOOSE_CELL": {
+        "cellsDistanceEval": "distance === 1"
+      }
+    }
   }
 }

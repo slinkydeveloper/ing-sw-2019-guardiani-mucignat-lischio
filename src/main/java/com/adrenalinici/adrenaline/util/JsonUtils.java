@@ -94,17 +94,39 @@ public class JsonUtils {
           gameStatus.getPlayerPosition(playerColor1),
           gameStatus.getPlayerPosition(playerColor2)
         );
-      try {
-        Bindings bindings = scriptEngine.createBindings();
-        bindings.put("distance", distance);
-        bindings.put("visible", visible);
-        return (boolean) scriptEngine.eval(serializedPredicate, bindings);
 
-      } catch (ScriptException | ClassCastException e) {
-        LOG.log(Level.SEVERE, "You dumb! The script is wrong! " + serializedPredicate, e);
-        return false;
-      }
+      return bindingsCreator(distance, visible, serializedPredicate);
     };
+  }
+
+  public static TriPredicate<Position, Position, GameModel> parseDistanceEvalForCellsPredicate(String serializedPredicate) {
+    return (position1, position2, gameStatus) -> {
+      int distance = gameStatus.getDashboard()
+        .calculateDistance(
+          position1,
+          position2
+        );
+      boolean visible = gameStatus.getDashboard()
+        .calculateIfVisible(
+          position1,
+          position2
+        );
+
+      return bindingsCreator(distance, visible, serializedPredicate);
+    };
+  }
+
+  private static boolean bindingsCreator(int distance, boolean visible, String serializedPredicate) {
+    try {
+      Bindings bindings = scriptEngine.createBindings();
+      bindings.put("distance", distance);
+      bindings.put("visible", visible);
+      return (boolean) scriptEngine.eval(serializedPredicate, bindings);
+
+    } catch (ScriptException | ClassCastException e) {
+      LOG.log(Level.SEVERE, "You dumb! The script is wrong! " + serializedPredicate, e);
+      return false;
+    }
   }
 
   public static Predicate<FlowState> parseEnabledPredicate(String serializedPredicate) {
@@ -128,7 +150,7 @@ public class JsonUtils {
         flowState.resolvePhaseConfiguration(nodeId).get("enabled").asText()
       );
     else
-      return f -> false;
+      return f -> true;
   }
 
   /**
