@@ -92,7 +92,6 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
 
   @Test
   public void testForThorRestrictions() {
-    //GameModel model1 = new GameModel(8, build3x3Dashboard(), generate4PlayerDashboards());
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
@@ -128,6 +127,76 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
 
     assertThat(((BaseEffectGunFlowState) context.getActualState()).getChosenPlayersToHit())
       .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW, PlayerColor.CYAN);
+
+    checkEndCalled();
+  }
+
+  @Test
+  public void testForRailgunRestrictionsWithFirstEnemyOnKillerCell() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
+
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("railgun");
+    AlternativeEffectGunFlowStateImpl alternativeEffectGunFlowState = new AlternativeEffectGunFlowStateImpl(gun);
+    alternativeEffectGunFlowState.setChosenEffect(gun.getSecondEffect(), false);
+
+    ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
+
+    context.nextPhase(
+      viewMock,
+      alternativeEffectGunFlowState
+    );
+
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+
+    verify(viewMock, times(2)).showChoosePlayerToHit(playersCaptor.capture());
+    assertThat(playersCaptor.getAllValues().get(0))
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
+    assertThat(playersCaptor.getAllValues().get(1))
+      .containsExactlyInAnyOrder(PlayerColor.YELLOW);
+
+    assertThat(((AlternativeEffectGunFlowState) context.getActualState()).getChosenPlayersToHit())
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
+
+    checkEndCalled();
+  }
+
+  @Test
+  public void testForRailgunRestrictions() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.CYAN);
+
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("railgun");
+    AlternativeEffectGunFlowStateImpl alternativeEffectGunFlowState = new AlternativeEffectGunFlowStateImpl(gun);
+    alternativeEffectGunFlowState.setChosenEffect(gun.getSecondEffect(), false);
+
+    ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
+
+    context.nextPhase(
+      viewMock,
+      alternativeEffectGunFlowState
+    );
+
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+
+    verify(viewMock, times(2)).showChoosePlayerToHit(playersCaptor.capture());
+    assertThat(playersCaptor.getAllValues().get(0))
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
+    assertThat(playersCaptor.getAllValues().get(1))
+      .containsExactlyInAnyOrder(PlayerColor.YELLOW);
+
+    assertThat(((AlternativeEffectGunFlowState) context.getActualState()).getChosenPlayersToHit())
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
 
     checkEndCalled();
   }

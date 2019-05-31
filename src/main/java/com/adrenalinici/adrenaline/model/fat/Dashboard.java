@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.model.fat;
 
+import com.adrenalinici.adrenaline.model.common.CardinalDirection;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.light.LightDashboard;
@@ -165,6 +166,30 @@ public class Dashboard {
     }
 
     return result.stream().map(c -> new Position(c.getLine(), c.getCell())).collect(Collectors.toList());
+  }
+
+  /**
+   * This method calulates in which cardinal direction the "arrival" position is,
+   * as compared to "start" position.
+   * It returns SAME if the two arguments are equals.
+   * It returns NONE if the "arrival" is not in one of the 4 basic cardinal directions
+   * as compared to "start".
+   *
+   * @param start
+   * @param arrival
+   * @return
+   */
+  public CardinalDirection calculateCardinalDirection(Position start, Position arrival) {
+    if (start.equals(arrival)) return CardinalDirection.SAME_CELL;
+    if (start.line() == arrival.line()) {
+      if (start.cell() > arrival.cell()) return CardinalDirection.WEST;
+      return CardinalDirection.EAST;
+    }
+    if (start.cell() == arrival.cell()) {
+      if (start.line() > arrival.line()) return CardinalDirection.NORTH;
+      return CardinalDirection.SOUTH;
+    }
+    return CardinalDirection.NONE;
   }
 
   public List<Position> calculateMovements(Position position, int range) {

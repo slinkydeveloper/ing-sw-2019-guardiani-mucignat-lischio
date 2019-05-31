@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.ControllerNodes;
+import com.adrenalinici.adrenaline.model.common.CardinalDirection;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
@@ -21,8 +22,9 @@ import static com.adrenalinici.adrenaline.util.CollectionUtils.notIn;
 
 //TODO javadoc
 public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowState> {
-  public static String DIFFERENT_CELL = "cell_different_from_previous";
-  public static String VISIBLE_FROM_PREVIOUS_ENEMY = "visible_from_previous_enemy";
+  public static final String DIFFERENT_CELL = "cell_different_from_previous";
+  public static final String VISIBLE_FROM_PREVIOUS_ENEMY = "visible_from_previous_enemy";
+  public static final String SAME_DIRECTION = "same_direction";
   public static final String DEFAULT = "default";
 
   @Override
@@ -64,6 +66,39 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
             .filter(newEnemy ->
               model.getDashboard().calculateIfVisible(model.getPlayerPosition(newEnemy), model.getPlayerPosition(previousEnemy))
+            )
+            .collect(Collectors.toList());
+
+      } else if (resolveHittablePlayersRestriction(flowState).equals(SAME_DIRECTION) && !flowState.getChosenPlayersToHit().isEmpty()) {
+        PlayerColor previousEnemy = flowState.getChosenPlayersToHit().get(flowState.getChosenPlayersToHit().size() - 1);
+        CardinalDirection previousEnemyCardinalDirection =
+          model
+            .getDashboard()
+            .calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(previousEnemy));
+
+        hittable =
+          model
+            .getPlayers()
+            .stream()
+            .filter(notIn(flowState.getChosenPlayersToHit()))
+            .filter(notIn(context.getKilledPlayers()))
+            .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(enemy ->
+              previousEnemyCardinalDirection == CardinalDirection.SAME_CELL ?
+                model.getDashboard().calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(enemy)) != CardinalDirection.NONE :
+                model.getDashboard().calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(enemy)) == previousEnemyCardinalDirection
+            )
+            .collect(Collectors.toList());
+
+      } else if (resolveHittablePlayersRestriction(flowState).equals(SAME_DIRECTION)) {
+        hittable =
+          model
+            .getPlayers()
+            .stream()
+            .filter(notIn(context.getKilledPlayers()))
+            .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(enemy ->
+              model.getDashboard().calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(enemy)) != CardinalDirection.NONE
             )
             .collect(Collectors.toList());
 
