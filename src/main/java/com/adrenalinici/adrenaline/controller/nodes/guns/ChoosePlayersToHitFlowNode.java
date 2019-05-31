@@ -20,7 +20,21 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.util.CollectionUtils.notIn;
 
-//TODO javadoc
+/**
+ * This node helps the player choosing the enemies he want to/could hit.
+ * There are many limitations in showing the player only the enemies he could effectively hit,
+ * depending on the used gun's config.
+ * By default (and in all cases), enemies are filtered according to the loaded distance predicate.
+ * Many other limitations are represented with various flags, which are:
+ * <p>
+ * DIFFERENT_CELL --> shows only enemies that are in different cells
+ * as compared to the enemies already chosen
+ * <p>
+ * VISIBLE_FROM_PREVIOUS_ENEMY --> shows only enemies that are visible from the last chosen enemy
+ * <p>
+ * SAME_DIRECTION --> shows only enemies that are (as compared to the killer)
+ * in the same direction in which the last chosen enemy is
+ */
 public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowState> {
   public static final String DIFFERENT_CELL = "cell_different_from_previous";
   public static final String VISIBLE_FROM_PREVIOUS_ENEMY = "visible_from_previous_enemy";
@@ -83,6 +97,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .filter(notIn(flowState.getChosenPlayersToHit()))
             .filter(notIn(context.getKilledPlayers()))
             .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(enemy -> predicate.test(previousEnemy, enemy, model))
             .filter(enemy ->
               previousEnemyCardinalDirection == CardinalDirection.SAME_CELL ?
                 model.getDashboard().calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(enemy)) != CardinalDirection.NONE :
@@ -97,6 +112,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .stream()
             .filter(notIn(context.getKilledPlayers()))
             .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(enemy -> predicate.test(context.getTurnOfPlayer(), enemy, model))
             .filter(enemy ->
               model.getDashboard().calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(enemy)) != CardinalDirection.NONE
             )

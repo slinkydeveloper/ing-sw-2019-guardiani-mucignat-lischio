@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.DecoratedGun;
 import com.adrenalinici.adrenaline.flow.FlowState;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface GunFlowState extends FlowState {
+  List<Position> getChosenCellsToHit();
+
   List<PlayerColor> getChosenPlayersToHit();
 
   Map<PlayerColor, Integer> getHitPlayers();

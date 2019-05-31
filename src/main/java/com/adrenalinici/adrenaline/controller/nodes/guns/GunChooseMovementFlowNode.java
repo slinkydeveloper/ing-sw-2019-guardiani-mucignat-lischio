@@ -1,18 +1,17 @@
 package com.adrenalinici.adrenaline.controller.nodes.guns;
 
-import com.adrenalinici.adrenaline.controller.*;
+import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
+import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.flow.FlowState;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.util.JsonUtils;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.gunMovement;
 
@@ -31,6 +30,11 @@ public class GunChooseMovementFlowNode implements SkippableGunFlowNode<GunChoose
 
     public GunChooseMovementFlowState(BaseEffectGunFlowState originalFlowState) {
       this.originalFlowState = originalFlowState;
+    }
+
+    @Override
+    public List<Position> getChosenCellsToHit() {
+      return null;
     }
 
     @Override

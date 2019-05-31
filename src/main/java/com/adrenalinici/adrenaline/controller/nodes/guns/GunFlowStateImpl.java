@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.controller.nodes.guns;
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.controller.DecoratedGun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
 
 import java.util.ArrayList;
@@ -13,15 +14,22 @@ import java.util.Map;
 public abstract class GunFlowStateImpl implements GunFlowState {
 
   DecoratedGun chosenGun;
+  private List<Position> chosenCellsToHit;
   private List<PlayerColor> chosenPlayersToHit;
   private Map<PlayerColor, Integer> hitPlayers;
   private Map<PlayerColor, Integer> markPlayers;
 
   public GunFlowStateImpl(DecoratedGun chosenGun) {
     this.chosenGun = chosenGun;
+    this.chosenCellsToHit = new ArrayList<>();
     this.chosenPlayersToHit = new ArrayList<>();
     this.hitPlayers = new HashMap<>();
     this.markPlayers = new HashMap<>();
+  }
+
+  @Override
+  public List<Position> getChosenCellsToHit() {
+    return chosenCellsToHit;
   }
 
   @Override

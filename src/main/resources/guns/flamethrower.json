@@ -1,0 +1,45 @@
+{
+  "name": "Flamethrower",
+  "firstAmmo": "red",
+  "note": "This weapon cannot damage anyone in your square. However, it can sometimes damage a target you can't see – the flame won't go through walls, but it will go through doors. Think of it as a straight-line blast of flame that can travel 2 squares in a cardinal direction.",
+  "phases": [
+    "ALTERNATIVE_GUN_START"
+  ],
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Choose a square 1 move away and possibly a second square 1 more move away in the same direction. On each square, you may choose 1 target and give it 1 damage.",
+    "phases": [
+      "CHOOSE_PLAYER_TO_HIT",
+      "apply_gun_effect_flamethrower_base"
+    ],
+    "phasesConfig": {
+      "CHOOSE_PLAYER_TO_HIT": {
+        "hittablePlayersNumber": 2,
+        "distanceEval": "distance === 1",
+        "restriction": "same_direction"
+      }
+    }
+  },
+  "secondEffect": {
+    "id": "barbecue",
+    "name": "Barbecue mode",
+    "description": "Choose 2 squares as above. Deal 2 damage to everyone on the first square and 1 damage to everyone on the second square.",
+    "phases": [
+      "CHOOSE_CELL",
+      "apply_gun_effect_flamethrower_barbecue"
+    ],
+    "phasesConfig": {
+      "CHOOSE_CELL": {
+        "hittableCellsNumber": 2,
+        "cellsDistanceEval": "distance === 1",
+        "restriction": "same_direction",
+        "mode": "hit_everyone"
+      }
+    },
+    "cost": [
+      "yellow",
+      "yellow"
+    ]
+  }
+}

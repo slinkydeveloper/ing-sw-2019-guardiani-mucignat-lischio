@@ -100,4 +100,45 @@ public class ChooseCellToHitFlowNodeTest extends BaseNodeTest {
 
     checkEndCalled();
   }
+
+  @Test
+  public void testShowCellsInOneDirection() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(1, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.GRAY);
+
+    model.getPlayerDashboard(PlayerColor.GREEN).addGun("flamethrower");
+
+    AlternativeEffectGunFlowState alternativeEffectGunFlowState =
+      new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("flamethrower"));
+    alternativeEffectGunFlowState.setChosenEffect(alternativeEffectGunFlowState.getChosenGun().getSecondEffect(), false);
+
+    ArgumentCaptor<Set<Position>> positionsCaptor = ArgumentCaptor.forClass(Set.class);
+
+    context.nextPhase(
+      viewMock,
+      alternativeEffectGunFlowState
+    );
+
+    context.handleEvent(new CellToHitChosenEvent(Position.of(1, 0)), viewMock);
+    context.handleEvent(new CellToHitChosenEvent(Position.of(2, 0)), viewMock);
+
+
+    verify(viewMock, times(2)).showAvailableCellsToHit(positionsCaptor.capture());
+    assertThat(positionsCaptor.getAllValues().get(0))
+      .containsOnly(
+        new Position(0, 1),
+        new Position(1, 0)
+      );
+    assertThat(positionsCaptor.getAllValues().get(1))
+      .containsOnly(
+        new Position(2, 0)
+      );
+
+    assertThat(alternativeEffectGunFlowState.getChosenPlayersToHit())
+      .containsExactlyInAnyOrder(PlayerColor.YELLOW, PlayerColor.GRAY);
+
+    checkEndCalled();
+  }
 }
