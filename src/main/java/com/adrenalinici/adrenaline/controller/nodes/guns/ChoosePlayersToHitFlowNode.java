@@ -39,6 +39,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
   public static final String DIFFERENT_CELL = "cell_different_from_previous";
   public static final String VISIBLE_FROM_PREVIOUS_ENEMY = "visible_from_previous_enemy";
   public static final String SAME_DIRECTION = "same_direction";
+  public static final String ON_CHOSEN_CELL = "on_chosen_cell";
   public static final String DEFAULT = "default";
 
   @Override
@@ -118,6 +119,19 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             )
             .collect(Collectors.toList());
 
+      } else if (resolveHittablePlayersRestriction(flowState).equals(ON_CHOSEN_CELL)) {
+        TriPredicate<Position, Position, GameModel> predicateForCells = resolveDistanceEvalForCellsPredicate(flowState);
+        Position chosenCellPosition = flowState.getChosenCellsToHit().get(0);
+        hittable =
+          model
+            .getPlayers()
+            .stream()
+            .filter(notIn(flowState.getChosenPlayersToHit()))
+            .filter(notIn(context.getKilledPlayers()))
+            .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(enemy -> predicateForCells.test(chosenCellPosition, model.getPlayerPosition(enemy), model))
+            .collect(Collectors.toList());
+
       } else {
         hittable =
           model
@@ -152,6 +166,12 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
 
   private TriPredicate<PlayerColor, PlayerColor, GameModel> resolveDistanceEvalPredicate(GunFlowState flowState) {
     return JsonUtils.parseDistanceEvalPredicate(
+      flowState.resolvePhaseConfiguration(id()).get("distanceEval").asText()
+    );
+  }
+
+  private TriPredicate<Position, Position, GameModel> resolveDistanceEvalForCellsPredicate(GunFlowState flowState) {
+    return JsonUtils.parseDistanceEvalForCellsPredicate(
       flowState.resolvePhaseConfiguration(id()).get("distanceEval").asText()
     );
   }

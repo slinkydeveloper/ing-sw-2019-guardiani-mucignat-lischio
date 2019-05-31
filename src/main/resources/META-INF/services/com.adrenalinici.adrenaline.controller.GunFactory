@@ -17,3 +17,4 @@ com.adrenalinici.adrenaline.controller.guns.GrenadeLauncherGunFactory
 com.adrenalinici.adrenaline.controller.guns.RocketLauncherGunFactory
 com.adrenalinici.adrenaline.controller.guns.RailgunGunFactory
 com.adrenalinici.adrenaline.controller.guns.FlamethrowerGunFactory
+com.adrenalinici.adrenaline.controller.guns.VortexCannonGunFactory

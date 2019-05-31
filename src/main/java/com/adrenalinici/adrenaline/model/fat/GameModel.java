@@ -88,14 +88,16 @@ public class GameModel extends Observable<ModelEvent> {
   }
 
   public void movePlayerInDashboard(Position newPosition, PlayerColor player) {
-    Position oldPosition = getPlayerPosition(player);
-    DashboardCell oldCell = dashboard.getDashboardCell(oldPosition);
-    oldCell.removePlayer(player);
-    notifyEvent(new DashboardCellUpdatedEvent(this, oldPosition));
+    if (!newPosition.equals(getPlayerPosition(player))) {
+      Position oldPosition = getPlayerPosition(player);
+      DashboardCell oldCell = dashboard.getDashboardCell(oldPosition);
+      oldCell.removePlayer(player);
+      notifyEvent(new DashboardCellUpdatedEvent(this, oldPosition));
 
-    DashboardCell newCell = dashboard.getDashboardCell(newPosition);
-    newCell.addPlayer(player);
-    notifyEvent(new DashboardCellUpdatedEvent(this, newPosition));
+      DashboardCell newCell = dashboard.getDashboardCell(newPosition);
+      newCell.addPlayer(player);
+      notifyEvent(new DashboardCellUpdatedEvent(this, newPosition));
+    }
   }
 
   public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
