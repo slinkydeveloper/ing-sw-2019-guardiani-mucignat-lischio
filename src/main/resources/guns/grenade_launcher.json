@@ -29,7 +29,9 @@
     ],
     "phasesConfig": {
       "CHOOSE_CELL": {
-        "cellsDistanceEval": "visible === true"
+        "hittableCellsNumber": 1,
+        "cellsDistanceEval": "visible === true",
+        "mode": "hit_everyone"
       }
     },
     "cost": [
