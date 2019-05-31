@@ -34,7 +34,7 @@ public class GunChooseMovementFlowNode implements SkippableGunFlowNode<GunChoose
 
     @Override
     public List<Position> getChosenCellsToHit() {
-      return null;
+      return originalFlowState.getChosenCellsToHit();
     }
 
     @Override
