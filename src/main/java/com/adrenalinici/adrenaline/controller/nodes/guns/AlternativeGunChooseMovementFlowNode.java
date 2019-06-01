@@ -12,6 +12,11 @@ import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This node manage the movement of the killer as an effect of an AlternativeEffectGun.
+ * The only available movements shown to the player are filtered according to the last
+ * chosen victim and its cardinal direction as compared to the killer.
+ */
 public class AlternativeGunChooseMovementFlowNode implements SkippableGunFlowNode<AlternativeEffectGunFlowState> {
 
   public AlternativeGunChooseMovementFlowNode() {
