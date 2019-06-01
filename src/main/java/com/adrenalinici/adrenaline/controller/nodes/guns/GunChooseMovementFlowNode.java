@@ -118,10 +118,11 @@ public class GunChooseMovementFlowNode implements SkippableGunFlowNode<GunChoose
   @Override
   public void onJump(GunChooseMovementFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     if (!flowState.alreadyMoved) {
+      List<Position> availableMovements;
       Position actualPlayerPosition = model.getDashboard().getPlayersPositions().get(context.getTurnOfPlayer());
-      view.showAvailableMovements(
-        model.getDashboard().calculateMovements(actualPlayerPosition, distance)
-      );
+      availableMovements = model.getDashboard().calculateMovements(actualPlayerPosition, distance);
+
+      view.showAvailableMovements(availableMovements);
     } else context.nextPhase(view, flowState);
   }
 

@@ -56,6 +56,7 @@ public class ChooseCellToHitFlowNode implements ControllerFlowNode<GunFlowState>
             .collect(Collectors.toSet());
       }
 
+      if (hittableCells.isEmpty()) context.nextPhase(view, flowState);
       view.showAvailableCellsToHit(hittableCells);
     }
   }
