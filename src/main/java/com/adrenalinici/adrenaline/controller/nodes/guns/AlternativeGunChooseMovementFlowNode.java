@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
  */
 public class AlternativeGunChooseMovementFlowNode implements SkippableGunFlowNode<AlternativeEffectGunFlowState> {
 
-  public AlternativeGunChooseMovementFlowNode() {
-  }
-
   @Override
   public String id() {
     return ControllerNodes.ALTERNATIVE_GUN_MOVEMENT.name();
