@@ -9,8 +9,8 @@ import java.util.Set;
 
 public class RemoteView extends BaseRemoteView {
 
-  public RemoteView(String matchId, ServerContext context, Set<PlayerColor> availablePlayers) {
-    super(matchId, context, availablePlayers);
+  public RemoteView(String matchId, ServerContext context, Set<PlayerColor> availablePlayers, long turnTimerSeconds) {
+    super(matchId, context, availablePlayers, turnTimerSeconds);
   }
 
   @Override
@@ -25,6 +25,7 @@ public class RemoteView extends BaseRemoteView {
 
   @Override
   public void showNextTurn(PlayerColor player) {
+    onNewTurn();
     broadcast(new NextTurnMessage(player));
   }
 

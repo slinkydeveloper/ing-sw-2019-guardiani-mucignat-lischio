@@ -1,6 +1,8 @@
 package com.adrenalinici.adrenaline.network.server;
 
 import com.adrenalinici.adrenaline.controller.GameController;
+import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
+import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.network.outbox.OutboxEntry;
 import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.util.CollectionUtils;
@@ -15,6 +17,7 @@ public class ServerContext {
 
   private static final Logger LOG = LogUtils.getLogger(ServerContext.class);
 
+  private final BlockingQueue<InboxEntry> inbox;
   private final BlockingQueue<OutboxEntry> outboxRmi;
   private final BlockingQueue<OutboxEntry> outboxSocket;
 
@@ -22,7 +25,8 @@ public class ServerContext {
   private final Map<String, RemoteView> matchesMap;
   private final Map<String, GameController> matchesControllersMap;
 
-  public ServerContext(BlockingQueue<OutboxEntry> outboxRmi, BlockingQueue<OutboxEntry> outboxSocket) {
+  public ServerContext(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxEntry> outboxRmi, BlockingQueue<OutboxEntry> outboxSocket) {
+    this.inbox = inbox;
     this.outboxRmi = outboxRmi;
     this.outboxSocket = outboxSocket;
     this.playerMatchMap = new HashMap<>();
@@ -34,6 +38,12 @@ public class ServerContext {
     CollectionUtils
       .keys(this.playerMatchMap, matchId)
       .forEach(p -> send(p, message));
+  }
+
+  public void enqueueInboxMessage(String matchId, InboxMessage message) {
+    CollectionUtils.keys(playerMatchMap, matchId).findFirst().ifPresent(aRandomGuyInThisMatchConnectionId  -> {
+      this.inbox.offer(new InboxEntry(aRandomGuyInThisMatchConnectionId, message));
+    }); // If nobody in this match, why enqueue stuff?
   }
 
   public void send(String connectionId, OutboxMessage message) {

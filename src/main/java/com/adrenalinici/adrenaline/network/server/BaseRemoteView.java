@@ -9,12 +9,11 @@ import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.LogUtils;
 import com.adrenalinici.adrenaline.util.Observable;
 import com.adrenalinici.adrenaline.view.GameView;
+import com.adrenalinici.adrenaline.view.event.ExpiredTurnEvent;
 import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public abstract class BaseRemoteView extends Observable<DecoratedEvent<ViewEvent, GameView>> implements GameView {
@@ -25,13 +24,16 @@ public abstract class BaseRemoteView extends Observable<DecoratedEvent<ViewEvent
   private final ServerContext context;
   private final Map<String, PlayerColor> connectedPlayers;
   private final Set<PlayerColor> availablePlayers;
+  private final long turnTimerSeconds;
+
   private boolean matchStarted;
-
   private OutboxMessage lastSentCommand;
+  private Timer actualTimer;
 
-  public BaseRemoteView(String matchId, ServerContext context, Set<PlayerColor> availablePlayers) {
+  public BaseRemoteView(String matchId, ServerContext context, Set<PlayerColor> availablePlayers, long turnTimerSeconds) {
     this.matchId = matchId;
     this.context = context;
+    this.turnTimerSeconds = turnTimerSeconds;
     this.connectedPlayers = new HashMap<>();
     this.availablePlayers = availablePlayers;
     this.matchStarted = false;
@@ -94,6 +96,18 @@ public abstract class BaseRemoteView extends Observable<DecoratedEvent<ViewEvent
   void broadcast(OutboxMessage en) {
     lastSentCommand = en;
     context.broadcastToMatch(matchId, en);
+  }
+
+  void onNewTurn() {
+    if (actualTimer != null)
+      actualTimer.cancel();
+    actualTimer = new Timer();
+    actualTimer.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        context.enqueueInboxMessage(matchId, new ViewEventMessage(new ExpiredTurnEvent()));
+      }
+    }, turnTimerSeconds * 1000);
   }
 
   private void checkStartMatch() {

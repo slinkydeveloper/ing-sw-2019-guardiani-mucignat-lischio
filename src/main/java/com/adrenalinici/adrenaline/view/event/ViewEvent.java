@@ -35,6 +35,10 @@ public interface ViewEvent extends Serializable {
     return false;
   }
 
+  default boolean isExpiredTurnEvent() {
+    return false;
+  }
+
   default void onEnemyMovementChosenEvent(Consumer<EnemyMovementChosenEvent> consumer) {
   }
 

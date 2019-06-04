@@ -15,6 +15,13 @@ import java.util.HashSet;
 import java.util.List;
 
 public class NewMatchMessageHandler implements MessageHandler<NewMatchMessage> {
+
+  private final long turnTimerSeconds;
+
+  public NewMatchMessageHandler(long turnTimerSeconds) {
+    this.turnTimerSeconds = turnTimerSeconds;
+  }
+
   @Override
   public void handleMessage(NewMatchMessage message, String connectionId, ServerContext context) {
     if (!context.getMatches().containsKey(message.getMatchId())) {
@@ -22,7 +29,7 @@ public class NewMatchMessageHandler implements MessageHandler<NewMatchMessage> {
       List<PlayerDashboard> playerDashboards = message.getPlayers().generate();
       GameModel model = message.getRules().generate(dashboard, playerDashboards);
 
-      RemoteView remoteView = new RemoteView(message.getMatchId(), context, new HashSet<>(model.getPlayers()));
+      RemoteView remoteView = new RemoteView(message.getMatchId(), context, new HashSet<>(model.getPlayers()), turnTimerSeconds);
       GameController controller = new GameController(model);
       remoteView.registerObserver(controller);
       model.registerObserver(remoteView);
