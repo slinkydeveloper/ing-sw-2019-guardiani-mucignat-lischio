@@ -173,7 +173,7 @@ public class GameModel extends Observable<ModelEvent> {
   public boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
     int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivedWithPlayerTurn);
     int indexThisTurnPlayer = getPlayers().indexOf(thisTurnPlayer);
-    return indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0 || indexThisTurnPlayer == 0;
+    return indexThisTurnPlayer == 0 || indexOfFrenzyModeFirstPlayer == 0 || indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0;
   }
 
   public void assignEndGamePoints() {
@@ -295,9 +295,12 @@ public class GameModel extends Observable<ModelEvent> {
     List<Integer> pointScheme = (victimPlayerDashboard.isFlipped()) ? POINTS_FOR_KILL_FRENZY_MODE : POINTS_FOR_KILL;
 
     IntStream.range(0, orderedKillers.size())
-      .map(i -> i + victimPlayerDashboard.getTimesKilled())
       .forEach(i ->
-        pointsToAssign.merge(orderedKillers.get(i), (i < pointScheme.size()) ? pointScheme.get(i) : 1, Integer::sum)
+        pointsToAssign.merge(
+          orderedKillers.get(i),
+          (i + victimPlayerDashboard.getTimesKilled() < pointScheme.size()) ? pointScheme.get(i + victimPlayerDashboard.getTimesKilled()) : 1,
+          Integer::sum
+        )
       );
 
     pointsToAssign.forEach((pc, p) -> {

@@ -15,6 +15,12 @@ import static com.adrenalinici.adrenaline.controller.nodes.ControllerNodes.*;
 
 public class ChooseActionFlowNode implements StatelessControllerFlowNode {
 
+  private static final List<Action> FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS = Arrays.asList(Action.MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_MOVE, Action.MOVE_MOVE_PICKUP);
+  private static final List<Action> FRENZY_MODE_AFTER_FIRST_PLAYER_ACTIONS = Arrays.asList(Action.MOVE_MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_PICKUP);
+  private static final List<Action> NO_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
+  private static final List<Action> ONE_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT, Action.MOVE_MOVE_PICKUP);
+  private static final List<Action> TWO_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT, Action.MOVE_MOVE_PICKUP, Action.MOVE_SHOOT);
+
   @Override
   public String id() {
     return CHOOSE_ACTION.name();
@@ -26,7 +32,7 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
       context.addPhases(RELOAD.name(), RESPAWN_KILLED_PEOPLE.name());
       context.nextPhase(view);
     } else
-      view.showAvailableActions(calculateAvailableActions(context));
+      view.showAvailableActions(calculateAvailableActions(model, context));
   }
 
   @Override
@@ -72,14 +78,21 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
     );
   }
 
-  private List<Action> calculateAvailableActions(ControllerFlowContext context) {
+  private List<Action> calculateAvailableActions(GameModel model, ControllerFlowContext context) {
     if (context.isFrenzyMode()) {
       if (context.isFirstPlayerOrAfterFirstPlayerInFrenzyMode()) {
-        return Arrays.asList(Action.MOVE_MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_PICKUP);
+        return FRENZY_MODE_AFTER_FIRST_PLAYER_ACTIONS;
       } else {
-        return Arrays.asList(Action.MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_MOVE, Action.MOVE_MOVE_PICKUP);
+        return FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS;
       }
     }
-    return Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
+    int thisPlayerDamages = model.getPlayerDashboard(context.getTurnOfPlayer()).getDamages().size();
+    if (thisPlayerDamages < 3) {
+      return NO_ADRENALINE_ACTIONS;
+    } else if (thisPlayerDamages < 6) {
+      return ONE_ADRENALINE_ACTIONS;
+    } else {
+      return TWO_ADRENALINE_ACTIONS;
+    }
   }
 }
