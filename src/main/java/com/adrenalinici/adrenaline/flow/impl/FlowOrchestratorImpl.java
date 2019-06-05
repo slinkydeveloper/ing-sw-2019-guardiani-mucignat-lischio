@@ -46,7 +46,7 @@ public class FlowOrchestratorImpl<T extends FlowContext> implements FlowOrchestr
   }
 
   @Override
-  public FlowNode resolveState(String id) {
+  public FlowNode resolveNode(String id) {
     return nodes.get(id);
   }
 

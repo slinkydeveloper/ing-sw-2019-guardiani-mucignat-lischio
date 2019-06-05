@@ -23,7 +23,6 @@ public class PlayerDashboard {
   private int skullsNumber;
   private int points;
   private boolean flipped;
-  private int timesKilled;
 
   public PlayerDashboard(PlayerColor player) {
     this.player = player;
@@ -35,7 +34,6 @@ public class PlayerDashboard {
     this.skullsNumber = 0;
     this.points = 0;
     this.flipped = false;
-    this.timesKilled = 0;
     addAmmo(AmmoColor.RED);
     addAmmo(AmmoColor.BLUE);
     addAmmo(AmmoColor.YELLOW);
@@ -86,14 +84,6 @@ public class PlayerDashboard {
     if (this.damages.size() > 12) {
       this.damages = this.damages.subList(0, 12);
     }
-  }
-
-  public void incrementTimesKilled() {
-    this.timesKilled++;
-  }
-
-  public int getTimesKilled() {
-    return timesKilled;
   }
 
   public void removeAllDamages() {
@@ -288,8 +278,7 @@ public class PlayerDashboard {
       powerUpCards,
       skullsNumber,
       points,
-      this.flipped,
-      this.timesKilled
+      this.flipped
     );
   }
 }

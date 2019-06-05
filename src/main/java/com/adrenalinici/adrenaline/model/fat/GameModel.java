@@ -248,7 +248,6 @@ public class GameModel extends Observable<ModelEvent> {
     if (killed) {
       // Player was killed
       decrementSkulls();
-      victimPlayerDashboard.incrementSkullsNumber();
 
       // Removed player from cell
       Position killedPlayerPosition = getPlayerPosition(victim);
@@ -268,7 +267,7 @@ public class GameModel extends Observable<ModelEvent> {
       // Reset victim player dashboard
       victimPlayerDashboard.removeAllDamages();
 
-      victimPlayerDashboard.incrementTimesKilled();
+      victimPlayerDashboard.incrementSkullsNumber();
     }
 
     return killed;
@@ -278,7 +277,8 @@ public class GameModel extends Observable<ModelEvent> {
     Map<PlayerColor, Integer> pointsToAssign = new HashMap<>();
 
     // First blood
-    pointsToAssign.put(victimPlayerDashboard.getFirstDamage().get(), 1);
+    if (!isFrenzyModeActivated())
+      pointsToAssign.put(victimPlayerDashboard.getFirstDamage().get(), 1);
 
     // Ordered players based on damages
     List<PlayerColor> orderedKillers = victimPlayerDashboard
@@ -298,7 +298,7 @@ public class GameModel extends Observable<ModelEvent> {
       .forEach(i ->
         pointsToAssign.merge(
           orderedKillers.get(i),
-          (i + victimPlayerDashboard.getTimesKilled() < pointScheme.size()) ? pointScheme.get(i + victimPlayerDashboard.getTimesKilled()) : 1,
+          (i + victimPlayerDashboard.getSkullsNumber() < pointScheme.size()) ? pointScheme.get(i + victimPlayerDashboard.getSkullsNumber()) : 1,
           Integer::sum
         )
       );

@@ -12,7 +12,7 @@ public interface FlowOrchestrator<T extends FlowContext> {
 
   void onEnd(GameView view);
 
-  FlowNode resolveState(String id);
+  FlowNode resolveNode(String id);
 
   void startNewFlow(GameView view, T context);
 
