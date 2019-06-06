@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
+import com.adrenalinici.adrenaline.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
 import com.adrenalinici.adrenaline.view.event.NewTurnEvent;

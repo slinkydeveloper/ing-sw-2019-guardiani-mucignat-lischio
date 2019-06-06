@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.network.inbox.ChosenMatchMessage;
 import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.network.inbox.NewMatchMessage;
 import com.adrenalinici.adrenaline.network.inbox.ViewEventMessage;
+import com.adrenalinici.adrenaline.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.util.ObservableImpl;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;

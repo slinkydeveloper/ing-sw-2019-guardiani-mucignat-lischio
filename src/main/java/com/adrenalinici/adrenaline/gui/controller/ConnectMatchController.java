@@ -7,6 +7,8 @@ import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.PlayersChoice;
 import com.adrenalinici.adrenaline.model.common.RulesChoice;
 import com.adrenalinici.adrenaline.network.outbox.AvailableMatchesMessage;
+import com.adrenalinici.adrenaline.network.outbox.InfoMessage;
+import com.adrenalinici.adrenaline.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.util.LogUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -53,8 +55,7 @@ public class ConnectMatchController {
       newMatchButton.setDisable(false);
       registeredHandler = view.getEventBus().registerEventHandler((message, eventBus, s) -> {
         message.onAvailableMatchesMessage(this::handleAvailableMatchesMessage);
-        // TODO on ok go to game scene
-        // TODO on fail open an alert
+        message.onInfoMessage(this::handleInfoMessage);
       });
       view.getEventBus().start();
       view.startNetworkAdapter();
@@ -133,6 +134,16 @@ public class ConnectMatchController {
     matchesListView.setOnMouseClicked(this::handleChosenMatch);
   }
 
+  private void handleInfoMessage(InfoMessage message) {
+    // TODO on ok go to game scene
+    // TODO on fail open an alert
+    if (message.getInfoType() != InfoType.ERROR) {
+      moveToGameScene();
+    } else {
+      ErrorUtils.showErrorAlert("Game connection error", message.getInformation());
+    }
+  }
+
   private void handleChosenMatch(MouseEvent event) {
     String chosenMatch = matchesListView.getSelectionModel().getSelectedItem();
     if (chosenMatch == null) return; // Nothing was chosen
@@ -150,7 +161,7 @@ public class ConnectMatchController {
     }
   }
 
-  private void moveToGameScene(PlayerColor firstPlayerTurn) {
+  private void moveToGameScene() {
     this.view.getEventBus().stop();
     this.view.getEventBus().unregisterEventHandler(registeredHandler);
     LOG.info("Moving to game scene");

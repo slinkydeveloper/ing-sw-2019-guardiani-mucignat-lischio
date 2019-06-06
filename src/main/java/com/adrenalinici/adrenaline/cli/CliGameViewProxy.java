@@ -34,5 +34,6 @@ import com.adrenalinici.adrenaline.util.ObservableImpl;
     message.onAvailableCellsToHitMessage(e -> view.showAvailableCellsToHit(e.getCells()));
     message.onModelEventMessage(e -> view.onEvent(e.getModelEvent()));
     message.onAvailableMatchesMessage(e -> view.showAvailableMatchesAndPlayers(e.getMatchesRemainingPlayers()));
+    message.onInfoMessage(e -> view.showInfoMessage(e.getInformation(), e.getInfoType()));
   }
 }
