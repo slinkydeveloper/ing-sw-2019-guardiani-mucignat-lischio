@@ -13,11 +13,16 @@ import com.adrenalinici.adrenaline.util.Observable;
 
 import java.util.*;
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.Map.Entry;
 
 public class GameModel extends Observable<ModelEvent> {
+  private final static List<Integer> POINTS_FOR_KILL = Arrays.asList(8, 6, 4, 2);
+  private final static List<Integer> POINTS_FOR_KILL_FRENZY_MODE = Arrays.asList(2);
+
   private List<Map.Entry<PlayerColor, Boolean>> killScore;
   private int remainingSkulls;
   private List<PlayerColor> doubleKillScore;
@@ -26,8 +31,10 @@ public class GameModel extends Observable<ModelEvent> {
   private CardDeck<String> guns;
   private CardDeck<PowerUpCard> powerUps;
   private CardDeck<AmmoCard> ammoCards;
+  private PlayerColor frenzyModeActivedWithPlayerTurn;
+  private boolean mustActivateFrenzyMode;
 
-  public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
+  public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards, boolean mustActivateFrenzyMode) {
     this.remainingSkulls = remainingSkulls;
     this.dashboard = dashboard;
     this.playerDashboards = playerDashboards;
@@ -36,6 +43,7 @@ public class GameModel extends Observable<ModelEvent> {
     this.guns = new CardDeck<>(GunLoader.getAvailableGuns());
     this.powerUps = new CardDeck<>(JsonUtils.loadPowerUpCards());
     this.ammoCards = new CardDeck<>(JsonUtils.loadAmmoCards());
+    this.mustActivateFrenzyMode = mustActivateFrenzyMode;
   }
 
   public int getRemainingSkulls() {
@@ -75,7 +83,7 @@ public class GameModel extends Observable<ModelEvent> {
     return getPlayerDashboards().stream().filter(d -> player.equals(d.getPlayer())).findFirst().orElseThrow(() -> new IllegalStateException("Player not present " + player));
   }
 
-  public boolean isFrenzyMode() {
+  public boolean noRemainingSkulls() {
     return remainingSkulls == 0;
   }
 
@@ -142,6 +150,49 @@ public class GameModel extends Observable<ModelEvent> {
   }
 
   /**
+   * Activate frenzy mode: flips player dashboards when possible, register newTurn
+   */
+  public void activateFrenzyMode(PlayerColor newTurnOfPlayer) {
+    this.frenzyModeActivedWithPlayerTurn = newTurnOfPlayer;
+
+    playerDashboards.forEach(pd -> {
+      if (pd.getDamages().isEmpty()) pd.setFlipped(true);
+    });
+  }
+
+  public boolean isFrenzyModeFinished(PlayerColor nextTurnPlayer) {
+    return this.frenzyModeActivedWithPlayerTurn == nextTurnPlayer;
+  }
+
+  public boolean isFrenzyModeActivated() {
+    return frenzyModeActivedWithPlayerTurn != null;
+  }
+
+  public boolean isMustActivateFrenzyMode() {
+    return mustActivateFrenzyMode;
+  }
+
+  public boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
+    int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivedWithPlayerTurn);
+    int indexThisTurnPlayer = getPlayers().indexOf(thisTurnPlayer);
+    return indexThisTurnPlayer == 0 || indexOfFrenzyModeFirstPlayer == 0 || indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0;
+  }
+
+  public void assignEndGamePoints() {
+    playerDashboards.forEach(pd -> {
+      assignPoints(pd);
+      pd.removeAllDamages();
+    });
+  }
+
+  public List<Map.Entry<PlayerColor, Integer>> getRanking() {
+    return getPlayerDashboards()
+      .stream()
+      .map(p -> new SimpleImmutableEntry<>(p.getPlayer(), p.getPoints()))
+      .collect(Collectors.toList());
+  }
+
+  /**
    * Respawn a player
    *
    * @param playerColor
@@ -194,24 +245,71 @@ public class GameModel extends Observable<ModelEvent> {
       Collections.nCopies(killerMarksOnVictimDashboard, killer)
     );
 
-    if (victimPlayerDashboard.getKillDamage().isPresent()) {
+    boolean killed = victimPlayerDashboard.getKillDamage().isPresent();
+
+    if (killed) {
       // Player was killed
       decrementSkulls();
-      victimPlayerDashboard.incrementSkullsNumber();
 
       // Removed player from cell
       Position killedPlayerPosition = getPlayerPosition(victim);
       dashboard.getDashboardCell(killedPlayerPosition).removePlayer(victim);
       notifyEvent(new DashboardCellUpdatedEvent(this, killedPlayerPosition));
 
+      // Add kill score to dashboard
       if (victimPlayerDashboard.getCruelDamage().isPresent()) {
         killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.TRUE));
         markPlayer(victim, killer, 1);
       } else killScore.add(new AbstractMap.SimpleImmutableEntry<>(killer, Boolean.FALSE));
       notifyEvent(new GameModelUpdatedEvent(this));
+
+      // Add points to killers
+      assignPoints(victimPlayerDashboard);
+
+      // Reset victim player dashboard
+      victimPlayerDashboard.removeAllDamages();
+
+      victimPlayerDashboard.incrementSkullsNumber();
     }
 
-    return victimPlayerDashboard.getKillDamage().isPresent();
+    return killed;
+  }
+
+  private void assignPoints(PlayerDashboard victimPlayerDashboard) {
+    Map<PlayerColor, Integer> pointsToAssign = new HashMap<>();
+
+    // First blood
+    if (!isFrenzyModeActivated())
+      pointsToAssign.put(victimPlayerDashboard.getFirstDamage().get(), 1);
+
+    // Ordered players based on damages
+    List<PlayerColor> orderedKillers = victimPlayerDashboard
+      .getDamages()
+      .stream()
+      .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+      .entrySet()
+      .stream()
+      .sorted((e1, e2) -> -Long.compare(e1.getValue(), e2.getValue()))
+      .map(Map.Entry::getKey)
+      .collect(Collectors.toList());
+
+    // Choose what point scheme we should use
+    List<Integer> pointScheme = (victimPlayerDashboard.isFlipped()) ? POINTS_FOR_KILL_FRENZY_MODE : POINTS_FOR_KILL;
+
+    IntStream.range(0, orderedKillers.size())
+      .forEach(i ->
+        pointsToAssign.merge(
+          orderedKillers.get(i),
+          (i + victimPlayerDashboard.getSkullsNumber() < pointScheme.size()) ? pointScheme.get(i + victimPlayerDashboard.getSkullsNumber()) : 1,
+          Integer::sum
+        )
+      );
+
+    pointsToAssign.forEach((pc, p) -> {
+      getPlayerDashboard(pc).addPoints(p);
+      notifyEvent(new PlayerDashboardUpdatedEvent(this, pc));
+    });
+
   }
 
   private void marker(PlayerColor killer, PlayerColor victim, int marks) {

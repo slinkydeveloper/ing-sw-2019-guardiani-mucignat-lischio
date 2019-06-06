@@ -22,6 +22,8 @@ public abstract class BaseFlowContext implements FlowContext {
 
   private FlowOrchestrator orchestrator;
 
+  private final List<String> additionalNodesToExecuteAlways;
+
   private int actualIndex;
 
   public BaseFlowContext(FlowOrchestrator orchestrator) {
@@ -29,9 +31,14 @@ public abstract class BaseFlowContext implements FlowContext {
   }
 
   public BaseFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
+    this(orchestrator, initialPhases, Collections.emptyList());
+  }
+
+  public BaseFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases, List<String> additionalNodesToExecuteAlways) {
     this.orchestrator = orchestrator;
     this.phasesQueue = initialPhases != null ? new ArrayList<>(initialPhases) : new ArrayList<>();
     this.actualIndex = this.phasesQueue.size();
+    this.additionalNodesToExecuteAlways = additionalNodesToExecuteAlways;
   }
 
   @Override
@@ -42,7 +49,7 @@ public abstract class BaseFlowContext implements FlowContext {
   @SuppressWarnings("unchecked")
   @Override
   public void jump(String stateId, GameView view, FlowState state) {
-    actualNode = orchestrator.resolveState(stateId);
+    actualNode = orchestrator.resolveNode(stateId);
     FlowState newState = actualNode.mapState(state);
     if (actualNode.skip(newState, this)) this.nextPhase(view, state);
     else {
@@ -74,7 +81,7 @@ public abstract class BaseFlowContext implements FlowContext {
 
   @Override
   public FlowNode actualFlowNode() {
-    return this.orchestrator.resolveState(this.actualPhaseId);
+    return this.orchestrator.resolveNode(this.actualPhaseId);
   }
 
   @Override
@@ -112,6 +119,9 @@ public abstract class BaseFlowContext implements FlowContext {
     } else {
       this.actualNode.handleEvent(event, actualState, view, getOrchestrator().getModel(), this);
     }
+    this.additionalNodesToExecuteAlways.forEach(n ->
+      this.getOrchestrator().resolveNode(n).handleEvent(event, actualState, view, getOrchestrator().getModel(), this)
+    );
   }
 
   public List<String> getPhasesQueue() {

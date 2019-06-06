@@ -92,4 +92,9 @@ public class RemoteView extends BaseRemoteView {
   public void showAvailableCellsToHit(Set<Position> cells) {
     broadcast(new AvailableCellsToHitMessage(cells));
   }
+
+  @Override
+  public void showRanking(List<Map.Entry<PlayerColor, Integer>> ranking) {
+    broadcast(new RankingMessage(ranking));
+  }
 }

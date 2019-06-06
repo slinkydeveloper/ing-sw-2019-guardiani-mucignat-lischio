@@ -61,14 +61,39 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
 
   void endTurnCallback(GameView view) {
     gameModel.refillDashboard();
-    //TODO P2 somewhere maybe here we should check if match is finished
     if (firstTurn) {
+      // First turn
       firstTurn = false;
       startNewTurn(view, gameModel.getPlayers().get(0));
+    } else if (gameModel.noRemainingSkulls()) {
+      // Frenzy mode or end game
+      PlayerColor playerTurn = nextTurnPlayer();
+      if (gameModel.isFrenzyModeActivated()) {
+        // Frenzy mode already activated
+        if (gameModel.isFrenzyModeFinished(playerTurn)) {
+          // Frenzy mode finished
+          endMatchCallback(view);
+        } else {
+          startNewFrenzyTurn(view, playerTurn, gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(playerTurn));
+        }
+      } else if (gameModel.isMustActivateFrenzyMode()) {
+        // Frenzy mode still not activated, but it must be
+        gameModel.activateFrenzyMode(nextTurnPlayer());
+        startNewFrenzyTurn(view, playerTurn, gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(playerTurn));
+      } else {
+        // No frenzy mode, close match
+        endMatchCallback(view);
+      }
     } else {
+      // Normal turn
       PlayerColor playerTurn = nextTurnPlayer();
       startNewTurn(view, playerTurn);
     }
+  }
+
+  void endMatchCallback(GameView view) {
+    gameModel.assignEndGamePoints();
+    view.showRanking(gameModel.getRanking());
   }
 
   private void startNewTurn(GameView view, PlayerColor player) {
@@ -76,6 +101,19 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       this.flowOrchestrator,
       Collections.singletonList(ControllerNodes.START_TURN.name())
     ).setTurnOfPlayer(player));
+    if (view != null) view.showNextTurn(player);
+  }
+
+  private void startNewFrenzyTurn(GameView view, PlayerColor player, boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode) {
+    this.flowOrchestrator.startNewFlow(view,
+      new ControllerFlowContext(
+        this.flowOrchestrator,
+        Collections.singletonList(ControllerNodes.START_TURN.name())
+      )
+        .setTurnOfPlayer(player)
+        .setFrenzyMode(true)
+        .setFirstPlayerOrAfterFirstPlayerInFrenzyMode(isFirstPlayerOrAfterFirstPlayerInFrenzyMode)
+    );
     if (view != null) view.showNextTurn(player);
   }
 

@@ -33,11 +33,11 @@ public interface OutboxMessage extends Serializable {
 
   default void onAvailableTagbackGrenadeMessage(Consumer<AvailableTagbackGrenadeMessage> c) {}
 
-  default void onAvailableRoomsMessage(Consumer<AvailableRoomsMessage> c) {
-  }
+  default void onAvailableRoomsMessage(Consumer<AvailableRoomsMessage> c) {}
 
-  default void onAvailableCellsToHitMessage(Consumer<AvailableCellsToHitMessage> c) {
-  }
+  default void onAvailableCellsToHitMessage(Consumer<AvailableCellsToHitMessage> c) {}
+
+  default void onRankingMessage(Consumer<RankingMessage> c) {}
 
   default void onModelEventMessage(Consumer<ModelEventMessage> c) {}
 

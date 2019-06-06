@@ -82,26 +82,26 @@ public class TestUtils {
 
   public static List<PlayerDashboard> generate3PlayerDashboards() {
     return Arrays.asList(
-      new PlayerDashboard(PlayerColor.GREEN, true, Collections.emptyList()),
-      new PlayerDashboard(PlayerColor.GRAY, false, Collections.emptyList()),
-      new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList())
+      new PlayerDashboard(PlayerColor.GREEN, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.GRAY, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.YELLOW, Collections.emptyList())
     );
   }
 
   public static List<PlayerDashboard> generate4PlayerDashboards() {
     return Arrays.asList(
-      new PlayerDashboard(PlayerColor.GREEN, true, Collections.emptyList()),
-      new PlayerDashboard(PlayerColor.GRAY, false, Collections.emptyList()),
-      new PlayerDashboard(PlayerColor.YELLOW, false, Collections.emptyList()),
-      new PlayerDashboard(PlayerColor.CYAN, false, Collections.emptyList())
+      new PlayerDashboard(PlayerColor.GREEN, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.GRAY, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.YELLOW, Collections.emptyList()),
+      new PlayerDashboard(PlayerColor.CYAN, Collections.emptyList())
     );
   }
 
   public static GameModel generateModel() {
-    return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards());
+    return new GameModel(8, build3x3Dashboard(), generate3PlayerDashboards(), true);
   }
 
   public static GameModel generateModelWith4Players() {
-    return new GameModel(8, build3x3Dashboard(), generate4PlayerDashboards());
+    return new GameModel(8, build3x3Dashboard(), generate4PlayerDashboards(), true);
   }
 }

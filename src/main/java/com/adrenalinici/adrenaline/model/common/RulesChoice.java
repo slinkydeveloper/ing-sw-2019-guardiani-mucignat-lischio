@@ -10,13 +10,13 @@ public enum RulesChoice {
   SIMPLE {
     @Override
     public GameModel generate(Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
-      return new GameModel(5, dashboard, playerDashboards); //TODO frenzy or not
+      return new GameModel(5, dashboard, playerDashboards, false);
     }
   },
   COMPLETE {
     @Override
     public GameModel generate(Dashboard dashboard, List<PlayerDashboard> playerDashboards) {
-      return new GameModel(8, dashboard, playerDashboards); //TODO frenzy or not
+      return new GameModel(8, dashboard, playerDashboards, true);
     }
   };
 

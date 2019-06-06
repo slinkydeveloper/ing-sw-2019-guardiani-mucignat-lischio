@@ -41,8 +41,6 @@ public class ElectroscytheTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.CYAN);
 
-    model.getPlayerDashboard(PlayerColor.GRAY).addDamages(Collections.nCopies(10, PlayerColor.GREEN));
-
     PlayerDashboard killerPlayerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     killerPlayerDashboard.addGun(gunId());
 
@@ -60,11 +58,9 @@ public class ElectroscytheTest extends BaseGunTest {
     assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
       .containsExactly(PlayerColor.GREEN);
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
-      .isEqualTo(Collections.nCopies(11, PlayerColor.GREEN));
+      .containsExactly(PlayerColor.GREEN);
 
     assertThat(model.getPlayerDashboard(PlayerColor.CYAN).getDamages().isEmpty()).isTrue();
-
-    assertThat(context.getKilledPlayers()).containsExactly(PlayerColor.GRAY);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))
@@ -87,8 +83,6 @@ public class ElectroscytheTest extends BaseGunTest {
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.CYAN);
 
-    model.getPlayerDashboard(PlayerColor.GRAY).addDamages(Collections.nCopies(9, PlayerColor.GREEN));
-
     PlayerDashboard killerPlayerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     killerPlayerDashboard.addGun(gunId());
 
@@ -108,11 +102,9 @@ public class ElectroscytheTest extends BaseGunTest {
     assertThat(model.getPlayerDashboard(PlayerColor.YELLOW).getDamages())
       .isEqualTo(Collections.nCopies(2, PlayerColor.GREEN));
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
-      .isEqualTo(Collections.nCopies(11, PlayerColor.GREEN));
+      .isEqualTo(Collections.nCopies(2, PlayerColor.GREEN));
 
     assertThat(model.getPlayerDashboard(PlayerColor.CYAN).getDamages().isEmpty()).isTrue();
-
-    assertThat(context.getKilledPlayers()).containsExactly(PlayerColor.GRAY);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY))

@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.controller.guns;
 
 import com.adrenalinici.adrenaline.controller.ControllerFlowContext;
-import com.adrenalinici.adrenaline.controller.GunFactory;
 import com.adrenalinici.adrenaline.controller.GunLoader;
 import com.adrenalinici.adrenaline.controller.nodes.TestControllerFlowContext;
 import com.adrenalinici.adrenaline.flow.FlowNode;
@@ -17,7 +16,6 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -40,7 +38,7 @@ public abstract class BaseGunTest {
 
   @Before
   public void setUp() {
-    this.model = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate4PlayerDashboards());
+    this.model = new GameModel(8, TestUtils.build3x3Dashboard(), TestUtils.generate4PlayerDashboards(), true);
     this.endCalled = new AtomicBoolean(false);
 
     List<FlowNode> nodes = new ArrayList<>();

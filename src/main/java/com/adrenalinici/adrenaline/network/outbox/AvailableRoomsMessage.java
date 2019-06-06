@@ -13,13 +13,9 @@ public class AvailableRoomsMessage implements OutboxMessage {
     this.rooms = rooms;
   }
 
-  public Set<CellColor> getRooms() {
-    return this.rooms;
-  }
+  public Set<CellColor> getRooms() { return this.rooms; }
 
   @Override
-  public void onAvailableRoomsMessage(Consumer<AvailableRoomsMessage> c) {
-    c.accept(this);
-  }
+  public void onAvailableRoomsMessage(Consumer<AvailableRoomsMessage> c) { c.accept(this); }
 
 }
