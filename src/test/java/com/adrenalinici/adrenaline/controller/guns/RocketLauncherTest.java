@@ -45,7 +45,7 @@ public class RocketLauncherTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
@@ -73,14 +73,14 @@ public class RocketLauncherTest extends BaseGunTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(0, 1), PlayerColor.GRAY),
+      new EnemyMovementChosenEvent(Position.of(1, 2), PlayerColor.GRAY),
       viewMock
     );
 
-    assertThat(model.getPlayerPosition(PlayerColor.GRAY)).isEqualTo(Position.of(0, 1));
+    assertThat(model.getPlayerPosition(PlayerColor.GRAY)).isEqualTo(Position.of(1, 2));
     assertThat(receivedModelEvents)
-      .haveExactly(1, isDashboardCellUpdatedEvent(0, 2))
-      .haveExactly(1, isDashboardCellUpdatedEvent(0, 1));
+      .haveExactly(1, isDashboardCellUpdatedEvent(1, 1))
+      .haveExactly(1, isDashboardCellUpdatedEvent(1, 2));
 
     assertThat(playerDashboard.getLoadedGuns()).isEmpty();
 
@@ -152,8 +152,8 @@ public class RocketLauncherTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
@@ -194,7 +194,7 @@ public class RocketLauncherTest extends BaseGunTest {
       .containsOnly(AmmoColor.RED);
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(0, 2), PlayerColor.YELLOW),
+      new EnemyMovementChosenEvent(Position.of(1, 2), PlayerColor.YELLOW),
       viewMock
     );
 
@@ -211,8 +211,8 @@ public class RocketLauncherTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
@@ -261,7 +261,7 @@ public class RocketLauncherTest extends BaseGunTest {
 
     assertThat(model.getPlayerPosition(PlayerColor.YELLOW)).isEqualTo(Position.of(1, 2));
     assertThat(receivedModelEvents)
-      .haveExactly(1, isDashboardCellUpdatedEvent(0, 2))
+      .haveExactly(1, isDashboardCellUpdatedEvent(1, 1))
       .haveExactly(1, isDashboardCellUpdatedEvent(1, 2));
 
     context.handleEvent(new MovementChosenEvent(Position.of(1, 0)), viewMock);

@@ -36,9 +36,9 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
-    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.CYAN);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.CYAN);
 
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
     context.nextPhase(viewMock,
@@ -63,8 +63,8 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
 
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
@@ -95,8 +95,8 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
     model.getPlayerDashboard(PlayerColor.GREEN).addAmmo(AmmoColor.BLUE);
     assertThat(model.getDashboard().calculateIfVisible(Position.of(2, 2), Position.of(2, 1)))

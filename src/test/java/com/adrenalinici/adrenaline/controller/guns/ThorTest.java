@@ -42,7 +42,7 @@ public class ThorTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
@@ -81,8 +81,8 @@ public class ThorTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
@@ -125,8 +125,8 @@ public class ThorTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
     model.getPlayerDashboard(PlayerColor.GREEN).addAmmo(AmmoColor.BLUE);
 
@@ -176,8 +176,8 @@ public class ThorTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
     model.getPlayerDashboard(PlayerColor.GREEN).addAmmo(AmmoColor.BLUE);
 

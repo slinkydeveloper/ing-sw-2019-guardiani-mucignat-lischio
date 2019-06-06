@@ -7,9 +7,9 @@ import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseAlternativeEffect
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
 import com.adrenalinici.adrenaline.flow.FlowNode;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
-import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
 import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.event.ModelEvent;
+import com.adrenalinici.adrenaline.model.fat.PlayerDashboard;
 import com.adrenalinici.adrenaline.view.event.AlternativeGunEffectChosenEvent;
 import com.adrenalinici.adrenaline.view.event.PlayerChosenEvent;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class ZX2Test extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
 
@@ -80,9 +80,9 @@ public class ZX2Test extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.YELLOW);
-    model.getDashboard().getDashboardCell(Position.of(2, 0)).addPlayer(PlayerColor.CYAN);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.CYAN);
 
     PlayerDashboard playerDashboard = model.getPlayerDashboard(PlayerColor.GREEN);
     playerDashboard.addGun("zx2");

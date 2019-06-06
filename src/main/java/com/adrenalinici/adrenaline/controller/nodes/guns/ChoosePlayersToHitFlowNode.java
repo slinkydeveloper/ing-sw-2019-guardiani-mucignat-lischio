@@ -79,7 +79,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .filter(notIn(context.getKilledPlayers()))
             .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
             .filter(newEnemy ->
-              model.getDashboard().calculateIfVisible(model.getPlayerPosition(newEnemy), model.getPlayerPosition(previousEnemy))
+              model.getDashboard().calculateIfVisible(model.getPlayerPosition(previousEnemy), model.getPlayerPosition(newEnemy))
             )
             .collect(Collectors.toList());
 
