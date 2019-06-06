@@ -43,4 +43,6 @@ public interface OutboxMessage extends Serializable {
 
   default void onAvailableMatchesMessage(Consumer<AvailableMatchesMessage> c) {}
 
+  default void onInfoMessage(Consumer<InfoMessage> c) {
+  }
 }

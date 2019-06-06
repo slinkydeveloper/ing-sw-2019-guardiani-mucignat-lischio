@@ -7,6 +7,7 @@ import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
+import com.adrenalinici.adrenaline.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.view.BaseClientGameView;
 import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
 import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
@@ -43,6 +44,11 @@ public class CliMain extends BaseClientGameView {
     }
     System.out.println(String.format("Transport %s to %s:%d initialized", transport, host, port));
     networkAdapter.run();
+  }
+
+  @Override
+  public void showInfoMessage(String information, InfoType infoType) {
+    System.out.println(infoType.name() + ":" + information);
   }
 
   @Override
