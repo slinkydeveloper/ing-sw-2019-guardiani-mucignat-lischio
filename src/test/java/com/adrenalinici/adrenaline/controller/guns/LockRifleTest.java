@@ -2,7 +2,6 @@ package com.adrenalinici.adrenaline.controller.guns;
 
 import com.adrenalinici.adrenaline.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.controller.GunLoader;
-import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowState;
 import com.adrenalinici.adrenaline.controller.nodes.guns.BaseEffectGunFlowStateImpl;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChooseBaseEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.controller.nodes.guns.ChoosePlayersToHitFlowNode;
@@ -43,7 +42,7 @@ public class LockRifleTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.CYAN);
 
@@ -86,8 +85,8 @@ public class LockRifleTest extends BaseGunTest {
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 0)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.CYAN);
 
 

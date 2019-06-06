@@ -53,8 +53,7 @@ public class ChooseRoomToHitFlowNodeTest extends BaseNodeTest {
     assertThat(roomsCaptor.getValue())
       .containsOnly(
         CellColor.YELLOW,
-        CellColor.GRAY,
-        CellColor.RED
+        CellColor.GRAY
       );
 
     context.handleEvent(new RoomChosenEvent(CellColor.YELLOW), viewMock);

@@ -1,10 +1,10 @@
 package com.adrenalinici.adrenaline.model;
 
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.Dashboard;
 import com.adrenalinici.adrenaline.model.fat.DashboardCell;
 import com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType;
-import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.testutil.TestUtils;
 import org.junit.Test;
 
@@ -144,17 +144,21 @@ public class DashboardTest {
 
   @Test
   public void testCalculateIfVisible() {
-    Dashboard d = TestUtils.build3x3DashboardWithWalls();
+    Dashboard d = TestUtils.build3x3Dashboard();
 
     assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(0, 1))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(1, 1))).isTrue();
     assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(0, 2))).isFalse();
-    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(1, 0))).isTrue();
-    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(2, 0))).isFalse();
-    assertThat(d.calculateIfVisible(Position.of(0, 0), Position.of(1, 1))).isFalse();
-    assertThat(d.calculateIfVisible(Position.of(0, 2), Position.of(0, 1))).isFalse();
-    assertThat(d.calculateIfVisible(Position.of(1, 2), Position.of(1, 0))).isFalse();
-    assertThat(d.calculateIfVisible(Position.of(2, 0), Position.of(1, 0))).isFalse();
-    assertThat(d.calculateIfVisible(Position.of(0, 2), Position.of(0, 2))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(1, 0), Position.of(0, 0))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(1, 0), Position.of(0, 1))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(1, 0), Position.of(2, 2))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(1, 0), Position.of(1, 2))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(1, 2), Position.of(2, 0))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(2, 1), Position.of(2, 0))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(2, 1), Position.of(2, 0))).isTrue();
+    assertThat(d.calculateIfVisible(Position.of(2, 1), Position.of(1, 2))).isFalse();
+    assertThat(d.calculateIfVisible(Position.of(2, 2), Position.of(0, 2))).isTrue();
+
 
   }
 

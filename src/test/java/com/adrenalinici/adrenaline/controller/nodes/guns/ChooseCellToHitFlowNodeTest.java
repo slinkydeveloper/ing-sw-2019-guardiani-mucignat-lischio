@@ -87,10 +87,8 @@ public class ChooseCellToHitFlowNodeTest extends BaseNodeTest {
       .containsOnly(
         new Position(0, 0),
         new Position(0, 1),
-        new Position(0, 2),
         new Position(1, 0),
-        new Position(2, 0)
-
+        new Position(1, 1)
       );
 
     context.handleEvent(new CellToHitChosenEvent(Position.of(0, 1)), viewMock);

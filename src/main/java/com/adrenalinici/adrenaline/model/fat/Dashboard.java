@@ -247,51 +247,34 @@ public class Dashboard {
     return Arrays.stream(dashboardCells).flatMap(Arrays::stream).filter(Objects::nonNull);
   }
 
+  /**
+   * This method calculates if a cell is visible from a certain position
+   *
+   * @param from starting position
+   * @param to   target position
+   * @return
+   */
   public boolean calculateIfVisible(Position from, Position to) {
-    if (from.equals(to)) return true;
+    if (this.getDashboardCell(from).getCellColor() == this.getDashboardCell(to).getCellColor())
+      return true;
 
-    List<DashboardCell> walled;
-    if (from.line() == to.line()) {
-      if (from.cell() < to.cell()) {
-        walled = stream()
-          .filter(dashboardCell ->
-            dashboardCell.getLine() == from.line() &&
-              dashboardCell.hasEastWall() &&
-              dashboardCell.getCell() >= from.cell() &&
-              dashboardCell.getCell() < to.cell()
-          ).collect(Collectors.toList());
-        return walled.isEmpty();
-      } else {
-        walled = stream()
-          .filter(dashboardCell ->
-            dashboardCell.getLine() == from.line() &&
-              dashboardCell.hasWestWall() &&
-              dashboardCell.getCell() <= from.cell() &&
-              dashboardCell.getCell() > to.cell()
-          ).collect(Collectors.toList());
-        return walled.isEmpty();
-      }
-    } else if (from.cell() == to.cell()) {
-      if (from.line() < to.line()) {
-        walled = stream()
-          .filter(dashboardCell ->
-            dashboardCell.getCell() == from.cell() &&
-              dashboardCell.hasSouthWall() &&
-              dashboardCell.getLine() >= from.line() &&
-              dashboardCell.getLine() < to.line()
-          ).collect(Collectors.toList());
-        return walled.isEmpty();
-      } else {
-        walled = stream()
-          .filter(dashboardCell ->
-            dashboardCell.getCell() == from.cell() &&
-              dashboardCell.hasNorthWall() &&
-              dashboardCell.getLine() <= from.line() &&
-              dashboardCell.getLine() > to.line()
-          ).collect(Collectors.toList());
-        return walled.isEmpty();
-      }
-    } else return false;
+    if (this.getDashboardCell(from).getNorthDashboardCellBoundType().equals(DOOR) &&
+      this.getDashboardCell(from).getNorthDashboardCell().getCellColor() == this.getDashboardCell(to).getCellColor()
+    ) return true;
+
+    if (this.getDashboardCell(from).getEastDashboardCellBoundType().equals(DOOR) &&
+      this.getDashboardCell(from).getEastDashboardCell().getCellColor() == this.getDashboardCell(to).getCellColor()
+    ) return true;
+
+    if (this.getDashboardCell(from).getSouthDashboardCellBoundType().equals(DOOR) &&
+      this.getDashboardCell(from).getSouthDashboardCell().getCellColor() == this.getDashboardCell(to).getCellColor()
+    ) return true;
+
+    if (this.getDashboardCell(from).getWestDashboardCellBoundType().equals(DOOR) &&
+      this.getDashboardCell(from).getWestDashboardCell().getCellColor() == this.getDashboardCell(to).getCellColor()
+    ) return true;
+
+    return false;
   }
 
   public int calculateDistance(Position from, Position to) {
