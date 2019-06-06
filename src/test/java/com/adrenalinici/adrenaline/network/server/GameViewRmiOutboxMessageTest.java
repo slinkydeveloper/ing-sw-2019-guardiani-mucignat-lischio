@@ -12,8 +12,7 @@ import java.util.Set;
 
 import static com.adrenalinici.adrenaline.network.outbox.OutboxMockData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest {
@@ -231,6 +230,8 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showInfoMessageERROR() throws IOException, InterruptedException {
+    reset(mockedClientView);
+
     mockedClientView.sendStartNewMatch("test-match", DashboardChoice.SMALL, PlayersChoice.THREE, RulesChoice.SIMPLE);
 
     sleep(2);
