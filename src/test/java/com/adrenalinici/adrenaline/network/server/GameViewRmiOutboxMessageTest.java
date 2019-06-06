@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.network.server;
 
 import com.adrenalinici.adrenaline.model.common.*;
+import com.adrenalinici.adrenaline.network.outbox.InfoType;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -11,8 +12,7 @@ import java.util.Set;
 
 import static com.adrenalinici.adrenaline.network.outbox.OutboxMockData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
 public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest {
@@ -226,6 +226,22 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
     verify(mockedClientView, times(1)).showAvailableCellsToHit(cellsCaptor.capture());
 
     assertThat(cellsCaptor.getValue()).isEqualTo(CELLS);
+  }
+
+  @Test
+  public void showInfoMessageERROR() throws IOException, InterruptedException {
+    reset(mockedClientView);
+
+    mockedClientView.sendStartNewMatch("test-match", DashboardChoice.SMALL, PlayersChoice.THREE, RulesChoice.SIMPLE);
+
+    sleep(2);
+
+    ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
+    ArgumentCaptor<InfoType> infoTypeCaptor = ArgumentCaptor.forClass(InfoType.class);
+    verify(mockedClientView, times(1))
+      .showInfoMessage(stringCaptor.capture(), infoTypeCaptor.capture());
+
+    assertThat(infoTypeCaptor.getValue()).isEqualTo(InfoType.ERROR);
   }
 
 }

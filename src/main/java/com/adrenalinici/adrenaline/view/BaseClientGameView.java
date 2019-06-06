@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.network.inbox.ChosenMatchMessage;
 import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.network.inbox.NewMatchMessage;
 import com.adrenalinici.adrenaline.network.inbox.ViewEventMessage;
+import com.adrenalinici.adrenaline.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.util.Observable;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
@@ -25,6 +26,8 @@ public abstract class BaseClientGameView extends Observable<InboxMessage> implem
     this.myPlayer = color;
     notifyEvent(new ChosenMatchMessage(matchId, color));
   }
+
+  public abstract void showInfoMessage(String information, InfoType infoType);
 
   public abstract void showAvailableMatchesAndPlayers(Map<String, Set<PlayerColor>> matches);
 
