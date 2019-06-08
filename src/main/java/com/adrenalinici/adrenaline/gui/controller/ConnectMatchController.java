@@ -138,7 +138,7 @@ public class ConnectMatchController {
     // TODO on ok go to game scene
     // TODO on fail open an alert
     if (message.getInfoType() != InfoType.ERROR) {
-      moveToGameScene();
+      //moveToGameScene();
     } else {
       ErrorUtils.showErrorAlert("Game connection error", message.getInformation());
     }

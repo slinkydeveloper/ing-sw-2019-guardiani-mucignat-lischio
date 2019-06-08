@@ -23,6 +23,7 @@ public class CliMain extends BaseCliGameView {
 
     if (args.length < 3) {
       System.err.println("Usage: adrenaline-cli socket|rmi HOST PORT");
+      System.exit(0);
     }
 
     String transport = args[0];
