@@ -25,12 +25,14 @@ public class GameBootstrapper {
   private ServerMessageRouter serverMessageRouter;
   private Thread serverMessageRouterThread;
 
-  private int rmiPort;
-  private int socketPort;
+  private final int rmiPort;
+  private final int socketPort;
+  private final long turnTimerSeconds;
 
-  public GameBootstrapper(int rmiPort, int socketPort) {
+  public GameBootstrapper(int rmiPort, int socketPort, long turnTimerSeconds) {
     this.rmiPort = rmiPort;
     this.socketPort = socketPort;
+    this.turnTimerSeconds = turnTimerSeconds;
   }
 
   public void start() throws IOException {
@@ -38,7 +40,7 @@ public class GameBootstrapper {
     this.outboxRmi = new LinkedBlockingQueue<>();
     this.outboxSocket = new LinkedBlockingQueue<>();
 
-    this.serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket);
+    this.serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket, turnTimerSeconds);
 
     this.serverMessageRouterThread = new Thread(serverMessageRouter, "message-router");
 

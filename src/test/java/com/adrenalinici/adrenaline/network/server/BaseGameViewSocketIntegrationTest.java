@@ -50,7 +50,7 @@ public class BaseGameViewSocketIntegrationTest {
     BlockingQueue<OutboxEntry> outboxRmi = new LinkedBlockingQueue<>();
     BlockingQueue<OutboxEntry> outboxSocket = new LinkedBlockingQueue<>();
 
-    serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket);
+    serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket, 3000);
     serverMessageRouterThread = new Thread(serverMessageRouter, "server-message-router-test");
 
     serverNetworkAdapter = new SocketServerNetworkAdapter(inbox, outboxSocket, 4000);

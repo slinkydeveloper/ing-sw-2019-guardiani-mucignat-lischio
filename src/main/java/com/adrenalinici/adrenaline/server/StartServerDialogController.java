@@ -43,7 +43,8 @@ public class StartServerDialogController {
       TextAreaLogAppenderController controller = loader.getController();
       GameBootstrapper bootstrapper = new GameBootstrapper(
         rmiPort,
-        socketPort
+        socketPort,
+        Long.parseLong(System.getProperty("turnTimeout", "240"))
       );
       controller.setBootstrapper(bootstrapper);
       bootstrapper.start();

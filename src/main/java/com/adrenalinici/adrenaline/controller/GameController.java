@@ -47,6 +47,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   public void onEvent(DecoratedEvent<ViewEvent, GameView> event) {
     if (event.getInnerEvent().isStartMatchEvent()) {
       startMatch(event.getEventSource());
+    } else if (event.getInnerEvent().isExpiredTurnEvent()) {
+      this.endTurnCallback(event.getEventSource());
     } else {
       flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
     }

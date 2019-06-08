@@ -22,7 +22,7 @@ public class ServerMessageRouter implements Runnable {
 
   public ServerMessageRouter(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxEntry> outboxRmi, BlockingQueue<OutboxEntry> outboxSocket) {
     this.inbox = inbox;
-    this.context = new ServerContext(outboxRmi, outboxSocket);
+    this.context = new ServerContext(inbox, outboxRmi, outboxSocket);
     this.handlers = new HashMap<>();
   }
 
@@ -63,12 +63,12 @@ public class ServerMessageRouter implements Runnable {
     return context;
   }
 
-  public static ServerMessageRouter createWithHandlers(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxEntry> outboxRmi, BlockingQueue<OutboxEntry> outboxSocket) {
+  public static ServerMessageRouter createWithHandlers(BlockingQueue<InboxEntry> inbox, BlockingQueue<OutboxEntry> outboxRmi, BlockingQueue<OutboxEntry> outboxSocket, long turnTimeout) {
     return new ServerMessageRouter(inbox, outboxRmi, outboxSocket)
       .withHandler(ChosenMatchMessage.class, new ChosenMatchMessageHandler())
       .withHandler(ConnectedPlayerMessage.class, new ConnectedPlayerMessageHandler())
       .withHandler(DisconnectedPlayerMessage.class, new DisconnectedPlayerMessageHandler())
-      .withHandler(NewMatchMessage.class, new NewMatchMessageHandler())
+      .withHandler(NewMatchMessage.class, new NewMatchMessageHandler(turnTimeout))
       .withHandler(ViewEventMessage.class, new ViewEventMessageHandler());
   }
 }
