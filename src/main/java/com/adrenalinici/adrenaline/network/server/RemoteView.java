@@ -59,8 +59,8 @@ public class RemoteView extends BaseRemoteView {
   }
 
   @Override
-  public void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements) {
-    broadcast(new ChoosePlayerToMoveMessage(availableMovements));
+  public void showChoosePlayerToMoveNewton(Map<PlayerColor, List<Position>> availableMovements) {
+    broadcast(new ChoosePlayerToMoveNewtonMessage(availableMovements));
   }
 
   @Override

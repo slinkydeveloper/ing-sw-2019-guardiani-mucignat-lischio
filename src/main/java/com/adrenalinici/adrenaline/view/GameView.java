@@ -28,7 +28,7 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showChoosePlayerToHit(List<PlayerColor> players);
 
-  void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements);
+  void showChoosePlayerToMoveNewton(Map<PlayerColor, List<Position>> availableMovements);
 
   void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect);
 

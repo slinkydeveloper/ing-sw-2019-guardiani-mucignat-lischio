@@ -142,7 +142,7 @@ public class CliMain extends BaseCliGameView {
   }
 
   @Override
-  public void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements) {
+  public void showChoosePlayerToMoveNewton(Map<PlayerColor, List<Position>> availableMovements) {
 
   }
 

@@ -140,12 +140,12 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
 
   @Test
   public void showChoosePlayerToMoveTest() throws IOException, InterruptedException {
-    remoteView.showChoosePlayerToMove(AVAILABLE_MOVEMENTS);
+    remoteView.showChoosePlayerToMoveNewton(AVAILABLE_MOVEMENTS);
 
     sleep();
 
     ArgumentCaptor<Map<PlayerColor, List<Position>>> availableMovementsCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(mockedClientView, times(1)).showChoosePlayerToMove(availableMovementsCaptor.capture());
+    verify(mockedClientView, times(1)).showChoosePlayerToMoveNewton(availableMovementsCaptor.capture());
 
     assertThat(availableMovementsCaptor.getValue()).isEqualTo(AVAILABLE_MOVEMENTS);
   }

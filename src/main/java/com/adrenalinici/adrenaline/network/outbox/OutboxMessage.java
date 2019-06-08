@@ -23,7 +23,7 @@ public interface OutboxMessage extends Serializable {
 
   default void onChoosePlayerToHitMessage(Consumer<ChoosePlayerToHitMessage> c) {}
 
-  default void onChoosePlayerToMoveMessage(Consumer<ChoosePlayerToMoveMessage> c) {}
+  default void onChoosePlayerToMoveMessage(Consumer<ChoosePlayerToMoveNewtonMessage> c) {}
 
   default void onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage> c) {}
 
