@@ -7,10 +7,7 @@ import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.socket.SocketClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.outbox.InfoType;
-import com.adrenalinici.adrenaline.view.event.ActionChosenEvent;
-import com.adrenalinici.adrenaline.view.event.MovementChosenEvent;
-import com.adrenalinici.adrenaline.view.event.NewTurnEvent;
-import com.adrenalinici.adrenaline.view.event.PowerUpCardChosenEvent;
+import com.adrenalinici.adrenaline.view.event.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
