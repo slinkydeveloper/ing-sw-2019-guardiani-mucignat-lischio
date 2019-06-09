@@ -124,6 +124,16 @@ public class GameModel extends ObservableImpl<ModelEvent> {
       );
   }
 
+  /**
+   * Removes power up from player, then fires a {@link PlayerDashboardUpdatedEvent}
+   */
+  public void removePowerUpFromPlayer(PlayerColor player, PowerUpCard card) {
+    if (this.getPlayerDashboard(player).removePowerUpCard(card)) {
+      this.powerUpsDeck().addCard(card);
+      notifyEvent(new PlayerDashboardUpdatedEvent(this, player));
+    }
+  }
+
   public void acquireGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addGun(chosenGun.getId());

@@ -194,8 +194,8 @@ public class PlayerDashboard {
     } else throw new IllegalStateException("You can't have more than 3 PowerUpCards");
   }
 
-  public void removePowerUpCard(PowerUpCard powerUp) {
-    powerUpCards.remove(powerUp);
+  public boolean removePowerUpCard(PowerUpCard powerUp) {
+    return powerUpCards.remove(powerUp);
   }
 
   public List<PowerUpCard> getPowerUpCards() {
