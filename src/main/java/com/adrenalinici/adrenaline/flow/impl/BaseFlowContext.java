@@ -26,10 +26,6 @@ public abstract class BaseFlowContext implements FlowContext {
 
   private int actualIndex;
 
-  public BaseFlowContext(FlowOrchestrator orchestrator) {
-    this(orchestrator, Collections.emptyList());
-  }
-
   public BaseFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
     this(orchestrator, initialPhases, Collections.emptyList());
   }
@@ -119,9 +115,11 @@ public abstract class BaseFlowContext implements FlowContext {
     } else {
       this.actualNode.handleEvent(event, actualState, view, getOrchestrator().getModel(), this);
     }
-    this.additionalNodesToExecuteAlways.forEach(n ->
-      this.getOrchestrator().resolveNode(n).handleEvent(event, actualState, view, getOrchestrator().getModel(), this)
-    );
+    if (additionalNodesToExecuteAlways != null) {
+      this.additionalNodesToExecuteAlways.forEach(n ->
+        this.getOrchestrator().resolveNode(n).handleEvent(event, actualState, view, getOrchestrator().getModel(), this)
+      );
+    }
   }
 
   public List<String> getPhasesQueue() {

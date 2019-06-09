@@ -18,7 +18,8 @@ public enum ControllerNodes {
   CHOOSE_CELL,
   APPLY_GRENADE_LAUNCHER,
   ALTERNATIVE_GUN_MOVEMENT,
-  APPLY_TELEPORT;
+  APPLY_TELEPORT,
+  APPLY_NEWTON;
 
   public static String movement(int distance) {
     return "movement_" + distance;

@@ -99,7 +99,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   private void startNewTurn(GameView view, PlayerColor player) {
     this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
       this.flowOrchestrator,
-      Collections.singletonList(ControllerNodes.START_TURN.name())
+      Collections.singletonList(ControllerNodes.START_TURN.name()),
+      ALWAYS_LOADED_NODES
     ).setTurnOfPlayer(player));
     if (view != null) view.showNextTurn(player);
   }
@@ -142,11 +143,15 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       new GunChooseEnemyMovementFlowNode(1),
       new GunChooseEnemyMovementFlowNode(2),
       new ChooseRoomToHitFlowNode(),
-      new ChooseCellToHitFlowNode()
+      new ChooseCellToHitFlowNode(),
+      new ApplyNewtonFlowNode(),
+      new ApplyTeleporterFlowNode()
     ));
     nodes.addAll(GunLoader.INSTANCE.getAllAdditionalNodes());
     return nodes;
   }
+
+  public static final List<String> ALWAYS_LOADED_NODES = Arrays.asList(ControllerNodes.APPLY_TELEPORT.name(), ControllerNodes.APPLY_NEWTON.name());
 
   public GameModel getGameModel() {
     return gameModel;

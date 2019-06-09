@@ -15,12 +15,12 @@ public class ControllerFlowContext extends BaseFlowContext {
   private boolean isFrenzyMode;
   private boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode;
 
-  public ControllerFlowContext(FlowOrchestrator orchestrator) {
-    this(orchestrator, null);
+  public ControllerFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
+    this(orchestrator, initialPhases, null);
   }
 
-  public ControllerFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases) {
-    super(orchestrator, initialPhases);
+  public ControllerFlowContext(FlowOrchestrator orchestrator, List<String> initialPhases, List<String> additionalNodesToExecuteAlways) {
+    super(orchestrator, initialPhases, additionalNodesToExecuteAlways);
     this.killedPlayers = new ArrayList<>();
     this.isFrenzyMode = false;
     this.isFirstPlayerOrAfterFirstPlayerInFrenzyMode = false;

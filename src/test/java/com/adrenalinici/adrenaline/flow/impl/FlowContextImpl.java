@@ -5,9 +5,6 @@ import com.adrenalinici.adrenaline.flow.FlowOrchestrator;
 import java.util.List;
 
 public class FlowContextImpl extends BaseFlowContext {
-  public FlowContextImpl(FlowOrchestrator orchestrator) {
-    super(orchestrator);
-  }
 
   public FlowContextImpl(FlowOrchestrator orchestrator, List<String> initialPhases) {
     super(orchestrator, initialPhases);
