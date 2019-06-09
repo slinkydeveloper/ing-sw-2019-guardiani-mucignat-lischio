@@ -13,17 +13,11 @@ public interface OutboxMessage extends Serializable {
 
   default void onReloadableGunsMessage(Consumer<ReloadableGunsMessage> c) {}
 
-  default void onLoadedGunsMessage(Consumer<LoadedGunsMessage> c) {}
-
-  default void onBaseGunExtraEffectsMessage(Consumer<BaseGunExtraEffectsMessage> c) {}
-
   default void onAvailablePowerUpCardsForRespawnMessage(Consumer<AvailablePowerUpCardsForRespawnMessage> c) {}
 
   default void onAvailableAlternativeEffectsGunMessage(Consumer<AvailableAlternativeEffectsGunMessage> c) {}
 
   default void onChoosePlayerToHitMessage(Consumer<ChoosePlayerToHitMessage> c) {}
-
-  default void onChoosePlayerToMoveMessage(Consumer<ChoosePlayerToMoveNewtonMessage> c) {}
 
   default void onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage> c) {}
 

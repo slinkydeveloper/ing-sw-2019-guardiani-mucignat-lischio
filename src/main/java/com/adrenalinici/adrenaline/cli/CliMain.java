@@ -110,16 +110,6 @@ public class CliMain extends BaseCliGameView {
   }
 
   @Override
-  public void showLoadedGuns(Set<String> guns) {
-
-  }
-
-  @Override
-  public void showBaseGunExtraEffects(List<Effect> effects) {
-
-  }
-
-  @Override
   public void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards) {
     if (player.equals(getMyPlayer())) {
       System.out.println(
@@ -138,11 +128,6 @@ public class CliMain extends BaseCliGameView {
 
   @Override
   public void showChoosePlayerToHit(List<PlayerColor> players) {
-
-  }
-
-  @Override
-  public void showChoosePlayerToMoveNewton(Map<PlayerColor, List<Position>> availableMovements) {
 
   }
 

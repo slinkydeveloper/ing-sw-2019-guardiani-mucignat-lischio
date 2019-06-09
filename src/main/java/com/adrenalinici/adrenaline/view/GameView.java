@@ -18,17 +18,11 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showReloadableGuns(Set<String> guns);
 
-  void showLoadedGuns(Set<String> guns);
-
-  void showBaseGunExtraEffects(List<Effect> effects);
-
   void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards);
 
   void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect);
 
   void showChoosePlayerToHit(List<PlayerColor> players);
-
-  void showChoosePlayerToMoveNewton(Map<PlayerColor, List<Position>> availableMovements);
 
   void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect);
 

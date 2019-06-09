@@ -49,6 +49,4 @@ public interface ViewEvent extends Serializable {
 
   default void onUseNewtonEvent(Consumer<UseNewtonEvent> consumer) {
   }
-
-  default void onUseNewtonPositionEvent(Consumer<UseNewtonPositionEvent> consumer) {}
 }
