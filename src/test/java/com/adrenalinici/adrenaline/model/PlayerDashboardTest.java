@@ -77,7 +77,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void removeAmmosIncludingPowerupsTest() {
-    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.NEWTON);
     PowerUpCard blueScope = new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW,
       Arrays.asList(blueKineticRay, blueScope));
@@ -90,7 +90,7 @@ public class PlayerDashboardTest {
 
   @Test
   public void removeAmmosIncludingPowerupsWithoutNeedOfPowerupsTest() {
-    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.NEWTON);
     PowerUpCard yellowScope = new PowerUpCard(AmmoColor.YELLOW, PowerUpType.SCOPE);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW,
       Arrays.asList(blueKineticRay, yellowScope));

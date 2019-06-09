@@ -13,14 +13,14 @@
   },
   {
     "color": "RED",
-    "type": "TELEPORT"
+    "type": "TELEPORTER"
   },
   {
     "color": "YELLOW",
-    "type": "TELEPORT"
+    "type": "TELEPORTER"
   },
   {
     "color": "BLUE",
-    "type": "TELEPORT"
+    "type": "TELEPORTER"
   }
 ]

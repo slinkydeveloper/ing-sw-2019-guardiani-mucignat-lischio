@@ -35,8 +35,8 @@ public class GameModelTest {
 
   @Test
   public void acquireGunUsingOnlyAmmosTest() {
-    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
-    PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.NEWTON);
+    PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORTER);
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redTeleport);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, powerUpCards);
     playerDashboard.addAmmo(AmmoColor.RED);
@@ -61,10 +61,10 @@ public class GameModelTest {
   @Test
   public void acquireGunUsingOnlyPowerupsTest() {
 
-    PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
-    PowerUpCard redKineticRay = new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY);
-    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
-    PowerUpCard blueTeleport = new PowerUpCard(AmmoColor.BLUE, PowerUpType.TELEPORT);
+    PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORTER);
+    PowerUpCard redKineticRay = new PowerUpCard(AmmoColor.RED, PowerUpType.NEWTON);
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.NEWTON);
+    PowerUpCard blueTeleport = new PowerUpCard(AmmoColor.BLUE, PowerUpType.TELEPORTER);
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redKineticRay, redTeleport, blueTeleport);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, powerUpCards);
     playerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE));
@@ -88,8 +88,8 @@ public class GameModelTest {
   @Test
   public void acquireGunUsingBothAmmosAndPowerupsTest() {
 
-    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.KINETIC_RAY);
-    PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORT);
+    PowerUpCard blueKineticRay = new PowerUpCard(AmmoColor.BLUE, PowerUpType.NEWTON);
+    PowerUpCard redTeleport = new PowerUpCard(AmmoColor.RED, PowerUpType.TELEPORTER);
     List<PowerUpCard> powerUpCards = Arrays.asList(blueKineticRay, redTeleport);
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.GREEN, powerUpCards);
     playerDashboard.addAmmo(AmmoColor.RED);
@@ -126,7 +126,7 @@ public class GameModelTest {
     PickupDashboardCell pickupDashboardCell = new PickupDashboardCell(OPEN, OPEN, OPEN, OPEN, CellColor.CYAN,0, 0, dashboard);
     pickupDashboardCell.setAmmoCard(ammoCard);
 
-    List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
+    List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.NEWTON), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, powerUpCards);
     List<PlayerDashboard> playerDashboardList = Arrays.asList(playerDashboard);
     GameModel gameModel = new GameModel(8, dashboard, playerDashboardList, true);
@@ -139,7 +139,7 @@ public class GameModelTest {
 
     assertThat(playerDashboard.getPowerUpCards())
     .contains(
-      new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY),
+      new PowerUpCard(AmmoColor.RED, PowerUpType.NEWTON),
       new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE)
     )
     .hasSize(3);
