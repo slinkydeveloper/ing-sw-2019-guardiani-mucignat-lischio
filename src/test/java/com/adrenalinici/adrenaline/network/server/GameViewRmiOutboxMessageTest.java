@@ -7,7 +7,6 @@ import org.mockito.ArgumentCaptor;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static com.adrenalinici.adrenaline.network.outbox.OutboxMockData.*;
@@ -75,30 +74,6 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
   }
 
   @Test
-  public void showLoadedGunsTest() throws IOException, InterruptedException {
-    remoteView.showLoadedGuns(GUNS);
-
-    sleep();
-
-    ArgumentCaptor<Set<String>> gunsCaptor = ArgumentCaptor.forClass(Set.class);
-    verify(mockedClientView, times(1)).showLoadedGuns(gunsCaptor.capture());
-
-    assertThat(gunsCaptor.getValue()).isEqualTo(GUNS);
-  }
-
-  @Test
-  public void showBaseGunExtraEffectsTest() throws IOException, InterruptedException {
-    remoteView.showBaseGunExtraEffects(EFFECTS);
-
-    sleep();
-
-    ArgumentCaptor<List<Effect>> effectsCaptor = ArgumentCaptor.forClass(List.class);
-    verify(mockedClientView, times(1)).showBaseGunExtraEffects(effectsCaptor.capture());
-
-    assertThat(effectsCaptor.getValue()).isEqualTo(EFFECTS);
-  }
-
-  @Test
   public void showAvailablePowerUpCardsForRespawnTest() throws IOException, InterruptedException {
     remoteView.showAvailablePowerUpCardsForRespawn(PLAYER, POWER_UP_CARDS);
 
@@ -136,18 +111,6 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
     verify(mockedClientView, times(1)).showChoosePlayerToHit(playersCaptor.capture());
 
     assertThat(playersCaptor.getValue()).isEqualTo(PLAYERS);
-  }
-
-  @Test
-  public void showChoosePlayerToMoveTest() throws IOException, InterruptedException {
-    remoteView.showChoosePlayerToMove(AVAILABLE_MOVEMENTS);
-
-    sleep();
-
-    ArgumentCaptor<Map<PlayerColor, List<Position>>> availableMovementsCaptor = ArgumentCaptor.forClass(Map.class);
-    verify(mockedClientView, times(1)).showChoosePlayerToMove(availableMovementsCaptor.capture());
-
-    assertThat(availableMovementsCaptor.getValue()).isEqualTo(AVAILABLE_MOVEMENTS);
   }
 
   @Test

@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class CellToHitChosenEvent implements ViewEvent {
-  private Position cellPosition;
+  private final Position cellPosition;
 
   public CellToHitChosenEvent(Position cellPosition) {
     this.cellPosition = cellPosition;
@@ -26,7 +26,7 @@ public class CellToHitChosenEvent implements ViewEvent {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     CellToHitChosenEvent that = (CellToHitChosenEvent) o;
-    return cellPosition == that.cellPosition;
+    return Objects.equals(cellPosition, that.cellPosition);
   }
 
   @Override

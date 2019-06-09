@@ -1,15 +1,15 @@
 package com.adrenalinici.adrenaline.network.server;
 
+import com.adrenalinici.adrenaline.cli.BaseCliGameView;
+import com.adrenalinici.adrenaline.cli.CliGameViewProxy;
 import com.adrenalinici.adrenaline.model.common.DashboardChoice;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
 import com.adrenalinici.adrenaline.model.common.PlayersChoice;
 import com.adrenalinici.adrenaline.model.common.RulesChoice;
-import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
 import com.adrenalinici.adrenaline.network.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
 import com.adrenalinici.adrenaline.network.outbox.OutboxEntry;
 import com.adrenalinici.adrenaline.network.server.rmi.RmiServerNetworkAdapter;
-import com.adrenalinici.adrenaline.view.BaseClientGameView;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,8 +29,9 @@ public class BaseGameViewRmiIntegrationTest {
   @Rule
   public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-  @Spy BaseClientGameView mockedClientView;
-  ClientViewProxy proxy;
+  @Spy
+  BaseCliGameView mockedClientView;
+  CliGameViewProxy proxy;
   Thread clientNetworkAdapter;
 
   RmiServerNetworkAdapter serverNetworkAdapter;
@@ -60,7 +61,7 @@ public class BaseGameViewRmiIntegrationTest {
 
     sleep(4);
 
-    proxy = new ClientViewProxy(mockedClientView);
+    proxy = new CliGameViewProxy(mockedClientView);
     clientNetworkAdapter = new Thread(new RmiClientNetworkAdapter(proxy, "localhost", 3001), "test-client-network-adapter");
     clientNetworkAdapter.start();
 

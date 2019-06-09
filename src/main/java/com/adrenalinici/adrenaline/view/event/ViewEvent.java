@@ -47,4 +47,10 @@ public interface ViewEvent extends Serializable {
 
   default void onCellToHitChosenEvent(Consumer<CellToHitChosenEvent> consumer) {
   }
+
+  default void onUseTeleporterEvent(Consumer<UseTeleporterEvent> consumer) {
+  }
+
+  default void onUseNewtonEvent(Consumer<UseNewtonEvent> consumer) {
+  }
 }

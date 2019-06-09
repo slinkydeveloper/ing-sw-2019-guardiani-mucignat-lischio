@@ -32,7 +32,7 @@ public class ReloadNodeFlowTest extends BaseNodeTest {
   @Test
   public void calculateAvailableGunsToReloadTest() {
     Dashboard dashboard = Dashboard.newBuilder().build();
-    List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.KINETIC_RAY), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
+    List<PowerUpCard> powerUpCards = Arrays.asList(new PowerUpCard(AmmoColor.RED, PowerUpType.NEWTON), new PowerUpCard(AmmoColor.BLUE, PowerUpType.SCOPE));
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, powerUpCards);
     Stream
       .of("test_revolver", "test_rifle", "test_sword")

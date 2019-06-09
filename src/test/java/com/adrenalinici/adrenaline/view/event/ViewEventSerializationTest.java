@@ -1,13 +1,10 @@
 package com.adrenalinici.adrenaline.view.event;
 
-import com.adrenalinici.adrenaline.model.common.Action;
-import com.adrenalinici.adrenaline.model.common.PlayerColor;
-import com.adrenalinici.adrenaline.model.common.Position;
+import com.adrenalinici.adrenaline.model.common.*;
 import com.adrenalinici.adrenaline.util.SerializationUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +22,12 @@ public class ViewEventSerializationTest {
       new BaseGunEffectChosenEvent(false, true),
       new GunChosenEvent("zx2"),
       new MovementChosenEvent(Position.of(10, 3)),
-      new PlayerChosenEvent(PlayerColor.YELLOW)
+      new PlayerChosenEvent(PlayerColor.YELLOW),
+      new CellToHitChosenEvent(Position.of(1, 2)),
+      new EnemyMovementChosenEvent(Position.of(1, 2), PlayerColor.GREEN),
+      new RoomChosenEvent(CellColor.CYAN),
+      new UseNewtonEvent(new PowerUpCard(AmmoColor.BLUE, PowerUpType.NEWTON), Position.of(1, 2), PlayerColor.YELLOW),
+      new UseTeleporterEvent(Position.of(1, 2), new PowerUpCard(AmmoColor.BLUE, PowerUpType.TELEPORTER))
     };
   }
 

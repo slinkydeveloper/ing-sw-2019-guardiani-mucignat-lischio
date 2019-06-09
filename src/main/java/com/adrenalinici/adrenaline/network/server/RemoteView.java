@@ -35,16 +35,6 @@ public class RemoteView extends BaseRemoteView {
   }
 
   @Override
-  public void showLoadedGuns(Set<String> guns) {
-    broadcast(new LoadedGunsMessage(guns));
-  }
-
-  @Override
-  public void showBaseGunExtraEffects(List<Effect> effects) {
-    broadcast(new BaseGunExtraEffectsMessage(effects));
-  }
-
-  @Override
   public void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards) {
     broadcast(new AvailablePowerUpCardsForRespawnMessage(player, powerUpCards));
   }
@@ -57,11 +47,6 @@ public class RemoteView extends BaseRemoteView {
   @Override
   public void showChoosePlayerToHit(List<PlayerColor> players) {
     broadcast(new ChoosePlayerToHitMessage(players));
-  }
-
-  @Override
-  public void showChoosePlayerToMove(Map<PlayerColor, List<Position>> availableMovements) {
-    broadcast(new ChoosePlayerToMoveMessage(availableMovements));
   }
 
   @Override

@@ -7,7 +7,7 @@ import com.adrenalinici.adrenaline.network.outbox.ModelEventMessage;
 import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.util.LogUtils;
-import com.adrenalinici.adrenaline.util.Observable;
+import com.adrenalinici.adrenaline.util.ObservableImpl;
 import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ExpiredTurnEvent;
 import com.adrenalinici.adrenaline.view.event.StartMatchEvent;
@@ -16,7 +16,7 @@ import com.adrenalinici.adrenaline.view.event.ViewEvent;
 import java.util.*;
 import java.util.logging.Logger;
 
-public abstract class BaseRemoteView extends Observable<DecoratedEvent<ViewEvent, GameView>> implements GameView {
+public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewEvent, GameView>> implements GameView {
 
   private static final Logger LOG = LogUtils.getLogger(BaseRemoteView.class);
 

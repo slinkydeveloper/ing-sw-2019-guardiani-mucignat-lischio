@@ -2,8 +2,6 @@ package com.adrenalinici.adrenaline.network.client.socket;
 
 import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
-import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
-import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.util.LogUtils;
 
 import java.io.IOException;
@@ -11,7 +9,6 @@ import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
@@ -33,24 +30,26 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
 
   @Override
   public void initialize() throws IOException {
-    readSelector = Selector.open();
+    if (readSelector == null) { // Avoid double initialization
+      readSelector = Selector.open();
 
-    this.channel = SocketChannel.open(new InetSocketAddress(host, port));
-    this.channel.configureBlocking(false);
-    this.channel.register(readSelector, SelectionKey.OP_READ);
+      this.channel = SocketChannel.open(new InetSocketAddress(host, port));
+      this.channel.configureBlocking(false);
+      this.channel.register(readSelector, SelectionKey.OP_READ);
 
-    LOG.info(String.format("Connected to %s:%d", host, port));
+      LOG.info(String.format("Connected to %s:%d", host, port));
 
-    this.receiverThread = new Thread(
-      new ReceiverRunnable(readSelector, clientViewInbox),
-      "client-" + this.channel.socket().getLocalPort() + "-socket-receiver"
-    );
-    this.receiverThread.start();
-    this.senderThread = new Thread(
-      new SenderRunnable(clientViewOutbox, channel),
-      "client-" + this.channel.socket().getLocalPort() + "-socket-sender"
-    );
-    this.senderThread.start();
+      this.receiverThread = new Thread(
+        new ReceiverRunnable(readSelector, clientViewInbox),
+        "client-" + this.channel.socket().getLocalPort() + "-socket-receiver"
+      );
+      this.receiverThread.start();
+      this.senderThread = new Thread(
+        new SenderRunnable(clientViewOutbox, channel),
+        "client-" + this.channel.socket().getLocalPort() + "-socket-sender"
+      );
+      this.senderThread.start();
+    }
   }
 
   @Override

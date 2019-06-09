@@ -1,4 +1,4 @@
-package com.adrenalinici.adrenaline.view;
+package com.adrenalinici.adrenaline.cli;
 
 import com.adrenalinici.adrenaline.model.common.DashboardChoice;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
@@ -9,13 +9,14 @@ import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.network.inbox.NewMatchMessage;
 import com.adrenalinici.adrenaline.network.inbox.ViewEventMessage;
 import com.adrenalinici.adrenaline.network.outbox.InfoType;
-import com.adrenalinici.adrenaline.util.Observable;
+import com.adrenalinici.adrenaline.util.ObservableImpl;
+import com.adrenalinici.adrenaline.view.GameView;
 import com.adrenalinici.adrenaline.view.event.ViewEvent;
 
 import java.util.Map;
 import java.util.Set;
 
-public abstract class BaseClientGameView extends Observable<InboxMessage> implements GameView {
+public abstract class BaseCliGameView extends ObservableImpl<InboxMessage> implements GameView {
 
   private String matchId;
   private PlayerColor myPlayer;
@@ -47,7 +48,7 @@ public abstract class BaseClientGameView extends Observable<InboxMessage> implem
     return turnOfPlayer;
   }
 
-  public BaseClientGameView setTurnOfPlayer(PlayerColor turnOfPlayer) {
+  public BaseCliGameView setTurnOfPlayer(PlayerColor turnOfPlayer) {
     this.turnOfPlayer = turnOfPlayer;
     return this;
   }

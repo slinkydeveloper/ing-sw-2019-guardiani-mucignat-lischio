@@ -60,7 +60,7 @@ public class TagbackGrenadeFlowNode implements ControllerFlowNode<TagbackGrenade
     event.onUseVenomGrenadeEvent(useVenomGrenadeEvent -> {
       flowState.waitingPlayers.remove(useVenomGrenadeEvent.getPlayerColor());
       if (useVenomGrenadeEvent.getChosenCard() != null) {
-        model.getPlayerDashboard(useVenomGrenadeEvent.getPlayerColor()).removePowerUpCard(useVenomGrenadeEvent.getChosenCard());
+        model.removePowerUpFromPlayer(useVenomGrenadeEvent.getPlayerColor(), useVenomGrenadeEvent.getChosenCard());
         model.markPlayer(useVenomGrenadeEvent.getPlayerColor(), context.getTurnOfPlayer(), 1);
       }
       if (flowState.waitingPlayers.isEmpty())

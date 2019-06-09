@@ -2,14 +2,11 @@ package com.adrenalinici.adrenaline.network.client.rmi;
 
 import com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter;
 import com.adrenalinici.adrenaline.network.client.ClientViewProxy;
-import com.adrenalinici.adrenaline.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.network.server.rmi.GameRmiServer;
 import com.adrenalinici.adrenaline.util.LogUtils;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -34,21 +31,23 @@ public class RmiClientNetworkAdapter extends ClientNetworkAdapter {
 
   @Override
   public void initialize() throws IOException {
-    try {
-      registry = LocateRegistry.getRegistry(host, port);
+    if (registry == null) { // Avoid double initialization
+      try {
+        registry = LocateRegistry.getRegistry(host, port);
 
-      server = (GameRmiServer) registry.lookup(GameRmiServer.class.getSimpleName());
+        server = (GameRmiServer) registry.lookup(GameRmiServer.class.getSimpleName());
 
-      GameRmiClient gameRmiClientInstance = new GameRmiClientImpl(this.clientViewInbox);
-      GameRmiClient remote = (GameRmiClient) UnicastRemoteObject.exportObject(gameRmiClientInstance, 0);
+        GameRmiClient gameRmiClientInstance = new GameRmiClientImpl(this.clientViewInbox);
+        GameRmiClient remote = (GameRmiClient) UnicastRemoteObject.exportObject(gameRmiClientInstance, 0);
 
-      senderThread = new Thread(new SenderRunnable(clientViewOutbox, server, remote));
-      senderThread.start();
-      server.startConnection(remote);
+        senderThread = new Thread(new SenderRunnable(clientViewOutbox, server, remote));
+        senderThread.start();
+        server.startConnection(remote);
 
-      LOG.info("Connected to server");
-    } catch (NotBoundException e) {
-      LOG.log(Level.SEVERE, "Error while starting rmi client adapter", e);
+        LOG.info("Connected to server");
+      } catch (NotBoundException e) {
+        LOG.log(Level.SEVERE, "Error while starting rmi client adapter", e);
+      }
     }
   }
 

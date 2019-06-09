@@ -36,6 +36,7 @@ public abstract class ClientNetworkAdapter implements Observer<InboxMessage>, Ru
       LOG.log(Level.SEVERE, "Error while initializing " + this.getClass().getName(), e);
       return;
     }
+    LOG.info("Connected!");
     while (!Thread.currentThread().isInterrupted()) {
       try {
         OutboxMessage e = clientViewInbox.take();
