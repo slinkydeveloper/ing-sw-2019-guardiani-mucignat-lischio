@@ -117,7 +117,7 @@ public abstract class BaseFlowContext implements FlowContext {
     }
     if (additionalNodesToExecuteAlways != null) {
       this.additionalNodesToExecuteAlways.forEach(n ->
-        this.getOrchestrator().resolveNode(n).handleEvent(event, actualState, view, getOrchestrator().getModel(), this)
+        this.getOrchestrator().resolveNode(n).handleEvent(event, null, view, getOrchestrator().getModel(), this)
       );
     }
   }

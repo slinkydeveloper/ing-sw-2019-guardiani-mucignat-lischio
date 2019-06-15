@@ -54,7 +54,13 @@ public class RespawnDashboardCell extends BaseDashboardCell {
     return new LightRespawnDashboardCell(
       getPlayersInCell(),
       getCellColor(),
-      availableGuns.stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet())
+      availableGuns.stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet()),
+      getNorthDashboardCellBoundType(),
+      getSouthDashboardCellBoundType(),
+      getEastDashboardCellBoundType(),
+      getWestDashboardCellBoundType(),
+      getLine(),
+      getCell()
     );
   }
 }

@@ -23,14 +23,11 @@ public class CliMain extends BaseCliGameView {
   public static final String ANSI_PURPLE = "\u001B[35m";
   public static final String ANSI_CYAN = "\u001B[36m";
   public static final String ANSI_WHITE = "\u001B[37m";
-  public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
-  public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
-  public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
-  public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
-  public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
-  public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
-  public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
-  public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+  public static final String SMALL = "SMALL";
+  public static final String MEDIUM_1 = "MEDIUM_1";
+  public static final String MEDIUM_2 = "MEDIUM_2";
+  public static final String BIG = "BIG";
 
   Scanner scanner = new Scanner(System.in);
 
@@ -148,17 +145,57 @@ public class CliMain extends BaseCliGameView {
 
   @Override
   public void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect) {
+    if (isMyTurn()) {
+      System.out.println(String.format("0) %s\n\tDescription: %s", firstEffect.getName(), firstEffect.getDescription()));
+      System.out.println(String.format("1) %s\n\tDescription: %s", secondEffect.getName(), secondEffect.getDescription()));
 
+      int chosenIndex = parseIndex(1);
+
+      sendViewEvent(new AlternativeGunEffectChosenEvent(chosenIndex == 1));
+    }
   }
 
   @Override
   public void showChoosePlayerToHit(List<PlayerColor> players) {
+    if (isMyTurn()) {
+      System.out.println("Available players to hit:");
+      printNumberedList(players);
 
+      int chosenIndex = parseIndex(players.size() - 1);
+      sendViewEvent(new PlayerChosenEvent(players.get(chosenIndex)));
+    }
   }
 
   @Override
   public void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect) {
+    if (isMyTurn()) {
+      String firstChoice = "n";
+      String secondChoice = "n";
+      System.out.println("Available extra effects:");
 
+      if (firstExtraEffect != null) {
+        System.out.println("First extra effect: " + firstExtraEffect.getId());
+        System.out.println("Wanna use it? Type y or n");
+        firstChoice = scanner.nextLine();
+        while (!firstChoice.equals("y") && !firstChoice.equals("n")) {
+          System.out.println("That's not a valid input, please retry with y or n");
+          firstChoice = scanner.nextLine();
+        }
+      }
+
+      if (secondExtraEffect != null) {
+        System.out.println("Second extra effect: " + secondExtraEffect.getId());
+        System.out.println("Wanna use it? Type y or n");
+        secondChoice = scanner.nextLine();
+        while (!secondChoice.equals("y") && !secondChoice.equals("n")) {
+          System.out.println("That's not a valid input, please retry with y or n");
+          secondChoice = scanner.nextLine();
+        }
+      }
+
+      sendViewEvent(new BaseGunEffectChosenEvent(firstChoice.equals("y"), secondChoice.equals("y")));
+
+    }
   }
 
   @Override
@@ -233,12 +270,34 @@ public class CliMain extends BaseCliGameView {
 
   @Override
   public void onEvent(ModelEvent newValue) {
-    System.out.println("Model updated! " + newValue);
+    //System.out.println("Model updated! " + newValue);
+    //here should be used buffered console out
     showModel(newValue.getGameModel());
   }
 
   private void showModel(LightGameModel model) {
+    Map<Position, List<PlayerColor>> playersMap = new HashMap<>();
+    model.getDashboard().stream().forEach(dc -> {
+      playersMap.put(Position.of(dc.getLine(), dc.getCell()), dc.getPlayersInCell());
+    });
 
+    String dashboardChoice = model.getDashboard().getDashboardChoice();
+
+    switch (dashboardChoice) {
+      case SMALL:
+        PrintUtils.printSmallDashboard(playersMap);
+        break;
+      case MEDIUM_1:
+        PrintUtils.printMedium1Dashboard(playersMap);
+        break;
+      case MEDIUM_2:
+        PrintUtils.printMedium2Dashboard(playersMap);
+        break;
+      case BIG:
+        PrintUtils.printBigDashboard(playersMap);
+        break;
+
+    }
   }
 
   private int parseIndex(int maximum) {
@@ -263,5 +322,6 @@ public class CliMain extends BaseCliGameView {
       System.out.println(String.format("\t%d) %s", i, element.toString()));
       i++;
     }
+    System.out.println("Insert index:");
   }
 }
