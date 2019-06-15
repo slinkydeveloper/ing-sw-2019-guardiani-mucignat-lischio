@@ -58,7 +58,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     List<PlayerColor> players = gameModel.getPlayers();
     if (flowOrchestrator.getActualContext().getTurnOfPlayer() == null)
       return players.get(0);
-    return players.get(players.indexOf(flowOrchestrator.getActualContext().getTurnOfPlayer()) + 1 % players.size());
+    return players.get((players.indexOf(flowOrchestrator.getActualContext().getTurnOfPlayer()) + 1) % players.size());
   }
 
   void endTurnCallback(GameView view) {

@@ -101,6 +101,13 @@ public class DashboardTest {
         new Position(1, 2),
         new Position(2, 2)
       );
+
+    assertThat(d.calculateMovements(Position.of(0, 0), 1))
+      .containsOnly(
+        new Position(0, 0),
+        new Position(0, 1),
+        new Position(1, 0)
+      );
   }
 
   @Test

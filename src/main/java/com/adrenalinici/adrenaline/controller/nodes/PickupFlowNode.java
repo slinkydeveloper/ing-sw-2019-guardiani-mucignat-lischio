@@ -7,9 +7,9 @@ import com.adrenalinici.adrenaline.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.model.common.AmmoColor;
 import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.DashboardCell;
 import com.adrenalinici.adrenaline.model.fat.GameModel;
-import com.adrenalinici.adrenaline.model.common.Position;
 import com.adrenalinici.adrenaline.model.fat.RespawnDashboardCell;
 import com.adrenalinici.adrenaline.util.Bag;
 import com.adrenalinici.adrenaline.view.GameView;
@@ -33,7 +33,9 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
     DashboardCell cell = model.getDashboard().getDashboardCell(actualPlayerPosition);
 
     cell.visit(respawnDashboardCell -> {
-      view.showAvailableGunsToPickup(calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer()));
+      Set<String> guns = calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer());
+      if (guns.isEmpty()) context.nextPhase(view);
+      view.showAvailableGunsToPickup(guns);
     }, pickupDashboardCell -> {
       // No user interaction required
       model.acquireAmmoCard(pickupDashboardCell, context.getTurnOfPlayer());

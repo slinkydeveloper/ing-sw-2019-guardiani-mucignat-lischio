@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.model.light;
 import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.Gun;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +14,8 @@ public class LightRespawnDashboardCell extends LightDashboardCell {
 
   private Set<Gun> availableGuns;
 
-  public LightRespawnDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor, Set<Gun> availableGuns) {
-    super(playersInCell, cellColor);
+  public LightRespawnDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor, Set<Gun> availableGuns, DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell) {
+    super(playersInCell, cellColor, northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell);
     this.availableGuns = availableGuns;
   }
 

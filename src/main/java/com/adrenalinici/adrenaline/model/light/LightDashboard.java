@@ -9,9 +9,11 @@ import java.util.stream.Stream;
 public class LightDashboard implements Serializable {
 
   private LightDashboardCell[][] dashboardCells;
+  private String dashboardChoice;
 
-  public LightDashboard(LightDashboardCell[][] dashboardCells) {
+  public LightDashboard(LightDashboardCell[][] dashboardCells, String dashboardChoice) {
     this.dashboardCells = dashboardCells;
+    this.dashboardChoice = dashboardChoice;
   }
 
   public LightDashboardCell getDashboardCell(int line, int cell) {
@@ -26,6 +28,10 @@ public class LightDashboard implements Serializable {
     }
   }
 
+  public String getDashboardChoice() {
+    return dashboardChoice;
+  }
+
   public int lines() {
     return dashboardCells.length;
   }
@@ -38,6 +44,7 @@ public class LightDashboard implements Serializable {
   public String toString() {
     return "LightDashboard{" +
       "dashboardCells=" + Arrays.toString(dashboardCells) +
+      "dashboardChoice=" + dashboardChoice +
       '}';
   }
 

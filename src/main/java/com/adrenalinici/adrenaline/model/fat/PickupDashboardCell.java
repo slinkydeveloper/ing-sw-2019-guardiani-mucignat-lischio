@@ -49,7 +49,17 @@ public class PickupDashboardCell extends BaseDashboardCell {
 
   @Override
   public LightDashboardCell light() {
-    return new LightPickupDashboardCell(getPlayersInCell(), getCellColor(), ammoCard);
+    return new LightPickupDashboardCell(
+      getPlayersInCell(),
+      getCellColor(),
+      ammoCard,
+      getNorthDashboardCellBoundType(),
+      getSouthDashboardCellBoundType(),
+      getEastDashboardCellBoundType(),
+      getWestDashboardCellBoundType(),
+      getLine(),
+      getCell()
+    );
   }
 
 }

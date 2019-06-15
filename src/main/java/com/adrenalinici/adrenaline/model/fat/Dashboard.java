@@ -49,6 +49,7 @@ public class Dashboard {
   public static class Builder {
     List<List<DashboardCell.Builder>> lines = new ArrayList<>();
     List<DashboardCell.Builder> actualLine = new ArrayList<>();
+    String dashboardChoice;
 
     int actualCellNumber = -1;
     int actualLineNumber = 0;
@@ -75,6 +76,11 @@ public class Dashboard {
       return this;
     }
 
+    public Builder setDashboardChoice(String dashboardChoice) {
+      this.dashboardChoice = dashboardChoice;
+      return this;
+    }
+
     public Dashboard build() {
       this.lines.add(actualLine);
       int width = actualLine.size();
@@ -90,6 +96,7 @@ public class Dashboard {
         }
       }
       dashboard.setDashboardCells(cells);
+      dashboard.setDashboardChoice(dashboardChoice);
       return dashboard;
     }
 
@@ -100,12 +107,23 @@ public class Dashboard {
     return new Builder();
   }
 
+  public static final String SMALL = "SMALL";
+  public static final String MEDIUM_1 = "MEDIUM_1";
+  public static final String MEDIUM_2 = "MEDIUM_2";
+  public static final String BIG = "BIG";
+
+
   private DashboardCell[][] dashboardCells;
+  private String dashboardChoice;
 
   private Dashboard() { }
 
   private void setDashboardCells(DashboardCell[][] dashboardCells) {
     this.dashboardCells = dashboardCells;
+  }
+
+  public void setDashboardChoice(String dashboardChoice) {
+    this.dashboardChoice = dashboardChoice;
   }
 
   public DashboardCell getDashboardCell(Position position) {
@@ -336,13 +354,13 @@ public class Dashboard {
       }
     }
 
-    return new LightDashboard(d);
+    return new LightDashboard(d, dashboardChoice);
   }
 
   public static Dashboard createSmallDashboard() {
     return Dashboard.newBuilder()
       .newEastCell(c -> c.setSouthType(DOOR).setEastType(OPEN).cellColor(CYAN).newPickupCell())
-      .newEastCell(c -> c.setWestType(OPEN).setWestType(OPEN).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setEastType(OPEN).setWestType(OPEN).cellColor(CYAN).newPickupCell())
       .newEastCell(c -> c.setWestType(OPEN).setSouthType(DOOR).cellColor(CYAN).newRespawnCell())
       .newEmptyCell()
       .newSouthLine()
@@ -355,18 +373,69 @@ public class Dashboard {
       .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(GRAY).newPickupCell())
       .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).cellColor(YELLOW).newPickupCell())
       .newEastCell(c -> c.setNorthType(OPEN).setWestType(DOOR).cellColor(YELLOW).newRespawnCell())
+      .setDashboardChoice(SMALL)
       .build();
   }
 
   public static Dashboard createMedium1Dashboard() {
-    return null; //TODO @peppelischio will take care of it
+    return Dashboard.newBuilder()
+      .newEastCell(c -> c.setSouthType(DOOR).setEastType(OPEN).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setEastType(OPEN).setWestType(OPEN).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setWestType(OPEN).setSouthType(DOOR).setEastType(DOOR).cellColor(CYAN).newRespawnCell())
+      .newEastCell(c -> c.setSouthType(DOOR).setWestType(DOOR).cellColor(GREEN).newPickupCell())
+      .newSouthLine()
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(RED).newRespawnCell())
+      .newEastCell(c -> c.setSouthType(DOOR).setWestType(OPEN).cellColor(RED).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).setSouthType(OPEN).cellColor(YELLOW).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setSouthType(OPEN).setWestType(OPEN).cellColor(YELLOW).newPickupCell())
+      .newSouthLine()
+      .newEmptyCell()
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(DOOR).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setEastType(OPEN).setWestType(DOOR).cellColor(YELLOW).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setWestType(OPEN).cellColor(YELLOW).newRespawnCell())
+      .setDashboardChoice(MEDIUM_1)
+      .build();
   }
 
   public static Dashboard createMedium2Dashboard() {
-    return null; //TODO @peppelischio will take care of it
+    return Dashboard.newBuilder()
+      .newEastCell(c -> c.setEastType(DOOR).setSouthType(OPEN).cellColor(RED).newPickupCell())
+      .newEastCell(c -> c.setEastType(OPEN).setSouthType(DOOR).setWestType(DOOR).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setSouthType(DOOR).setWestType(OPEN).cellColor(CYAN).newRespawnCell())
+      .newEmptyCell()
+      .newSouthLine()
+      .newEastCell(c -> c.setNorthType(OPEN).setSouthType(DOOR).cellColor(RED).newRespawnCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).setSouthType(DOOR).cellColor(PURPLE).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(DOOR).setWestType(OPEN).cellColor(PURPLE).newPickupCell())
+      .newEastCell(c -> c.setSouthType(OPEN).setWestType(DOOR).cellColor(YELLOW).newPickupCell())
+      .newSouthLine()
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).setWestType(OPEN).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setWestType(DOOR).cellColor(YELLOW).newRespawnCell())
+      .setDashboardChoice(MEDIUM_2)
+      .build();
+
   }
 
   public static Dashboard createLargeDashboard() {
-    return null; //TODO @peppelischio will take care of it
+    return Dashboard.newBuilder()
+      .newEastCell(c -> c.setEastType(DOOR).setSouthType(OPEN).cellColor(RED).newPickupCell())
+      .newEastCell(c -> c.setEastType(OPEN).setSouthType(DOOR).setWestType(DOOR).cellColor(CYAN).newPickupCell())
+      .newEastCell(c -> c.setEastType(DOOR).setSouthType(DOOR).setWestType(OPEN).cellColor(CYAN).newRespawnCell())
+      .newEastCell(c -> c.setSouthType(DOOR).setWestType(DOOR).cellColor(GREEN).newPickupCell())
+      .newSouthLine()
+      .newEastCell(c -> c.setNorthType(OPEN).setSouthType(DOOR).cellColor(RED).newRespawnCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setSouthType(DOOR).cellColor(PURPLE).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).setSouthType(OPEN).cellColor(YELLOW).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setSouthType(OPEN).setWestType(OPEN).cellColor(YELLOW).newPickupCell())
+      .newSouthLine()
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setNorthType(DOOR).setEastType(DOOR).setWestType(OPEN).cellColor(GRAY).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setEastType(OPEN).setWestType(DOOR).cellColor(YELLOW).newPickupCell())
+      .newEastCell(c -> c.setNorthType(OPEN).setWestType(OPEN).cellColor(YELLOW).newRespawnCell())
+      .setDashboardChoice(BIG)
+      .build();
   }
+
 }

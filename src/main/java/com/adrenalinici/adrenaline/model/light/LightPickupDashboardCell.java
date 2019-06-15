@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.model.light;
 import com.adrenalinici.adrenaline.model.common.AmmoCard;
 import com.adrenalinici.adrenaline.model.common.CellColor;
 import com.adrenalinici.adrenaline.model.common.PlayerColor;
+import com.adrenalinici.adrenaline.model.fat.DashboardCellBoundType;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,8 +13,8 @@ public class LightPickupDashboardCell extends LightDashboardCell {
 
   private AmmoCard ammoCard;
 
-  public LightPickupDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor, AmmoCard ammoCard) {
-    super(playersInCell, cellColor);
+  public LightPickupDashboardCell(List<PlayerColor> playersInCell, CellColor cellColor, AmmoCard ammoCard, DashboardCellBoundType northDashboardCellBoundType, DashboardCellBoundType southDashboardCellBoundType, DashboardCellBoundType eastDashboardCellBoundType, DashboardCellBoundType westDashboardCellBoundType, int line, int cell) {
+    super(playersInCell, cellColor, northDashboardCellBoundType, southDashboardCellBoundType, eastDashboardCellBoundType, westDashboardCellBoundType, line, cell);
     this.ammoCard = ammoCard;
   }
 

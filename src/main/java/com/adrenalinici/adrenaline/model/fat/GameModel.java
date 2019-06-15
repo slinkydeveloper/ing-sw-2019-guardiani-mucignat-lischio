@@ -31,7 +31,7 @@ public class GameModel extends ObservableImpl<ModelEvent> {
   private CardDeck<String> guns;
   private CardDeck<PowerUpCard> powerUps;
   private CardDeck<AmmoCard> ammoCards;
-  private PlayerColor frenzyModeActivedWithPlayerTurn;
+  private PlayerColor frenzyModeActivatedWithPlayerTurn;
   private boolean mustActivateFrenzyMode;
 
   public GameModel(int remainingSkulls, Dashboard dashboard, List<PlayerDashboard> playerDashboards, boolean mustActivateFrenzyMode) {
@@ -163,7 +163,7 @@ public class GameModel extends ObservableImpl<ModelEvent> {
    * Activate frenzy mode: flips player dashboards when possible, register newTurn
    */
   public void activateFrenzyMode(PlayerColor newTurnOfPlayer) {
-    this.frenzyModeActivedWithPlayerTurn = newTurnOfPlayer;
+    this.frenzyModeActivatedWithPlayerTurn = newTurnOfPlayer;
 
     playerDashboards.forEach(pd -> {
       if (pd.getDamages().isEmpty()) pd.setFlipped(true);
@@ -171,11 +171,11 @@ public class GameModel extends ObservableImpl<ModelEvent> {
   }
 
   public boolean isFrenzyModeFinished(PlayerColor nextTurnPlayer) {
-    return this.frenzyModeActivedWithPlayerTurn == nextTurnPlayer;
+    return this.frenzyModeActivatedWithPlayerTurn == nextTurnPlayer;
   }
 
   public boolean isFrenzyModeActivated() {
-    return frenzyModeActivedWithPlayerTurn != null;
+    return frenzyModeActivatedWithPlayerTurn != null;
   }
 
   public boolean isMustActivateFrenzyMode() {
@@ -183,7 +183,7 @@ public class GameModel extends ObservableImpl<ModelEvent> {
   }
 
   public boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
-    int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivedWithPlayerTurn);
+    int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivatedWithPlayerTurn);
     int indexThisTurnPlayer = getPlayers().indexOf(thisTurnPlayer);
     return indexThisTurnPlayer == 0 || indexOfFrenzyModeFirstPlayer == 0 || indexThisTurnPlayer / indexOfFrenzyModeFirstPlayer == 0;
   }
