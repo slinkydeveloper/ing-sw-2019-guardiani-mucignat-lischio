@@ -1,11 +1,14 @@
 package com.adrenalinici.adrenaline.server.network;
 
+import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.network.inbox.InboxEntry;
 import com.adrenalinici.adrenaline.common.network.inbox.InboxMessage;
+import com.adrenalinici.adrenaline.common.network.inbox.ViewEventMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.OutboxEntry;
 import com.adrenalinici.adrenaline.common.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.common.util.CollectionUtils;
 import com.adrenalinici.adrenaline.common.util.LogUtils;
+import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
 import com.adrenalinici.adrenaline.server.controller.GameController;
 
 import java.util.HashMap;
@@ -70,7 +73,9 @@ public class ServerContext {
   public void onDisconnection(String connectionId) {
     String matchId = playerMatchMap.remove(connectionId);
     if (matchId != null) {
-      this.matchesMap.get(matchId).notifyDisconnectedPlayer(connectionId);
+      PlayerColor disconnectedPlayerColor = this.matchesMap.get(matchId).resolvePlayerColor(connectionId);
+      this.matchesMap.get(matchId).disconnectedPlayer(connectionId);
+      this.enqueueInboxMessage(matchId, new ViewEventMessage(new UnavailablePlayerEvent(disconnectedPlayerColor)));
     }
   }
 

@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.common.util.Observer;
 import com.adrenalinici.adrenaline.common.view.GameView;
+import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.nodes.*;
 import com.adrenalinici.adrenaline.server.controller.nodes.guns.*;
@@ -48,7 +49,10 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   public void onEvent(DecoratedEvent<ViewEvent, GameView> event) {
     if (event.getInnerEvent().isStartMatchEvent()) {
       startMatch(event.getEventSource());
-    } else if (event.getInnerEvent().isExpiredTurnEvent()) {
+    } else if (
+      event.getInnerEvent().isUnavailablePlayerEvent() &&
+      flowOrchestrator.getActualContext().getTurnOfPlayer() == ((UnavailablePlayerEvent)event.getInnerEvent()).getPlayerColor()
+    ) {
       this.endTurnCallback(event.getEventSource());
     } else {
       flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());

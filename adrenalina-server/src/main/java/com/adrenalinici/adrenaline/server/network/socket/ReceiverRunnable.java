@@ -80,7 +80,15 @@ public class ReceiverRunnable extends BaseSocketRunnable {
     int size = sizeBuf.getInt(0);
     ByteBuffer valueBuf = ByteBuffer.allocate(size);
     try {
-      numRead = channel.read(valueBuf);
+      numRead = 0;
+      while (valueBuf.hasRemaining()) {
+        int readNow = channel.read(valueBuf);
+        if (readNow == -1) {
+          handleUserDisconnection(connectionId, socket, key, channel);
+          return;
+        }
+        numRead += readNow;
+      }
     } catch (IOException e) {
       handleUserDisconnection(connectionId, socket, key, channel);
       return;

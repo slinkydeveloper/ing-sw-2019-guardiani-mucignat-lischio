@@ -26,7 +26,6 @@ public class RemoteView extends BaseRemoteView {
   @Override
   public void showNextTurn(PlayerColor player) {
     onNewTurn(player);
-    broadcast(new NextTurnMessage(player));
   }
 
   @Override

@@ -12,7 +12,7 @@ public class ChosenMatchMessageHandler implements MessageHandler<ChosenMatchMess
   public void handleMessage(ChosenMatchMessage message, String connectionId, ServerContext context) {
     if (
       context.getMatches().containsKey(message.getMatchId()) &&
-      context.getMatches().get(message.getMatchId()).notifyNewPlayer(connectionId, message.getColor())
+      context.getMatches().get(message.getMatchId()).newPlayer(connectionId, message.getColor())
     ) {
       context.addConnectionToMatch(connectionId, message.getMatchId());
       context.getMatches().get(message.getMatchId()).checkMatchStatus();
