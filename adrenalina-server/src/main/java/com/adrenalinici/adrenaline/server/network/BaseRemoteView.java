@@ -90,10 +90,7 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
   }
 
   public void notifyViewEvent(ViewEventMessage message) {
-    if (!availablePlayers.isEmpty() || !this.matchStarted) { // Someone is disconnected or the match is not yet started
-      // > Drop message or enqueue? Notify client that match is paused?
-      // Noop for now
-    } else {
+    if (this.matchStarted) {
       notifyEvent(new DecoratedEvent<>(message.getViewEvent(), this));
     }
   }
