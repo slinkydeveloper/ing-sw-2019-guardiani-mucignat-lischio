@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.server.controller;
 
 import com.adrenalinici.adrenaline.common.model.Gun;
+import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.common.util.StreamUtils;
 import com.adrenalinici.adrenaline.server.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,10 +10,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GunLoader {
+
+  private static final Logger LOG = LogUtils.getLogger(GunLoader.class);
 
   public static final GunLoader INSTANCE = new GunLoader();
   private List<GunFactory> factories;
@@ -40,18 +48,21 @@ public class GunLoader {
   public Gun getModelGun(String id) {
     if (guns.containsKey(id)) return guns.get(id);
     guns.put(id, resolveGunFactory(id).getModelGun(id, (ObjectNode) getGunConfigJson(id)));
+    LOG.info("Created new model gun " + id);
     return guns.get(id);
   }
 
   public DecoratedGun getDecoratedGun(String id) {
     if (decoratedGuns.containsKey(id)) return decoratedGuns.get(id);
     decoratedGuns.put(id, resolveGunFactory(id).getDecoratedGun(id, (ObjectNode) getGunConfigJson(id)));
+    LOG.info("Created new decorated gun " + id);
     return decoratedGuns.get(id);
   }
 
   public List<ControllerFlowNode> getAdditionalNodes(String id) {
     if (nodes.containsKey(id)) return nodes.get(id);
     nodes.put(id, resolveGunFactory(id).getAdditionalNodes(id, (ObjectNode) getGunConfigJson(id)));
+    LOG.info("Discovered additional nodes for gun " + id);
     return nodes.get(id);
   }
 
@@ -109,15 +120,38 @@ public class GunLoader {
   public static List<String> getAvailableGuns() {
     try {
       ClassLoader loader = Thread.currentThread().getContextClassLoader();
-      return StreamUtils.enumerationStream(loader.getResources("guns"))
-          .map(URL::getPath)
-          .filter(Objects::nonNull)
-          .flatMap(path -> Arrays.stream(new File(path).listFiles()))
-          .map(File::getName)
+      List<String> guns = StreamUtils.enumerationStream(loader.getResources("guns"))
+          .flatMap(GunLoader::getResourceListingForResourceURL)
           .map(s -> s.replace(".json", ""))
           .collect(Collectors.toList());
+      LOG.info("Discovered guns: " + guns.toString());
+      return guns;
     } catch (IOException e) {
       return null;
     }
+  }
+
+  private static Stream<String> getResourceListingForResourceURL(URL dirURL) {
+    try {
+      if (dirURL != null && dirURL.getProtocol().equals("file")) {
+        /* A file path: easy enough */
+        return Stream
+          .of(new File(dirURL.toURI()).listFiles())
+          .map(File::getName);
+      }
+
+      if (dirURL.getProtocol().equals("jar")) {
+        /* A JAR path */
+        String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!")); //strip out only the JAR file
+        String innerPath = dirURL.getPath().substring(dirURL.getPath().indexOf("!") + 1) + "/";
+
+        JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
+        return StreamUtils
+          .enumerationStream(jar.entries())
+          .map(JarEntry::getName)
+          .filter(name -> name.startsWith(innerPath));
+      }
+    } catch (Exception e) {}
+    throw new UnsupportedOperationException("Cannot list files for URL " + dirURL);
   }
 }
