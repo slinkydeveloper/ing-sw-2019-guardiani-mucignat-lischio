@@ -46,6 +46,7 @@ public abstract class BaseFlowContext implements FlowContext {
   @Override
   public void jump(String stateId, GameView view, FlowState state) {
     actualNode = orchestrator.resolveNode(stateId);
+    if (actualNode == null) throw new IllegalStateException("Node with id " + stateId + " doesn't exists! You dumb!");
     FlowState newState = actualNode.mapState(state);
     if (actualNode.skip(newState, this)) this.nextPhase(view, state);
     else {
