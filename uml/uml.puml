@@ -357,7 +357,7 @@ package com.adrenalinici.adrenaline.model.events {
   }
 }
 
-package com.adrenalinici.adrenaline.controller.guns {
+package com.adrenalinici.adrenaline.server.controller.guns {
   abstract class AlternativeEffectGunFactory implements GunFactory {
     + AlternativeEffectGun getModelGun (String key, ObjectNode config)
     + public DecoratedAlternativeEffectGun getDecoratedGun(String key, ObjectNode config)
@@ -380,7 +380,7 @@ package com.adrenalinici.adrenaline.controller.guns {
   }
 }
 
-package com.adrenalinici.adrenaline.controller {
+package com.adrenalinici.adrenaline.server.controller {
 
   class ControllerFlowContext extends com.adrenalinici.adrenaline.flow.BaseFlowContext {
     -int remainingActions;
@@ -398,7 +398,7 @@ package com.adrenalinici.adrenaline.controller {
     + GunLoader getGunLoader()
   }
 
-  interface ControllerFlowNode extends com.adrenalinici.adrenaline.flow.FlowNode
+  interface ControllerFlowNode extends FlowNode
 
   class DecoratedEffect {
     - Effect effect
@@ -452,7 +452,7 @@ package com.adrenalinici.adrenaline.controller {
     +Optional<T> getCard()
   }
 
-  interface StatelessControllerFlowNode extends com.adrenalinici.adrenaline.flow.StatelessFlowNode
+  interface StatelessControllerFlowNode extends StatelessFlowNode
 
   com.adrenalinici.adrenaline.observer.Observer <|.. GameController: "T::ViewEvent"
 
@@ -497,7 +497,7 @@ package com.adrenalinici.adrenaline.controller {
 
 }
 
-package com.adrenalinici.adrenaline.controller.nodes {
+package com.adrenalinici.adrenaline.server.controller.nodes {
 
   enum ControllerNodes {
       START_TURN
@@ -511,24 +511,24 @@ package com.adrenalinici.adrenaline.controller.nodes {
       BASE_GUN_START
   }
 
-  class ChooseActionFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+  class ChooseActionFlowNode implements StatelessControllerFlowNode
 
-  class ChooseGunFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+  class ChooseGunFlowNode implements StatelessControllerFlowNode
 
-  class ChooseMovementFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode {
+  class ChooseMovementFlowNode implements StatelessControllerFlowNode {
     -int distance
   }
 
-  class NewTurnFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+  class NewTurnFlowNode implements StatelessControllerFlowNode
 
-  class PickupFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+  class PickupFlowNode implements StatelessControllerFlowNode
 
-  class ReloadFlowNode implements com.adrenalinici.adrenaline.controller.StatelessControllerFlowNode
+  class ReloadFlowNode implements StatelessControllerFlowNode
 }
 
-package com.adrenalinici.adrenaline.controller.nodes.guns {
+package com.adrenalinici.adrenaline.server.controller.nodes.guns {
 
-  abstract class GunFlowState implements com.adrenalinici.adrenaline.flow.FlowState {
+  abstract class GunFlowState implements FlowState {
     -chosenGun: DecoratedGun
     -chosenPlayersToHit: List<PlayerColor>
     -hitPlayers: List<PlayerColor>
@@ -544,19 +544,19 @@ package com.adrenalinici.adrenaline.controller.nodes.guns {
     -activatedSecondExtraEffect: boolean
   }
 
-  class ApplyAlternativeGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode {
+  class ApplyAlternativeGunFlowNode implements ControllerFlowNode {
     -nodeId: String
     -consumer: TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext>
   }
 
-  class ApplyBaseGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode {
+  class ApplyBaseGunFlowNode implements ControllerFlowNode {
     -nodeId: String
     -consumer: TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext>
   }
 
-  class ChooseAlternativeEffectForGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode
-  class ChooseBaseEffectForGunFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode
-  class ChoosePlayersToHitFlowNode implements com.adrenalinici.adrenaline.controller.ControllerFlowNode
+  class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode
+  class ChooseBaseEffectForGunFlowNode implements ControllerFlowNode
+  class ChoosePlayersToHitFlowNode implements ControllerFlowNode
 }
 
 package com.adrenalinici.adrenaline.flow {
@@ -600,8 +600,8 @@ package com.adrenalinici.adrenaline.flow {
   }
 }
 
-package com.adrenalinici.adrenaline.flow.impl {
-  abstract class BaseFlowContext implements com.adrenalinici.adrenaline.flow.FlowContext {
+package com.adrenalinici.adrenaline.server.impl {
+  abstract class BaseFlowContext implements FlowContext {
     - FlowNode actualNode;
     # FlowState actualState;
     - String actualPhaseId;
@@ -625,7 +625,7 @@ package com.adrenalinici.adrenaline.flow.impl {
     + List<String> getPhasesQueue()
   }
 
-  class FlowOrchestratorImpl<T extends FlowContext> implements com.adrenalinici.adrenaline.flow.FlowOrchestrator {
+  class FlowOrchestratorImpl<T extends FlowContext> implements FlowOrchestrator {
 
     -Map<String, ? extends FlowNode> nodes;
     -T actualContext;
@@ -641,7 +641,7 @@ package com.adrenalinici.adrenaline.flow.impl {
     +T getActualContext()
   }
 
-  class VoidState implements com.adrenalinici.adrenaline.flow.FlowState
+  class VoidState implements FlowState
 }
 
 package com.adrenalinici.adrenaline.view {
@@ -725,7 +725,7 @@ package com.adrenalinici.adrenaline.network.outbox {
   class ReloadableGunsMessage implements OutboxMessage
 }
 
-package com.adrenalinici.adrenaline.network.client {
+package com.adrenalinici.adrenaline.client.client {
   class ClientViewProxy {
     -view: BaseClientGameView
 
@@ -747,7 +747,7 @@ package com.adrenalinici.adrenaline.network.client {
   com.adrenalinici.adrenaline.observer.Observer <|-- ClientNetworkAdapter: "T::InboxMessage"
 }
 
-package com.adrenalinici.adrenaline.network.client.rmi {
+package com.adrenalinici.adrenaline.client.client.rmi {
   interface GameRmiClient extends java.rmi.Remote {
     +void acceptMessage(OutboxMessage message)
   }
@@ -756,7 +756,7 @@ package com.adrenalinici.adrenaline.network.client.rmi {
     -clientViewInbox: BlockingQueue<OutboxMessage>
   }
 
-  class RmiClientNetworkAdapter extends com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter {
+  class RmiClientNetworkAdapter extends ClientNetworkAdapter {
     -registry: Registry
     -server: GameRmiServer
     -senderThread: Thread
@@ -769,9 +769,9 @@ package com.adrenalinici.adrenaline.network.client.rmi {
   }
 }
 
-package com.adrenalinici.adrenaline.network.client.socket {
+package com.adrenalinici.adrenaline.client.client.socket {
 
-  class SocketClientNetworkAdapter extends com.adrenalinici.adrenaline.network.client.ClientNetworkAdapter {
+  class SocketClientNetworkAdapter extends ClientNetworkAdapter {
     -receiverThread: Thread
     -senderThread: Thread
     -channel: SocketChannel
@@ -789,7 +789,7 @@ package com.adrenalinici.adrenaline.network.client.socket {
 }
 
 package com.adrenalinici.adrenaline.network.server {
-  abstract class BaseGameViewServer implements com.adrenalinici.adrenaline.view.GameView, java.lang.Runnable {
+  abstract class BaseGameViewServer implements GameView, java.lang.Runnable {
     -inbox: BlockingQueue<InboxEntry>
     -outbox: BlockingQueue<OutboxMessage>
     -connectedPlayers: Map<String, PlayerColor>
@@ -815,7 +815,7 @@ package com.adrenalinici.adrenaline.network.server {
 
 }
 
-package com.adrenalinici.adrenaline.network.server.socket {
+package com.adrenalinici.adrenaline.server.network.socket {
   abstract class BaseSocketRunnable {
     #connectedClients: Map<Socket, String>
   }
@@ -829,7 +829,7 @@ package com.adrenalinici.adrenaline.network.server.socket {
     -viewInbox: BlockingQueue<InboxEntry>
   }
 
-  class SocketServerNetworkAdapter extends com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter {
+  class SocketServerNetworkAdapter extends com.adrenalinici.adrenaline.server.network.ServerNetworkAdapter {
     -receiverThread: Thread
     -broadcasterThread: Thread
     -serverChannel: ServerSocketChannel
@@ -841,7 +841,7 @@ package com.adrenalinici.adrenaline.network.server.socket {
 
 }
 
-package com.adrenalinici.adrenaline.network.server.rmi {
+package com.adrenalinici.adrenaline.server.network.rmi {
   interface GameRmiServer extends java.rmi.Remote {
     +void acceptMessage(InboxMessage message, GameRmiClient client)
     +void startConnection(GameRmiClient client)
@@ -852,7 +852,7 @@ package com.adrenalinici.adrenaline.network.server.rmi {
     -viewOutbox: BlockingQueue<OutboxMessage>
   }
 
-  class RmiServerNetworkAdapter extends com.adrenalinici.adrenaline.network.server.ServerNetworkAdapter implements GameRmiServer {
+  class RmiServerNetworkAdapter extends com.adrenalinici.adrenaline.server.network.ServerNetworkAdapter implements GameRmiServer {
     -addressToConnectionId: Map<String, String>
     -connectionIdToClient: Map<String, GameRmiClient>
     -broadcasterThread: Thread

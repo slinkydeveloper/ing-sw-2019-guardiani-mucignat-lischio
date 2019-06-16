@@ -93,7 +93,7 @@ File("src/main/java/com/adrenalinici/adrenaline/network/outbox/OutboxMessage.jav
 //    |
 //    |import com.adrenalinici.adrenaline.model.common.*;
 //    |import com.adrenalinici.adrenaline.network.outbox.*;
-//    |import com.adrenalinici.adrenaline.network.inbox.InboxEntry;
+//    |import InboxEntry;
 //    |
 //    |import java.util.*;
 //    |import java.util.concurrent.BlockingQueue;
@@ -233,11 +233,11 @@ File("src/main/java/com/adrenalinici/adrenaline/network/outbox/OutboxMessage.jav
 //
 //File("src/main/java/com/adrenalinici/adrenaline/network/client/ClientViewProxy.java").printWriter().use { out ->
 //  out.println("""
-//    |package com.adrenalinici.adrenaline.network.client;
+//    |package com.adrenalinici.adrenaline.client.client;
 //    |
-//    |import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
+//    |import InboxMessage;
 //    |import com.adrenalinici.adrenaline.network.outbox.*;
-//    |import com.adrenalinici.adrenaline.util.Observable;
+//    |import Observable;
 //    |import com.adrenalinici.adrenaline.view.BaseClientGameView;
 //    |
 //    |public class ClientViewProxy extends Observable<InboxMessage> {
@@ -328,11 +328,11 @@ println("-----------")
 
 File("src/main/java/com/adrenalinici/adrenaline/network/client/ClientViewProxy.java").printWriter().use { out ->
   out.println("""
-    |package com.adrenalinici.adrenaline.network.client;
+    |package com.adrenalinici.adrenaline.client.client;
     |
-    |import com.adrenalinici.adrenaline.network.inbox.InboxMessage;
+    |import InboxMessage;
     |import com.adrenalinici.adrenaline.network.outbox.*;
-    |import com.adrenalinici.adrenaline.util.Observable;
+    |import Observable;
     |import com.adrenalinici.adrenaline.cli.BaseClientGameView;
     |
     |public class ClientViewProxy extends Observable<InboxMessage> {
