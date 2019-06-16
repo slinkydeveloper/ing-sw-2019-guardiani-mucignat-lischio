@@ -34,7 +34,6 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
 
     cell.visit(respawnDashboardCell -> {
       Set<String> guns = calculateAvailableGunsToPickup(model, respawnDashboardCell, context.getTurnOfPlayer());
-      if (guns.isEmpty()) context.nextPhase(view);
       view.showAvailableGunsToPickup(guns);
     }, pickupDashboardCell -> {
       // No user interaction required

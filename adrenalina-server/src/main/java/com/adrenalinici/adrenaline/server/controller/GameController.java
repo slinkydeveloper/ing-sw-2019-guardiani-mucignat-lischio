@@ -37,6 +37,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   }
 
   public void startMatch(GameView view) {
+    gameModel.refillDashboard();
     this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
       this.flowOrchestrator,
       Collections.singletonList(ControllerNodes.FIRST_TURN.name())

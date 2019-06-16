@@ -277,7 +277,7 @@ public class CliMain extends BaseCliGameView {
 
   private void showModel(LightGameModel model) {
     Map<Position, List<PlayerColor>> playersMap = new HashMap<>();
-    model.getDashboard().stream().forEach(dc -> {
+    model.getDashboard().stream().filter(Objects::nonNull).forEach(dc -> {
       playersMap.put(Position.of(dc.getLine(), dc.getCell()), dc.getPlayersInCell());
     });
 

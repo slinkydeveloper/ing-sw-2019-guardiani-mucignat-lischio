@@ -98,13 +98,14 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
     context.broadcastToMatch(matchId, en);
   }
 
-  void onNewTurn() {
+  void onNewTurn(PlayerColor player) {
     if (actualTimer != null)
       actualTimer.cancel();
     actualTimer = new Timer();
     actualTimer.schedule(new TimerTask() {
       @Override
       public void run() {
+        LOG.info(String.format("Turn timer expired for player %s in match %s", player.name(), matchId));
         context.enqueueInboxMessage(matchId, new ViewEventMessage(new ExpiredTurnEvent()));
       }
     }, turnTimerSeconds * 1000);
