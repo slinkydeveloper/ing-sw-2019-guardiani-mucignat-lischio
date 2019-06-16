@@ -4,16 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>it.polimi.se2019</groupId>
+  <groupId>com.adrenalinici</groupId>
   <artifactId>adrenalina</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>adrenalina</name>
+  <modules>
+    <module>adrenalina-common</module>
+    <module>adrenalina-server</module>
+    <module>adrenalina-cli</module>
+    <module>adrenalina-gui</module>
+    <module>adrenalina-client</module>
+  </modules>
+
+  <packaging>pom</packaging>
+
+  <name>Adrenaline project parent</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <!-- Java version  -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
@@ -24,8 +32,6 @@
     <sonar.language>java</sonar.language>
 
     <sonar.host.url>http://localhost:9000/</sonar.host.url>
-    <!--sonar.login>admin</sonar.login>
-    <sonar.password>admin</sonar.password-->
 
   </properties>
 
@@ -58,29 +64,10 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.9.9</version>
     </dependency>
-    <dependency>
-      <groupId>org.fusesource.jansi</groupId>
-      <artifactId>jansi</artifactId>
-      <version>1.18</version>
-    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-
-      <!-- Export the project as a runnable JAR, with the provided mainClass -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>com.adrenalinici.adrenaline.cli.CliMain</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
 
       <!-- Jacoco is a code coverage library that allows basic report creation -->
       <plugin>
@@ -115,23 +102,6 @@
         <configuration>
           <doclint>none</doclint>
         </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <executions>
-          <execution>
-            <id>server</id>
-            <goals>
-              <goal>java</goal>
-            </goals>
-            <configuration>
-              <mainClass>com.adrenalinici.adrenaline.server.ServerMain</mainClass>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
