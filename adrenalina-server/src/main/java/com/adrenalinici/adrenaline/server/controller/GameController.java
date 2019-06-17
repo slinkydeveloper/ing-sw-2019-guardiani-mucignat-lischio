@@ -152,7 +152,9 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       new ChooseRoomToHitFlowNode(),
       new ChooseCellToHitFlowNode(),
       new ApplyNewtonFlowNode(),
-      new ApplyTeleporterFlowNode()
+      new ApplyTeleporterFlowNode(),
+      new ApplyScopeFlowNode(),
+      new TagbackGrenadeFlowNode()
     ));
     nodes.addAll(GunLoader.INSTANCE.getAllAdditionalNodes());
     return nodes;

@@ -298,6 +298,8 @@ public class CliMain extends BaseCliGameView {
         break;
 
     }
+
+    model.getPlayerDashboards().forEach(pd -> System.out.println(pd.getPlayer() + pd.getDamages().toString()));
   }
 
   private int parseIndex(int maximum) {
