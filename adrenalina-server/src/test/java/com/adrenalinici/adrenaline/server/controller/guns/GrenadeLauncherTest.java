@@ -63,7 +63,7 @@ public class GrenadeLauncherTest extends BaseGunTest {
 
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
-    context.handleEvent(new EnemyMovementChosenEvent(Position.of(0, 2), PlayerColor.GRAY), viewMock);
+    context.handleEvent(new EnemyMovementChosenEvent(Position.of(0, 2)), viewMock);
     assertThat(model.getPlayerPosition(PlayerColor.GRAY)).isEqualTo(Position.of(0, 2));
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(0, 1))
@@ -109,7 +109,7 @@ public class GrenadeLauncherTest extends BaseGunTest {
 
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
-    context.handleEvent(new EnemyMovementChosenEvent(Position.of(0, 2), PlayerColor.GRAY), viewMock);
+    context.handleEvent(new EnemyMovementChosenEvent(Position.of(0, 2)), viewMock);
     assertThat(model.getPlayerPosition(PlayerColor.GRAY)).isEqualTo(Position.of(0, 2));
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(0, 1))
@@ -165,7 +165,7 @@ public class GrenadeLauncherTest extends BaseGunTest {
 
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
-    context.handleEvent(new EnemyMovementChosenEvent(model.getPlayerPosition(PlayerColor.GRAY), PlayerColor.GRAY), viewMock);
+    context.handleEvent(new EnemyMovementChosenEvent(model.getPlayerPosition(PlayerColor.GRAY)), viewMock);
 
     context.handleEvent(new CellToHitChosenEvent(Position.of(0, 2)), viewMock);
 

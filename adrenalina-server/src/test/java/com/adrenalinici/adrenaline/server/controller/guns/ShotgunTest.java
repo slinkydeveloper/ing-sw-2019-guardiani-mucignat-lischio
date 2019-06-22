@@ -71,7 +71,7 @@ public class ShotgunTest extends BaseGunTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(0, 1), PlayerColor.GRAY),
+      new EnemyMovementChosenEvent(Position.of(0, 1)),
       viewMock
     );
 

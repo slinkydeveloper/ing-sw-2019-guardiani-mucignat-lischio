@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
-public class GunChooseMovementFlowNodeTest extends BaseNodeTest {
+public class BaseGunChooseMovementFlowNodeTest extends BaseNodeTest {
   @Override
   @Before
   public void setUp() {
@@ -30,7 +30,7 @@ public class GunChooseMovementFlowNodeTest extends BaseNodeTest {
 
   @Override
   public FlowNode nodeToTest() {
-    return new GunChooseMovementFlowNode(2);
+    return new BaseGunChooseMovementFlowNode(2);
   }
 
   @Test
@@ -45,7 +45,7 @@ public class GunChooseMovementFlowNodeTest extends BaseNodeTest {
 
     context.nextPhase(
       viewMock,
-      new GunChooseMovementFlowNode.GunChooseMovementFlowState(baseEffectGunFlowState)
+      new BaseGunChooseMovementFlowNode.GunChooseMovementFlowState(baseEffectGunFlowState)
     );
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);

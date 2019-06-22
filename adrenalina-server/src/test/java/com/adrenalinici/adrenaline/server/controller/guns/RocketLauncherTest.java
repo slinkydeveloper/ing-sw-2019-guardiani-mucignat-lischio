@@ -30,7 +30,7 @@ public class RocketLauncherTest extends BaseGunTest {
     return Arrays.asList(
       new ChooseBaseEffectForGunFlowNode(),
       new ChoosePlayersToHitFlowNode(),
-      new GunChooseMovementFlowNode(2),
+      new BaseGunChooseMovementFlowNode(2),
       new GunChooseEnemyMovementFlowNode(1)
     );
   }
@@ -73,7 +73,7 @@ public class RocketLauncherTest extends BaseGunTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(1, 2), PlayerColor.GRAY),
+      new EnemyMovementChosenEvent(Position.of(1, 2)),
       viewMock
     );
 
@@ -129,7 +129,7 @@ public class RocketLauncherTest extends BaseGunTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.YELLOW));
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(2, 2), PlayerColor.YELLOW),
+      new EnemyMovementChosenEvent(Position.of(2, 2)),
       viewMock
     );
 
@@ -194,7 +194,7 @@ public class RocketLauncherTest extends BaseGunTest {
       .containsOnly(AmmoColor.RED);
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(1, 2), PlayerColor.YELLOW),
+      new EnemyMovementChosenEvent(Position.of(1, 2)),
       viewMock
     );
 
@@ -255,11 +255,11 @@ public class RocketLauncherTest extends BaseGunTest {
       .containsOnly(AmmoColor.RED);
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(1, 2), PlayerColor.YELLOW),
+      new EnemyMovementChosenEvent(Position.of(1, 2)),
       viewMock
     );
 
-    assertThat(model.getPlayerPosition(PlayerColor.YELLOW)).isEqualTo(Position.of(1, 2));
+    assertThat(model.getPlayerPosition(PlayerColor.GRAY)).isEqualTo(Position.of(1, 2));
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(1, 1))
       .haveExactly(1, isDashboardCellUpdatedEvent(1, 2));

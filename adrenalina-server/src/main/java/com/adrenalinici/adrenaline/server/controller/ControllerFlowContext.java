@@ -40,6 +40,11 @@ public class ControllerFlowContext extends BaseFlowContext {
     return this;
   }
 
+  public ControllerFlowContext incrementRemainingActions() {
+    this.remainingActions++;
+    return this;
+  }
+
   public PlayerColor getTurnOfPlayer() {
     return turnOfPlayer;
   }

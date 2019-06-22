@@ -8,18 +8,20 @@ import com.adrenalinici.adrenaline.server.controller.StatelessControllerFlowNode
 import com.adrenalinici.adrenaline.server.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.*;
 
 public class ChooseActionFlowNode implements StatelessControllerFlowNode {
 
-  private static final List<Action> FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS = Arrays.asList(Action.MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_MOVE, Action.MOVE_MOVE_PICKUP);
-  private static final List<Action> FRENZY_MODE_AFTER_FIRST_PLAYER_ACTIONS = Arrays.asList(Action.MOVE_MOVE_RELOAD_SHOOT, Action.MOVE_MOVE_MOVE_PICKUP);
-  private static final List<Action> NO_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
-  private static final List<Action> ONE_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT, Action.MOVE_MOVE_PICKUP);
-  private static final List<Action> TWO_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT, Action.MOVE_MOVE_PICKUP, Action.MOVE_SHOOT);
+  private static final List<Action> FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE_MOVE, Action.MOVE_MOVE_PICKUP);
+  private static final List<Action> FRENZY_MODE_AFTER_FIRST_PLAYER_ACTIONS = Collections.singletonList(Action.MOVE_MOVE_MOVE_PICKUP);
+  private static final List<Action> NO_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP);
+  private static final List<Action> ONE_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.MOVE_MOVE_PICKUP);
+  private static final List<Action> TWO_ADRENALINE_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.MOVE_MOVE_PICKUP);
 
   @Override
   public String id() {
@@ -79,20 +81,43 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
   }
 
   private List<Action> calculateAvailableActions(GameModel model, ControllerFlowContext context) {
+    List<Action> actions;
     if (context.isFrenzyMode()) {
       if (context.isFirstPlayerOrAfterFirstPlayerInFrenzyMode()) {
-        return FRENZY_MODE_AFTER_FIRST_PLAYER_ACTIONS;
+        actions = new ArrayList<>(FRENZY_MODE_AFTER_FIRST_PLAYER_ACTIONS);
+        if (model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns().isEmpty())
+          return actions;
+        actions.add(Action.MOVE_MOVE_RELOAD_SHOOT);
+        return actions;
       } else {
-        return FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS;
+        actions = new ArrayList<>(FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS);
+        if (model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns().isEmpty())
+          return actions;
+        actions.add(Action.MOVE_RELOAD_SHOOT);
+        return actions;
       }
     }
     int thisPlayerDamages = model.getPlayerDashboard(context.getTurnOfPlayer()).getDamages().size();
     if (thisPlayerDamages < 3) {
-      return NO_ADRENALINE_ACTIONS;
+      actions = new ArrayList<>(NO_ADRENALINE_ACTIONS);
+      if (model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns().isEmpty())
+        return actions;
+      actions.add(Action.SHOOT);
+      return actions;
+
     } else if (thisPlayerDamages < 6) {
-      return ONE_ADRENALINE_ACTIONS;
+      actions = new ArrayList<>(ONE_ADRENALINE_ACTIONS);
+      if (model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns().isEmpty())
+        return actions;
+      actions.add(Action.SHOOT);
+      return actions;
     } else {
-      return TWO_ADRENALINE_ACTIONS;
+      actions = new ArrayList<>(TWO_ADRENALINE_ACTIONS);
+      if (model.getPlayerDashboard(context.getTurnOfPlayer()).getLoadedGuns().isEmpty())
+        return actions;
+      actions.add(Action.SHOOT);
+      actions.add(Action.MOVE_SHOOT);
+      return actions;
     }
   }
 }

@@ -31,7 +31,7 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
         .collect(Collectors.toList());
 
     if (currentPlayerScopes.isEmpty() || flowState.getHitPlayers().isEmpty()) {
-      context.nextPhase(view);
+      context.nextPhase(view, flowState);
     } else {
       List<PlayerColor> hittablePlayers = new ArrayList<>(flowState.getHitPlayers().keySet());
       System.out.println("I'm the SCOPE, wanna give an additional damage to one of this enemy?");
@@ -44,7 +44,7 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
   public void handleEvent(ViewEvent event, GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onPlayerChosenEvent(
       e -> {
-        if (e.getPlayerColor() == null) context.nextPhase(view);
+        if (e.getPlayerColor() == null) context.nextPhase(view, flowState);
         else {
           model.hitPlayer(context.getTurnOfPlayer(), e.getPlayerColor(), 1);
 
@@ -55,7 +55,7 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
             .findFirst()
             .ifPresent(puc -> model.removePowerUpFromPlayer(context.getTurnOfPlayer(), puc));
 
-          context.nextPhase(view);
+          context.nextPhase(view, flowState);
         }
       });
   }

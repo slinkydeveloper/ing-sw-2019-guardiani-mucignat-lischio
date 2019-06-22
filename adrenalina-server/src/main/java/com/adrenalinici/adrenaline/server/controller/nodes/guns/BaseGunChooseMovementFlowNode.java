@@ -22,7 +22,7 @@ import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNode
  * This value is modified only in case the player chooses to move in a Position that
  * id different from the one in which he already is.
  */
-public class GunChooseMovementFlowNode implements SkippableGunFlowNode<GunChooseMovementFlowNode.GunChooseMovementFlowState> {
+public class BaseGunChooseMovementFlowNode implements SkippableGunFlowNode<BaseGunChooseMovementFlowNode.GunChooseMovementFlowState> {
 
   public static class GunChooseMovementFlowState implements BaseEffectGunFlowState {
     boolean alreadyMoved = false;
@@ -100,7 +100,7 @@ public class GunChooseMovementFlowNode implements SkippableGunFlowNode<GunChoose
 
   int distance;
 
-  public GunChooseMovementFlowNode(int distance) {
+  public BaseGunChooseMovementFlowNode(int distance) {
     this.distance = distance;
   }
 

@@ -77,7 +77,7 @@ public class NewMatchMessageHandler implements MessageHandler<NewMatchMessage> {
 
       context.send(
         connectionId,
-        new InfoMessage("Ok, you are now connected!", InfoType.INFO)
+        new InfoMessage("Ok, match created!", InfoType.INFO)
       );
 
     } else {

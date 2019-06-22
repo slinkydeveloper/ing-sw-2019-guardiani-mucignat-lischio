@@ -25,16 +25,18 @@ public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<Alternati
 
   @Override
   public void onJump(AlternativeEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    consumer.accept(flowState, model, context);
+    if (!flowState.getChosenPlayersToHit().isEmpty()) {
+      consumer.accept(flowState, model, context);
 
-    flowState.applyHitAndMarkPlayers(model, context);
+      flowState.applyHitAndMarkPlayers(model, context);
 
-    // Remove ammos required for effect and unload the gun
-    PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
+      // Remove ammos required for effect and unload the gun
+      PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
 
-    dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
+      dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
 
-    dashboard.unloadGun(flowState.getChosenGun().getId());
+      dashboard.unloadGun(flowState.getChosenGun().getId());
+    } else context.incrementRemainingActions();
     context.nextPhase(view, flowState);
   }
 

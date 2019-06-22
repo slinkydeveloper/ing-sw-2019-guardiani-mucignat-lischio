@@ -22,19 +22,21 @@ public class ChooseGunFlowNode implements StatelessControllerFlowNode {
   @Override
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onGunChosenEvent(gunChosenEvent -> {
-      GunLoader.INSTANCE
-        .getModelGun(gunChosenEvent.getGunid())
-        .visit(alternativeEffectGun -> {
-          DecoratedAlternativeEffectGun decorated = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE
-          .getDecoratedGun(alternativeEffectGun.getId());
-          context.addPhases(decorated.getPhases().toArray(new String[0]));
-          context.nextPhase(view, new AlternativeEffectGunFlowStateImpl(decorated));
-      }, baseEffectGun -> {
-          DecoratedBaseEffectGun decorated = (DecoratedBaseEffectGun) GunLoader.INSTANCE
-            .getDecoratedGun(baseEffectGun.getId());
-          context.addPhases(decorated.getPhases().toArray(new String[0]));
-          context.nextPhase(view, new BaseEffectGunFlowStateImpl(decorated));
-      });
+      if (gunChosenEvent.getGunid() != null) {
+        GunLoader.INSTANCE
+          .getModelGun(gunChosenEvent.getGunid())
+          .visit(alternativeEffectGun -> {
+            DecoratedAlternativeEffectGun decorated = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE
+              .getDecoratedGun(alternativeEffectGun.getId());
+            context.addPhases(decorated.getPhases().toArray(new String[0]));
+            context.nextPhase(view, new AlternativeEffectGunFlowStateImpl(decorated));
+          }, baseEffectGun -> {
+            DecoratedBaseEffectGun decorated = (DecoratedBaseEffectGun) GunLoader.INSTANCE
+              .getDecoratedGun(baseEffectGun.getId());
+            context.addPhases(decorated.getPhases().toArray(new String[0]));
+            context.nextPhase(view, new BaseEffectGunFlowStateImpl(decorated));
+          });
+      } else context.nextPhase(view);
     });
   }
 }
