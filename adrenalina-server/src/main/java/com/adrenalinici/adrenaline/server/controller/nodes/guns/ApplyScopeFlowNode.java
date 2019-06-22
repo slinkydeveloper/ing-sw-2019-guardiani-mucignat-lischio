@@ -34,8 +34,8 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
       context.nextPhase(view, flowState);
     } else {
       List<PlayerColor> hittablePlayers = new ArrayList<>(flowState.getHitPlayers().keySet());
-      System.out.println("I'm the SCOPE, wanna give an additional damage to one of this enemy?");
       view.showChoosePlayerToHit(hittablePlayers);
+      //TODO create a new view method to show the player you want to hit with the scope (and a new view event)
     }
 
   }
