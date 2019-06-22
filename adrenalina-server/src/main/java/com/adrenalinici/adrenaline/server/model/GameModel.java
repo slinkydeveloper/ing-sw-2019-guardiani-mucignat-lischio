@@ -12,6 +12,7 @@ import com.adrenalinici.adrenaline.server.controller.GunLoader;
 
 import java.util.*;
 import java.util.AbstractMap.SimpleImmutableEntry;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -435,15 +436,21 @@ public class GameModel extends ObservableImpl<ModelEvent> {
    */
   public void refillDashboard() {
     dashboard.stream().forEach(dc -> {
+      AtomicBoolean mut = new AtomicBoolean(false);
       dc.visit(rpc -> {
         while (rpc.getAvailableGuns().size() < 3 && !gunsDeck().isEmpty()) {
           rpc.addAvailableGun(gunsDeck().getCard());
+          mut.set(true);
         }
       }, pdc -> {
         if (!pdc.getAmmoCard().isPresent() && !ammoCardDeck().isEmpty()) {
           pdc.setAmmoCard(ammoCardDeck().getCard());
+          mut.set(true);
         }
       });
+      if (mut.get()) {
+        notifyEvent(new DashboardCellUpdatedEvent(light(), dc.getPosition()));
+      }
     });
   }
 

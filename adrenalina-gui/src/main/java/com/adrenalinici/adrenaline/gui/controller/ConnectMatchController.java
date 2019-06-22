@@ -8,14 +8,16 @@ import com.adrenalinici.adrenaline.common.network.outbox.AvailableMatchesMessage
 import com.adrenalinici.adrenaline.common.network.outbox.InfoMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.common.util.LogUtils;
-import com.adrenalinici.adrenaline.gui.ErrorUtils;
+import com.adrenalinici.adrenaline.gui.GuiUtils;
 import com.adrenalinici.adrenaline.gui.GuiView;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URI;
@@ -41,6 +43,8 @@ public class ConnectMatchController {
   private GuiView view;
   private Map<String, Set<PlayerColor>> matches;
   private String registeredHandler;
+
+  private Boolean startingNewMatch;
 
   public void initialize() {
     newMatchButton.setDisable(true);
@@ -73,7 +77,7 @@ public class ConnectMatchController {
       choicesPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/new_match_dialog.fxml"));
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Cannot find fxml", e);
-      ErrorUtils.showExceptionAndClose(e,"Cannot find fxml");
+      GuiUtils.showExceptionAndClose(e,"Cannot find fxml");
       return;
     }
 
@@ -96,6 +100,7 @@ public class ConnectMatchController {
     Optional<ButtonType> result = alert.showAndWait();
     if (result.isPresent() && result.get() == ButtonType.OK && !matchNameText.getText().isEmpty()) {
       LOG.info("Going to create a new match");
+      startingNewMatch = true;
       view.getEventBus().sendStartNewMatch(
         matchNameText.getText(),
         dashboardChoiceChoiceBox.getValue(),
@@ -115,11 +120,11 @@ public class ConnectMatchController {
       new URI(host + ":" + port); // To check if hostname is valid
     } catch (NumberFormatException e) {
       // Invalid port
-      ErrorUtils.showExceptionAndClose(e, "Invalid port!");
+      GuiUtils.showExceptionAndClose(e, "Invalid port!");
       return null;
     } catch (URISyntaxException e) {
       // Invalid hostname
-      ErrorUtils.showExceptionAndClose(e, "Invalid hostname!");
+      GuiUtils.showExceptionAndClose(e, "Invalid hostname!");
       return null;
     }
 
@@ -135,12 +140,19 @@ public class ConnectMatchController {
   }
 
   private void handleInfoMessage(InfoMessage message) {
-    // TODO on ok go to game scene
-    // TODO on fail open an alert
-    if (message.getInfoType() != InfoType.ERROR) {
-      //moveToGameScene();
+    if (startingNewMatch == null) {
+      GuiUtils.showErrorAlert("Generic error", message.getInformation());
+    }
+    if (startingNewMatch) {
+      if (message.getInfoType() == InfoType.ERROR) {
+        GuiUtils.showErrorAlert("Error while initalizing match", message.getInformation());
+      }
     } else {
-      ErrorUtils.showErrorAlert("Game connection error", message.getInformation());
+      if (message.getInfoType() != InfoType.ERROR) {
+        moveToGameScene();
+      } else {
+        GuiUtils.showErrorAlert("Game connection error", message.getInformation());
+      }
     }
   }
 
@@ -155,8 +167,11 @@ public class ConnectMatchController {
     dialog.setContentText("Player color:");
 
     Optional<PlayerColor> result = dialog.showAndWait();
+    dialog.getDialogPane().requestFocus();
     if (result.isPresent()){
+      startingNewMatch = false;
       LOG.info("Trying to connect to match " + chosenMatch + " with color " + result.get());
+      this.view.getEventBus().setEnqueueFilter(m -> !(m instanceof InfoMessage));
       this.view.getEventBus().sendChosenMatch(chosenMatch, result.get());
     }
   }
@@ -165,6 +180,27 @@ public class ConnectMatchController {
     this.view.getEventBus().stop();
     this.view.getEventBus().unregisterEventHandler(registeredHandler);
     LOG.info("Moving to game scene");
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/main_game_pane.fxml"));
+      Scene newScene = new Scene(loader.load());
+      Stage newStage = new Stage();
+      newStage.setScene(newScene);
+      newStage.setMaximized(true);
+
+      MainGamePaneController controller = loader.getController();
+
+      controller.setView(this.view);
+
+      ((Stage)this.newMatchButton.getScene().getWindow()).close();
+      newStage.show();
+
+      controller.start();
+
+    } catch (Exception e) {
+      LOG.log(Level.SEVERE, "Error while loading game scene", e);
+      GuiUtils.showExceptionAndClose(e,"Error while loading game scene");
+      return;
+    }
   }
 
 }

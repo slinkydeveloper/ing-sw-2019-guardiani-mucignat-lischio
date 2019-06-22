@@ -42,6 +42,10 @@ public class LightGameModel implements Serializable {
     return playerDashboards;
   }
 
+  public LightPlayerDashboard getPlayerDashboard(PlayerColor player) {
+    return getPlayerDashboards().stream().filter(d -> player.equals(d.getPlayer())).findFirst().orElseThrow(() -> new IllegalStateException("Player not present " + player));
+  }
+
   @Override
   public String toString() {
     return "LightGameModel{" +
