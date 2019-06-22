@@ -28,8 +28,9 @@ public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlo
 
   @Override
   public void onJump(BaseEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    if (!flowState.getChosenPlayersToHit().isEmpty()) {
-      consumer.accept(flowState, model, context);
+    consumer.accept(flowState, model, context);
+
+    if (!(flowState.getHitPlayers().isEmpty() && flowState.getMarkPlayers().isEmpty())) {
 
       if (!(resolveEffectRestriction(flowState).equals(SKIP_IF_EXTRA_ON) && flowState.isActivatedSecondExtraEffect())) {
         flowState.applyHitAndMarkPlayers(model, context);

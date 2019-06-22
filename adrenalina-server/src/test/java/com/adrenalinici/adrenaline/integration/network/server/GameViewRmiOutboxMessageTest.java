@@ -50,18 +50,6 @@ public class GameViewRmiOutboxMessageTest extends BaseGameViewRmiIntegrationTest
   }
 
   @Test
-  public void showNextTurnTest() throws IOException, InterruptedException {
-    remoteView.showNextTurn(OutboxMockData.PLAYER);
-
-    sleep();
-
-    ArgumentCaptor<PlayerColor> playerCaptor = ArgumentCaptor.forClass(PlayerColor.class);
-    verify(mockedClientView, times(1)).showNextTurn(playerCaptor.capture());
-
-    assertThat(playerCaptor.getValue()).isEqualTo(OutboxMockData.PLAYER);
-  }
-
-  @Test
   public void showReloadableGunsTest() throws IOException, InterruptedException {
     remoteView.showReloadableGuns(OutboxMockData.GUNS);
 

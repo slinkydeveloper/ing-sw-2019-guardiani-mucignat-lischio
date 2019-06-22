@@ -25,8 +25,9 @@ public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<Alternati
 
   @Override
   public void onJump(AlternativeEffectGunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
-    if (!flowState.getChosenPlayersToHit().isEmpty()) {
-      consumer.accept(flowState, model, context);
+    consumer.accept(flowState, model, context);
+
+    if (!(flowState.getHitPlayers().keySet().isEmpty() && flowState.getMarkPlayers().keySet().isEmpty())) {
 
       flowState.applyHitAndMarkPlayers(model, context);
 
