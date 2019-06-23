@@ -186,6 +186,7 @@ public class JsonUtils {
 
   public static List<PowerUpCard> loadPowerUpCards() {
     ArrayNode node = (ArrayNode) getConfigurationJSONFromClasspath("powerup_cards.json");
+    if (node == null) throw new IllegalStateException("Cannot find powerup_cards.json in classpath");
     return StreamUtils
       .iteratorStream(node.elements())
       .map(j -> (ObjectNode)j)
@@ -198,6 +199,7 @@ public class JsonUtils {
 
   public static List<AmmoCard> loadAmmoCards() {
     ArrayNode node = (ArrayNode) getConfigurationJSONFromClasspath("ammo_cards.json");
+    if (node == null) throw new IllegalStateException("Cannot find ammo_cards.json in classpath");
     return StreamUtils
       .iteratorStream(node.elements())
       .map(j -> StreamUtils.iteratorStream(j.elements()).map(JsonNode::asText).collect(Collectors.toList()))

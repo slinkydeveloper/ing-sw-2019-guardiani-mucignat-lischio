@@ -131,14 +131,11 @@ public class PlayerDashboard {
    */
   public void addGun(String gun) {
     if (guns.size() == 3) {
-      guns.remove(
-        guns
-          .entrySet()
-          .stream()
-          .min((e1, e2) -> (e1.getValue() == e2.getValue()) ? 0 : !e1.getValue() ? -1 : 1)
-          .get()
-          .getKey() // I remove the first unloaded gun
-      );
+      guns
+        .entrySet()
+        .stream()
+        .min((e1, e2) -> (e1.getValue().equals(e2.getValue())) ? 0 : !e1.getValue() ? -1 : 1)
+        .ifPresent(e -> guns.remove(e.getKey())); // I remove the first unloaded gun
     }
     guns.put(gun, true);
   }
