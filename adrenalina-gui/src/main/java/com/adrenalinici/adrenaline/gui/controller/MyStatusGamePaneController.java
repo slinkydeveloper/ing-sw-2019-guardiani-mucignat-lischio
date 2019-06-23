@@ -36,21 +36,7 @@ public class MyStatusGamePaneController {
 
   private PlayerColor thisPlayer;
 
-  public void initialize() {
-    damagesGrid.setGridLinesVisible(true);
-    marksGrid.setGridLinesVisible(true);
-
-    updatePlayerInfo(
-      Arrays.asList(PlayerColor.CYAN, PlayerColor.CYAN, PlayerColor.YELLOW),
-      Collections.emptyList(),
-      0,
-      0,
-      Collections.emptyList(),
-      Collections.emptyList(),
-      Collections.emptySet(),
-      Collections.emptySet()
-    );
-  }
+  public void initialize() {}
 
   public void initializePlayer(PlayerColor p) {
     thisPlayer = p;
@@ -112,7 +98,7 @@ public class MyStatusGamePaneController {
     gunsHBox.getChildren().clear();
 
     loadedGuns.forEach(gun -> {
-      String url = String.format("/images/guns/%s.png", gun.getId());
+      String url = GuiUtils.computeGunFilename(gun);
 
       gunsHBox.getChildren().add(
         new ImageView(new Image(url, 100, 150, true, true))
@@ -120,7 +106,7 @@ public class MyStatusGamePaneController {
     });
 
     unloadedGuns.forEach(gun -> {
-      String url = String.format("/images/guns/%s.png", gun.getId());
+      String url = GuiUtils.computeGunFilename(gun);
 
       gunsHBox.getChildren().add(
         new ImageView(new Image(url, 100, 150, true, true))

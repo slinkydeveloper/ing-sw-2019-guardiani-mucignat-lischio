@@ -1,19 +1,20 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
+import com.adrenalinici.adrenaline.common.model.Action;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
+import com.adrenalinici.adrenaline.common.model.Position;
 import com.adrenalinici.adrenaline.common.model.PowerUpCard;
 import com.adrenalinici.adrenaline.common.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.common.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.common.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.common.network.inbox.ViewEventMessage;
-import com.adrenalinici.adrenaline.common.network.outbox.AvailablePowerUpCardsForRespawnMessage;
-import com.adrenalinici.adrenaline.common.network.outbox.ModelEventMessage;
-import com.adrenalinici.adrenaline.common.view.PowerUpCardChosenEvent;
-import com.adrenalinici.adrenaline.common.view.ViewEvent;
+import com.adrenalinici.adrenaline.common.network.outbox.*;
+import com.adrenalinici.adrenaline.common.view.*;
 import com.adrenalinici.adrenaline.gui.GuiUtils;
 import com.adrenalinici.adrenaline.gui.GuiView;
 import javafx.fxml.FXML;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +39,9 @@ public class MainGamePaneController {
     registeredHandler = view.getEventBus().registerEventHandler((message, eventBus, s) -> {
       message.onModelEventMessage(this::handleModelUpdate);
       message.onAvailablePowerUpCardsForRespawnMessage(this::handleAvailablePowerUpCardsForRespawn);
+      message.onAvailableActionsMessage(this::handleAvailableActions);
+      message.onAvailableMovementsMessage(this::handleAvailableMovements);
+      message.onAvailableGunsToPickupMessage(this::handleAvailableGunsToPickup);
     });
     view.getEventBus().start();
   }
@@ -84,6 +88,56 @@ public class MainGamePaneController {
 
       sendViewEvent(new PowerUpCardChosenEvent(view.getEventBus().getMyPlayer(), chosenCard));
     }
+  }
+
+  public void handleAvailableActions(AvailableActionsMessage message) {
+    if (isMyTurn()) {
+      Action chosen = GuiUtils.showChoiceDialogWithMappedValues(
+        "Scegli una azione",
+        "Azione:",
+        message.getActions(),
+        Action::toString
+      );
+
+      if (chosen != null) {
+        sendViewEvent(new ActionChosenEvent(chosen));
+      } else {
+        sendViewEvent(new ActionChosenEvent(null));
+      }
+    }
+  }
+
+  public void handleAvailableMovements(AvailableMovementsMessage message) {
+    if (isMyTurn()) {
+      Position chosen = GuiUtils.showChoiceDialogWithMappedValues(
+        "Scegli una posizione",
+        "Posizione:",
+        message.getPositions(),
+        p -> String.format("[%d, %d]", p.line(), p.cell())
+      );
+      if (chosen != null) {
+        sendViewEvent(new MovementChosenEvent(chosen));
+      } else {
+        sendViewEvent(new MovementChosenEvent(null));
+      }
+    }
+  }
+
+  public void handleAvailableGunsToPickup(AvailableGunsToPickupMessage message) {
+    if (isMyTurn()) {
+      String chosenCard = GuiUtils.showImagesRadioButtonDialog(
+        "Scegli un'arma",
+        "Scegli un'arma da raccogliere. L'arma verrà raccolta carica.",
+        new ArrayList<>(message.getGuns()),
+        GuiUtils::computeGunFilename
+      );
+
+      sendViewEvent(new GunChosenEvent(chosenCard));
+    }
+  }
+
+  private boolean isMyTurn() {
+    return this.view.getEventBus().getMyPlayer() == this.view.getEventBus().getTurnOfPlayer();
   }
 
   private void sendViewEvent(ViewEvent event) {

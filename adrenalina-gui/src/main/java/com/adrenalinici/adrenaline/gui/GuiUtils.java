@@ -1,21 +1,22 @@
 package com.adrenalinici.adrenaline.gui;
 
+import com.adrenalinici.adrenaline.common.model.Gun;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.PowerUpCard;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class GuiUtils {
 
@@ -52,6 +53,14 @@ public class GuiUtils {
     return String.format("/images/powerups/%s_%s.png", card.getAmmoColor().name().toLowerCase(), card.getPowerUpType().name().toLowerCase());
   }
 
+  public static String computeGunFilename(Gun gun) {
+    return computeGunFilename(gun.getId());
+  }
+
+  public static String computeGunFilename(String gunId) {
+    return String.format("/images/guns/%s.png", gunId);
+  }
+
   @SuppressWarnings("unchecked")
   public static <T> T showImagesRadioButtonDialog(String title, String question, List<T> elements, Function<T, String> fileNameFn) {
     if (elements.isEmpty()) return null;
@@ -85,6 +94,26 @@ public class GuiUtils {
 
     if (result.isPresent() && result.get() == ButtonType.OK) {
       return (T) group.getSelectedToggle().getUserData();
+    } else {
+      return null;
+    }
+  }
+
+  public static <T> T showChoiceDialogWithMappedValues(String title, String contentText, List<T> values, Function<T, String> fn) {
+    Map<String, T> valuesMap = values.stream().collect(Collectors.toMap(fn, Function.identity()));
+    List<String> choices = new ArrayList<>(valuesMap.keySet());
+
+    ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+
+    dialog.setTitle(title);
+    dialog.setHeaderText(title);
+    dialog.setContentText(contentText);
+
+    Optional<String> result = dialog.showAndWait();
+    dialog.getDialogPane().requestFocus();
+
+    if (result.isPresent()) {
+      return valuesMap.get(dialog.getSelectedItem());
     } else {
       return null;
     }
