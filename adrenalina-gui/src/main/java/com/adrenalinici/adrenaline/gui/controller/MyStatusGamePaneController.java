@@ -16,8 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -43,17 +41,6 @@ public class MyStatusGamePaneController {
 
     playerColorLabel.setText("Giocatore " + p.name());
     playerColorLabel.setTextFill(Paint.valueOf(p.name().toUpperCase()));
-
-    updatePlayerInfo(
-      Arrays.asList(PlayerColor.CYAN),
-      Collections.emptyList(),
-      0,
-      0,
-      Collections.emptyList(),
-      Collections.emptyList(),
-      Collections.emptySet(),
-      Collections.emptySet()
-    );
   }
 
   public void update(PlayerDashboardUpdatedEvent event) {
