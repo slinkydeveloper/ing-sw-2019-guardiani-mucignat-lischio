@@ -113,7 +113,7 @@ public class SledgehammerTest extends BaseGunTest {
       .haveExactly(1, isPlayerDashboardUpdateEvent(PlayerColor.GRAY));
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(0, 2), PlayerColor.GRAY),
+      new EnemyMovementChosenEvent(Position.of(0, 2)),
       viewMock
     );
 

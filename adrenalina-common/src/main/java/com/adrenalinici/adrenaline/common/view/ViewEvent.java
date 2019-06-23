@@ -35,7 +35,7 @@ public interface ViewEvent extends Serializable {
     return false;
   }
 
-  default boolean isExpiredTurnEvent() {
+  default boolean isUnavailablePlayerEvent() {
     return false;
   }
 

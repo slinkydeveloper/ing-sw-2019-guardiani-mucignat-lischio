@@ -62,7 +62,7 @@ public class GunChooseEnemyMovementFlowNodeOneDirectionModeTest extends BaseNode
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    context.handleEvent(new EnemyMovementChosenEvent(Position.of(1, 0), PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new EnemyMovementChosenEvent(Position.of(1, 0)), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(1, 0))

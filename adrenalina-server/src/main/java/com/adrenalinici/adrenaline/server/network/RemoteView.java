@@ -24,9 +24,13 @@ public class RemoteView extends BaseRemoteView {
   }
 
   @Override
+  public void showAvailableEnemyMovements(List<Position> positions) {
+    broadcast(new AvailableEnemyMovementsMessage(positions));
+  }
+
+  @Override
   public void showNextTurn(PlayerColor player) {
-    onNewTurn();
-    broadcast(new NextTurnMessage(player));
+    onNewTurn(player);
   }
 
   @Override

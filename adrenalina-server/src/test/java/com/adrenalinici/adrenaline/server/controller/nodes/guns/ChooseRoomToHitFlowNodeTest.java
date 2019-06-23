@@ -33,9 +33,9 @@ public class ChooseRoomToHitFlowNodeTest extends BaseNodeTest {
   public void testShowAvailableCells() {
     context.setTurnOfPlayer(PlayerColor.GREEN);
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 2)).addPlayer(PlayerColor.YELLOW);
-    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.GRAY);
-    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.CYAN);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.CYAN);
 
     model.getPlayerDashboard(PlayerColor.GREEN).addGun("furnace");
 
@@ -52,11 +52,10 @@ public class ChooseRoomToHitFlowNodeTest extends BaseNodeTest {
     verify(viewMock, times(1)).showAvailableRooms(roomsCaptor.capture());
     assertThat(roomsCaptor.getValue())
       .containsOnly(
-        CellColor.YELLOW,
         CellColor.GRAY
       );
 
-    context.handleEvent(new RoomChosenEvent(CellColor.YELLOW), viewMock);
+    context.handleEvent(new RoomChosenEvent(CellColor.GRAY), viewMock);
 
     assertThat(alternativeEffectGunFlowState.getChosenPlayersToHit())
       .containsExactlyInAnyOrder(PlayerColor.YELLOW, PlayerColor.GRAY);

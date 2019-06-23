@@ -143,13 +143,14 @@ public class GunLoader {
       if (dirURL.getProtocol().equals("jar")) {
         /* A JAR path */
         String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!")); //strip out only the JAR file
-        String innerPath = dirURL.getPath().substring(dirURL.getPath().indexOf("!") + 1) + "/";
+        String innerPath = dirURL.getPath().substring(dirURL.getPath().indexOf("!") + 2) + "/";
 
         JarFile jar = new JarFile(URLDecoder.decode(jarPath, "UTF-8"));
         return StreamUtils
           .enumerationStream(jar.entries())
           .map(JarEntry::getName)
-          .filter(name -> name.startsWith(innerPath));
+          .filter(name -> name.startsWith(innerPath) && !name.equals(innerPath))
+          .map(name -> name.substring(innerPath.length()));
       }
     } catch (Exception e) {}
     throw new UnsupportedOperationException("Cannot list files for URL " + dirURL);

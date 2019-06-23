@@ -11,6 +11,7 @@ import com.adrenalinici.adrenaline.server.flow.FlowState;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,17 +70,18 @@ public class TagbackGrenadeFlowNode implements ControllerFlowNode<TagbackGrenade
   }
 
   protected List<PlayerColor> calculatePlayersThatCanUseVenomGrenade(GunFlowState gunFlowState, GameModel model, ControllerFlowContext context) {
-    return gunFlowState
-      .getHitPlayers()
-      .keySet()
-      .stream()
-      .filter(f -> model.getPlayerDashboard(f).hasVenomGrenade())
-      .filter(f -> 3 - model.calculateKillerMarksOnVictimPlayerDashboard(f, context.getTurnOfPlayer()) >= 1)
-      .filter(f -> model.getDashboard().calculateIfVisible(
-        model.getPlayerPosition(f),
-        model.getPlayerPosition(context.getTurnOfPlayer())
-      ))
-      .collect(Collectors.toList());
+    return gunFlowState == null ? Collections.emptyList() :
+      gunFlowState
+        .getHitPlayers()
+        .keySet()
+        .stream()
+        .filter(f -> model.getPlayerDashboard(f).hasVenomGrenade())
+        .filter(f -> 3 - model.calculateKillerMarksOnVictimPlayerDashboard(f, context.getTurnOfPlayer()) >= 1)
+        .filter(f -> model.getDashboard().calculateIfVisible(
+          model.getPlayerPosition(f),
+          model.getPlayerPosition(context.getTurnOfPlayer())
+        ))
+        .collect(Collectors.toList());
   }
 
 }

@@ -211,6 +211,7 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     DashboardCell cell = dashboard
       .stream()
       .filter(c -> c.getCellColor().matchesAmmoColor(card.getAmmoColor()))
+      .filter(DashboardCell::isRespawnCell)
       .findFirst()
       .orElseThrow(() -> new IllegalStateException("Cannot find a cell with color " + card.getAmmoColor()));
 

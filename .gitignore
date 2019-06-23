@@ -28,4 +28,4 @@ hs_err_pid*
 plantuml_repo
 plantuml.jar
 
-.iml
+*.iml

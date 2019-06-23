@@ -64,7 +64,7 @@ public class TractorBeamTest extends BaseGunTest {
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
 
     context.handleEvent(
-      new EnemyMovementChosenEvent(Position.of(0, 0), PlayerColor.GRAY),
+      new EnemyMovementChosenEvent(Position.of(0, 0)),
       viewMock
     );
 

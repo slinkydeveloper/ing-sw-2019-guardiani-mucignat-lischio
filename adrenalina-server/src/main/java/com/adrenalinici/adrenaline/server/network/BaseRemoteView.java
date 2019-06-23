@@ -4,13 +4,14 @@ import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.common.network.inbox.ViewEventMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.ModelEventMessage;
+import com.adrenalinici.adrenaline.common.network.outbox.NextTurnMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.common.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.common.util.ObservableImpl;
-import com.adrenalinici.adrenaline.common.view.ExpiredTurnEvent;
 import com.adrenalinici.adrenaline.common.view.GameView;
 import com.adrenalinici.adrenaline.common.view.StartMatchEvent;
+import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 
 import java.util.*;
@@ -43,6 +44,10 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
     return connectedPlayers;
   }
 
+  public PlayerColor resolvePlayerColor(String connectionId) {
+    return connectedPlayers.get(connectionId);
+  }
+
   public Set<PlayerColor> getAvailablePlayers() {
     return availablePlayers;
   }
@@ -60,14 +65,14 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
     broadcast(new ModelEventMessage(newValue));
   }
 
-  public void notifyDisconnectedPlayer(String connectionId) {
+  public void disconnectedPlayer(String connectionId) {
     if (connectedPlayers.containsKey(connectionId)) {
       LOG.info(String.format("Disconnected %s (connection id %s)", connectedPlayers.get(connectionId), connectionId));
       availablePlayers.add(connectedPlayers.remove(connectionId));
     }
   }
 
-  public boolean notifyNewPlayer(String connectionId, PlayerColor color) {
+  public boolean newPlayer(String connectionId, PlayerColor color) {
     if (availablePlayers.contains(color)) {
       availablePlayers.remove(color);
       connectedPlayers.put(connectionId, color);
@@ -85,10 +90,7 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
   }
 
   public void notifyViewEvent(ViewEventMessage message) {
-    if (!availablePlayers.isEmpty() || !this.matchStarted) { // Someone is disconnected or the match is not yet started
-      // > Drop message or enqueue? Notify client that match is paused?
-      // Noop for now
-    } else {
+    if (this.matchStarted) {
       notifyEvent(new DecoratedEvent<>(message.getViewEvent(), this));
     }
   }
@@ -98,16 +100,23 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
     context.broadcastToMatch(matchId, en);
   }
 
-  void onNewTurn() {
+  void onNewTurn(PlayerColor player) {
+    if (!connectedPlayers.containsValue(player)) {
+      context.enqueueInboxMessage(matchId, new ViewEventMessage(new UnavailablePlayerEvent(player)));
+      return;
+    }
+
     if (actualTimer != null)
       actualTimer.cancel();
     actualTimer = new Timer();
     actualTimer.schedule(new TimerTask() {
       @Override
       public void run() {
-        context.enqueueInboxMessage(matchId, new ViewEventMessage(new ExpiredTurnEvent()));
+        LOG.info(String.format("Turn timer expired for player %s in match %s", player.name(), matchId));
+        context.enqueueInboxMessage(matchId, new ViewEventMessage(new UnavailablePlayerEvent(player)));
       }
     }, turnTimerSeconds * 1000);
+    broadcast(new NextTurnMessage(player));
   }
 
   private void checkStartMatch() {

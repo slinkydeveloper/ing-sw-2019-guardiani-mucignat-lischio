@@ -28,7 +28,7 @@ public class ChooseRoomToHitFlowNode implements ControllerFlowNode<GunFlowState>
         .stream()
         .filter(cell ->
           !cell.getCellColor().equals(model.getDashboard().getDashboardCell(killerPosition).getCellColor()))
-        .filter(cell -> model.getDashboard().calculateIfVisible(cell.getPosition(), killerPosition))
+        .filter(cell -> model.getDashboard().calculateIfVisible(killerPosition, cell.getPosition()))
         .map(DashboardCell::getCellColor)
         .collect(Collectors.toSet());
 

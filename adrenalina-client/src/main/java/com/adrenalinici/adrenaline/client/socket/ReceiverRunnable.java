@@ -65,7 +65,15 @@ public class ReceiverRunnable implements Runnable {
     }
     int size = sizeBuf.getInt(0);
     ByteBuffer valueBuf = ByteBuffer.allocate(size);
-    numRead = channel.read(valueBuf);
+    numRead = 0;
+    while (valueBuf.hasRemaining()) {
+      int readNow = channel.read(valueBuf);
+      if (readNow == -1) {
+        numRead = -1;
+        break;
+      }
+      numRead += readNow;
+    }
 
     if (numRead == -1) {
       channel.close();

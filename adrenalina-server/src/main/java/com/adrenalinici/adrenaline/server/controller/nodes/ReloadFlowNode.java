@@ -34,9 +34,11 @@ public class ReloadFlowNode implements StatelessControllerFlowNode {
   @Override
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onGunChosenEvent(gunToReloadChosenEvent -> {
-      Gun chosenGun = GunLoader.INSTANCE.getModelGun(gunToReloadChosenEvent.getGunid());
-      model.reloadGun(context.getTurnOfPlayer(), chosenGun);
-      context.replayNode(view);
+      if (gunToReloadChosenEvent.getGunid() != null) {
+        Gun chosenGun = GunLoader.INSTANCE.getModelGun(gunToReloadChosenEvent.getGunid());
+        model.reloadGun(context.getTurnOfPlayer(), chosenGun);
+        context.replayNode(view);
+      } else context.nextPhase(view);
     });
   }
 

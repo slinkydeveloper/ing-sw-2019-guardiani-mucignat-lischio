@@ -51,7 +51,7 @@ public class GunChooseEnemyMovementFlowNodeDefaultTest extends BaseNodeTest {
     );
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
-    verify(viewMock, times(1)).showAvailableMovements(positionsCaptor.capture());
+    verify(viewMock, times(1)).showAvailableEnemyMovements(positionsCaptor.capture());
     assertThat(positionsCaptor.getValue())
       .containsOnly(
         new Position(0, 0),
@@ -62,7 +62,7 @@ public class GunChooseEnemyMovementFlowNodeDefaultTest extends BaseNodeTest {
     List<ModelEvent> receivedModelEvents = new ArrayList<>();
     model.registerObserver(receivedModelEvents::add);
 
-    context.handleEvent(new EnemyMovementChosenEvent(Position.of(1, 0), PlayerColor.YELLOW), viewMock);
+    context.handleEvent(new EnemyMovementChosenEvent(Position.of(1, 0)), viewMock);
 
     assertThat(receivedModelEvents)
       .haveExactly(1, isDashboardCellUpdatedEvent(0, 0))

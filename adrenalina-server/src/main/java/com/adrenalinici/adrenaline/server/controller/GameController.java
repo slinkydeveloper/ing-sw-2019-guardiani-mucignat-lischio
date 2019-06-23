@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.common.util.Observer;
 import com.adrenalinici.adrenaline.common.view.GameView;
+import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.nodes.*;
 import com.adrenalinici.adrenaline.server.controller.nodes.guns.*;
@@ -37,6 +38,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   }
 
   public void startMatch(GameView view) {
+    gameModel.refillDashboard();
     this.flowOrchestrator.startNewFlow(view, new ControllerFlowContext(
       this.flowOrchestrator,
       Collections.singletonList(ControllerNodes.FIRST_TURN.name())
@@ -47,7 +49,10 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
   public void onEvent(DecoratedEvent<ViewEvent, GameView> event) {
     if (event.getInnerEvent().isStartMatchEvent()) {
       startMatch(event.getEventSource());
-    } else if (event.getInnerEvent().isExpiredTurnEvent()) {
+    } else if (
+      event.getInnerEvent().isUnavailablePlayerEvent() &&
+      flowOrchestrator.getActualContext().getTurnOfPlayer() == ((UnavailablePlayerEvent)event.getInnerEvent()).getPlayerColor()
+    ) {
       this.endTurnCallback(event.getEventSource());
     } else {
       flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
@@ -140,14 +145,16 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       new ChoosePlayersToHitFlowNode(),
       new ChooseBaseEffectForGunFlowNode(),
       new ChooseAlternativeEffectForGunFlowNode(),
-      new GunChooseMovementFlowNode(1),
-      new GunChooseMovementFlowNode(2),
+      new BaseGunChooseMovementFlowNode(1),
+      new BaseGunChooseMovementFlowNode(2),
       new GunChooseEnemyMovementFlowNode(1),
       new GunChooseEnemyMovementFlowNode(2),
       new ChooseRoomToHitFlowNode(),
       new ChooseCellToHitFlowNode(),
       new ApplyNewtonFlowNode(),
-      new ApplyTeleporterFlowNode()
+      new ApplyTeleporterFlowNode(),
+      new ApplyScopeFlowNode(),
+      new TagbackGrenadeFlowNode()
     ));
     nodes.addAll(GunLoader.INSTANCE.getAllAdditionalNodes());
     return nodes;

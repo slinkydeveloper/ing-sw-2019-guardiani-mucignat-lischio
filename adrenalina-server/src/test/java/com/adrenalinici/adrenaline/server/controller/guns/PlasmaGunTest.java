@@ -10,9 +10,9 @@ import com.adrenalinici.adrenaline.common.view.PlayerChosenEvent;
 import com.adrenalinici.adrenaline.server.controller.DecoratedBaseEffectGun;
 import com.adrenalinici.adrenaline.server.controller.GunLoader;
 import com.adrenalinici.adrenaline.server.controller.nodes.guns.BaseEffectGunFlowStateImpl;
+import com.adrenalinici.adrenaline.server.controller.nodes.guns.BaseGunChooseMovementFlowNode;
 import com.adrenalinici.adrenaline.server.controller.nodes.guns.ChooseBaseEffectForGunFlowNode;
 import com.adrenalinici.adrenaline.server.controller.nodes.guns.ChoosePlayersToHitFlowNode;
-import com.adrenalinici.adrenaline.server.controller.nodes.guns.GunChooseMovementFlowNode;
 import com.adrenalinici.adrenaline.server.flow.FlowNode;
 import com.adrenalinici.adrenaline.server.model.PlayerDashboard;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class PlasmaGunTest extends BaseGunTest {
     return Arrays.asList(
       new ChooseBaseEffectForGunFlowNode(),
       new ChoosePlayersToHitFlowNode(),
-      new GunChooseMovementFlowNode(2)
+      new BaseGunChooseMovementFlowNode(2)
     );
   }
 

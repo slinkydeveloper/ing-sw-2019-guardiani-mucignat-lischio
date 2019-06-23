@@ -14,6 +14,9 @@ public class SerializationUtils {
       out.writeObject(o);
       out.flush();
       return bos.toByteArray();
+    } catch (EOFException e) {
+      LOG.info("Strange EOFException thrown");
+      return null;
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Error while serializing " + o, e);
       return null;
@@ -25,6 +28,9 @@ public class SerializationUtils {
     try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes)) {
       ObjectInputStream in = new ObjectInputStream(bis);
       return (T) in.readObject();
+    } catch (EOFException e) {
+      LOG.info("Strange EOFException thrown");
+      return null;
     } catch (IOException | ClassNotFoundException e) {
       LOG.log(Level.SEVERE, "Error while deserializing", e);
       return null;

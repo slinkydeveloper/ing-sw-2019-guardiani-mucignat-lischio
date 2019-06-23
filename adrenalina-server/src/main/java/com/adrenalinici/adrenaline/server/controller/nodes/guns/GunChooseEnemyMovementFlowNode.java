@@ -51,7 +51,7 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunF
           .collect(Collectors.toList())
       );
     } else {
-      view.showAvailableMovements(
+      view.showAvailableEnemyMovements(
         model.getDashboard().calculateMovements(actualEnemyPosition, distance)
       );
     }
@@ -63,9 +63,8 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunF
       e -> {
         if (
           e.getCoordinates() != null &&
-            e.getEnemy() != null &&
-            !e.getCoordinates().equals(model.getPlayerPosition(e.getEnemy()))
-        ) model.movePlayerInDashboard(e.getCoordinates(), e.getEnemy());
+            !e.getCoordinates().equals(model.getPlayerPosition(flowState.getChosenPlayersToHit().get(0)))
+        ) model.movePlayerInDashboard(e.getCoordinates(), flowState.getChosenPlayersToHit().get(0));
 
         context.nextPhase(view, flowState);
       }

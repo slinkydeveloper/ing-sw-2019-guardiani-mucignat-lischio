@@ -19,6 +19,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -50,7 +51,7 @@ public class JsonUtils {
   }
 
   public static List<AmmoColor> parseListAmmoColor(JsonNode node) {
-    return node == null ? null : StreamSupport.stream(node.spliterator(), false).map(JsonUtils::parseAmmoColor).collect(Collectors.toList());
+    return node == null ? Collections.emptyList() : StreamSupport.stream(node.spliterator(), false).map(JsonUtils::parseAmmoColor).collect(Collectors.toList());
   }
 
   public static Effect parseEffect(JsonNode node) {

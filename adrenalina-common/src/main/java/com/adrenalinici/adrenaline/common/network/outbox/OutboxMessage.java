@@ -9,6 +9,9 @@ public interface OutboxMessage extends Serializable {
 
   default void onAvailableMovementsMessage(Consumer<AvailableMovementsMessage> c) {}
 
+  default void onAvailableEnemyMovementsMessage(Consumer<AvailableEnemyMovementsMessage> c) {
+  }
+
   default void onNextTurnMessage(Consumer<NextTurnMessage> c) {}
 
   default void onReloadableGunsMessage(Consumer<ReloadableGunsMessage> c) {}

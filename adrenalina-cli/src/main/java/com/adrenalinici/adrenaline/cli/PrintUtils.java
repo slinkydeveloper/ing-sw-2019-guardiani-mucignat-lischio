@@ -51,10 +51,10 @@ public class PrintUtils {
 
   }};
 
-  public static void main(String[] args) {
+  /*public static void main(String[] args) {
     printSmallDashboard(playersMap);
     printMedium1Dashboard(playersMap);
-  }
+  }*/
 
   public static void printSmallDashboard(Map<Position, List<PlayerColor>> playersMap) {
     //first line
@@ -70,12 +70,13 @@ public class PrintUtils {
     System.out.println("╙" + HORIZ_DOOR + "╧" + HORIZ_WALL + "╧" + HORIZ_DOOR + "╜");
 
     //second line
-    System.out.println(COLORS.get("RED") + "╓" + HORIZ_DOOR + "╤" + HORIZ_WALL + "╤" + COLORS.get("PURPLE") + HORIZ_DOOR + "╤" +
+    System.out.println(COLORS.get("RED") + "╓" + HORIZ_DOOR + "╤" + HORIZ_WALL + "╤" + HORIZ_DOOR + "╤" +
       COLORS.get("YELLOW") + TOP + "╗" + COLORS.get("RED"));
 
     System.out.println("║" + SPACES + SPACES + SPACES + COLORS.get("YELLOW") + SPACES + "   ║" + COLORS.get("RED"));
 
-    System.out.println("║ " + players(playersMap.get(Position.of(1, 0))) +
+    System.out.println("║ " +
+      players(playersMap.get(Position.of(1, 0))) +
       players(playersMap.get(Position.of(1, 1))) + "  " +
       players(playersMap.get(Position.of(1, 2))) +
       players(playersMap.get(Position.of(1, 3))) +
@@ -83,7 +84,7 @@ public class PrintUtils {
 
     System.out.println("║ " + SPACES + SPACES + SPACES + COLORS.get("YELLOW") + SPACES + "  ║" + COLORS.get("RED"));
 
-    System.out.println("╚" + TOP + "╧" + HORIZ_DOOR + "╧" + COLORS.get("PURPLE") + HORIZ_WALL + "╧" + SPACES + COLORS.get("YELLOW") + "╜");
+    System.out.println("╚" + TOP + "╧" + HORIZ_DOOR + "╧" + HORIZ_WALL + "╧" + SPACES + COLORS.get("YELLOW") + "╜");
 
     //third line
     System.out.println(SPACES + COLORS.get("GRAY") + " ╓" + HORIZ_DOOR + "╤" + HORIZ_WALL + "╤" + COLORS.get("YELLOW") + SPACES + "╖");
@@ -91,9 +92,9 @@ public class PrintUtils {
     System.out.println(SPACES + COLORS.get("GRAY") + " ║ " + SPACES + SPACES + SPACES + COLORS.get("YELLOW") + " ║");
 
     System.out.println(SPACES + COLORS.get("GRAY") + " ║ " +
-      players(playersMap.get(Position.of(2, 0))) +
-      players(playersMap.get(Position.of(2, 1))) + " " +
-      players(playersMap.get(Position.of(2, 2))) +
+      players(playersMap.get(Position.of(2, 1))) +
+      players(playersMap.get(Position.of(2, 2))) + " " +
+      players(playersMap.get(Position.of(2, 3))) +
       COLORS.get("YELLOW") + "║");
 
     System.out.println(SPACES + COLORS.get("GRAY") + " ║ " + SPACES + SPACES + SPACES + COLORS.get("YELLOW") + " ║");
@@ -139,9 +140,9 @@ public class PrintUtils {
     System.out.println(SPACES + COLORS.get("GRAY") + " ║ " + SPACES + SPACES + SPACES + COLORS.get("YELLOW") + " ║");
 
     System.out.println(SPACES + COLORS.get("GRAY") + " ║" +
-      players(playersMap.get(Position.of(2, 0))) + "  " +
-      players(playersMap.get(Position.of(2, 1))) +
+      players(playersMap.get(Position.of(2, 1))) + "  " +
       players(playersMap.get(Position.of(2, 2))) +
+      players(playersMap.get(Position.of(2, 3))) +
       COLORS.get("YELLOW") + "║");
 
     System.out.println(SPACES + COLORS.get("GRAY") + " ║ " + SPACES + SPACES + SPACES + COLORS.get("YELLOW") + " ║");
@@ -164,13 +165,15 @@ public class PrintUtils {
   public static String players(List<PlayerColor> players) {
     String out = "";
 
-    for (PlayerColor p : players) {
-      out = out.concat(COLORS.get(p.name()) + BOLD + "0" + COLORS.get("RESET"));
-    }
+    if (players != null) {
+      for (PlayerColor p : players) {
+        out = out.concat(COLORS.get(p.name()) + BOLD + "0" + COLORS.get("RESET"));
+      }
 
-    for (int i = 0; i < 9 - players.size(); i++) {
-      out = out.concat(" ");
-    }
+      for (int i = 0; i < 9 - players.size(); i++) {
+        out = out.concat(" ");
+      }
+    } else out = SPACES;
 
     //players.forEach(p -> out.concat(COLORS.get(p.name()) + "0" + COLORS.get("RESET")));
     //IntStream.range(0, 9 - players.size()).forEach(i -> out.concat(" "));

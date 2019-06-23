@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.server.flow.FlowNode;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -35,8 +36,24 @@ public class ChooseActionNodeFlowTest extends BaseNodeTest {
     ArgumentCaptor<List<Action>> actionsCaptor = ArgumentCaptor.forClass(List.class);
     verify(viewMock, times(1)).showAvailableActions(actionsCaptor.capture());
     assertThat(actionsCaptor.getValue())
-      .containsOnly(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.SHOOT);
+      .containsOnly(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP);
   }
+
+  @Test
+  public void testShowAvailableActionsWithSevenDamagesAndLoadedGun() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    context.setRemainingActions(1);
+    model.getPlayerDashboard(context.getTurnOfPlayer()).addGun("railgun");
+    model.getPlayerDashboard(context.getTurnOfPlayer()).addDamages(Collections.nCopies(7, PlayerColor.PURPLE));
+
+    orchestrator.startNewFlow(viewMock, context);
+
+    ArgumentCaptor<List<Action>> actionsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(viewMock, times(1)).showAvailableActions(actionsCaptor.capture());
+    assertThat(actionsCaptor.getValue())
+      .containsOnly(Action.MOVE_MOVE_MOVE, Action.MOVE_PICKUP, Action.MOVE_MOVE_PICKUP, Action.SHOOT, Action.MOVE_SHOOT);
+  }
+
 
   @Test
   public void testChooseMoveMoveMove() {

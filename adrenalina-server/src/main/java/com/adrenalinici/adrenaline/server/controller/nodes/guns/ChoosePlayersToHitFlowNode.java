@@ -70,6 +70,7 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
             .filter(notIn(flowState.getChosenPlayersToHit()))
             .filter(notIn(context.getKilledPlayers()))
             .filter(notIn(Collections.singletonList(context.getTurnOfPlayer())))
+            .filter(p -> predicate.test(context.getTurnOfPlayer(), p, model))
             .filter(player -> !positionsToFilter.contains(model.getPlayerPosition(player)))
             .collect(Collectors.toList());
 
