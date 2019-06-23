@@ -64,6 +64,19 @@ public class ChooseActionNodeFlowTest extends BaseNodeTest {
   }
 
   @Test
+  public void testNullAction() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+    context.setRemainingActions(1);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GREEN);
+
+    orchestrator.startNewFlow(viewMock, context);
+
+    orchestrator.handleEvent(new ActionChosenEvent(null), viewMock);
+
+    checkEndCalled();
+  }
+
+  @Test
   public void testChooseMovePickup() {
     testChooseSpecificAction(Action.MOVE_PICKUP, phases -> {
       assertThat(phases.get(0)).isEqualTo(movement(1));
