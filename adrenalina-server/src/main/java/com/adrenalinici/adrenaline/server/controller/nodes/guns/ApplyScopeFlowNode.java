@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.server.controller.nodes.guns;
 
+import com.adrenalinici.adrenaline.common.model.AmmoColor;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.PowerUpCard;
 import com.adrenalinici.adrenaline.common.model.PowerUpType;
@@ -8,8 +9,10 @@ import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.server.model.GameModel;
+import com.adrenalinici.adrenaline.server.model.PlayerDashboard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +33,13 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
         .filter(puc -> puc.getPowerUpType().equals(PowerUpType.SCOPE))
         .collect(Collectors.toList());
 
-    if (currentPlayerScopes.isEmpty() || flowState.getHitPlayers().isEmpty()) {
+    List<AmmoColor> killerAmmo = model.getPlayerDashboard(context.getTurnOfPlayer()).getAmmos();
+
+    if (currentPlayerScopes.isEmpty() || flowState.getHitPlayers().isEmpty() || killerAmmo.isEmpty()) {
       context.nextPhase(view, flowState);
     } else {
       List<PlayerColor> hittablePlayers = new ArrayList<>(flowState.getHitPlayers().keySet());
-      view.showChoosePlayerToHit(hittablePlayers);
-      //TODO create a new view method to show the player you want to hit with the scope (and a new view event)
-      //TODO create a test for this node
+      view.showScopePlayers(hittablePlayers);
     }
 
   }
@@ -47,14 +50,18 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
       e -> {
         if (e.getPlayerColor() == null) context.nextPhase(view, flowState);
         else {
+          PlayerDashboard killerDashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
+
           model.hitPlayer(context.getTurnOfPlayer(), e.getPlayerColor(), 1);
 
-          model.getPlayerDashboard(context.getTurnOfPlayer())
+          killerDashboard
             .getPowerUpCards()
             .stream()
             .filter(puc -> puc.getPowerUpType().equals(PowerUpType.SCOPE))
             .findFirst()
             .ifPresent(puc -> model.removePowerUpFromPlayer(context.getTurnOfPlayer(), puc));
+
+          killerDashboard.removeAmmos(Collections.singletonList(killerDashboard.getAmmos().get(0)));
 
           context.nextPhase(view, flowState);
         }
