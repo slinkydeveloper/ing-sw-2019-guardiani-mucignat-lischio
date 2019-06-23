@@ -63,6 +63,8 @@ public class CliMain extends BaseCliGameView {
 
   Scanner scanner = new Scanner(System.in);
 
+  private ModelEvent lastModelEvent;
+
   public static void main(String[] args) {
 
     if (args.length < 3) {
@@ -155,7 +157,44 @@ public class CliMain extends BaseCliGameView {
 
       int chosenIndex = parseIndex(-3, actions.size() - 1);
 
-      sendViewEvent(new ActionChosenEvent(actions.get(chosenIndex)));
+      if (chosenIndex == -2) {
+        manageTeleporterUse();
+      }
+
+      sendViewEvent(new ActionChosenEvent(chosenIndex != -1 ? actions.get(chosenIndex) : null));
+    }
+  }
+
+  private void manageTeleporterUse() {
+    if (isMyTurn()) {
+      List<Position> allDashboardCells = lastModelEvent.getGameModel().getDashboard()
+        .stream()
+        .map(c -> Position.of(c.getLine(), c.getCell()))
+        .collect(Collectors.toList());
+
+      System.out.println("Choose where you wanna move:");
+      printNumberedList(allDashboardCells);
+
+      int chosenPositionIndex = parseIndex(0, allDashboardCells.size() - 1);
+
+      List<PowerUpCard> myTeleporters = lastModelEvent.getGameModel().getPlayerDashboard(getMyPlayer())
+        .getPowerUpCards()
+        .stream()
+        .filter(puc -> puc.getPowerUpType().equals(PowerUpType.TELEPORTER))
+        .collect(Collectors.toList());
+
+      sendViewEvent(
+        new UseTeleporterEvent(
+          allDashboardCells.get(chosenPositionIndex),
+          myTeleporters.isEmpty() ? null : myTeleporters.get(0)
+        )
+      );
+    }
+  }
+
+  private void manageNewtonUse() {
+    if (isMyTurn()) {
+
     }
   }
 
@@ -207,7 +246,7 @@ public class CliMain extends BaseCliGameView {
       System.out.println("Available power up cards:");
       printNumberedList(powerUpCards);
 
-      int chosenIndex = parseIndex(-3, powerUpCards.size() - 1);
+      int chosenIndex = parseIndex(0, powerUpCards.size() - 1);
 
       System.out.println("Chosen Power up card: " + powerUpCards.get(chosenIndex));
       sendViewEvent(new PowerUpCardChosenEvent(getMyPlayer(), powerUpCards.get(chosenIndex)));
@@ -220,7 +259,7 @@ public class CliMain extends BaseCliGameView {
       System.out.println(String.format("0) %s\n\tDescription: %s", firstEffect.getName(), firstEffect.getDescription()));
       System.out.println(String.format("1) %s\n\tDescription: %s", secondEffect.getName(), secondEffect.getDescription()));
 
-      int chosenIndex = parseIndex(-3, 1);
+      int chosenIndex = parseIndex(0, 1);
 
       sendViewEvent(new AlternativeGunEffectChosenEvent(chosenIndex == 1));
     }
@@ -232,7 +271,7 @@ public class CliMain extends BaseCliGameView {
       System.out.println("Available players to hit:");
       printNumberedList(players);
 
-      int chosenIndex = parseIndex(-3, players.size() - 1);
+      int chosenIndex = parseIndex(-1, players.size() - 1);
       sendViewEvent(new PlayerChosenEvent(chosenIndex != -1 ? players.get(chosenIndex) : null));
     }
   }
@@ -277,7 +316,7 @@ public class CliMain extends BaseCliGameView {
       System.out.println("Loaded guns:");
       printNumberedList(gunsList);
 
-      int chosenIndex = parseIndex(-3, gunsList.size() - 1);
+      int chosenIndex = parseIndex(-1, gunsList.size() - 1);
       sendViewEvent(new GunChosenEvent(chosenIndex != -1 ? gunsList.get(chosenIndex) : null));
     }
   }
@@ -345,6 +384,8 @@ public class CliMain extends BaseCliGameView {
   public void onEvent(ModelEvent newValue) {
     //System.out.println("Model updated! " + newValue);
     //here should be used buffered console out
+    lastModelEvent = newValue;
+
     showModel(newValue.getGameModel());
     BufferedConsoleOut.OUT.println(ANSI_PURPLE + "ehilà campione\n\n" + ANSI_RESET);
     BufferedConsoleOut.OUT.flush();
@@ -419,11 +460,11 @@ public class CliMain extends BaseCliGameView {
     if (command.trim().toLowerCase().equals("teleporter")) return -2;
     if (command.trim().toLowerCase().equals("kinetic")) return -3;
 
-    while (!(chosenIndex >= -1 && chosenIndex <= maximum)) {
+    while (!(chosenIndex >= minimum && chosenIndex <= maximum)) {
       try {
         //chosenIndex = Integer.parseInt(scanner.nextLine());
         chosenIndex = Integer.parseInt(command);
-        if (!(chosenIndex >= -1 && chosenIndex <= maximum))
+        if (!(chosenIndex >= minimum && chosenIndex <= maximum))
           System.out.println(String.format("Please try again, Insert an index between 0 and %d:", maximum));
       } catch (NumberFormatException e) {
         System.out.println("What you inserted is not an integer, please retry.\nInsert index:");
@@ -437,6 +478,6 @@ public class CliMain extends BaseCliGameView {
   private <T> void printNumberedList(List<T> list) {
     IntStream.range(0, list.size())
       .forEach(i -> System.out.println(String.format("%d) %s", i, list.get(i).toString().toUpperCase())));
-    System.out.println("Insert index of your selection, or -1 if you wanna skip:");
+    System.out.println("Insert index of your selection:");
   }
 }

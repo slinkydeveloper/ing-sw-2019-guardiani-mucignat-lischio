@@ -42,38 +42,40 @@ public class ChooseActionFlowNode implements StatelessControllerFlowNode {
     event.onActionChosenEvent(
       e -> {
         context.decrementRemainingActions();
-        switch (e.getAction()) {
-          case MOVE_MOVE_MOVE:
-            context.addPhases(movement(3), id());
-            break;
-          case MOVE_PICKUP:
-            context.addPhases(movement(1), PICKUP.name(), id());
-            break;
-          case SHOOT:
-            context.addPhases(CHOOSE_GUN.name(), USE_SCOPE.name());
-            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
-            break;
-          case MOVE_MOVE_PICKUP:
-            context.addPhases(movement(2), PICKUP.name(), id());
-            break;
-          case MOVE_SHOOT:
-            context.addPhases(movement(1), CHOOSE_GUN.name(), USE_SCOPE.name());
-            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
-            break;
-          case MOVE_RELOAD_SHOOT:
-            context.addPhases(movement(1), RELOAD.name(), CHOOSE_GUN.name(), USE_SCOPE.name());
-            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
-            break;
-          case MOVE_MOVE_MOVE_MOVE:
-            context.addPhases(movement(4), id());
-            break;
-          case MOVE_MOVE_RELOAD_SHOOT:
-            context.addPhases(movement(2), RELOAD.name(), CHOOSE_GUN.name(), USE_SCOPE.name());
-            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
-            break;
-          case MOVE_MOVE_MOVE_PICKUP:
-            context.addPhases(movement(3), PICKUP.name(), id());
-            break;
+        if (e.getAction() != null) {
+          switch (e.getAction()) {
+            case MOVE_MOVE_MOVE:
+              context.addPhases(movement(3), id());
+              break;
+            case MOVE_PICKUP:
+              context.addPhases(movement(1), PICKUP.name(), id());
+              break;
+            case SHOOT:
+              context.addPhases(CHOOSE_GUN.name(), USE_SCOPE.name());
+              context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+              break;
+            case MOVE_MOVE_PICKUP:
+              context.addPhases(movement(2), PICKUP.name(), id());
+              break;
+            case MOVE_SHOOT:
+              context.addPhases(movement(1), CHOOSE_GUN.name(), USE_SCOPE.name());
+              context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+              break;
+            case MOVE_RELOAD_SHOOT:
+              context.addPhases(movement(1), RELOAD.name(), CHOOSE_GUN.name(), USE_SCOPE.name());
+              context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+              break;
+            case MOVE_MOVE_MOVE_MOVE:
+              context.addPhases(movement(4), id());
+              break;
+            case MOVE_MOVE_RELOAD_SHOOT:
+              context.addPhases(movement(2), RELOAD.name(), CHOOSE_GUN.name(), USE_SCOPE.name());
+              context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), id());
+              break;
+            case MOVE_MOVE_MOVE_PICKUP:
+              context.addPhases(movement(3), PICKUP.name(), id());
+              break;
+          }
         }
         context.nextPhase(view);
       }
