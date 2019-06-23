@@ -118,14 +118,9 @@ public class ConnectMatchController {
     try {
       host = hostText.getText();
       port = Integer.parseInt(portText.getText());
-      new URI(host + ":" + port); // To check if hostname is valid
     } catch (NumberFormatException e) {
       // Invalid port
       GuiUtils.showExceptionAndClose(e, "Invalid port!");
-      return null;
-    } catch (URISyntaxException e) {
-      // Invalid hostname
-      GuiUtils.showExceptionAndClose(e, "Invalid hostname!");
       return null;
     }
 
