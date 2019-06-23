@@ -110,6 +110,8 @@ public class ReceiverRunnable extends BaseSocketRunnable {
     SocketChannel channel = serverChannel.accept(); // Retrieve client socket channel
     channel.configureBlocking(false); // Configure socket as non blocking
     channel.register(this.readSelector, SelectionKey.OP_READ);
+    channel.socket().setKeepAlive(true);
+    channel.socket().setSendBufferSize(64 * 1024 * 1024);
 
     String connectionId = UUID.randomUUID().toString();
     this.connectedClients.put(channel.socket(), connectionId);
