@@ -16,7 +16,7 @@
   </rowConstraints>
   <children>
     <Label text="Match name" />
-    <TextArea fx:id="matchNameText" text="My match" GridPane.columnIndex="1" />
+    <TextArea fx:id="matchNameText" text="new_match_name" GridPane.columnIndex="1"/>
     <Label text="Choose dashboard" GridPane.rowIndex="1" />
     <ChoiceBox fx:id="dashboardChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     <Label text="Choose number of players" GridPane.rowIndex="2" />

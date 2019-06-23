@@ -154,18 +154,19 @@ public class ConnectMatchController {
     if (chosenMatch == null) return; // Nothing was chosen
     Set<PlayerColor> availableColors = matches.get(chosenMatch);
 
-    PlayerColor chosenPlayer = GuiUtils.showPlayersRadioButtonDialog(
+    GuiUtils.showPlayersRadioButtonDialog(
       "Scegli un colore giocatore",
       "Scegli un colore giocatore",
       new ArrayList<>(availableColors),
-      false
+      false,
+      chosenPlayer -> {
+        startingNewMatch = false;
+
+        LOG.info("Trying to connect to match " + chosenMatch + " with color " + chosenPlayer);
+        this.view.getEventBus().setEnqueueFilter(m -> !(m instanceof InfoMessage));
+        this.view.getEventBus().sendChosenMatch(chosenMatch, chosenPlayer);
+      }
     );
-
-    startingNewMatch = false;
-
-    LOG.info("Trying to connect to match " + chosenMatch + " with color " + chosenPlayer);
-    this.view.getEventBus().setEnqueueFilter(m -> !(m instanceof InfoMessage));
-    this.view.getEventBus().sendChosenMatch(chosenMatch, chosenPlayer);
   }
 
   private void moveToGameScene() {
