@@ -22,6 +22,9 @@ public interface OutboxMessage extends Serializable {
 
   default void onChoosePlayerToHitMessage(Consumer<ChoosePlayerToHitMessage> c) {}
 
+  default void onChooseScopePlayerMessage(Consumer<ChooseScopePlayerMessage> c) {
+  }
+
   default void onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage> c) {}
 
   default void onAvailableGunsMessage(Consumer<AvailableGunsMessage> c) {}

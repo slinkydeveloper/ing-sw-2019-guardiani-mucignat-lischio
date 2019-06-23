@@ -87,4 +87,9 @@ public class RemoteView extends BaseRemoteView {
   public void showRanking(List<Map.Entry<PlayerColor, Integer>> ranking) {
     broadcast(new RankingMessage(ranking));
   }
+
+  @Override
+  public void showScopePlayers(List<PlayerColor> players) {
+    broadcast(new ChooseScopePlayerMessage(players));
+  }
 }

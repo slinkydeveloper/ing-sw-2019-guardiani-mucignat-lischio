@@ -277,6 +277,17 @@ public class CliMain extends BaseCliGameView {
   }
 
   @Override
+  public void showScopePlayers(List<PlayerColor> players) {
+    if (isMyTurn()) {
+      System.out.println("Choose a player for the scope:");
+      printNumberedList(players);
+
+      int chosenIndex = parseIndex(-1, players.size() - 1);
+      sendViewEvent(new PlayerChosenEvent(chosenIndex != -1 ? players.get(chosenIndex) : null));
+    }
+  }
+
+  @Override
   public void showAvailableExtraEffects(Effect firstExtraEffect, Effect secondExtraEffect) {
     if (isMyTurn()) {
       String firstChoice = "n";
