@@ -6,25 +6,25 @@ import java.util.List;
 
 public class CardDeck<T> {
 
-  private List<T> queue;
+  private List<T> deck;
 
-  public CardDeck(List<T> queue) {
-    this.queue = new ArrayList<>(queue);
-    Collections.shuffle(queue);
+  public CardDeck(List<T> deck) {
+    this.deck = new ArrayList<>(deck);
+    Collections.shuffle(deck);
   }
 
   public boolean isEmpty() {
-    return queue.isEmpty();
+    return deck.isEmpty();
   }
 
   public T getCard() {
-    T val = queue.remove(0);
-    Collections.shuffle(queue);
+    T val = deck.remove(0);
+    Collections.shuffle(deck);
     return val;
   }
 
   public void addCard(T card) {
-    queue.add(card);
-    Collections.shuffle(queue);
+    deck.add(card);
+    Collections.shuffle(deck);
   }
 }

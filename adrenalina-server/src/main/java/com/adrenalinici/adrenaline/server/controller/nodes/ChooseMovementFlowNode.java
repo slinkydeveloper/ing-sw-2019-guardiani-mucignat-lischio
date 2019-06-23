@@ -35,7 +35,8 @@ public class ChooseMovementFlowNode implements StatelessControllerFlowNode {
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onMovementChosenEvent(
       e -> {
-        model.movePlayerInDashboard(e.getCoordinates(), context.getTurnOfPlayer());
+        if (e.getCoordinates() != null)
+          model.movePlayerInDashboard(e.getCoordinates(), context.getTurnOfPlayer());
         context.nextPhase(view);
       }
     );
