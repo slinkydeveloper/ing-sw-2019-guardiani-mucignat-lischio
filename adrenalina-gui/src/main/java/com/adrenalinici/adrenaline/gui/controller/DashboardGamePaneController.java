@@ -73,7 +73,8 @@ public class DashboardGamePaneController {
   }
 
   public void initializeGameModel(LightGameModel model, PlayerColor playerTurn) {
-    showGameInfo(model, playerTurn);
+    showGameInfo(model);
+    updateTurnOfPlayer(playerTurn);
   }
 
   public void updateCell(DashboardCellUpdatedEvent cellUpdatedEvent) {
@@ -89,18 +90,21 @@ public class DashboardGamePaneController {
     });
   }
 
-  public void updateGameModel(GameModelUpdatedEvent gameModelUpdatedEvent, PlayerColor playerTurn) {
-    showGameInfo(gameModelUpdatedEvent.getGameModel(), playerTurn);
+  public void updateGameModel(GameModelUpdatedEvent gameModelUpdatedEvent) {
+    showGameInfo(gameModelUpdatedEvent.getGameModel());
   }
 
-  public void showGameInfo(LightGameModel gameModel, PlayerColor playerTurn) {
+  public void updateTurnOfPlayer(PlayerColor playerTurn) {
+    if (playerTurn != null) playerTurnLabel.setText("Turno del giocatore: " + playerTurn.name());
+  }
+
+  public void showGameInfo(LightGameModel gameModel) {
     int remainingSkulls = gameModel.getRemainingSkulls();
     boolean isFrenzyMode = gameModel.getRemainingSkulls() == 0;
     List<Map.Entry<PlayerColor, Boolean>> killScore = gameModel.getKillScore();
     List<PlayerColor> doubleKillScore = gameModel.getDoubleKillScore();
 
     remainingSkullsLabel.setText("Teschi rimanenti: " + remainingSkulls);
-    if (playerTurn != null) playerTurnLabel.setText("Turno del giocatore: " + playerTurn.name());
     if (isFrenzyMode) frenzyModeLabel.setText("Modalità frenesia attiva!");
 
     Map<PlayerColor, Integer> pointsMap = new HashMap<>();
