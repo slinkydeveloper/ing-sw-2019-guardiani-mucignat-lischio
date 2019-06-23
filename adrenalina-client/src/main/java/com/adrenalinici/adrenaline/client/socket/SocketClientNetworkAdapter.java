@@ -35,6 +35,9 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
 
       this.channel = SocketChannel.open(new InetSocketAddress(host, port));
       this.channel.configureBlocking(false);
+      this.channel.socket().setKeepAlive(true);
+      this.channel.socket().setSendBufferSize(128 * 1024 * 1024);
+      this.channel.socket().setReceiveBufferSize(128 * 1024 * 1024);
       this.channel.register(readSelector, SelectionKey.OP_READ);
 
       LOG.info(String.format("Connected to %s:%d", host, port));

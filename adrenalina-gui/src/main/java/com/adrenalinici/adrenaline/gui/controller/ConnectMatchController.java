@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -161,19 +162,16 @@ public class ConnectMatchController {
     if (chosenMatch == null) return; // Nothing was chosen
     Set<PlayerColor> availableColors = matches.get(chosenMatch);
 
-    ChoiceDialog<PlayerColor> dialog = new ChoiceDialog<>(availableColors.iterator().next(), availableColors);
-    dialog.setTitle("Choose a Player color");
-    dialog.setHeaderText("Choose a player color you want to play with");
-    dialog.setContentText("Player color:");
+    PlayerColor chosenPlayer = GuiUtils.showPlayersRadioButtonDialog(
+      "Scegli un colore giocatore",
+      "Scegli un colore giocatore",
+      new ArrayList<>(availableColors),
+      false
+    );
 
-    Optional<PlayerColor> result = dialog.showAndWait();
-    dialog.getDialogPane().requestFocus();
-    if (result.isPresent()){
-      startingNewMatch = false;
-      LOG.info("Trying to connect to match " + chosenMatch + " with color " + result.get());
-      this.view.getEventBus().setEnqueueFilter(m -> !(m instanceof InfoMessage));
-      this.view.getEventBus().sendChosenMatch(chosenMatch, result.get());
-    }
+    LOG.info("Trying to connect to match " + chosenMatch + " with color " + chosenPlayer);
+    this.view.getEventBus().setEnqueueFilter(m -> !(m instanceof InfoMessage));
+    this.view.getEventBus().sendChosenMatch(chosenMatch, chosenPlayer);
   }
 
   private void moveToGameScene() {

@@ -31,7 +31,7 @@ public class DashboardCellController {
   public void setAmmoCardContent(AmmoCard card) {
     if (card.isPickPowerUp()) {
       this.content.setText(
-        "Carta munizioni in questa cella:\nPower Up " + card.getAmmoColor().stream().map(AmmoColor::name).collect(Collectors.joining(", "))
+        "Carta munizioni in questa cella:\nPower Up, " + card.getAmmoColor().stream().map(AmmoColor::name).collect(Collectors.joining(", "))
       );
     }
     else {

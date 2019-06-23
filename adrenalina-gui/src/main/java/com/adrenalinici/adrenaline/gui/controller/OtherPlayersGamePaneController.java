@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.gui.controller;
 
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.event.PlayerDashboardUpdatedEvent;
+import com.adrenalinici.adrenaline.common.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.common.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.gui.GuiUtils;
@@ -27,7 +28,7 @@ public class OtherPlayersGamePaneController {
 
   public void initialize() {}
 
-  public void initializePlayers(List<PlayerColor> players) {
+  public void initializePlayers(List<PlayerColor> players, LightGameModel gameModel) {
     this.playerGamePaneControllers = new HashMap<>();
     players.forEach(p -> {
       try {
@@ -37,7 +38,7 @@ public class OtherPlayersGamePaneController {
         PlayerGamePaneController controller = loader.getController();
         this.playerGamePaneControllers.put(p, controller);
 
-        controller.initializePlayer(p);
+        controller.initializePlayer(p, gameModel);
       } catch (IOException e) {
         LOG.log(Level.SEVERE, "Cannot find fxml", e);
         GuiUtils.showExceptionAndClose(e,"Cannot find fxml");

@@ -5,13 +5,12 @@ import com.adrenalinici.adrenaline.common.model.Gun;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.PowerUpCard;
 import com.adrenalinici.adrenaline.common.model.event.PlayerDashboardUpdatedEvent;
+import com.adrenalinici.adrenaline.common.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.common.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.common.util.Bag;
 import com.adrenalinici.adrenaline.gui.GuiUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
@@ -36,11 +35,23 @@ public class MyStatusGamePaneController {
 
   public void initialize() {}
 
-  public void initializePlayer(PlayerColor p) {
+  public void initializePlayer(PlayerColor p, LightGameModel gameModel) {
     thisPlayer = p;
 
     playerColorLabel.setText("Giocatore " + p.name());
     playerColorLabel.setTextFill(Paint.valueOf(p.name().toUpperCase()));
+
+    LightPlayerDashboard playerDashboard = gameModel.getPlayerDashboard(p);
+    this.updatePlayerInfo(
+      playerDashboard.getDamages(),
+      playerDashboard.getMarks(),
+      playerDashboard.getPoints(),
+      playerDashboard.getSkullsNumber(),
+      playerDashboard.getAmmos(),
+      playerDashboard.getPowerUpCards(),
+      playerDashboard.getLoadedGuns(),
+      playerDashboard.getUnloadedGuns()
+    );
   }
 
   public void update(PlayerDashboardUpdatedEvent event) {
@@ -78,7 +89,7 @@ public class MyStatusGamePaneController {
       String url = GuiUtils.computePowerUpFilename(powerup);
 
       powerupHBox.getChildren().add(
-        new ImageView(new Image(url, 100, 150, true, true))
+        GuiUtils.createCardImageView(url)
       );
     });
 
@@ -88,7 +99,7 @@ public class MyStatusGamePaneController {
       String url = GuiUtils.computeGunFilename(gun);
 
       gunsHBox.getChildren().add(
-        new ImageView(new Image(url, 100, 150, true, true))
+        GuiUtils.createCardImageView(url)
       );
     });
 
@@ -96,7 +107,7 @@ public class MyStatusGamePaneController {
       String url = GuiUtils.computeGunFilename(gun);
 
       gunsHBox.getChildren().add(
-        new ImageView(new Image(url, 100, 150, true, true))
+        GuiUtils.createCardImageView(url)
       );
 
       gunsHBox.setOpacity(0.5d);
