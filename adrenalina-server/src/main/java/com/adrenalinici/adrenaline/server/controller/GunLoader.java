@@ -127,7 +127,7 @@ public class GunLoader {
       LOG.info("Discovered guns: " + guns.toString());
       return guns;
     } catch (IOException e) {
-      return null;
+      throw new IllegalStateException("Cannot find guns", e);
     }
   }
 
@@ -139,8 +139,7 @@ public class GunLoader {
           .of(new File(dirURL.toURI()).listFiles())
           .map(File::getName);
       }
-
-      if (dirURL.getProtocol().equals("jar")) {
+      if (dirURL != null && dirURL.getProtocol().equals("jar")) {
         /* A JAR path */
         String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!")); //strip out only the JAR file
         String innerPath = dirURL.getPath().substring(dirURL.getPath().indexOf("!") + 2) + "/";
