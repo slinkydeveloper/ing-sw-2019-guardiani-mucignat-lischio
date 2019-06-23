@@ -53,14 +53,14 @@ public class TextAreaLogAppenderController extends Handler {
             + t.getMessage());
         }
       });
-    } catch (final IllegalStateException e) {
-      // ignore case when the platform hasn't yet been iniitialized
-    }
+    } catch (final IllegalStateException e) {}
   }
 
   public void onStopClicked(MouseEvent e) {
     try {
       this.bootstrapper.stop();
+      Platform.exit();
+      System.exit(0);
     } catch (IOException ex) {
       ex.printStackTrace();
     }

@@ -14,11 +14,13 @@ import com.adrenalinici.adrenaline.common.util.TriConsumer;
 import javafx.application.Platform;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class ViewEventBus extends ObservableImpl<InboxMessage> implements ClientViewProxy {
 
   private Map<String, TriConsumer<OutboxMessage, ViewEventBus, String>> eventHandlers;
   private boolean isListening;
+  private Predicate<OutboxMessage> enqueueFilter;
   private LinkedList<OutboxMessage> messageQueue;
 
   private String matchId;
@@ -57,10 +59,11 @@ public class ViewEventBus extends ObservableImpl<InboxMessage> implements Client
       message.onNextTurnMessage(nextTurnMessage -> {
         this.turnOfPlayer = nextTurnMessage.getPlayer();
       });
-      if (isListening)
-        new HashSet<>(eventHandlers.entrySet()).forEach(e -> e.getValue().accept(message, this, e.getKey()));
-      else {
+      if (!isListening || (enqueueFilter != null && enqueueFilter.test(message))) {
         messageQueue.offer(message);
+      }
+      else {
+        new HashSet<>(eventHandlers.entrySet()).forEach(e -> e.getValue().accept(message, this, e.getKey()));
       }
     });
   }
@@ -72,11 +75,29 @@ public class ViewEventBus extends ObservableImpl<InboxMessage> implements Client
 
   public void stop() {
     isListening = false;
+    this.enqueueFilter = null;
+  }
+
+  public void setEnqueueFilter(Predicate<OutboxMessage> enqueueFilter) {
+    this.enqueueFilter = enqueueFilter;
+  }
+
+  public void removeEnqueueFilter() {
+    this.enqueueFilter = null;
+    start();
   }
 
   public void start() {
     isListening = true;
     while (!messageQueue.isEmpty())
       handleNewServerMessage(messageQueue.poll());
+  }
+
+  public PlayerColor getMyPlayer() {
+    return myPlayer;
+  }
+
+  public PlayerColor getTurnOfPlayer() {
+    return turnOfPlayer;
   }
 }

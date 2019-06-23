@@ -49,6 +49,8 @@ public class SenderRunnable extends BaseSocketRunnable {
         }
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
+      } catch (Exception e1) {
+        LOG.log(Level.SEVERE, "Unexpected exception", e1);
       }
     }
   }
