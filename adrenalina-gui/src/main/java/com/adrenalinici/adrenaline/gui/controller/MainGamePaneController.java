@@ -159,6 +159,7 @@ public class MainGamePaneController {
 
   public void handleNextTurn(NextTurnMessage message) {
     this.dashboardController.updateTurnOfPlayer(this.view.getEventBus().getTurnOfPlayer());
+    sendViewEvent(new NewTurnEvent());
   }
 
   public void handleReloadableGuns(ReloadableGunsMessage message) {

@@ -20,8 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
@@ -138,8 +136,7 @@ public class ConnectMatchController {
   private void handleInfoMessage(InfoMessage message) {
     if (startingNewMatch == null) {
       GuiUtils.showErrorAlert("Generic error", message.getInformation());
-    }
-    if (startingNewMatch) {
+    } else if (startingNewMatch) {
       if (message.getInfoType() == InfoType.ERROR) {
         GuiUtils.showErrorAlert("Error while initalizing match", message.getInformation());
       }
@@ -163,6 +160,8 @@ public class ConnectMatchController {
       new ArrayList<>(availableColors),
       false
     );
+
+    startingNewMatch = false;
 
     LOG.info("Trying to connect to match " + chosenMatch + " with color " + chosenPlayer);
     this.view.getEventBus().setEnqueueFilter(m -> !(m instanceof InfoMessage));
