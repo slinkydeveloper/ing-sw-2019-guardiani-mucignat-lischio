@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.client.socket.SocketClientNetworkAdapter;
 import com.adrenalinici.adrenaline.common.model.*;
 import com.adrenalinici.adrenaline.common.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.common.model.light.LightGameModel;
+import com.adrenalinici.adrenaline.common.model.light.LightPlayerDashboard;
 import com.adrenalinici.adrenaline.common.network.outbox.InfoType;
 import com.adrenalinici.adrenaline.common.view.*;
 
@@ -101,7 +102,7 @@ public class CliMain extends BaseCliGameView {
     if (getMyPlayer() == null) {
       int chosenIndex;
       if (matches.isEmpty()) {
-        System.out.println("No existing matches available, so let's start a new match!\n\tChoose a name for your match:");
+        System.out.println("No existing matches available, so let's start a new match!");
         newMatchManager();
       } else {
         System.out.println("Available matches");
@@ -115,7 +116,7 @@ public class CliMain extends BaseCliGameView {
         } else {
           while (!matches.keySet().contains(choice)) {//choice non è uguale ad uno degli id dei match
             System.out.println("Please select an existing match, or type 'new' to create one:");
-            choice = scanner.nextLine().trim().toLowerCase();
+            choice = scanner.nextLine().trim().toLowerCase(); //TODO manage if input equals new here
           }
           System.out.println("Now choose your player:");
           List<PlayerColor> availablePlayers = new ArrayList<>(matches.get(choice));
@@ -157,8 +158,13 @@ public class CliMain extends BaseCliGameView {
 
       int chosenIndex = parseIndex(-3, actions.size() - 1);
 
-      if (chosenIndex == -2) {
-        manageTeleporterUse();
+      while (chosenIndex < -1) {
+        if (chosenIndex == -2) manageTeleporterUse();
+        else if (chosenIndex == -3) manageNewtonUse();
+
+        System.out.println("Available actions:");
+        printNumberedList(actions);
+        chosenIndex = parseIndex(-3, actions.size() - 1);
       }
 
       sendViewEvent(new ActionChosenEvent(chosenIndex != -1 ? actions.get(chosenIndex) : null));
@@ -169,6 +175,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<Position> allDashboardCells = lastModelEvent.getGameModel().getDashboard()
         .stream()
+        .filter(Objects::nonNull)
         .map(c -> Position.of(c.getLine(), c.getCell()))
         .collect(Collectors.toList());
 
@@ -194,6 +201,38 @@ public class CliMain extends BaseCliGameView {
 
   private void manageNewtonUse() {
     if (isMyTurn()) {
+      List<Position> allPositions = lastModelEvent.getGameModel().getDashboard()
+        .stream()
+        .filter(Objects::nonNull)
+        .map(c -> Position.of(c.getLine(), c.getCell()))
+        .collect(Collectors.toList());
+
+      List<PlayerColor> allEnemies = lastModelEvent.getGameModel().getPlayerDashboards()
+        .stream()
+        .map(LightPlayerDashboard::getPlayer)
+        .collect(Collectors.toList());
+
+      System.out.println("Choose who you wanna move:");
+      printNumberedList(allEnemies);
+
+      int chosenEnemyIndex = parseIndex(0, allEnemies.size() - 1);
+
+      System.out.println("Choose where you wanna move it (only two moves away from its position):");
+      printNumberedList(allPositions);
+
+      int chosenPositionIndex = parseIndex(0, allPositions.size() - 1);
+
+      List<PowerUpCard> myNewtons = lastModelEvent.getGameModel().getPlayerDashboard(getMyPlayer())
+        .getPowerUpCards()
+        .stream()
+        .filter(puc -> puc.getPowerUpType().equals(PowerUpType.NEWTON))
+        .collect(Collectors.toList());
+
+      sendViewEvent(new UseNewtonEvent(
+        myNewtons.isEmpty() ? null : myNewtons.get(0),
+        allPositions.get(chosenPositionIndex),
+        allEnemies.get(chosenEnemyIndex)
+      ));
 
     }
   }
@@ -393,17 +432,15 @@ public class CliMain extends BaseCliGameView {
 
   @Override
   public void onEvent(ModelEvent newValue) {
-    //System.out.println("Model updated! " + newValue);
-    //here should be used buffered console out
     lastModelEvent = newValue;
 
+    System.out.print("\033[H\033[2J");
     showModel(newValue.getGameModel());
-    BufferedConsoleOut.OUT.println(ANSI_PURPLE + "ehilà campione\n\n" + ANSI_RESET);
-    BufferedConsoleOut.OUT.flush();
   }
 
   private void showModel(LightGameModel model) {
     Map<Position, List<PlayerColor>> playersMap = new HashMap<>();
+
     model.getDashboard().stream().filter(Objects::nonNull).forEach(dc -> {
       playersMap.put(Position.of(dc.getLine(), dc.getCell()), dc.getPlayersInCell());
     });
@@ -446,41 +483,35 @@ public class CliMain extends BaseCliGameView {
         System.out.println(COLORS.get(myPD.getPlayer().name()) + "MY STATUS -> DAMAGES: " + myPD.getDamages().toString());
         System.out.println("\t  MARKS: " + myPD.getMarks().toString());
         System.out.println("\t  AMMOS: " + myPD.getAmmos().toString());
-        System.out.println("\t  LOADED GUNS: " + myPD.getLoadedGuns().toString());
-        System.out.println("\t  UNLOADED GUNS: " + myPD.getUnloadedGuns().toString());
+        System.out.println("\t  LOADED GUNS: " + myPD.getLoadedGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString());
+        System.out.println("\t  UNLOADED GUNS: " + myPD.getUnloadedGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString());
         System.out.println("\t  POWERUPS: ");
         myPD.getPowerUpCards()
           .forEach(puc -> System.out.println(String.format("\t\t - %s (%s)", puc.getPowerUpType(), puc.getAmmoColor())));
         System.out.println("\t  NUMBER OF DEATHS: " + myPD.getSkullsNumber());
         System.out.println("\t  POINTS: " + myPD.getPoints());
+        System.out.println(ANSI_RESET);
       });
-    //devo aggiungere anche le robe da printare, magari differenziandole anche in base al turnOfPlayer
-    //printo tipo le ammo rimanenti e le armi cariche/scariche solo per il player in corso
   }
 
   private int parseIndex(int minimum, int maximum) {
-    int chosenIndex = -2;
-    String command = scanner.nextLine();
-    //potrei gestire qui il parsing dei comandi che attivano teleporter o kinetic ray
-    //magari sulla nextline provo a vedere se becco uno dei due comandi 'teleporter' o 'kinetic'
-    //se true allora in base a quale dei due faccio restituire -2 o -3 e questi li vado a gestire
-    //in tutti i metodi show
-
-
-    //qui piazzo l'if per il controllo sul minimum xD
-    if (command.trim().toLowerCase().equals("teleporter")) return -2;
-    if (command.trim().toLowerCase().equals("kinetic")) return -3;
+    int chosenIndex = -4;
 
     while (!(chosenIndex >= minimum && chosenIndex <= maximum)) {
+      String command = scanner.nextLine();
+
       try {
-        //chosenIndex = Integer.parseInt(scanner.nextLine());
+        if (command.equals("teleporter")) return -2;
+        if (command.equals("newton")) return -3;
+
         chosenIndex = Integer.parseInt(command);
+
         if (!(chosenIndex >= minimum && chosenIndex <= maximum))
           System.out.println(String.format("Please try again, Insert an index between 0 and %d:", maximum));
+
       } catch (NumberFormatException e) {
         System.out.println("What you inserted is not an integer, please retry.\nInsert index:");
       }
-      command = scanner.nextLine();
     }
 
     return chosenIndex;
