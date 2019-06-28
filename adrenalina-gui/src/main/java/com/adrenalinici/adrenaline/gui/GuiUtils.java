@@ -13,7 +13,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -60,29 +62,6 @@ public class GuiUtils {
 
   public static String computeGunFilename(String gunId) {
     return String.format("/images/guns/%s.png", gunId);
-  }
-
-  @Deprecated
-  public static <T> T showChoiceDialogWithMappedValues(String title, String contentText, List<T> values, Function<T, String> fn, boolean optional) {
-    Map<String, T> valuesMap = values.stream().collect(Collectors.toMap(fn, Function.identity()));
-    List<String> choices = new ArrayList<>(valuesMap.keySet());
-
-    ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
-
-    dialog.setTitle(title);
-    dialog.setHeaderText(title);
-    dialog.setContentText(contentText);
-
-    Optional<String> result = dialog.showAndWait();
-    dialog.getDialogPane().requestFocus();
-
-    if (result.isPresent()) {
-      return valuesMap.get(dialog.getSelectedItem());
-    } else if (!optional) {
-      return showChoiceDialogWithMappedValues(title, contentText, values, fn, optional);
-    } else {
-      return null;
-    }
   }
 
   public static void showPlayersRadioButtonDialog(String title, String question, List<PlayerColor> elements, boolean optional, Consumer<PlayerColor> onEnd) {
