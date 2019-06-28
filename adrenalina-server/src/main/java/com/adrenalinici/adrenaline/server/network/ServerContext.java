@@ -69,9 +69,8 @@ public class ServerContext {
 
   public void onDisconnection(String connectionId) {
     String matchId = playerMatchMap.remove(connectionId);
-    if (matchId != null) {
-      RemoteView match = matchesMap.get(matchId);
-      match.disconnectedPlayer(connectionId);
+    if (matchId != null && matchesMap.containsKey(matchId)) {
+      matchesMap.get(matchId).disconnectedPlayer(connectionId);
     }
   }
 
