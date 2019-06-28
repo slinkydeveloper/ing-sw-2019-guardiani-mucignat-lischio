@@ -70,6 +70,8 @@ public class TagbackGrenadeFlowNode implements ControllerFlowNode<TagbackGrenade
     });
     if (event.isUnavailablePlayerEvent()) {
       flowState.waitingPlayers.remove(((UnavailablePlayerEvent)event).getPlayerColor());
+      if (flowState.waitingPlayers.isEmpty())
+        context.nextPhase(view);
     }
   }
 

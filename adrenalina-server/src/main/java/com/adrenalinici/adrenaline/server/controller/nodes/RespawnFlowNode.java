@@ -58,6 +58,8 @@ public class RespawnFlowNode implements ControllerFlowNode<RespawnFlowNode.Respa
     });
     if (event.isUnavailablePlayerEvent()) {
       flowState.waitingPlayers.remove(((UnavailablePlayerEvent)event).getPlayerColor());
+      if (flowState.waitingPlayers.isEmpty())
+        context.nextPhase(view);
     }
   }
 
