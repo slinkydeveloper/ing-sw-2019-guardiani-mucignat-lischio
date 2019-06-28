@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class PlayerDashboardTest {
 
@@ -35,14 +34,12 @@ public class PlayerDashboardTest {
   }
 
   @Test
-  public void addAmmoMustThrowExceptionTest() {
+  public void addAmmoLimitTest() {
     PlayerDashboard playerDashboard = new PlayerDashboard(PlayerColor.YELLOW, Collections.emptyList());
     playerDashboard.addAmmo(AmmoColor.RED);
     playerDashboard.addAmmo(AmmoColor.RED);
+    playerDashboard.addAmmo(AmmoColor.RED);
 
-    assertThat(playerDashboard.getAmmos())
-      .containsOnly(AmmoColor.RED, AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE);
-    assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> playerDashboard.addAmmo(AmmoColor.RED));
     assertThat(playerDashboard.getAmmos())
       .containsOnly(AmmoColor.RED, AmmoColor.RED, AmmoColor.RED, AmmoColor.YELLOW, AmmoColor.BLUE);
   }

@@ -58,7 +58,7 @@ public class PlayerDashboard {
   }
 
   public void addAmmo(AmmoColor ammo) {
-    if (ammos.size() < 3) ammos.add(ammo);
+    if (ammos.stream().filter(a -> a.equals(ammo)).count() < 3) ammos.add(ammo);
   }
 
   public void removeAmmos(List<AmmoColor> ammos) {
