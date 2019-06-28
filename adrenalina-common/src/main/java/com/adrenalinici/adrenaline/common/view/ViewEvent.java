@@ -39,6 +39,8 @@ public interface ViewEvent extends Serializable {
     return false;
   }
 
+  default boolean isEndMatchEvent() { return false; }
+
   default void onEnemyMovementChosenEvent(Consumer<EnemyMovementChosenEvent> consumer) {
   }
 

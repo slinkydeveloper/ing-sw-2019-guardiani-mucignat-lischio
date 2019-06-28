@@ -21,6 +21,7 @@ public class StartServerDialogController {
   public void initialize() {
     rmiPortTextField.setText("9001");
     socketPortTextField.setText("9000");
+    turnTimeoutTextField.setText("240");
 
     startMatchButton.setOnMouseClicked(this::onStartMatchClicked);
   }
