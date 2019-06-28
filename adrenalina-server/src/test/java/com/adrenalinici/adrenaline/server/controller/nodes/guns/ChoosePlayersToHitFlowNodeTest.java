@@ -206,9 +206,9 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest { //TODO test f
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(1, 0)).addPlayer(PlayerColor.YELLOW);
-    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.CYAN);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.CYAN);
 
     DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("shockwave");
     AlternativeEffectGunFlowStateImpl alternativeEffectGunFlowState = new AlternativeEffectGunFlowStateImpl(gun);
