@@ -6,6 +6,7 @@ import com.adrenalinici.adrenaline.common.model.PowerUpCard;
 import com.adrenalinici.adrenaline.common.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.common.view.PowerUpCardChosenEvent;
 import com.adrenalinici.adrenaline.server.flow.FlowNode;
+import com.adrenalinici.adrenaline.server.model.DashboardCell;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -65,6 +66,7 @@ public class RespawnNodeFlowTest extends BaseNodeTest {
     Position cellPositionWherePlayerShouldRespawn = model
       .getDashboard()
       .stream()
+      .filter(DashboardCell::isRespawnCell)
       .filter(c -> c.getCellColor().matchesAmmoColor(extracted.getAmmoColor()))
       .findFirst()
       .get()
@@ -116,6 +118,7 @@ public class RespawnNodeFlowTest extends BaseNodeTest {
     Position cellPositionWhereGrayShouldRespawn = model
       .getDashboard()
       .stream()
+      .filter(DashboardCell::isRespawnCell)
       .filter(c -> c.getCellColor().matchesAmmoColor(extractedPowerUpCardForGray.getAmmoColor()))
       .findFirst()
       .get()
@@ -125,6 +128,7 @@ public class RespawnNodeFlowTest extends BaseNodeTest {
     Position cellPositionWhereYellowShouldRespawn = model
       .getDashboard()
       .stream()
+      .filter(DashboardCell::isRespawnCell)
       .filter(c -> c.getCellColor().matchesAmmoColor(extractedPowerUpCardForYellow.getAmmoColor()))
       .findFirst()
       .get()
