@@ -57,18 +57,8 @@ public class PlayerDashboard {
     return player;
   }
 
-  public void addAmmo(AmmoColor ammo) throws IllegalStateException {
-    int countAmmo = 0;
-    for (AmmoColor a : ammos) {
-      if (a.equals(ammo)) {
-        countAmmo++;
-      }
-    }
-    if (countAmmo == 3) {
-      throw new IllegalStateException("I have plus than 3 ammos of the same colors");
-    } else {
-      ammos.add(ammo);
-    }
+  public void addAmmo(AmmoColor ammo) {
+    if (ammos.stream().filter(a -> a.equals(ammo)).count() < 3) ammos.add(ammo);
   }
 
   public void removeAmmos(List<AmmoColor> ammos) {
@@ -185,10 +175,10 @@ public class PlayerDashboard {
       .collect(Collectors.toSet());
   }
 
-  public void addPowerUpCard(PowerUpCard powerUp) throws IllegalStateException {
+  public void addPowerUpCard(PowerUpCard powerUp) {
     if (powerUpCards.size() < 3) {
       powerUpCards.add(powerUp);
-    } else throw new IllegalStateException("You can't have more than 3 PowerUpCards");
+    }
   }
 
   public boolean removePowerUpCard(PowerUpCard powerUp) {

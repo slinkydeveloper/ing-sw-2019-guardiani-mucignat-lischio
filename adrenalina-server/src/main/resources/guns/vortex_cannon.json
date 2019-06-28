@@ -14,7 +14,7 @@
   "phasesConfig": {
     "CHOOSE_CELL": {
       "hittableCellsNumber": 1,
-      "cellsDistanceEval": "visible === true"
+      "cellsDistanceEval": "visible === true && distance > 0"
     },
     "CHOOSE_PLAYER_TO_HIT": {
       "hittablePlayersNumber": 1,
