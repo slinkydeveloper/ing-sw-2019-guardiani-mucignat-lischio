@@ -9,10 +9,7 @@ import com.adrenalinici.adrenaline.common.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.common.util.DecoratedEvent;
 import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.common.util.ObservableImpl;
-import com.adrenalinici.adrenaline.common.view.GameView;
-import com.adrenalinici.adrenaline.common.view.StartMatchEvent;
-import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
-import com.adrenalinici.adrenaline.common.view.ViewEvent;
+import com.adrenalinici.adrenaline.common.view.*;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -66,9 +63,15 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
   }
 
   public void disconnectedPlayer(String connectionId) {
+    PlayerColor disconnectedPlayerColor = connectedPlayers.remove(connectionId);
     if (connectedPlayers.containsKey(connectionId)) {
       LOG.info(String.format("Disconnected %s (connection id %s)", connectedPlayers.get(connectionId), connectionId));
-      availablePlayers.add(connectedPlayers.remove(connectionId));
+      availablePlayers.add(disconnectedPlayerColor);
+    }
+    if (this.isMatchStarted() && connectedPlayers.size() < 3) {
+      notifyViewEvent(new ViewEventMessage(new EndMatchEvent()));
+    } else {
+      notifyViewEvent(new ViewEventMessage(new UnavailablePlayerEvent(disconnectedPlayerColor)));
     }
   }
 
@@ -102,7 +105,7 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
 
   void onNewTurn(PlayerColor player) {
     if (!connectedPlayers.containsValue(player)) {
-      context.enqueueInboxMessage(matchId, new ViewEventMessage(new UnavailablePlayerEvent(player)));
+      this.notifyViewEvent(new ViewEventMessage(new UnavailablePlayerEvent(player)));
       return;
     }
 
@@ -117,6 +120,10 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
       }
     }, turnTimerSeconds * 1000);
     broadcast(new NextTurnMessage(player));
+  }
+
+  void onEndMatch() {
+    context.removeMatch(this.matchId);
   }
 
   private void checkStartMatch() {

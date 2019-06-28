@@ -14,6 +14,7 @@ import com.adrenalinici.adrenaline.gui.GuiUtils;
 import com.adrenalinici.adrenaline.gui.GuiView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,7 @@ public class MainGamePaneController {
   private String registeredHandler;
 
   private boolean firstUpdate = true;
+  private Dialog openedDialog;
 
   public void initialize() {}
 
@@ -92,7 +94,7 @@ public class MainGamePaneController {
 
   public void handleAvailablePowerUpCardsForRespawn(AvailablePowerUpCardsForRespawnMessage message) {
     if (this.view.getEventBus().getMyPlayer() == message.getPlayer()) {
-      GuiUtils.showCardImagesRadioButtonDialog(
+      this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli dove rinascere",
         "Scegli un powerup. In base al colore del powerup rinascerai.",
         message.getPowerUpCards(),
@@ -105,7 +107,7 @@ public class MainGamePaneController {
 
   public void handleAvailableActions(AvailableActionsMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showLabelRadioButtonDialog(
+      this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una azione",
         "Azione:",
         message.getActions(),
@@ -118,7 +120,7 @@ public class MainGamePaneController {
 
   public void handleAvailableMovements(AvailableMovementsMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showLabelRadioButtonDialog(
+      this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una posizione",
         "Posizione:",
         message.getPositions(),
@@ -131,7 +133,7 @@ public class MainGamePaneController {
 
   public void handleAvailableGunsToPickup(AvailableGunsToPickupMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showCardImagesRadioButtonDialog(
+      this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma",
         "Scegli un'arma da raccogliere. L'arma verrà raccolta carica.",
         new ArrayList<>(message.getGuns()),
@@ -144,7 +146,7 @@ public class MainGamePaneController {
 
   public void handleAvailableEnemyMovements(AvailableEnemyMovementsMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showLabelRadioButtonDialog(
+      this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una posizione dove spostare il nemico",
         "Posizione:",
         message.getPositions(),
@@ -157,12 +159,17 @@ public class MainGamePaneController {
 
   public void handleNextTurn(NextTurnMessage message) {
     this.dashboardController.updateTurnOfPlayer(this.view.getEventBus().getTurnOfPlayer());
-    sendViewEvent(new NewTurnEvent());
+    if (isMyTurn())
+      sendViewEvent(new NewTurnEvent());
+    if (openedDialog != null && openedDialog.isShowing()) {
+      openedDialog.close();
+      openedDialog = null;
+    }
   }
 
   public void handleReloadableGuns(ReloadableGunsMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showCardImagesRadioButtonDialog(
+      this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma da ricaricare",
         "Scegli un'arma da ricaricare. L'arma verrà ricaricata e verranno scalate le munizioni necessarie.",
         new ArrayList<>(message.getGuns()),
@@ -175,7 +182,7 @@ public class MainGamePaneController {
 
   public void handleAvailableAlternativeEffectsGun(AvailableAlternativeEffectsGunMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showLabelRadioButtonDialog(
+      this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli un effetto dell'arma scelta",
         "Scegli un effetto. Verranno scalate le munizioni necessarie.",
         Arrays.asList(message.getFirstEffect(), message.getSecondEffect()),
@@ -188,7 +195,7 @@ public class MainGamePaneController {
 
   public void handleChoosePlayerToHit(ChoosePlayerToHitMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showPlayersRadioButtonDialog(
+      this.openedDialog = GuiUtils.showPlayersRadioButtonDialog(
         "Scegli un giocatore da colpire",
         "Scegli un giocatore da colpire",
         message.getPlayers(),
@@ -204,12 +211,11 @@ public class MainGamePaneController {
       if (message.getFirstExtraEffect() != null) effects.add(message.getFirstExtraEffect());
       if (message.getSecondExtraEffect() != null) effects.add(message.getSecondExtraEffect());
 
-      GuiUtils.showLabelCheckBoxDialog(
+      this.openedDialog = GuiUtils.showLabelCheckBoxDialog(
         "Scegli gli effetti da applicare",
         "Scegli gli effetti da applicare, verrano scalati i costi degli effetti",
         effects,
         e -> String.format("%s: %s", e.getName(), e.getDescription()),
-        null,
         true,
         chosenEffects -> sendViewEvent(new BaseGunEffectChosenEvent(
           chosenEffects.contains(message.getFirstExtraEffect()),
@@ -222,7 +228,7 @@ public class MainGamePaneController {
 
   public void handleAvailableGuns(AvailableGunsMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showCardImagesRadioButtonDialog(
+      this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma da utilizzare",
         "Scegli un'arma da utilizzare",
         new ArrayList<>(message.getGuns()),
@@ -235,7 +241,7 @@ public class MainGamePaneController {
 
   public void handleAvailableTagbackGrenade(AvailableTagbackGrenadeMessage message) {
     if (message.getPlayer().equals(this.view.getEventBus().getMyPlayer())) {
-      GuiUtils.showCardImagesRadioButtonDialog(
+      this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli la granata venom da utilizzare",
         "Scegli la granata venom da utilizzare per marcare il nemico che ti ha sparato",
         message.getPowerUpCards(),
@@ -248,7 +254,7 @@ public class MainGamePaneController {
 
   public void handleAvailableRooms(AvailableRoomsMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showLabelRadioButtonDialog(
+      this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una stanza",
         "Stanza:",
         new ArrayList<>(message.getRooms()),
@@ -261,7 +267,7 @@ public class MainGamePaneController {
 
   public void handleAvailableCellsToHit(AvailableCellsToHitMessage message) {
     if (isMyTurn()) {
-      GuiUtils.showLabelRadioButtonDialog(
+      this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli cella dove applicare l'effetto",
         "Scegli cella dove applicare l'effetto",
         new ArrayList<>(message.getCells()),
@@ -285,6 +291,7 @@ public class MainGamePaneController {
     );
 
     alert.showAndWait();
+
   }
 
   private boolean isMyTurn() {

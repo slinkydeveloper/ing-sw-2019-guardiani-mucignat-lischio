@@ -54,6 +54,8 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
       flowOrchestrator.getActualContext().getTurnOfPlayer() == ((UnavailablePlayerEvent)event.getInnerEvent()).getPlayerColor()
     ) {
       this.endTurnCallback(event.getEventSource());
+    } else if (event.getInnerEvent().isEndMatchEvent()) {
+      this.endMatchCallback(event.getEventSource());
     } else {
       flowOrchestrator.handleEvent(event.getInnerEvent(), event.getEventSource());
     }

@@ -15,11 +15,13 @@ public class StartServerDialogController {
 
   @FXML private TextField rmiPortTextField;
   @FXML private TextField socketPortTextField;
+  @FXML private TextField turnTimeoutTextField;
   @FXML private Button startMatchButton;
 
   public void initialize() {
     rmiPortTextField.setText("9001");
     socketPortTextField.setText("9000");
+    turnTimeoutTextField.setText("240");
 
     startMatchButton.setOnMouseClicked(this::onStartMatchClicked);
   }
@@ -27,9 +29,11 @@ public class StartServerDialogController {
   public void onStartMatchClicked(MouseEvent e) {
     String serializedRmiPort = rmiPortTextField.getText();
     String serializedSocktPort = socketPortTextField.getText();
+    String serializedTurnTimeout = turnTimeoutTextField.getText();
     try {
-      int rmiPort = Integer.valueOf(serializedRmiPort);
-      int socketPort = Integer.valueOf(serializedSocktPort);
+      int rmiPort = Integer.parseInt(serializedRmiPort);
+      int socketPort = Integer.parseInt(serializedSocktPort);
+      long turnTimeout = Long.parseLong(serializedTurnTimeout);
 
       FXMLLoader loader = new FXMLLoader(
         getClass().getResource(
@@ -44,7 +48,7 @@ public class StartServerDialogController {
       GameBootstrapper bootstrapper = new GameBootstrapper(
         rmiPort,
         socketPort,
-        Long.parseLong(System.getProperty("turnTimeout", "240"))
+        turnTimeout
       );
       controller.setBootstrapper(bootstrapper);
       bootstrapper.start();

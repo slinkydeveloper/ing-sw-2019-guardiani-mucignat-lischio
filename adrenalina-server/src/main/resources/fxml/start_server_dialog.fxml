@@ -21,7 +21,13 @@
                   <TextField fx:id="socketPortTextField"/>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" text="Start match" fx:id="startMatchButton"/>
+           <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
+             <children>
+               <Label text="Choose turn timeout (ms)" />
+               <TextField fx:id="turnTimeoutTextField"/>
+             </children>
+           </HBox>
+           <Button mnemonicParsing="false" text="Start match" fx:id="startMatchButton"/>
          </children>
          <BorderPane.margin>
             <Insets />
