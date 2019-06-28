@@ -18,7 +18,7 @@
     },
     "CHOOSE_PLAYER_TO_HIT": {
       "hittablePlayersNumber": 1,
-      "distanceEval": "distance <= 1",
+      "distanceEval": "distance < 2",
       "restriction": "on_chosen_cell"
     }
   },

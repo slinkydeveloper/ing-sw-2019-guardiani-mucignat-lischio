@@ -36,32 +36,6 @@ public class CliMain extends BaseCliGameView {
     put("RESET", "\u001B[0m");
   }};
 
-  public static final String SMALL = "SMALL";
-  public static final String MEDIUM_1 = "MEDIUM_1";
-  public static final String MEDIUM_2 = "MEDIUM_2";
-  public static final String BIG = "BIG";
-
-  public static final List<PlayerColor> THREE_PLAYERS = Arrays.asList(
-    PlayerColor.GREEN,
-    PlayerColor.YELLOW,
-    PlayerColor.PURPLE
-  );
-
-  public static final List<PlayerColor> FOUR_PLAYERS = Arrays.asList(
-    PlayerColor.GREEN,
-    PlayerColor.YELLOW,
-    PlayerColor.PURPLE,
-    PlayerColor.GRAY
-  );
-
-  public static final List<PlayerColor> FIVE_PLAYERS = Arrays.asList(
-    PlayerColor.GREEN,
-    PlayerColor.YELLOW,
-    PlayerColor.PURPLE,
-    PlayerColor.GRAY,
-    PlayerColor.CYAN
-  );
-
   Scanner scanner = new Scanner(System.in);
 
   private ModelEvent lastModelEvent;
@@ -111,13 +85,13 @@ public class CliMain extends BaseCliGameView {
         );
         System.out.println("Type name of the match you wanna join, or 'new' to create a new one");
         String choice = scanner.nextLine().trim().toLowerCase();
+        while (!choice.equals("new") && !matches.keySet().contains(choice)) {
+          System.out.println("Please select an existing match, or type 'new' to create one:");
+          choice = scanner.nextLine().trim().toLowerCase();
+        }
         if (choice.equals("new")) {
           newMatchManager();
         } else {
-          while (!matches.keySet().contains(choice)) {//choice non è uguale ad uno degli id dei match
-            System.out.println("Please select an existing match, or type 'new' to create one:");
-            choice = scanner.nextLine().trim().toLowerCase(); //TODO manage if input equals new here
-          }
           System.out.println("Now choose your player:");
           List<PlayerColor> availablePlayers = new ArrayList<>(matches.get(choice));
           printNumberedList(availablePlayers);
@@ -132,21 +106,25 @@ public class CliMain extends BaseCliGameView {
     int chosenIndex;
     System.out.println("Choose a name for your match:");
     String matchId = scanner.nextLine();
+
     System.out.println("Now choose one of the dashboards:");
     List<DashboardChoice> dashboardChoices = Arrays.asList(DashboardChoice.values());
     printNumberedList(Arrays.asList(DashboardChoice.values()));
     chosenIndex = parseIndex(0, dashboardChoices.size() - 1);
     DashboardChoice dashboard = dashboardChoices.get(chosenIndex);
+
     System.out.println("Now select how many player you want in the match:");
     List<PlayersChoice> playersChoices = Arrays.asList(PlayersChoice.values());
     printNumberedList(playersChoices);
     chosenIndex = parseIndex(0, playersChoices.size() - 1);
     PlayersChoice players = playersChoices.get(chosenIndex);
+
     System.out.println("Last thing, choose the ruleset:");
     List<RulesChoice> rulesChoices = Arrays.asList(RulesChoice.values());
     printNumberedList(rulesChoices);
     chosenIndex = parseIndex(0, rulesChoices.size() - 1);
     RulesChoice rules = rulesChoices.get(chosenIndex);
+
     sendStartNewMatch(matchId, dashboard, players, rules);
   }
 
@@ -427,7 +405,11 @@ public class CliMain extends BaseCliGameView {
 
   @Override
   public void showRanking(List<Map.Entry<PlayerColor, Integer>> ranking) {
-
+    System.out.println("Final ranking:");
+    IntStream.range(0, ranking.size())
+      .forEach(i -> System.out.println(
+        String.format("%d) %s -> %d points", i + 1, ranking.get(i).getKey(), ranking.get(i).getValue())
+      ));
   }
 
   @Override
@@ -463,8 +445,22 @@ public class CliMain extends BaseCliGameView {
 
     }
 
-    System.out.println("Remaining skulls: " + model.getRemainingSkulls());
-    System.out.println("Kill track: " + model.getKillScore().toString());
+    model.getDashboard().stream().filter(Objects::nonNull).forEach(dc -> {
+      dc.visit(
+        rdc -> {
+          System.out.println(String.format("Cell {%d, %d}: %s", rdc.getLine(), rdc.getCell(), rdc.getAvailableGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString()));
+        },
+        pdc -> {
+          if (pdc.getAmmoCard() != null)
+            System.out.println(String.format("Cell {%d, %d}: %s / PowerUp -> %d", pdc.getLine(), pdc.getCell(), pdc.getAmmoCard().getAmmoColor().toString(), pdc.getAmmoCard().isPickPowerUp() ? 1 : 0));
+          else
+            System.out.println(String.format("Cell {%d, %d}: no ammoCard", pdc.getLine(), pdc.getCell()));
+        }
+      );
+    });
+
+    System.out.println("\nRemaining skulls: " + model.getRemainingSkulls());
+    System.out.println("Kill track: " + model.getKillScore().toString() + "\n");
 
     model.getPlayerDashboards()
       .stream()
@@ -492,6 +488,7 @@ public class CliMain extends BaseCliGameView {
         System.out.println("\t  POINTS: " + myPD.getPoints());
         System.out.println(ANSI_RESET);
       });
+
   }
 
   private int parseIndex(int minimum, int maximum) {

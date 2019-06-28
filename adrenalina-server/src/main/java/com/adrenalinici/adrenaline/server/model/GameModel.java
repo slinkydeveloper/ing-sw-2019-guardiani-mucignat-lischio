@@ -195,10 +195,15 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     });
   }
 
+  /**
+   * @return an ordered list with the points assigned to every player.
+   * First element correspond to the player who has more points.
+   */
   public List<Map.Entry<PlayerColor, Integer>> getRanking() {
     return getPlayerDashboards()
       .stream()
       .map(p -> new SimpleImmutableEntry<>(p.getPlayer(), p.getPoints()))
+      .sorted(((o1, o2) -> Integer.compare(o2.getValue(), o1.getValue())))
       .collect(Collectors.toList());
   }
 
