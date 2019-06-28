@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.server.controller.nodes;
 
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.view.GameView;
+import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowNode;
@@ -55,6 +56,9 @@ public class RespawnFlowNode implements ControllerFlowNode<RespawnFlowNode.Respa
       if (flowState.waitingPlayers.isEmpty())
         context.nextPhase(view);
     });
+    if (event.isUnavailablePlayerEvent()) {
+      flowState.waitingPlayers.remove(((UnavailablePlayerEvent)event).getPlayerColor());
+    }
   }
 
 

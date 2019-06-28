@@ -3,6 +3,7 @@ package com.adrenalinici.adrenaline.server.controller.nodes.guns;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.PowerUpType;
 import com.adrenalinici.adrenaline.common.view.GameView;
+import com.adrenalinici.adrenaline.common.view.UnavailablePlayerEvent;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowNode;
@@ -67,6 +68,9 @@ public class TagbackGrenadeFlowNode implements ControllerFlowNode<TagbackGrenade
       if (flowState.waitingPlayers.isEmpty())
         context.nextPhase(view, flowState.gunFlowState);
     });
+    if (event.isUnavailablePlayerEvent()) {
+      flowState.waitingPlayers.remove(((UnavailablePlayerEvent)event).getPlayerColor());
+    }
   }
 
   protected List<PlayerColor> calculatePlayersThatCanUseVenomGrenade(GunFlowState gunFlowState, GameModel model, ControllerFlowContext context) {
