@@ -206,7 +206,7 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest { //TODO test f
     context.setTurnOfPlayer(PlayerColor.GREEN);
 
     model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
-    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GRAY);
     model.getDashboard().getDashboardCell(Position.of(1, 0)).addPlayer(PlayerColor.YELLOW);
     model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.CYAN);
 
@@ -234,5 +234,29 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest { //TODO test f
       .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
   }
 
+  @Test
+  public void testOnChosenCellRestriction() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
 
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 1)).addPlayer(PlayerColor.CYAN);
+
+    DecoratedBaseEffectGun gun = (DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("vortex_cannon");
+    BaseEffectGunFlowStateImpl baseEffectGunFlowState = new BaseEffectGunFlowStateImpl(gun);
+    baseEffectGunFlowState.setActivatedFirstExtraEffect(false).setActivatedSecondExtraEffect(false);
+    baseEffectGunFlowState.getChosenCellsToHit().add(Position.of(0, 1));
+
+    ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
+
+    context.nextPhase(
+      viewMock,
+      baseEffectGunFlowState
+    );
+
+    verify(viewMock, times(1)).showChoosePlayerToHit(playersCaptor.capture());
+    assertThat(playersCaptor.getValue())
+      .containsOnly(PlayerColor.GRAY);
+  }
 }

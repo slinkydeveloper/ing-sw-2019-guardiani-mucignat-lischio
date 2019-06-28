@@ -389,4 +389,18 @@ public class GameModelTest {
     assertThat(gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor.GREEN)).isTrue();
     assertThat(gameModel.isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor.GRAY)).isTrue();
   }
+
+  @Test
+  public void getRankingTest() {
+    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
+      TestUtils.generate3PlayerDashboards(), true);
+
+    gameModel.getPlayerDashboard(PlayerColor.GREEN).addPoints(90);
+    gameModel.getPlayerDashboard(PlayerColor.GRAY).addPoints(21);
+    gameModel.getPlayerDashboard(PlayerColor.YELLOW).addPoints(0);
+
+    assertThat(gameModel.getRanking().get(0).getValue()).isEqualTo(90);
+    assertThat(gameModel.getRanking().get(1).getValue()).isEqualTo(21);
+    assertThat(gameModel.getRanking().get(2).getValue()).isEqualTo(0);
+  }
 }
