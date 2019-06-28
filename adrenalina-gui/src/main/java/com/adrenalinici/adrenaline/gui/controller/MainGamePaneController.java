@@ -1,6 +1,9 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
-import com.adrenalinici.adrenaline.common.model.*;
+import com.adrenalinici.adrenaline.common.model.Action;
+import com.adrenalinici.adrenaline.common.model.CellColor;
+import com.adrenalinici.adrenaline.common.model.Effect;
+import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.event.ModelEvent;
 import com.adrenalinici.adrenaline.common.model.light.LightGameModel;
 import com.adrenalinici.adrenaline.common.model.light.LightPlayerDashboard;
@@ -89,116 +92,109 @@ public class MainGamePaneController {
 
   public void handleAvailablePowerUpCardsForRespawn(AvailablePowerUpCardsForRespawnMessage message) {
     if (this.view.getEventBus().getMyPlayer() == message.getPlayer()) {
-      PowerUpCard chosenCard = GuiUtils.showCardImagesRadioButtonDialog(
+      GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli dove rinascere",
         "Scegli un powerup. In base al colore del powerup rinascerai.",
         message.getPowerUpCards(),
         GuiUtils::computePowerUpFilename,
-        false
+        false,
+        chosenCard -> sendViewEvent(new PowerUpCardChosenEvent(view.getEventBus().getMyPlayer(), chosenCard))
       );
-
-      sendViewEvent(new PowerUpCardChosenEvent(view.getEventBus().getMyPlayer(), chosenCard));
     }
   }
 
   public void handleAvailableActions(AvailableActionsMessage message) {
     if (isMyTurn()) {
-      Action chosen = GuiUtils.showChoiceDialogWithMappedValues(
+      GuiUtils.showLabelRadioButtonDialog(
         "Scegli una azione",
         "Azione:",
         message.getActions(),
-        Action::toString,
-        true
+        Action::name,
+        true,
+        chosen -> sendViewEvent(new ActionChosenEvent(chosen))
       );
-
-      sendViewEvent(new ActionChosenEvent(chosen));
     }
   }
 
   public void handleAvailableMovements(AvailableMovementsMessage message) {
     if (isMyTurn()) {
-      Position chosen = GuiUtils.showChoiceDialogWithMappedValues(
+      GuiUtils.showLabelRadioButtonDialog(
         "Scegli una posizione",
         "Posizione:",
         message.getPositions(),
         p -> String.format("[%d, %d]", p.line(), p.cell()),
-        true
+        true,
+        chosen -> sendViewEvent(new MovementChosenEvent(chosen))
       );
-
-      sendViewEvent(new MovementChosenEvent(chosen));
     }
   }
 
   public void handleAvailableGunsToPickup(AvailableGunsToPickupMessage message) {
     if (isMyTurn()) {
-      String chosenCard = GuiUtils.showCardImagesRadioButtonDialog(
+      GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma",
         "Scegli un'arma da raccogliere. L'arma verrà raccolta carica.",
         new ArrayList<>(message.getGuns()),
         GuiUtils::computeGunFilename,
-        true
+        true,
+        chosenCard -> sendViewEvent(new GunChosenEvent(chosenCard))
       );
-
-      sendViewEvent(new GunChosenEvent(chosenCard));
     }
   }
 
   public void handleAvailableEnemyMovements(AvailableEnemyMovementsMessage message) {
     if (isMyTurn()) {
-      Position chosen = GuiUtils.showChoiceDialogWithMappedValues(
+      GuiUtils.showLabelRadioButtonDialog(
         "Scegli una posizione dove spostare il nemico",
         "Posizione:",
         message.getPositions(),
         p -> String.format("[%d, %d]", p.line(), p.cell()),
-        true
+        true,
+        chosen -> sendViewEvent(new EnemyMovementChosenEvent(chosen))
       );
-
-      sendViewEvent(new EnemyMovementChosenEvent(chosen));
     }
   }
 
   public void handleNextTurn(NextTurnMessage message) {
     this.dashboardController.updateTurnOfPlayer(this.view.getEventBus().getTurnOfPlayer());
+    sendViewEvent(new NewTurnEvent());
   }
 
   public void handleReloadableGuns(ReloadableGunsMessage message) {
     if (isMyTurn()) {
-      String chosenCard = GuiUtils.showCardImagesRadioButtonDialog(
+      GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma da ricaricare",
         "Scegli un'arma da ricaricare. L'arma verrà ricaricata e verranno scalate le munizioni necessarie.",
         new ArrayList<>(message.getGuns()),
         GuiUtils::computeGunFilename,
-        true
+        true,
+        chosenCard -> sendViewEvent(new GunChosenEvent(chosenCard))
       );
-
-      sendViewEvent(new GunChosenEvent(chosenCard));
     }
   }
 
   public void handleAvailableAlternativeEffectsGun(AvailableAlternativeEffectsGunMessage message) {
     if (isMyTurn()) {
-      Effect chosen = GuiUtils.showLabelRadioButtonDialog(
+      GuiUtils.showLabelRadioButtonDialog(
         "Scegli un effetto dell'arma scelta",
         "Scegli un effetto. Verranno scalate le munizioni necessarie.",
         Arrays.asList(message.getFirstEffect(), message.getSecondEffect()),
         e -> String.format("%s: %s", e.getName(), e.getDescription()),
-        true
+        true,
+        chosen -> sendViewEvent(new AlternativeGunEffectChosenEvent(chosen.getId().equals(message.getSecondEffect().getId())))
       );
-
-      sendViewEvent(new AlternativeGunEffectChosenEvent(chosen.getId().equals(message.getSecondEffect().getId())));
     }
   }
 
   public void handleChoosePlayerToHit(ChoosePlayerToHitMessage message) {
     if (isMyTurn()) {
-      PlayerColor color = GuiUtils.showPlayersRadioButtonDialog(
+      GuiUtils.showPlayersRadioButtonDialog(
         "Scegli un giocatore da colpire",
         "Scegli un giocatore da colpire",
         message.getPlayers(),
-        true
+        true,
+        color -> sendViewEvent(new PlayerChosenEvent(color))
       );
-
-      sendViewEvent(new PlayerChosenEvent(color));
     }
   }
 
@@ -208,76 +204,71 @@ public class MainGamePaneController {
       if (message.getFirstExtraEffect() != null) effects.add(message.getFirstExtraEffect());
       if (message.getSecondExtraEffect() != null) effects.add(message.getSecondExtraEffect());
 
-      List<Effect> chosenEffects = GuiUtils.showLabelCheckBoxDialog(
+      GuiUtils.showLabelCheckBoxDialog(
         "Scegli gli effetti da applicare",
         "Scegli gli effetti da applicare, verrano scalati i costi degli effetti",
         effects,
         e -> String.format("%s: %s", e.getName(), e.getDescription()),
         null,
-        true
+        true,
+        chosenEffects -> sendViewEvent(new BaseGunEffectChosenEvent(
+          chosenEffects.contains(message.getFirstExtraEffect()),
+          chosenEffects.contains(message.getSecondExtraEffect())
+        ))
       );
-
-      sendViewEvent(new BaseGunEffectChosenEvent(
-        chosenEffects.contains(message.getFirstExtraEffect()),
-        chosenEffects.contains(message.getSecondExtraEffect())
-      ));
 
     }
   }
 
   public void handleAvailableGuns(AvailableGunsMessage message) {
     if (isMyTurn()) {
-      String chosenCard = GuiUtils.showCardImagesRadioButtonDialog(
+      GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma da utilizzare",
         "Scegli un'arma da utilizzare",
         new ArrayList<>(message.getGuns()),
         GuiUtils::computeGunFilename,
-        true
+        true,
+        chosenCard -> sendViewEvent(new GunChosenEvent(chosenCard))
       );
-
-      sendViewEvent(new GunChosenEvent(chosenCard));
     }
   }
 
   public void handleAvailableTagbackGrenade(AvailableTagbackGrenadeMessage message) {
     if (message.getPlayer().equals(this.view.getEventBus().getMyPlayer())) {
-      PowerUpCard chosenCard = GuiUtils.showCardImagesRadioButtonDialog(
+      GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli la granata venom da utilizzare",
         "Scegli la granata venom da utilizzare per marcare il nemico che ti ha sparato",
         message.getPowerUpCards(),
         GuiUtils::computePowerUpFilename,
-        true
+        true,
+        chosenCard -> sendViewEvent(new UseTagbackGrenadeEvent(message.getPlayer(), chosenCard))
       );
-
-      sendViewEvent(new UseTagbackGrenadeEvent(message.getPlayer(), chosenCard));
     }
   }
 
   public void handleAvailableRooms(AvailableRoomsMessage message) {
     if (isMyTurn()) {
-      CellColor chosen = GuiUtils.showChoiceDialogWithMappedValues(
+      GuiUtils.showLabelRadioButtonDialog(
         "Scegli una stanza",
         "Stanza:",
         new ArrayList<>(message.getRooms()),
         CellColor::name,
-        true
+        true,
+        chosen -> sendViewEvent(new RoomChosenEvent(chosen))
       );
-
-      sendViewEvent(new RoomChosenEvent(chosen));
     }
   }
 
   public void handleAvailableCellsToHit(AvailableCellsToHitMessage message) {
     if (isMyTurn()) {
-      Position chosen = GuiUtils.showChoiceDialogWithMappedValues(
+      GuiUtils.showLabelRadioButtonDialog(
         "Scegli cella dove applicare l'effetto",
         "Scegli cella dove applicare l'effetto",
         new ArrayList<>(message.getCells()),
         p -> String.format("[%d, %d]", p.line(), p.cell()),
-        true
+        true,
+        chosen -> sendViewEvent(new CellToHitChosenEvent(chosen))
       );
-
-      sendViewEvent(new CellToHitChosenEvent(chosen));
     }
   }
 

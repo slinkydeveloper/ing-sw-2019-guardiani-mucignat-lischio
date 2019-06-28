@@ -60,8 +60,11 @@ public class ChoosePlayersToHitFlowNode implements ControllerFlowNode<GunFlowSta
 
       if (resolveHittablePlayersRestriction(flowState).equals(DIFFERENT_CELL)) {
         Set<Position> positionsToFilter = new HashSet<>();
-        flowState.getChosenPlayersToHit()
-          .forEach(player -> positionsToFilter.add(model.getPlayerPosition(player)));
+
+        if (!flowState.getChosenPlayersToHit().isEmpty()) {
+          flowState.getChosenPlayersToHit()
+            .forEach(player -> positionsToFilter.add(model.getPlayerPosition(player)));
+        }
 
         hittable =
           model

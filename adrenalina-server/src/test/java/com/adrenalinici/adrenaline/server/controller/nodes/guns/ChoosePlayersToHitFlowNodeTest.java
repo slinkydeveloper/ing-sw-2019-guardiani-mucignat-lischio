@@ -200,4 +200,39 @@ public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest { //TODO test f
 
     checkEndCalled();
   }
+
+  @Test
+  public void testForShockwaveRestrictions() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 0)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(2, 2)).addPlayer(PlayerColor.CYAN);
+
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("shockwave");
+    AlternativeEffectGunFlowStateImpl alternativeEffectGunFlowState = new AlternativeEffectGunFlowStateImpl(gun);
+    alternativeEffectGunFlowState.setChosenEffect(gun.getFirstEffect(), true);
+
+    ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
+
+    context.nextPhase(
+      viewMock,
+      alternativeEffectGunFlowState
+    );
+
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.YELLOW), viewMock);
+
+    verify(viewMock, times(2)).showChoosePlayerToHit(playersCaptor.capture());
+    assertThat(playersCaptor.getAllValues().get(0))
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
+    assertThat(playersCaptor.getAllValues().get(1))
+      .containsExactlyInAnyOrder(PlayerColor.YELLOW);
+
+    assertThat(((AlternativeEffectGunFlowState) context.getActualState()).getChosenPlayersToHit())
+      .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
+  }
+
+
 }

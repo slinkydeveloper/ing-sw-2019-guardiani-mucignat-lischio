@@ -11,8 +11,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -60,56 +64,47 @@ public class GuiUtils {
     return String.format("/images/guns/%s.png", gunId);
   }
 
-  public static <T> T showChoiceDialogWithMappedValues(String title, String contentText, List<T> values, Function<T, String> fn, boolean optional) {
-    Map<String, T> valuesMap = values.stream().collect(Collectors.toMap(fn, Function.identity()));
-    List<String> choices = new ArrayList<>(valuesMap.keySet());
+  public static void showPlayersRadioButtonDialog(String title, String question, List<PlayerColor> elements, boolean optional, Consumer<PlayerColor> onEnd) {
+    showVerticalRadioButtonDialog(title, question, elements, GuiUtils::createPlayerCircle, optional, onEnd);
+  }
 
-    ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+  public static <T> void showLabelRadioButtonDialog(String title, String question, List<T> elements, Function<T, String> descriptionFn, boolean optional, Consumer<T> onEnd) {
+    showVerticalRadioButtonDialog(title, question, elements, el -> new Label(descriptionFn.apply(el)), optional, onEnd);
+  }
 
-    dialog.setTitle(title);
-    dialog.setHeaderText(title);
-    dialog.setContentText(contentText);
+  public static <T> void showLabelCheckBoxDialog(String title, String question, List<T> elements, Function<T, String> descriptionFn, Predicate<List<T>> acceptancePredicate, boolean optional, Consumer<List<T>> onEnd) {
+    showVerticalCheckBoxDialog(title, question, elements, el -> new Label(descriptionFn.apply(el)), acceptancePredicate, optional, onEnd);
+  }
 
-    Optional<String> result = dialog.showAndWait();
-    dialog.getDialogPane().requestFocus();
+  public static <T> void showCardImagesRadioButtonDialog(String title, String question, List<T> elements, Function<T, String> fileNameFn, boolean optional, Consumer<T> onEnd) {
+    showHorizontalRadioButtonDialog(title, question, elements, el -> GuiUtils.createCardImageView(fileNameFn.apply(el)), optional, onEnd);
+  }
 
-    if (result.isPresent()) {
-      return valuesMap.get(dialog.getSelectedItem());
-    } else if (!optional) {
-      return showChoiceDialogWithMappedValues(title, contentText, values, fn, optional);
-    } else {
-      return null;
+  public static <T> void showHorizontalRadioButtonDialog(String title, String question, List<T> elements, Function<T, Node> nodeGenFn, boolean optional, Consumer<T> onEnd) {
+    showRadioButtonDialog(false, title, question, elements, nodeGenFn, optional, onEnd);
+  }
+
+  public static <T> void showVerticalRadioButtonDialog(String title, String question, List<T> elements, Function<T, Node> nodeGenFn, boolean optional, Consumer<T> onEnd) {
+    showRadioButtonDialog(true, title, question, elements, nodeGenFn, optional, onEnd);
+  }
+
+  @SuppressWarnings("unchecked")
+  private static <T> void showRadioButtonDialog(boolean vertical, String title, String question, List<T> elements, Function<T, Node> nodeGenFn, boolean optional, Consumer<T> onEnd) {
+    if (elements.isEmpty()) {
+      onEnd.accept(null);
+      return;
     }
-  }
-
-  public static PlayerColor showPlayersRadioButtonDialog(String title, String question, List<PlayerColor> elements, boolean optional) {
-    return showVerticalRadioButtonDialog(title, question, elements, GuiUtils::createPlayerCircle, optional);
-  }
-
-  public static <T> T showLabelRadioButtonDialog(String title, String question, List<T> elements, Function<T, String> descriptionFn, boolean optional) {
-    return showVerticalRadioButtonDialog(title, question, elements, el -> new Label(descriptionFn.apply(el)), optional);
-  }
-
-  public static <T> List<T> showLabelCheckBoxDialog(String title, String question, List<T> elements, Function<T, String> descriptionFn, Predicate<List<T>> acceptancePredicate, boolean optional) {
-    return showVerticalCheckBoxDialog(title, question, elements, el -> new Label(descriptionFn.apply(el)), acceptancePredicate, optional);
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T> T showCardImagesRadioButtonDialog(String title, String question, List<T> elements, Function<T, String> fileNameFn, boolean optional) {
-    return showHorizontalRadioButtonDialog(title, question, elements, el -> GuiUtils.createCardImageView(fileNameFn.apply(el)), optional);
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T> T showHorizontalRadioButtonDialog(String title, String question, List<T> elements, Function<T, Node> nodeGenFn, boolean optional) {
-    if (elements.isEmpty()) return null;
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.initModality(Modality.NONE);
     alert.setTitle(title);
     alert.setHeaderText(question);
 
     ToggleGroup group = new ToggleGroup();
 
-    GridPane imagesGridPane = new GridPane();
-    imagesGridPane.setPadding(new Insets(10, 10, 10, 10));
+    GridPane innerGridPane = new GridPane();
+    innerGridPane.setHgap(10);
+    innerGridPane.setVgap(10);
+    innerGridPane.setPadding(new Insets(10, 10, 10, 10));
 
     for (int i = 0; i < elements.size(); i++) {
       Node node = nodeGenFn.apply(elements.get(i));
@@ -117,65 +112,43 @@ public class GuiUtils {
       button.setUserData(elements.get(i));
       button.setToggleGroup(group);
 
-      imagesGridPane.add(node, i, 0);
-      imagesGridPane.add(button, i, 1);
+      if (vertical) {
+        innerGridPane.add(button, 0, i);
+        innerGridPane.add(node, 1, i);
+      } else {
+        innerGridPane.add(node, i, 0);
+        innerGridPane.add(button, i, 1);
+      }
     }
 
     group.getToggles().get(0).setSelected(true);
 
-    alert.getDialogPane().setContent(imagesGridPane);
+    alert.getDialogPane().setContent(innerGridPane);
 
-    Optional<ButtonType> result = alert.showAndWait();
+    Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+    okButton.setOnAction(action -> {
+      onEnd.accept((T) group.getSelectedToggle().getUserData());
+    });
+    Button cancelButton = (Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL);
+    cancelButton.setOnAction(actionEvent -> {
+      if (!optional) {
+        showHorizontalRadioButtonDialog(title, question, elements, nodeGenFn, optional, onEnd);
+      } else {
+        onEnd.accept(null);
+      }
+    });
 
-    if (result.isPresent() && result.get() == ButtonType.OK) {
-      return (T) group.getSelectedToggle().getUserData();
-    } else if (!optional) {
-      return showHorizontalRadioButtonDialog(title, question, elements, nodeGenFn, optional);
-    } else {
-      return null;
-    }
+    //TODO close top right button?
+
+    alert.show();
   }
 
   @SuppressWarnings("unchecked")
-  public static <T> T showVerticalRadioButtonDialog(String title, String question, List<T> elements, Function<T, Node> nodeGenFn, boolean optional) {
-    if (elements.isEmpty()) return null;
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle(title);
-    alert.setHeaderText(question);
-
-    ToggleGroup group = new ToggleGroup();
-
-    GridPane descriptionsGridPane = new GridPane();
-    descriptionsGridPane.setPadding(new Insets(10, 10, 10, 10));
-
-    for (int i = 0; i < elements.size(); i++) {
-      Node node = nodeGenFn.apply(elements.get(i));
-      RadioButton button = new RadioButton();
-      button.setUserData(elements.get(i));
-      button.setToggleGroup(group);
-
-      descriptionsGridPane.add(button, 0, i);
-      descriptionsGridPane.add(node, 1, i);
+  public static <T> void showVerticalCheckBoxDialog(String title, String question, List<T> elements, Function<T, Node> nodeGenFn, Predicate<List<T>> acceptancePredicate, boolean optional, Consumer<List<T>> onEnd) {
+    if (elements.isEmpty()) {
+      onEnd.accept(null);
+      return;
     }
-
-    group.getToggles().get(0).setSelected(true);
-
-    alert.getDialogPane().setContent(descriptionsGridPane);
-
-    Optional<ButtonType> result = alert.showAndWait();
-
-    if (result.isPresent() && result.get() == ButtonType.OK) {
-      return (T) group.getSelectedToggle().getUserData();
-    } else if (!optional) {
-      return showVerticalRadioButtonDialog(title, question, elements, nodeGenFn, optional);
-    } else {
-      return null;
-    }
-  }
-
-  @SuppressWarnings("unchecked")
-  public static <T> List<T> showVerticalCheckBoxDialog(String title, String question, List<T> elements, Function<T, Node> nodeGenFn, Predicate<List<T>> acceptancePredicate, boolean optional) {
-    if (elements.isEmpty()) return null;
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle(title);
     alert.setHeaderText(question);
@@ -199,20 +172,25 @@ public class GuiUtils {
 
     alert.getDialogPane().setContent(descriptionsGridPane);
 
-    Optional<ButtonType> result = alert.showAndWait();
-
-    if (result.isPresent() && result.get() == ButtonType.OK) {
+    Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
+    okButton.setOnAction(action -> {
       List<T> chosen = dataMapping.entrySet().stream().filter(e -> e.getKey().isSelected()).map(Map.Entry::getValue).collect(Collectors.toList());
       if (acceptancePredicate != null && !acceptancePredicate.test(chosen)) {
-        return showVerticalCheckBoxDialog(title, question, elements, nodeGenFn, acceptancePredicate, optional);
+        showVerticalCheckBoxDialog(title, question, elements, nodeGenFn, acceptancePredicate, optional, onEnd);
       } else {
-        return chosen;
+        onEnd.accept(chosen);
       }
-    } else if (!optional) {
-      return showVerticalCheckBoxDialog(title, question, elements, nodeGenFn, acceptancePredicate, optional);
-    } else {
-      return null;
-    }
+    });
+    Button cancelButton = (Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL);
+    cancelButton.setOnAction(actionEvent -> {
+      if (!optional) {
+        showVerticalCheckBoxDialog(title, question, elements, nodeGenFn, acceptancePredicate, optional, onEnd);
+      } else {
+        onEnd.accept(null);
+      }
+    });
+
+    alert.show();
   }
 
   public static ImageView createCardImageView(String url) {

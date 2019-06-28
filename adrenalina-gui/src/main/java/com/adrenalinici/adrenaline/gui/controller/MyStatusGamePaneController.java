@@ -11,6 +11,7 @@ import com.adrenalinici.adrenaline.common.util.Bag;
 import com.adrenalinici.adrenaline.gui.GuiUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
@@ -106,11 +107,10 @@ public class MyStatusGamePaneController {
     unloadedGuns.forEach(gun -> {
       String url = GuiUtils.computeGunFilename(gun);
 
-      gunsHBox.getChildren().add(
-        GuiUtils.createCardImageView(url)
-      );
+      ImageView image = GuiUtils.createCardImageView(url);
+      image.setOpacity(0.5d);
 
-      gunsHBox.setOpacity(0.5d);
+      gunsHBox.getChildren().add(image);
     });
 
   }

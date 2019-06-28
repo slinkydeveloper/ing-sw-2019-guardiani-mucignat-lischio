@@ -353,8 +353,14 @@ public class GameModelTest {
     PickupDashboardCell cell = (PickupDashboardCell) gameModel.getDashboard().getDashboardCell(Position.of(1, 1));
     cell.removeAmmoCard();
 
+    List<ModelEvent> events = new ArrayList<>();
+    gameModel.registerObserver(events::add);
+
     // Refill again
     gameModel.refillDashboard();
+
+    assertThat(events)
+      .haveExactly(1, MyConditions.isDashboardCellUpdatedEvent(1, 1));
 
     assertThat(gameModel.getDashboard().stream())
       .noneMatch(MyConditions.EMPTY_CELL_PREDICATE); // All cells must have something
