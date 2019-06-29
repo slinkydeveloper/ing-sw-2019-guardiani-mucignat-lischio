@@ -446,9 +446,9 @@ package com.adrenalinici.adrenaline.server.controller {
   }
 
   class CardDeck<T> {
-    -List<T> queue
+    -List<T> deck
 
-    +CardDeck(List<T> queue)
+    +CardDeck(List<T> deck)
     +Optional<T> getCard()
   }
 
