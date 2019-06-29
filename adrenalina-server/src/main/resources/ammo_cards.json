@@ -1,7 +1,12 @@
 [
   [
-    "RED",
+    "YELLOW",
     "BLUE",
+    "POWER_UP"
+  ],
+  [
+    "YELLOW",
+    "RED",
     "POWER_UP"
   ],
   [
@@ -11,117 +16,167 @@
   ],
   [
     "RED",
-    "BLUE",
-    "POWER_UP"
+    "YELLOW",
+    "YELLOW"
   ],
   [
     "RED",
     "BLUE",
-    "POWER_UP"
+    "BLUE"
+  ],
+  [
+    "RED",
+    "RED",
+    "BLUE"
+  ],
+  [
+    "YELLOW",
+    "BLUE",
+    "BLUE"
+  ],
+  [
+    "BLUE",
+    "RED",
+    "RED"
+  ],
+  [
+    "YELLOW",
+    "RED",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "RED",
+    "BLUE"
+  ],
+  [
+    "YELLOW",
+    "RED",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "RED",
+    "BLUE"
+  ],
+  [
+    "YELLOW",
+    "BLUE",
+    "BLUE"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "YELLOW"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "BLUE"
+  ],
+  [
+    "YELLOW",
+    "RED",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "RED",
+    "BLUE"
+  ],
+  [
+    "POWER_UP",
+    "RED",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "BLUE",
+    "BLUE"
   ],
   [
     "RED",
     "BLUE",
-    "POWER_UP"
+    "BLUE"
+  ],
+  [
+    "POWER_UP",
+    "BLUE",
+    "BLUE"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "BLUE"
+  ],
+  [
+    "BLUE",
+    "RED",
+    "RED"
+  ],
+  [
+    "BLUE",
+    "YELLOW",
+    "YELLOW"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "BLUE"
+  ],
+  [
+    "BLUE",
+    "YELLOW",
+    "YELLOW"
+  ],
+  [
+    "POWER_UP",
+    "RED",
+    "RED"
+  ],
+  [
+    "POWER_UP",
+    "YELLOW",
+    "RED"
   ],
   [
     "RED",
     "BLUE",
-    "POWER_UP"
+    "BLUE"
   ],
   [
     "RED",
+    "YELLOW",
+    "YELLOW"
+  ],
+  [
     "BLUE",
-    "POWER_UP"
+    "YELLOW",
+    "YELLOW"
   ],
   [
     "RED",
-    "BLUE",
-    "POWER_UP"
+    "YELLOW",
+    "YELLOW"
   ],
   [
-    "RED",
-    "BLUE",
-    "POWER_UP"
+    "POWER_UP",
+    "YELLOW",
+    "YELLOW"
   ],
   [
-    "RED",
+    "YELLOW",
     "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
-  ],
-  [
-    "RED",
-    "BLUE",
-    "POWER_UP"
+    "BLUE"
   ]
 ]
