@@ -34,7 +34,11 @@ public class SenderRunnable implements Runnable {
         bufWithSize.putInt(serialized.length);
         bufWithSize.put(serialized);
         bufWithSize.rewind();
-        channel.write(bufWithSize);
+
+        while (bufWithSize.hasRemaining()) {
+          channel.write(bufWithSize);
+          Thread.sleep(20);
+        }
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       } catch (IOException e) {

@@ -39,7 +39,7 @@ public class SocketServerNetworkAdapter extends ServerNetworkAdapter {
     // Configure socket server and register channel to selector
     this.serverChannel = ServerSocketChannel.open();
     this.serverChannel.configureBlocking(false);
-    this.serverChannel.socket().setReceiveBufferSize(512 * 1024 * 1024);
+    this.serverChannel.socket().setReceiveBufferSize(64 * 1024 * 1024);
     this.serverChannel.socket().bind(new InetSocketAddress(port));
     this.serverChannel.register(readSelector, SelectionKey.OP_ACCEPT);
 
