@@ -1,5 +1,7 @@
 package com.adrenalinici.adrenaline.client.socket;
 
+import com.adrenalinici.adrenaline.common.network.NetworkUtils;
+import com.adrenalinici.adrenaline.common.network.inbox.InboxMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.OutboxMessage;
 import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.common.util.SerializationUtils;
@@ -10,30 +12,39 @@ import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReceiverRunnable implements Runnable {
+public class SocketEventLoopRunnable implements Runnable {
 
-  private static final Logger LOG = LogUtils.getLogger(ReceiverRunnable.class);
+  private static final Logger LOG = LogUtils.getLogger(SocketEventLoopRunnable.class);
 
-  private Selector readSelector;
+  private Selector selector;
   private BlockingQueue<OutboxMessage> clientViewInbox;
+  private BlockingQueue<InboxMessage> clientViewOutbox;
 
-  public ReceiverRunnable(Selector readSelector, BlockingQueue<OutboxMessage> clientViewInbox) {
-    this.readSelector = readSelector;
+  private Queue<ByteBuffer> remainingWrites;
+
+  public SocketEventLoopRunnable(Selector selector, BlockingQueue<OutboxMessage> clientViewInbox, BlockingQueue<InboxMessage> clientViewOutbox) {
+    this.selector = selector;
     this.clientViewInbox = clientViewInbox;
+    this.clientViewOutbox = clientViewOutbox;
+
+    this.remainingWrites = new ArrayDeque<>();
   }
 
   @Override
   public void run() {
     while (!Thread.currentThread().isInterrupted()) {
       try {
-        this.readSelector.select(); // <- Blocks the thread waiting for new events to process
+        this.selector.select(); // <- Blocks the thread waiting for new events to process
 
-        Iterator<SelectionKey> keys = this.readSelector.selectedKeys().iterator();
+        Iterator<SelectionKey> keys = this.selector.selectedKeys().iterator();
         while (keys.hasNext()) {
           SelectionKey key = keys.next();
           keys.remove();
@@ -43,11 +54,46 @@ public class ReceiverRunnable implements Runnable {
           if (key.isReadable()) {
             handleRead(key);
           }
+          if (key.isWritable()) {
+            tryToReadOutboxQueue();
+            handleWrite(key);
+          }
         }
       } catch (IOException e) {
-        LOG.log(Level.SEVERE, "Error in client socket BroadcasterRunnable", e);
+        LOG.log(Level.SEVERE, "Error in client socket event loop", e);
       } catch (ClosedSelectorException e) {
         Thread.currentThread().interrupt();
+      } catch (Exception e) {
+        LOG.log(Level.WARNING, "Uncaught exception in SocketEventLoopRunnable", e);
+      }
+    }
+  }
+
+  private void tryToReadOutboxQueue() {
+    while (!clientViewOutbox.isEmpty()) {
+      InboxMessage message = clientViewOutbox.remove();
+      List<ByteBuffer> bufs = NetworkUtils.prepareSerializedBuffer(
+        SerializationUtils.serialize(message)
+      );
+
+      bufs.forEach(remainingWrites::offer);
+
+      LOG.info(String.format("Prepared message %s", message.getClass()));
+    }
+  }
+
+  private void handleWrite(SelectionKey key) throws IOException {
+    SocketChannel channel = (SocketChannel) key.channel();
+
+    while (!remainingWrites.isEmpty()) {
+      ByteBuffer buf = remainingWrites.peek();
+
+      int wrote = channel.write(buf);
+
+      if (buf.hasRemaining() || wrote == 0) {
+        return;
+      } else {
+        remainingWrites.remove().clear();
       }
     }
   }

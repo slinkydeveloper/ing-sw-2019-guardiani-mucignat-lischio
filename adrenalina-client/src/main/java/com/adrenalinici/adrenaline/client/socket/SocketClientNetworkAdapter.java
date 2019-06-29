@@ -17,10 +17,9 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
 
   private String host;
   private int port;
-  private Thread receiverThread;
-  private Thread senderThread;
+  private Thread eventLoop;
   private SocketChannel channel;
-  private Selector readSelector;
+  private Selector selector;
 
   public SocketClientNetworkAdapter(ClientViewProxy proxy, String host, int port) {
     super(proxy);
@@ -30,39 +29,33 @@ public class SocketClientNetworkAdapter extends ClientNetworkAdapter {
 
   @Override
   public void initialize() throws IOException {
-    if (readSelector == null) { // Avoid double initialization
-      readSelector = Selector.open();
+    if (selector == null) { // Avoid double initialization
+      selector = Selector.open();
 
       this.channel = SocketChannel.open(new InetSocketAddress(host, port));
       this.channel.configureBlocking(false);
       this.channel.socket().setKeepAlive(true);
       this.channel.socket().setSendBufferSize(128 * 1024 * 1024);
       this.channel.socket().setReceiveBufferSize(128 * 1024 * 1024);
-      this.channel.register(readSelector, SelectionKey.OP_READ);
+
+      this.channel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 
       LOG.info(String.format("Connected to %s:%d", host, port));
 
-      this.receiverThread = new Thread(
-        new ReceiverRunnable(readSelector, clientViewInbox),
-        "client-" + this.channel.socket().getLocalPort() + "-socket-receiver"
+      this.eventLoop = new Thread(
+        new SocketEventLoopRunnable(selector, clientViewInbox, clientViewOutbox),
+        "client-" + this.channel.socket().getLocalPort() + "-event-loop"
       );
-      this.receiverThread.start();
-      this.senderThread = new Thread(
-        new SenderRunnable(clientViewOutbox, channel),
-        "client-" + this.channel.socket().getLocalPort() + "-socket-sender"
-      );
-      this.senderThread.start();
+      this.eventLoop.start();
     }
   }
 
   @Override
   public void stop() throws IOException {
-    if (receiverThread != null)
-      receiverThread.interrupt();
-    if (senderThread != null)
-      senderThread.interrupt();
-    if (readSelector != null && readSelector.isOpen())
-      readSelector.close();
+    if (eventLoop != null)
+      eventLoop.interrupt();
+    if (selector != null && selector.isOpen())
+      selector.close();
     if (channel != null && channel.isOpen())
       channel.close();
   }
