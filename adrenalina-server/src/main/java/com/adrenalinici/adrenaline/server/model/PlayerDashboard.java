@@ -236,21 +236,26 @@ public class PlayerDashboard {
    *
    * @param ammos
    */
-  public void removeAmmosIncludingPowerups(List<AmmoColor> ammos) {
+  public List<PowerUpCard> removeAmmosIncludingPowerups(List<AmmoColor> ammos) {
     List<AmmoColor> ammosToGetFromPowerUp = CollectionUtils.differencePure(ammos, getAmmos());
 
     List<AmmoColor> ammosToRemove = CollectionUtils.differencePure(ammos, ammosToGetFromPowerUp);
     removeAmmos(ammosToRemove);
 
-    if (!ammosToGetFromPowerUp.isEmpty())
+    List<PowerUpCard> powerUpsToRemove = new ArrayList<>();
+
+    if (!ammosToGetFromPowerUp.isEmpty()) {
       ammosToGetFromPowerUp.forEach(ammo -> {
         PowerUpCard toRemove = getPowerUpCards().stream().filter(
           powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
         ).findFirst().get();
-        removePowerUpCard(toRemove);
 
-        //TODO must put card back to deck
+        removePowerUpCard(toRemove);
+        powerUpsToRemove.add(toRemove);
+        //TODO must put card back to deck;
       });
+    }
+    return powerUpsToRemove;
   }
 
   public boolean hasVenomGrenade() {

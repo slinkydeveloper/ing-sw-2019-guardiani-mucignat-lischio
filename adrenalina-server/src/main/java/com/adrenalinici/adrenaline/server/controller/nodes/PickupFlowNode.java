@@ -46,7 +46,6 @@ public class PickupFlowNode implements StatelessControllerFlowNode {
   @Override
   public void handleEvent(ViewEvent event, VoidState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     event.onGunChosenEvent(gunToPickupChosenEvent -> {
-      //TODO P2 ci sarebbe anche da gestire il caso in cui si supera il limite delle tre armi
       if (gunToPickupChosenEvent.getGunid() != null) {
         Gun chosenGun = GunLoader.INSTANCE.getModelGun(gunToPickupChosenEvent.getGunid());
         model.acquireGun(context.getTurnOfPlayer(), chosenGun);

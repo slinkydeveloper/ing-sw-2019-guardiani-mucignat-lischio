@@ -13,6 +13,10 @@ public class CardDeck<T> {
     Collections.shuffle(deck);
   }
 
+  public int size() {
+    return deck.size();
+  }
+
   public boolean isEmpty() {
     return deck.isEmpty();
   }

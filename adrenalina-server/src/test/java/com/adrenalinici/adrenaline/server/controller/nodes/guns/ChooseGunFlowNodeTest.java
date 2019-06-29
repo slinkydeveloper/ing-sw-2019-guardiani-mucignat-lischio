@@ -75,7 +75,4 @@ public class ChooseGunFlowNodeTest extends BaseNodeTest {
       .isInstanceOf(BaseEffectGunFlowStateImpl.class);
 
   }
-
-  //TODO P2 choose base gun test
-
 }
