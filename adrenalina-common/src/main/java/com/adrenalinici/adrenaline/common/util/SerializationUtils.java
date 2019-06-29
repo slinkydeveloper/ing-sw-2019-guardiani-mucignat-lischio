@@ -16,10 +16,10 @@ public class SerializationUtils {
       return bos.toByteArray();
     } catch (EOFException e) {
       LOG.info("Strange EOFException thrown");
-      return null;
+      throw new RuntimeException(e);
     } catch (IOException e) {
       LOG.log(Level.SEVERE, "Error while serializing " + o, e);
-      return null;
+      throw new RuntimeException(e);
     }
   }
 
@@ -30,10 +30,10 @@ public class SerializationUtils {
       return (T) in.readObject();
     } catch (EOFException e) {
       LOG.info("Strange EOFException thrown");
-      return null;
+      throw new RuntimeException(e);
     } catch (IOException | ClassNotFoundException e) {
       LOG.log(Level.SEVERE, "Error while deserializing", e);
-      return null;
+      throw new RuntimeException(e);
     }
   }
 

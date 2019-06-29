@@ -70,7 +70,7 @@ public class BaseGameViewSocketIntegrationTest {
 
     mockedClientView.sendStartNewMatch("test-match", DashboardChoice.SMALL, PlayersChoice.THREE, RulesChoice.SIMPLE);
 
-    sleep(5);
+    sleep(10);
 
     remoteView = serverMessageRouter.getContext().getMatches().get("test-match");
     assertThat(remoteView).isNotNull();
