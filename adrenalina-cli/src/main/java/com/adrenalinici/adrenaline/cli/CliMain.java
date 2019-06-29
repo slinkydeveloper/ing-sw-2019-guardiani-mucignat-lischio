@@ -17,14 +17,6 @@ import java.util.stream.IntStream;
 public class CliMain extends BaseCliGameView {
 
   public static final String ANSI_RESET = "\u001B[0m";
-  public static final String ANSI_BLACK = "\u001B[30m";
-  public static final String ANSI_RED = "\u001B[31m";
-  public static final String ANSI_GREEN = "\u001B[32m";
-  public static final String ANSI_YELLOW = "\u001B[33m";
-  public static final String ANSI_BLUE = "\u001B[34m";
-  public static final String ANSI_PURPLE = "\u001B[35m";
-  public static final String ANSI_CYAN = "\u001B[36m";
-  public static final String ANSI_WHITE = "\u001B[37m";
 
   public static final Map<String, String> COLORS = new HashMap<String, String>() {{
     put("RED", "\u001B[31m");
@@ -131,7 +123,8 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableActions(List<Action> actions) {
     if (isMyTurn()) {
-      System.out.println("Available actions:");
+      System.out.println("Available actions: " +
+        "\n\t(NOTE -> if you have a teleporter or a newton, just type the name to use it)");
       printNumberedList(actions);
 
       int chosenIndex = parseIndex(-3, actions.size() - 1);
@@ -218,7 +211,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableMovements(List<Position> positions) {
     if (isMyTurn()) {
-      System.out.println("Available movements:");
+      System.out.println("Available movements: (-1 if you wanna skip)");
       printNumberedList(positions);
 
       int chosenIndex = parseIndex(-1, positions.size() - 1);
@@ -229,7 +222,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableEnemyMovements(List<Position> positions) {
     if (isMyTurn()) {
-      System.out.println("You can move the enemy in these positions:");
+      System.out.println("You can move the enemy in these positions: (-1 if you wanna skip)");
       printNumberedList(positions);
 
       int chosenIndex = parseIndex(-1, positions.size() - 1);
@@ -249,7 +242,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<String> gunsList = new ArrayList<>(guns);
 
-      System.out.println("Reloadable guns:");
+      System.out.println("Reloadable guns: (-1 if you wanna skip)");
       printNumberedList(gunsList);
 
       int chosenIndex = parseIndex(-1, gunsList.size() - 1);
@@ -285,7 +278,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showChoosePlayerToHit(List<PlayerColor> players) {
     if (isMyTurn()) {
-      System.out.println("Available players to hit:");
+      System.out.println("Available players to hit: (-1 if you wanna skip)");
       printNumberedList(players);
 
       int chosenIndex = parseIndex(-1, players.size() - 1);
@@ -296,7 +289,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showScopePlayers(List<PlayerColor> players) {
     if (isMyTurn()) {
-      System.out.println("Choose a player for the scope:");
+      System.out.println("Choose a player for the scope: (-1 if you wanna skip)");
       printNumberedList(players);
 
       int chosenIndex = parseIndex(-1, players.size() - 1);
@@ -341,7 +334,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<String> gunsList = new ArrayList<>(guns);
 
-      System.out.println("Loaded guns:");
+      System.out.println("Choose which gun you wanna use: (-1 if you wanna skip)");
       printNumberedList(gunsList);
 
       int chosenIndex = parseIndex(-1, gunsList.size() - 1);
@@ -354,7 +347,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<String> gunsList = new ArrayList<>(guns);
 
-      System.out.println("Available guns to pickup:");
+      System.out.println("Available guns to pickup: (-1 if you wanna skip)");
       printNumberedList(gunsList);
 
       int chosenIndex = parseIndex(-1, gunsList.size() - 1);
@@ -365,7 +358,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableTagbackGrenade(PlayerColor player, List<PowerUpCard> powerUpCards) {
     if (player.equals(getMyPlayer())) {
-      System.out.println("Available tagback granades:");
+      System.out.println("Available tagback granades: (-1 if you wanna skip)");
       printNumberedList(powerUpCards);
 
       int chosenIndex = parseIndex(-1, powerUpCards.size() - 1);
@@ -380,7 +373,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<CellColor> roomsList = new ArrayList<>(rooms);
 
-      System.out.println("Available rooms to hit:");
+      System.out.println("Available rooms to hit: (-1 if you wanna skip)");
       printNumberedList(roomsList);
 
       int chosenIndex = parseIndex(-1, roomsList.size() - 1);
@@ -394,7 +387,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<Position> cellsList = new ArrayList<>(cells);
 
-      System.out.println("Available cells to hit:");
+      System.out.println("Available cells to hit: (-1 if you wanna skip)");
       printNumberedList(cellsList);
 
       int chosenIndex = parseIndex(-1, cellsList.size() - 1);
@@ -495,7 +488,7 @@ public class CliMain extends BaseCliGameView {
     int chosenIndex = -4;
 
     while (!(chosenIndex >= minimum && chosenIndex <= maximum)) {
-      String command = scanner.nextLine();
+      String command = scanner.nextLine().trim().toLowerCase();
 
       try {
         if (command.equals("teleporter")) return -2;

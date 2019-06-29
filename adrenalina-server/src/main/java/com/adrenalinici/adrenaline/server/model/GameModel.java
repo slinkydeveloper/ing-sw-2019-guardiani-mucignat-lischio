@@ -154,8 +154,11 @@ public class GameModel extends ObservableImpl<ModelEvent> {
    */
   public void acquirePowerUpCard(PlayerColor player) {
     if (!powerUps.isEmpty()) {
-      getPlayerDashboard(player).addPowerUpCard(powerUps.getCard());
-      notifyEvent(new PlayerDashboardUpdatedEvent(light(), player));
+      PowerUpCard cardToAdd = powerUps.getCard();
+
+      boolean added = getPlayerDashboard(player).addPowerUpCard(cardToAdd);
+      if (!added) powerUps.addCard(cardToAdd);
+      else notifyEvent(new PlayerDashboardUpdatedEvent(light(), player));
     }
   }
 
