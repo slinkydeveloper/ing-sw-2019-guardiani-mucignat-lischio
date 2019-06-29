@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -86,9 +87,7 @@ public class NetworkUtilsTest {
 
   private byte[] createByteArrayOf(int size, byte b) {
     byte[] newArr = new byte[size];
-    for (int i = 0; i < size; i++) {
-      newArr[i] = b;
-    }
+    new Random().nextBytes(newArr);
     return newArr;
   }
 
