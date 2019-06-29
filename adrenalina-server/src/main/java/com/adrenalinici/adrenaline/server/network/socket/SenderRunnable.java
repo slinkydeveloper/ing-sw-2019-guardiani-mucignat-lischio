@@ -34,14 +34,22 @@ public class SenderRunnable extends BaseSocketRunnable {
             .forEach(s -> {
               try {
                 LOG.info(String.format("Going to send message %s to %s", message.getMessage().getClass(), message.getConnectionId()));
+
+                // Prepare buffer
                 byte[] serialized = SerializationUtils.serialize(message.getMessage());
                 ByteBuffer bufWithSize = ByteBuffer.allocate(serialized.length + 4);
                 bufWithSize.putInt(serialized.length);
                 bufWithSize.put(serialized);
                 bufWithSize.rewind();
-                s.getChannel().write(bufWithSize);
+
+                while (bufWithSize.hasRemaining()) {
+                  s.getChannel().write(bufWithSize);
+                  Thread.sleep(20);
+                }
               } catch (IOException e) {
                 LOG.log(Level.WARNING, "IOException while broadcasting message", e);
+              } catch (InterruptedException e1) {
+                LOG.log(Level.SEVERE, "Unexpected exception while trying to write " + message, e1);
               }
             });
         } else {
