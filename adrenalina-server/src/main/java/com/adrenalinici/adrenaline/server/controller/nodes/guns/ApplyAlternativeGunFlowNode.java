@@ -34,7 +34,11 @@ public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<Alternati
       // Remove ammos required for effect and unload the gun
       PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
 
-      dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos());
+
+      model.putPowerUpsBackInDeck(
+        dashboard.removeAmmosIncludingPowerups(flowState.getChosenEffect().getRequiredAmmos())
+      );
+
 
       dashboard.unloadGun(flowState.getChosenGun().getId());
     } else context.incrementRemainingActions();

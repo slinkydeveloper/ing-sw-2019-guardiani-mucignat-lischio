@@ -141,10 +141,17 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     RespawnDashboardCell cell = (RespawnDashboardCell) dashboard.getDashboardCell(getPlayerPosition(player));
     cell.getAvailableGuns().remove(chosenGun.getId());
 
-    playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup());
+    putPowerUpsBackInDeck(
+      playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToPickup())
+    );
 
     notifyEvent(new DashboardCellUpdatedEvent(light(), cell.getPosition()));
     notifyEvent(new PlayerDashboardUpdatedEvent(light(), player));
+  }
+
+
+  public void putPowerUpsBackInDeck(List<PowerUpCard> powerUpCards) {
+    powerUpCards.forEach(puc -> this.powerUps.addCard(puc));
   }
 
   /**
@@ -243,7 +250,7 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.reloadGun(chosenGun.getId());
 
-    playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload());
+    putPowerUpsBackInDeck(playerDashboard.removeAmmosIncludingPowerups(chosenGun.getRequiredAmmoToReload()));
 
     notifyEvent(new PlayerDashboardUpdatedEvent(light(), player));
   }

@@ -403,4 +403,23 @@ public class GameModelTest {
     assertThat(gameModel.getRanking().get(1).getValue()).isEqualTo(21);
     assertThat(gameModel.getRanking().get(2).getValue()).isEqualTo(0);
   }
+
+  @Test
+  public void removingPowerUpFromPlayerDashboardAndPuttingBackToDeckTest() {
+    GameModel gameModel = new GameModel(8, TestUtils.build3x3Dashboard(),
+      TestUtils.generate3PlayerDashboards(), true);
+
+    int startingDeckSize = gameModel.powerUpsDeck().size();
+
+    gameModel.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    gameModel.getDashboard().getDashboardCell(Position.of(0, 0))
+      .visit(rdc -> rdc.addAvailableGun("shotgun"), null);
+
+    gameModel.getPlayerDashboard(PlayerColor.GREEN).removeAmmos(Collections.singletonList(AmmoColor.YELLOW));
+    gameModel.getPlayerDashboard(PlayerColor.GREEN).addPowerUpCard(new PowerUpCard(AmmoColor.YELLOW, PowerUpType.SCOPE));
+    gameModel.acquireGun(PlayerColor.GREEN, GunLoader.INSTANCE.getModelGun("shotgun"));
+
+    assertThat(gameModel.getPlayerDashboard(PlayerColor.GREEN).getPowerUpCards().isEmpty()).isTrue();
+    assertThat(gameModel.powerUpsDeck().size()).isEqualTo(startingDeckSize + 1);
+  }
 }

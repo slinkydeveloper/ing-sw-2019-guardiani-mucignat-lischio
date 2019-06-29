@@ -19,7 +19,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SuppressWarnings("unchecked")
-public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest { //TODO test for flag ON_CHOSEN_CELL after visible fixing
+public class ChoosePlayersToHitFlowNodeTest extends BaseNodeTest {
 
   @Override
   public void setUp() {

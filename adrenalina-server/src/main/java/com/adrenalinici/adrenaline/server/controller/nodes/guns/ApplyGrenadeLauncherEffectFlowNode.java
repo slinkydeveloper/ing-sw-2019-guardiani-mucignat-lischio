@@ -32,8 +32,11 @@ public class ApplyGrenadeLauncherEffectFlowNode implements ControllerFlowNode<Ba
 
         // Remove ammos required for effect and unload the gun
         PlayerDashboard dashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
-        if (flowState.isActivatedFirstExtraEffect())
-          dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getFirstExtraEffectCost());
+        if (flowState.isActivatedFirstExtraEffect()) {
+          model.putPowerUpsBackInDeck(
+            dashboard.removeAmmosIncludingPowerups(flowState.getChosenGun().getFirstExtraEffectCost())
+          );
+        }
 
         dashboard.unloadGun(flowState.getChosenGun().getId());
         beenHere = false;
