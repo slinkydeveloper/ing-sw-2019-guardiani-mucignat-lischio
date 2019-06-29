@@ -32,6 +32,10 @@ public class GuiView {
     this.networkAdapterThread.interrupt();
   }
 
+  public boolean isMyTurn() {
+    return getEventBus().getMyPlayer() == getEventBus().getTurnOfPlayer();
+  }
+
   public static GuiView createRmiGuiView(String host, int port) {
     ViewEventBus eventBus = new ViewEventBus();
     ClientNetworkAdapter networkAdapter = new RmiClientNetworkAdapter(eventBus, host, port);
