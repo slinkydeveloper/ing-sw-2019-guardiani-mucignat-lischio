@@ -13,9 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -97,6 +95,7 @@ public class GuiUtils {
     alert.initModality(Modality.NONE);
     alert.setTitle(title);
     alert.setHeaderText(question);
+    alert.setWidth(800);
 
     ToggleGroup group = new ToggleGroup();
 
@@ -151,6 +150,7 @@ public class GuiUtils {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle(title);
     alert.setHeaderText(question);
+    alert.setWidth(800);
 
     Map<CheckBox, T> dataMapping = new HashMap<>();
 
@@ -188,6 +188,22 @@ public class GuiUtils {
     alert.show();
 
     return alert;
+  }
+
+  public static <T> Optional<T> showChoiceDialogWithMappedValues(String title, String contentText, List<T> values, Function<T, String> fn) {
+    Map<String, T> valuesMap = values.stream().collect(Collectors.toMap(fn, Function.identity()));
+    List<String> choices = new ArrayList<>(valuesMap.keySet());
+
+    ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+
+    dialog.setTitle(title);
+    dialog.setHeaderText(title);
+    dialog.setContentText(contentText);
+
+    Optional<String> result = dialog.showAndWait();
+    dialog.getDialogPane().requestFocus();
+
+    return result.map(valuesMap::get);
   }
 
   public static ImageView createCardImageView(String url) {

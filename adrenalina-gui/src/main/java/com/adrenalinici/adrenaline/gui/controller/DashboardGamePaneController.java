@@ -39,7 +39,7 @@ public class DashboardGamePaneController {
 
   public void initialize() {}
 
-  public void initializeDashboard(DashboardChoice dashboard) {
+  public void initializeView(DashboardChoice dashboard) {
     this.dashboardGridPane
       .setStyle(String.format("-fx-background-image: url(/images/dashboards/%s.png); -fx-background-size: stretch", dashboard.name().toLowerCase()));
 
@@ -72,7 +72,7 @@ public class DashboardGamePaneController {
     }
   }
 
-  public void initializeGameModel(LightGameModel model, PlayerColor playerTurn) {
+  public void initializeView(LightGameModel model, PlayerColor playerTurn) {
     showGameInfo(model);
     updateTurnOfPlayer(playerTurn);
   }

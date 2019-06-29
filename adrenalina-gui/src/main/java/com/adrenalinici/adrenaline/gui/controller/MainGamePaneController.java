@@ -12,6 +12,7 @@ import com.adrenalinici.adrenaline.common.network.outbox.*;
 import com.adrenalinici.adrenaline.common.view.*;
 import com.adrenalinici.adrenaline.gui.GuiUtils;
 import com.adrenalinici.adrenaline.gui.GuiView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Dialog;
@@ -78,9 +79,10 @@ public class MainGamePaneController {
   }
 
   private void initializeView(LightGameModel gameModel) {
-    dashboardController.initializeDashboard(gameModel.getDashboard().getDashboardChoice());
-    dashboardController.initializeGameModel(gameModel, view.getEventBus().getTurnOfPlayer());
-    thisPlayerController.initializePlayer(view.getEventBus().getMyPlayer(), gameModel);
+    dashboardController.initializeView(gameModel.getDashboard().getDashboardChoice());
+    dashboardController.initializeView(gameModel, view.getEventBus().getTurnOfPlayer());
+    thisPlayerController.initializeView(view.getEventBus().getMyPlayer(), gameModel);
+    thisPlayerController.setView(this.view);
 
     List<PlayerColor> otherPlayerList = gameModel
       .getPlayerDashboards()
@@ -292,6 +294,8 @@ public class MainGamePaneController {
 
     alert.showAndWait();
 
+    this.view.stopNetworkAdapter();
+    Platform.exit();
   }
 
   private boolean isMyTurn() {
