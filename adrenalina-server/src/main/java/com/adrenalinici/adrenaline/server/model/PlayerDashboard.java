@@ -175,10 +175,12 @@ public class PlayerDashboard {
       .collect(Collectors.toSet());
   }
 
-  public void addPowerUpCard(PowerUpCard powerUp) {
+  public boolean addPowerUpCard(PowerUpCard powerUp) {
     if (powerUpCards.size() < 3) {
       powerUpCards.add(powerUp);
+      return true;
     }
+    return false;
   }
 
   public boolean removePowerUpCard(PowerUpCard powerUp) {
@@ -246,6 +248,7 @@ public class PlayerDashboard {
           powerUpCard -> powerUpCard.getAmmoColor().equals(ammo)
         ).findFirst().get();
         removePowerUpCard(toRemove);
+
         //TODO must put card back to deck
       });
   }
