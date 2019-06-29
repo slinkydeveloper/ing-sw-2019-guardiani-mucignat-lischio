@@ -1,15 +1,15 @@
 [
   {
     "color": "RED",
-    "type": "TAGBACK_GRENADE"
+    "type": "TELEPORTER"
   },
   {
     "color": "YELLOW",
-    "type": "TAGBACK_GRENADE"
+    "type": "TELEPORTER"
   },
   {
     "color": "BLUE",
-    "type": "TAGBACK_GRENADE"
+    "type": "TELEPORTER"
   },
   {
     "color": "RED",
@@ -22,5 +22,77 @@
   {
     "color": "BLUE",
     "type": "TELEPORTER"
+  },
+  {
+    "color": "RED",
+    "type": "TAGBACK_GRENADE"
+  },
+  {
+    "color": "YELLOW",
+    "type": "TAGBACK_GRENADE"
+  },
+  {
+    "color": "BLUE",
+    "type": "TAGBACK_GRENADE"
+  },
+  {
+    "color": "RED",
+    "type": "TAGBACK_GRENADE"
+  },
+  {
+    "color": "YELLOW",
+    "type": "TAGBACK_GRENADE"
+  },
+  {
+    "color": "BLUE",
+    "type": "TAGBACK_GRENADE"
+  },
+  {
+    "color": "RED",
+    "type": "SCOPE"
+  },
+  {
+    "color": "YELLOW",
+    "type": "SCOPE"
+  },
+  {
+    "color": "BLUE",
+    "type": "SCOPE"
+  },
+  {
+    "color": "RED",
+    "type": "SCOPE"
+  },
+  {
+    "color": "YELLOW",
+    "type": "SCOPE"
+  },
+  {
+    "color": "BLUE",
+    "type": "SCOPE"
+  },
+  {
+    "color": "RED",
+    "type": "NEWTON"
+  },
+  {
+    "color": "YELLOW",
+    "type": "NEWTON"
+  },
+  {
+    "color": "BLUE",
+    "type": "NEWTON"
+  },
+  {
+    "color": "RED",
+    "type": "NEWTON"
+  },
+  {
+    "color": "YELLOW",
+    "type": "NEWTON"
+  },
+  {
+    "color": "BLUE",
+    "type": "NEWTON"
   }
 ]
