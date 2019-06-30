@@ -203,7 +203,7 @@ public class SocketEventLoopRunnable implements Runnable {
 
       if (payloadSize == Integer.MAX_VALUE) {
         lastKeepAlive.put(connectionId, System.currentTimeMillis());
-        LOG.info(String.format("Keep alive from connection id: %s", connectionId));
+        LOG.info(String.format("Keep alive from connection id %s and %s", connectionId, channel.getRemoteAddress()));
       } else {
         // Prepare the payload buf
         ByteBuffer payloadBuf = ByteBuffer.allocate(payloadSize);

@@ -74,9 +74,13 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
       .map(Map.Entry::getKey)
       .findFirst()
       .ifPresent(address -> {
-      this.addressToConnectionId.remove(address);
-      LOG.info(String.format("Connection with id %s and host %s disconnected", connectionId, getRemoteHost()));
-      this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
+        try {
+          this.connectionIdToClient.remove(this.addressToConnectionId.remove(address));
+          LOG.info(String.format("Connection with id %s and host %s disconnected", connectionId, getRemoteHost()));
+          this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
+        } catch (Exception e) {
+          LOG.info(String.format("Error while deregistering client %s with host %s", connectionId, getRemoteHost()));
+        }
     });
   }
 
@@ -130,6 +134,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   @Override
   public void keepAlive() throws RemoteException {
     this.lastKeepAlive.put(this.addressToConnectionId.get(getRemoteHost()), System.currentTimeMillis());
+    LOG.info(String.format("Keep alive from connection id: %s", this.addressToConnectionId.get(getRemoteHost())));
   }
 
   private String getRemoteHost() {
