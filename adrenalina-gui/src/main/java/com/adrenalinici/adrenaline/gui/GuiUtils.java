@@ -95,7 +95,6 @@ public class GuiUtils {
     alert.initModality(Modality.NONE);
     alert.setTitle(title);
     alert.setHeaderText(question);
-    alert.setWidth(800);
 
     ToggleGroup group = new ToggleGroup();
 
@@ -122,6 +121,7 @@ public class GuiUtils {
     group.getToggles().get(0).setSelected(true);
 
     alert.getDialogPane().setContent(innerGridPane);
+    alert.setWidth(800);
 
     Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
     okButton.setOnAction(action -> {
@@ -150,7 +150,6 @@ public class GuiUtils {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle(title);
     alert.setHeaderText(question);
-    alert.setWidth(800);
 
     Map<CheckBox, T> dataMapping = new HashMap<>();
 
@@ -170,6 +169,7 @@ public class GuiUtils {
     }
 
     alert.getDialogPane().setContent(descriptionsGridPane);
+    alert.setWidth(800);
 
     Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
     okButton.setOnAction(action -> {
