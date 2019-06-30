@@ -30,7 +30,7 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private Queue<ByteBuffer> remainingWrites;
   private ByteBuffer remainingRead;
-  private Timer actualTimer;
+  private Timer keepAliveTimer;
 
   public SocketEventLoopRunnable(Selector selector, BlockingQueue<OutboxMessage> clientViewInbox, BlockingQueue<InboxMessage> clientViewOutbox) {
     this.selector = selector;
@@ -71,6 +71,7 @@ public class SocketEventLoopRunnable implements Runnable {
         LOG.log(Level.WARNING, "Uncaught exception in SocketEventLoopRunnable", e);
       }
     }
+    this.keepAliveTimer.cancel();
   }
 
   private void tryToReadOutboxQueue() {
@@ -163,8 +164,8 @@ public class SocketEventLoopRunnable implements Runnable {
   }
 
   private void initializeKeepAlive() {
-    actualTimer = new Timer();
-    actualTimer.scheduleAtFixedRate(new TimerTask() {
+    keepAliveTimer = new Timer();
+    keepAliveTimer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
         ByteBuffer keepAliveBuf = ByteBuffer.allocate(4).putInt(Integer.MAX_VALUE);

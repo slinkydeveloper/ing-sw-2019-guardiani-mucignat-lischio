@@ -8,9 +8,12 @@ import com.adrenalinici.adrenaline.common.util.LogUtils;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,11 +21,14 @@ public class RmiClientNetworkAdapter extends ClientNetworkAdapter {
 
   private static final Logger LOG = LogUtils.getLogger(RmiClientNetworkAdapter.class);
 
+  private static final long KEEP_ALIVE_PERIOD = 3 * 1000;
+
   private Thread senderThread;
   private Registry registry;
   private GameRmiServer server;
   private String host;
   private int port;
+  private Timer keepAliveTimer;
 
   public RmiClientNetworkAdapter(ClientViewProxy proxy, String host, int port) {
     super(proxy);
@@ -45,6 +51,8 @@ public class RmiClientNetworkAdapter extends ClientNetworkAdapter {
         senderThread.start();
         server.startConnection(remote);
 
+        initializeKeepAlive();
+
         LOG.info("Connected to server");
       } catch (NotBoundException e) {
         LOG.log(Level.SEVERE, "Error while starting rmi client adapter", e);
@@ -54,7 +62,21 @@ public class RmiClientNetworkAdapter extends ClientNetworkAdapter {
 
   @Override
   public void stop() throws IOException {
+    if (keepAliveTimer != null)
+      this.keepAliveTimer.cancel();
     if (this.senderThread != null)
       this.senderThread.interrupt();
+  }
+
+  private void initializeKeepAlive() {
+    keepAliveTimer = new Timer();
+    keepAliveTimer.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          server.keepAlive();
+        } catch (RemoteException e) { }
+      }
+    }, 0, KEEP_ALIVE_PERIOD);
   }
 }

@@ -111,7 +111,7 @@ public class CompleteIntegrationTest {
 
     player1View.sendStartNewMatch("test-match", DashboardChoice.SMALL, PlayersChoice.THREE, RulesChoice.SIMPLE);
 
-    Thread.sleep(1500);
+    Thread.sleep(5000);
 
     RemoteView remoteView = bootstrapper.getServerMessageRouter().getContext().getMatches().get("test-match");
     GameController controller = bootstrapper.getServerMessageRouter().getContext().getMatchesControllersMap().get("test-match");
