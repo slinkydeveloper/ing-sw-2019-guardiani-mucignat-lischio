@@ -6,7 +6,6 @@ import com.adrenalinici.adrenaline.common.model.BaseEffectGun;
 import com.adrenalinici.adrenaline.common.model.Gun;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public abstract class DecoratedGun implements Gun {
@@ -41,16 +40,6 @@ public abstract class DecoratedGun implements Gun {
   @Override
   public List<AmmoColor> getRequiredAmmoToReload() {
     return gun.getRequiredAmmoToReload();
-  }
-
-  @Override
-  public String getName() {
-    return gun.getName();
-  }
-
-  @Override
-  public Optional<String> getNote() {
-    return gun.getNote();
   }
 
   public List<String> getPhases() {

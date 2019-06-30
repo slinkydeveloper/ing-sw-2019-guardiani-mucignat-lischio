@@ -1,0 +1,14 @@
+{
+  "name": "Electroscythe",
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 1 damage to every other player on your square."
+  },
+  "secondEffect": {
+    "id": "reaper",
+    "name": "Reaper mode",
+    "description": "Deal 2 damage to every other player on your square."
+  }
+}
+

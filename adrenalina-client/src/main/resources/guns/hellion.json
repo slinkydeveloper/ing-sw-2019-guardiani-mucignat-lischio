@@ -1,0 +1,14 @@
+{
+  "name": "Hellion",
+  "note": "Remember that the three targets can be in three different rooms.",
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 1 damage to 1 target you can see at least 1 move away. Then give 1 mark to that target and everyone else on that square."
+  },
+  "secondEffect": {
+    "id": "nanoTracer",
+    "name": "Nano-tracer mode",
+    "description": "Deal 1 damage to 1 target you can see at least 1 move away. Then give 2 marks to that target and everyone else on that square."
+  }
+}

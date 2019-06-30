@@ -26,14 +26,6 @@ public class DecoratedEffect {
     return effect.getId();
   }
 
-  public String getName() {
-    return effect.getName();
-  }
-
-  public String getDescription() {
-    return effect.getDescription();
-  }
-
   public List<AmmoColor> getRequiredAmmos() {
     return requiredAmmos;
   }

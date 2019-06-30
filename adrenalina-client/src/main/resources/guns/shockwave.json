@@ -1,0 +1,13 @@
+{
+  "name": "Shockwave",
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Choose up to 3 targets on different squares, each exactly 1 move away. Deal 1 damage to each target."
+  },
+  "secondEffect": {
+    "id": "tsunami",
+    "name": "Tsunami mode",
+    "description": "Deal 1 damage to all targets that are exactly 1 move away."
+  }
+}

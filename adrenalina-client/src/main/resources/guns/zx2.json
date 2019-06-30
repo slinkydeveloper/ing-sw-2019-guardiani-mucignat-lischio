@@ -1,0 +1,14 @@
+{
+  "name": "ZX-2",
+  "note": "Remember that the three targets can be in three different rooms.",
+  "firstEffect": {
+    "id": "base",
+    "name": "Basic mode",
+    "description": "Deal 1 damage and 2 marks to 1 target you can see."
+  },
+  "secondEffect": {
+    "id": "scanner",
+    "name": "Scanner mode",
+    "description": "Choose up to 3 targets you can see and deal 1 mark to each."
+  }
+}
