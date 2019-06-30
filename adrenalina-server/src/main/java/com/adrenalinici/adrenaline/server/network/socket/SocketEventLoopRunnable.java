@@ -26,6 +26,7 @@ public class SocketEventLoopRunnable implements Runnable {
   private BlockingQueue<OutboxEntry> viewOutbox;
   private BlockingQueue<InboxEntry> viewInbox;
   private Map<String, Queue<ByteBuffer>> remainingWrites;
+  private Map<String, ByteBuffer> remainingReads;
   private Selector selector;
   private Map<Socket, String> connectedClients;
 
@@ -35,6 +36,7 @@ public class SocketEventLoopRunnable implements Runnable {
     this.selector = selector;
     this.connectedClients = new HashMap<>();
     this.remainingWrites = new HashMap<>();
+    this.remainingReads = new HashMap<>();
   }
 
   @Override
@@ -64,8 +66,10 @@ public class SocketEventLoopRunnable implements Runnable {
       } catch (IOException e) {
         LOG.log(Level.WARNING, "IOException in SenderRunnable", e);
       } catch (ClosedSelectorException e) {
-        LOG.log(Level.WARNING, "Selector was closed!", e);
+        LOG.log(Level.INFO, "Server selector was closed", e);
         Thread.currentThread().interrupt();
+      } catch (CancelledKeyException e) {
+        LOG.log(Level.INFO, "Cancelled key", e);
       } catch (Exception e) {
         LOG.log(Level.WARNING, "Uncaught exception in SocketEventLoopRunnable", e);
       }
@@ -80,11 +84,13 @@ public class SocketEventLoopRunnable implements Runnable {
         CollectionUtils
           .keys(connectedClients, message.getConnectionId())
           .forEach(s -> {
-            LOG.info(String.format("Prepared message %s for %s", message.getMessage().getClass(), message.getConnectionId()));
 
             List<ByteBuffer> bufs = NetworkUtils.prepareSerializedBuffer(
               SerializationUtils.serialize(message.getMessage())
             );
+
+            LOG.info(String.format("Prepared message %s splitted in %d chunks for %s", message.getMessage().getClass(), bufs.size(), message.getConnectionId()));
+
             Queue<ByteBuffer> queue = remainingWrites
               .computeIfAbsent(message.getConnectionId(), k -> new ArrayDeque<>());
 
@@ -117,7 +123,44 @@ public class SocketEventLoopRunnable implements Runnable {
         }
       }
     } catch (IOException e) {
-      handleDisconnection(connectionId, socket, key, channel);
+      handleDisconnection(key);
+      LOG.log(Level.WARNING, "IOException while writing payload to " + connectionId + " (" + channel.getRemoteAddress() + ")", e);
+    }
+  }
+
+  private void handlePendingRead(SelectionKey key, SocketChannel channel, String connectionId, ByteBuffer pendingBuffer) throws IOException {
+    try {
+      int read = channel.read(pendingBuffer);
+
+      if (read == -1) {
+        // Connection closed
+        handleDisconnection(key);
+        return;
+      }
+    } catch (IOException e) {
+      handleDisconnection(key);
+      LOG.log(Level.WARNING, "IOException while reading payload from " + connectionId + " (" + channel.getRemoteAddress() + ")", e);
+      return;
+    }
+
+    if (pendingBuffer.hasRemaining()) {
+      // Still missing something to read
+      this.remainingReads.put(connectionId, pendingBuffer);
+    } else {
+      // Full buffer, ready to unmarshall
+
+      pendingBuffer.rewind();
+      byte[] data = new byte[pendingBuffer.capacity()];
+      pendingBuffer.get(data);
+
+      InboxMessage message = SerializationUtils.deserialize(data);
+      LOG.info(String.format(
+        "Received inbox message %s from address %s (connection id %s)",
+        message.getClass(),
+        channel.getRemoteAddress(),
+        connectionId
+      ));
+      this.viewInbox.offer(new InboxEntry(connectionId, message));
     }
   }
 
@@ -126,47 +169,35 @@ public class SocketEventLoopRunnable implements Runnable {
     Socket socket = channel.socket();
     String connectionId = connectedClients.get(socket);
 
-    ByteBuffer sizeBuf = ByteBuffer.allocate(4);
-    int numRead;
-    try {
-      numRead = channel.read(sizeBuf);
-    } catch (IOException e) {
-      handleDisconnection(connectionId, socket, key, channel);
-      return;
-    }
-
-    if (numRead == -1) {
-      handleDisconnection(connectionId, socket, key, channel);
-      return;
-    }
-
-    int size = sizeBuf.getInt(0);
-    ByteBuffer valueBuf = ByteBuffer.allocate(size);
-    try {
-      numRead = 0;
-      while (valueBuf.hasRemaining()) {
-        int readNow = channel.read(valueBuf);
-        if (readNow == -1) {
-          handleDisconnection(connectionId, socket, key, channel);
-          return;
-        }
-        numRead += readNow;
+    if (this.remainingReads.containsKey(connectionId)) {
+      handlePendingRead(
+        key,
+        channel,
+        connectionId,
+        this.remainingReads.remove(connectionId)
+      );
+    } else {
+      // Read the size of next message
+      ByteBuffer sizeBuf = ByteBuffer.allocate(4);
+      int numRead;
+      try {
+        numRead = channel.read(sizeBuf);
+      } catch (IOException e) {
+        handleDisconnection(key);
+        LOG.log(Level.WARNING, "IOException while reading payload size from " + connectionId + " (" + channel.getRemoteAddress() + ")", e);
+        return;
       }
-    } catch (IOException e) {
-      handleDisconnection(connectionId, socket, key, channel);
-      return;
-    }
 
-    if (numRead == -1) {
-      handleDisconnection(connectionId, socket, key, channel);
-      return;
-    }
+      if (numRead == -1) {
+        handleDisconnection(key);
+        return;
+      }
 
-    byte[] data = new byte[numRead];
-    System.arraycopy(valueBuf.array(), 0, data, 0, numRead);
-    InboxMessage message = SerializationUtils.deserialize(data);
-    LOG.info(String.format("Received inbox message %s from address %s (connection id %s)", message.getClass(), connectionId, socket.getInetAddress()));
-    this.viewInbox.offer(new InboxEntry(connectionId, message));
+      // Prepare the payload buf
+      ByteBuffer payloadBuf = ByteBuffer.allocate(sizeBuf.getInt(0));
+
+      handlePendingRead(key, channel, connectionId, payloadBuf);
+    }
   }
 
   private void handleNewConnection(ServerSocketChannel serverChannel) throws IOException {
@@ -185,11 +216,15 @@ public class SocketEventLoopRunnable implements Runnable {
     this.viewInbox.offer(new InboxEntry(connectionId, new ConnectedPlayerMessage()));
   }
 
-  private void handleDisconnection(String connectionId, Socket socket, SelectionKey key, SocketChannel channel) throws IOException {
+  private void handleDisconnection(SelectionKey key) throws IOException {
+    SocketChannel channel = (SocketChannel) key.channel();
+    Socket socket = channel.socket();
+
     channel.close();
     key.cancel();
+
+    String connectionId = this.connectedClients.remove(socket);
     LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
-    this.connectedClients.remove(socket);
     this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
   }
 }
