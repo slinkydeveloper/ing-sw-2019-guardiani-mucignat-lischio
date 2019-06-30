@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.server.controller.nodes;
 
+import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.common.view.GameView;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.*;
@@ -8,9 +9,14 @@ import com.adrenalinici.adrenaline.server.controller.nodes.guns.BaseEffectGunFlo
 import com.adrenalinici.adrenaline.server.flow.impl.VoidState;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 
+import java.util.logging.Logger;
+
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.*;
 
 public class ChooseGunFlowNode implements StatelessControllerFlowNode {
+
+  private static final Logger LOG = LogUtils.getLogger(GunLoader.class);
+
   @Override
   public String id() {
     return ControllerNodes.CHOOSE_GUN.name();
@@ -35,11 +41,19 @@ public class ChooseGunFlowNode implements StatelessControllerFlowNode {
             context.addPhases(USE_SCOPE.name());
             context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), CHOOSE_ACTION.name());
 
+            LOG.info("Loaded phases" + context.getPhasesQueue().toString());
+
             context.nextPhase(view, new AlternativeEffectGunFlowStateImpl(decorated));
           }, baseEffectGun -> {
             DecoratedBaseEffectGun decorated = (DecoratedBaseEffectGun) GunLoader.INSTANCE
               .getDecoratedGun(baseEffectGun.getId());
+
             context.addPhases(decorated.getPhases().toArray(new String[0]));
+            context.addPhases(USE_SCOPE.name());
+            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), CHOOSE_ACTION.name());
+
+            LOG.info("Loaded phases" + context.getPhasesQueue().toString());
+
             context.nextPhase(view, new BaseEffectGunFlowStateImpl(decorated));
           });
       } else context.nextPhase(view);
