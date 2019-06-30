@@ -48,7 +48,7 @@ public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlo
           );
         }
 
-        dashboard.unloadGun(flowState.getChosenGun().getId());
+        model.unloadGun(context.getTurnOfPlayer(), flowState.getChosenGun().getId());
       }
     } else context.incrementRemainingActions();
     context.nextPhase(view, flowState);

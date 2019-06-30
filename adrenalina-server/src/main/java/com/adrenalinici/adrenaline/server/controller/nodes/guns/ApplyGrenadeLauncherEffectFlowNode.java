@@ -38,7 +38,7 @@ public class ApplyGrenadeLauncherEffectFlowNode implements ControllerFlowNode<Ba
           );
         }
 
-        dashboard.unloadGun(flowState.getChosenGun().getId());
+        model.unloadGun(context.getTurnOfPlayer(), flowState.getChosenGun().getId());
         beenHere = false;
       } else beenHere = true;
     } else context.incrementRemainingActions();
