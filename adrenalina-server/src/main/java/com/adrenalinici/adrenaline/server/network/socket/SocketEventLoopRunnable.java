@@ -201,7 +201,7 @@ public class SocketEventLoopRunnable implements Runnable {
 
       int payloadSize = sizeBuf.getInt(0);
 
-      if (payloadSize == 0) {
+      if (payloadSize == Integer.MAX_VALUE) {
         lastKeepAlive.put(connectionId, System.currentTimeMillis());
         LOG.info(String.format("Keep alive from connection id: %s", connectionId));
       } else {
@@ -243,9 +243,6 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private void handleDisconnection(String connectionId) {
     this.connectedClients.entrySet().stream().filter(f -> f.getValue().equals(connectionId)).map(Map.Entry::getKey).findFirst().ifPresent(socket -> {
-      try {
-        socket.close();
-      } catch (IOException e) { }
       this.connectedClients.remove(socket);
       LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
       this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));

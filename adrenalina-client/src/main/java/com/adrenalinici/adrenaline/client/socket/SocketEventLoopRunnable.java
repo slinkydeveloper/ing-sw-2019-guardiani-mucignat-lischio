@@ -167,9 +167,11 @@ public class SocketEventLoopRunnable implements Runnable {
     actualTimer.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        remainingWrites.offer(ByteBuffer.allocate(4).putInt(0));
+        ByteBuffer keepAliveBuf = ByteBuffer.allocate(4).putInt(Integer.MAX_VALUE);
+        keepAliveBuf.rewind();
+        remainingWrites.offer(keepAliveBuf);
       }
-    }, KEEP_ALIVE_PERIOD, KEEP_ALIVE_PERIOD);
+    }, 0, KEEP_ALIVE_PERIOD);
   }
 
 }
