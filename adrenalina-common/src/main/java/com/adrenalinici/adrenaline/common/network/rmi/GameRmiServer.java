@@ -11,4 +11,6 @@ public interface GameRmiServer extends Remote {
 
   void startConnection(GameRmiClient client) throws RemoteException;
 
+  void keepAlive() throws RemoteException;
+
 }

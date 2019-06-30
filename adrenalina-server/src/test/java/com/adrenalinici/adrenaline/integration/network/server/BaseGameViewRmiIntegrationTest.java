@@ -80,7 +80,7 @@ public class BaseGameViewRmiIntegrationTest {
   }
 
   void sleep(int times) throws InterruptedException {
-    Thread.sleep(times * 200);
+    Thread.sleep(times * 500);
   }
 
   void sleep() throws InterruptedException {

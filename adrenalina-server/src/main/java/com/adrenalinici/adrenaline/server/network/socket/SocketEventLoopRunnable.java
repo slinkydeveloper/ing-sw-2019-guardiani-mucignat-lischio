@@ -23,12 +23,15 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private final static Logger LOG = LogUtils.getLogger(SocketEventLoopRunnable.class);
 
+  private final static long KEEP_ALIVE_THRESHOLD = 10 * 1000;
+
   private BlockingQueue<OutboxEntry> viewOutbox;
   private BlockingQueue<InboxEntry> viewInbox;
   private Map<String, Queue<ByteBuffer>> remainingWrites;
   private Map<String, ByteBuffer> remainingReads;
   private Selector selector;
   private Map<Socket, String> connectedClients;
+  private Map<String, Long> lastKeepAlive;
 
   public SocketEventLoopRunnable(BlockingQueue<OutboxEntry> viewOutbox, BlockingQueue<InboxEntry> viewInbox, Selector selector) {
     this.viewOutbox = viewOutbox;
@@ -37,6 +40,7 @@ public class SocketEventLoopRunnable implements Runnable {
     this.connectedClients = new HashMap<>();
     this.remainingWrites = new HashMap<>();
     this.remainingReads = new HashMap<>();
+    this.lastKeepAlive = new HashMap<>();
   }
 
   @Override
@@ -63,6 +67,8 @@ public class SocketEventLoopRunnable implements Runnable {
             handleNewConnection((ServerSocketChannel) key.channel());
           }
         }
+
+        checkKeepAlive();
       } catch (IOException e) {
         LOG.log(Level.WARNING, "IOException in SenderRunnable", e);
       } catch (ClosedSelectorException e) {
@@ -193,10 +199,17 @@ public class SocketEventLoopRunnable implements Runnable {
         return;
       }
 
-      // Prepare the payload buf
-      ByteBuffer payloadBuf = ByteBuffer.allocate(sizeBuf.getInt(0));
+      int payloadSize = sizeBuf.getInt(0);
 
-      handlePendingRead(key, channel, connectionId, payloadBuf);
+      if (payloadSize == Integer.MAX_VALUE) {
+        lastKeepAlive.put(connectionId, System.currentTimeMillis());
+        LOG.info(String.format("Keep alive from connection id: %s", connectionId));
+      } else {
+        // Prepare the payload buf
+        ByteBuffer payloadBuf = ByteBuffer.allocate(payloadSize);
+
+        handlePendingRead(key, channel, connectionId, payloadBuf);
+      }
     }
   }
 
@@ -226,5 +239,21 @@ public class SocketEventLoopRunnable implements Runnable {
     String connectionId = this.connectedClients.remove(socket);
     LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
     this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
+  }
+
+  private void handleDisconnection(String connectionId) {
+    this.connectedClients.entrySet().stream().filter(f -> f.getValue().equals(connectionId)).map(Map.Entry::getKey).findFirst().ifPresent(socket -> {
+      this.connectedClients.remove(socket);
+      LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
+      this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
+    });
+  }
+
+  private void checkKeepAlive() {
+    lastKeepAlive.forEach((connectionId, lastTime) -> {
+      if (System.currentTimeMillis() - lastTime > KEEP_ALIVE_THRESHOLD) {
+        handleDisconnection(connectionId);
+      }
+    });
   }
 }
