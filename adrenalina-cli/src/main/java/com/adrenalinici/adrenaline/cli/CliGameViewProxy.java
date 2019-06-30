@@ -24,7 +24,7 @@ public class CliGameViewProxy extends ObservableImpl<InboxMessage> implements Cl
     message.onAvailablePowerUpCardsForRespawnMessage(e -> view.showAvailablePowerUpCardsForRespawn(e.getPlayer(), e.getPowerUpCards()));
     message.onAvailableAlternativeEffectsGunMessage(e -> view.showAvailableAlternativeEffectsGun(e.getFirstEffect(), e.getSecondEffect()));
     message.onChoosePlayerToHitMessage(e -> view.showChoosePlayerToHit(e.getPlayers()));
-    message.onChooseScopePlayerMessage(e -> view.showScopePlayers(e.getPlayers()));
+    message.onChooseScopePlayerMessage(e -> view.showScopePlayers(e.getPlayers(), e.getScopes()));
     message.onAvailableExtraEffectsMessage(e -> view.showAvailableExtraEffects(e.getFirstExtraEffect(), e.getSecondExtraEffect()));
     message.onAvailableGunsMessage(e -> view.showAvailableGuns(e.getGuns()));
     message.onAvailableGunsToPickupMessage(e -> view.showAvailableGunsToPickup(e.getGuns()));

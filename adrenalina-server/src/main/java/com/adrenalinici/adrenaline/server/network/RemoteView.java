@@ -90,7 +90,7 @@ public class RemoteView extends BaseRemoteView {
   }
 
   @Override
-  public void showScopePlayers(List<PlayerColor> players) {
-    broadcast(new ChooseScopePlayerMessage(players));
+  public void showScopePlayers(List<PlayerColor> players, List<PowerUpCard> scopes) {
+    broadcast(new ChooseScopePlayerMessage(players, scopes));
   }
 }

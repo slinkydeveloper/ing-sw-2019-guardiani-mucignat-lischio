@@ -39,7 +39,7 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
       context.nextPhase(view, flowState);
     } else {
       List<PlayerColor> hittablePlayers = new ArrayList<>(flowState.getHitPlayers().keySet());
-      view.showScopePlayers(hittablePlayers);
+      view.showScopePlayers(hittablePlayers, currentPlayerScopes);
     }
 
   }
@@ -50,21 +50,21 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
       e -> {
         if (e.getPlayerColor() == null) context.nextPhase(view, flowState);
         else {
-          PlayerDashboard killerDashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
-
           model.hitPlayer(context.getTurnOfPlayer(), e.getPlayerColor(), 1);
 
-          killerDashboard
-            .getPowerUpCards()
-            .stream()
-            .filter(puc -> puc.getPowerUpType().equals(PowerUpType.SCOPE))
-            .findFirst()
-            .ifPresent(puc -> model.removePowerUpFromPlayer(context.getTurnOfPlayer(), puc));
-
+          PlayerDashboard killerDashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
           killerDashboard.removeAmmos(Collections.singletonList(killerDashboard.getAmmos().get(0)));
-
-          context.nextPhase(view, flowState);
         }
       });
+
+    event.onPowerUpChosenEvent(
+      e -> {
+        if (e.getCard() == null) context.nextPhase(view, flowState);
+        else {
+          model.removePowerUpFromPlayer(context.getTurnOfPlayer(), e.getCard());
+          context.nextPhase(view, flowState);
+        }
+      }
+    );
   }
 }

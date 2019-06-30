@@ -40,5 +40,5 @@ public interface GameView extends Observer<ModelEvent> {
 
   void showRanking(List<Map.Entry<PlayerColor, Integer>> ranking);
 
-  void showScopePlayers(List<PlayerColor> players);
+  void showScopePlayers(List<PlayerColor> players, List<PowerUpCard> scopes);
 }
