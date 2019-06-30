@@ -123,6 +123,8 @@ public abstract class BaseRemoteView extends ObservableImpl<DecoratedEvent<ViewE
   }
 
   void onEndMatch() {
+    if (actualTimer != null)
+      actualTimer.cancel();
     context.removeMatch(this.matchId);
   }
 
