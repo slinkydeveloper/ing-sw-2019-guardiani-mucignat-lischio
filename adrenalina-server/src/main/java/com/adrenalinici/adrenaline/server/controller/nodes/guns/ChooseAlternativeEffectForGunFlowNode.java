@@ -27,7 +27,9 @@ public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode
     if (canUseSecondEffect(model, context.getTurnOfPlayer(), flowState.getChosenGun().get())) {
       view.showAvailableAlternativeEffectsGun(flowState.getChosenGun().getFirstEffect().get(), flowState.getChosenGun().getSecondEffect().get());
     } else {
-      context.nextPhase(view, flowState.setChosenEffect(flowState.getChosenGun().getFirstEffect(), true));
+      flowState.setChosenEffect(flowState.getChosenGun().getFirstEffect(), true);
+      context.addPhases(flowState.getChosenGun().getFirstEffect().getAdditionalPhases().toArray(new String[0]));
+      context.nextPhase(view, flowState);
     }
   }
 
