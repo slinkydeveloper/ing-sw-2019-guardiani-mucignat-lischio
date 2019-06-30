@@ -2,6 +2,7 @@ package com.adrenalinici.adrenaline.server.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.common.model.*;
 import com.adrenalinici.adrenaline.common.view.PlayerChosenEvent;
+import com.adrenalinici.adrenaline.common.view.PowerUpCardChosenEvent;
 import com.adrenalinici.adrenaline.server.controller.DecoratedAlternativeEffectGun;
 import com.adrenalinici.adrenaline.server.controller.GunLoader;
 import com.adrenalinici.adrenaline.server.controller.nodes.BaseNodeTest;
@@ -56,11 +57,17 @@ public class ApplyScopeFlowNodeTest extends BaseNodeTest {
     context.nextPhase(viewMock, gunFlowState);
 
     ArgumentCaptor<List<PlayerColor>> playersCaptor = ArgumentCaptor.forClass(List.class);
-    verify(viewMock, times(1)).showScopePlayers(playersCaptor.capture());
+    ArgumentCaptor<List<PowerUpCard>> powerupsCaptor = ArgumentCaptor.forClass(List.class);
+    verify(viewMock, times(1))
+      .showScopePlayers(playersCaptor.capture(), powerupsCaptor.capture());
+
     assertThat(playersCaptor.getValue())
       .containsExactlyInAnyOrder(PlayerColor.GRAY, PlayerColor.YELLOW);
+    assertThat(powerupsCaptor.getValue())
+      .containsOnly(blueScope);
 
     context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PowerUpCardChosenEvent(PlayerColor.GREEN, blueScope), viewMock);
 
     assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages())
       .isEqualTo(Collections.nCopies(1, PlayerColor.GREEN));

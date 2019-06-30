@@ -287,13 +287,21 @@ public class CliMain extends BaseCliGameView {
   }
 
   @Override
-  public void showScopePlayers(List<PlayerColor> players) {
+  public void showScopePlayers(List<PlayerColor> players, List<PowerUpCard> scopes) {
     if (isMyTurn()) {
       System.out.println("Choose a player for the scope: (-1 if you wanna skip)");
       printNumberedList(players);
 
-      int chosenIndex = parseIndex(-1, players.size() - 1);
-      sendViewEvent(new PlayerChosenEvent(chosenIndex != -1 ? players.get(chosenIndex) : null));
+      int chosenPlayerIndex = parseIndex(-1, players.size() - 1);
+      sendViewEvent(new PlayerChosenEvent(chosenPlayerIndex != -1 ? players.get(chosenPlayerIndex) : null));
+
+      System.out.println("Choose which scope you wanna use: (-1 if you wanna skip)");
+      printNumberedList(scopes);
+
+      int chosenScopeIndex = parseIndex(-1, scopes.size() - 1);
+      sendViewEvent(
+        new PowerUpCardChosenEvent(getMyPlayer(), chosenScopeIndex != -1 ? scopes.get(chosenScopeIndex) : null)
+      );
     }
   }
 
