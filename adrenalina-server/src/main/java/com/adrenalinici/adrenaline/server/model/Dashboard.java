@@ -364,7 +364,7 @@ public class Dashboard {
       .newSouthLine()
       .newEmptyCell()
       .newEastCell(c -> c.setNorthType(DOOR).setEastType(OPEN).cellColor(GRAY).newPickupCell())
-      .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).cellColor(YELLOW).newPickupCell())
+      .newEastCell(c -> c.setEastType(DOOR).setWestType(OPEN).cellColor(GRAY).newPickupCell())
       .newEastCell(c -> c.setNorthType(OPEN).setWestType(DOOR).cellColor(YELLOW).newRespawnCell())
       .setDashboardChoice(SMALL)
       .build();
