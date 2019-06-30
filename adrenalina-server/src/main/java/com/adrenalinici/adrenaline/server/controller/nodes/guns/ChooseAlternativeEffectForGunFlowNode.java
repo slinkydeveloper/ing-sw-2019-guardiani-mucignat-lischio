@@ -2,15 +2,20 @@ package com.adrenalinici.adrenaline.server.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.common.model.AlternativeEffectGun;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
+import com.adrenalinici.adrenaline.common.util.LogUtils;
 import com.adrenalinici.adrenaline.common.view.GameView;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowContext;
 import com.adrenalinici.adrenaline.server.controller.ControllerFlowNode;
+import com.adrenalinici.adrenaline.server.controller.GunLoader;
 import com.adrenalinici.adrenaline.server.model.GameModel;
+
+import java.util.logging.Logger;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.ALTERNATIVE_GUN_START;
 
 public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode<AlternativeEffectGunFlowState> {
+  private static final Logger LOG = LogUtils.getLogger(GunLoader.class);
 
   @Override
   public String id() {
@@ -36,6 +41,9 @@ public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode
         alternativeGunEffectChosenEvent.chosenFirstEffect()
       );
       context.addPhases(flowState.getChosenEffect().getAdditionalPhases().toArray(new String[0]));
+
+      LOG.info("Loaded phases:" + context.getPhasesQueue().toString());
+
       context.nextPhase(view, flowState);
     });
   }
