@@ -12,11 +12,9 @@ import java.nio.channels.ClosedSelectorException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-import java.util.ArrayDeque;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,19 +22,24 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private static final Logger LOG = LogUtils.getLogger(SocketEventLoopRunnable.class);
 
+  private static final long KEEP_ALIVE_PERIOD = 3 * 1000;
+
   private Selector selector;
   private BlockingQueue<OutboxMessage> clientViewInbox;
   private BlockingQueue<InboxMessage> clientViewOutbox;
 
   private Queue<ByteBuffer> remainingWrites;
   private ByteBuffer remainingRead;
+  private Timer actualTimer;
 
   public SocketEventLoopRunnable(Selector selector, BlockingQueue<OutboxMessage> clientViewInbox, BlockingQueue<InboxMessage> clientViewOutbox) {
     this.selector = selector;
     this.clientViewInbox = clientViewInbox;
     this.clientViewOutbox = clientViewOutbox;
 
-    this.remainingWrites = new ArrayDeque<>();
+    this.remainingWrites = new LinkedBlockingQueue<>();
+
+    this.initializeKeepAlive();
   }
 
   @Override
@@ -157,6 +160,16 @@ public class SocketEventLoopRunnable implements Runnable {
         this.clientViewInbox.offer(message);
       }
     }
+  }
+
+  private void initializeKeepAlive() {
+    actualTimer = new Timer();
+    actualTimer.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        remainingWrites.offer(ByteBuffer.allocate(4).putInt(0));
+      }
+    }, KEEP_ALIVE_PERIOD, KEEP_ALIVE_PERIOD);
   }
 
 }
