@@ -447,6 +447,11 @@ public class GameModel extends ObservableImpl<ModelEvent> {
       .filter(playerColor -> playerColor.equals(killer)).count();
   }
 
+  public void unloadGun(PlayerColor player, String gunId) {
+    getPlayerDashboard(player).unloadGun(gunId);
+    notifyEvent(new PlayerDashboardUpdatedEvent(light(), player));
+  }
+
   /**
    * Mutates the internal dashboard refilling, if needed, {@link RespawnDashboardCell} with guns and {@link PickupDashboardCell} with ammo cards
    */
