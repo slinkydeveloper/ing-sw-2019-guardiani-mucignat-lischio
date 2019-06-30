@@ -35,6 +35,9 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunF
 
   @Override
   public void onJump(GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
+    if (flowState.getChosenPlayersToHit().isEmpty())
+      context.nextPhase(view, flowState);
+
     PlayerColor enemy = flowState.getChosenPlayersToHit().get(0);
     Position actualEnemyPosition = model.getPlayerPosition(enemy);
     if (resolveMovementModeConfiguration(flowState).equals(ONLY_ONE_DIRECTION)) {

@@ -16,7 +16,7 @@
   "phasesConfig": {
     "CHOOSE_PLAYER_TO_HIT": {
       "hittablePlayersNumber": 1,
-      "distanceEval": "visible === true && distance >= 1"
+      "distanceEval": "visible === true && distance > 0"
     },
     "gun_movement_2": {
       "enabled": "state.isActivatedFirstExtraEffect()"
