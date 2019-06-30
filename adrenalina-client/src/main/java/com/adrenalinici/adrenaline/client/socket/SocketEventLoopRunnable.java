@@ -29,6 +29,7 @@ public class SocketEventLoopRunnable implements Runnable {
   private BlockingQueue<InboxMessage> clientViewOutbox;
 
   private Queue<ByteBuffer> remainingWrites;
+  private ByteBuffer remainingRead;
 
   public SocketEventLoopRunnable(Selector selector, BlockingQueue<OutboxMessage> clientViewInbox, BlockingQueue<InboxMessage> clientViewOutbox) {
     this.selector = selector;
@@ -77,8 +78,6 @@ public class SocketEventLoopRunnable implements Runnable {
       );
 
       bufs.forEach(remainingWrites::offer);
-
-      LOG.info(String.format("Prepared message %s", message.getClass()));
     }
   }
 
@@ -100,40 +99,63 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private void handleRead(SelectionKey key) throws IOException {
     SocketChannel channel = (SocketChannel) key.channel();
-    ByteBuffer sizeBuf = ByteBuffer.allocate(4);
-    int numRead = channel.read(sizeBuf);
 
-    if (numRead == -1) {
-      channel.close();
-      key.cancel();
-      LOG.severe("Server disconnected!");
-      return;
-    }
-    int size = sizeBuf.getInt(0);
-    ByteBuffer valueBuf = ByteBuffer.allocate(size);
-    numRead = 0;
-    while (valueBuf.hasRemaining()) {
-      int readNow = channel.read(valueBuf);
-      if (readNow == -1) {
-        numRead = -1;
-        break;
+    if (remainingRead != null) {
+      ByteBuffer pending = remainingRead;
+      remainingRead = null;
+      handlePendingRead(key, channel, pending);
+    } else {
+
+      // Read length
+      ByteBuffer sizeBuf = ByteBuffer.allocate(4);
+      int numRead = channel.read(sizeBuf);
+
+      if (numRead == -1) {
+        channel.close();
+        key.cancel();
+        LOG.severe("Server disconnected!");
+        return;
       }
-      numRead += readNow;
-    }
+      int size = sizeBuf.getInt(0);
+      ByteBuffer payloadBuf = ByteBuffer.allocate(size);
 
-    if (numRead == -1) {
+      handlePendingRead(key, channel, payloadBuf);
+    }
+  }
+
+  private void handlePendingRead(SelectionKey key, SocketChannel channel, ByteBuffer pendingBuffer) throws IOException {
+    try {
+      int read = channel.read(pendingBuffer);
+
+      if (read == -1) {
+        // Connection closed
+        channel.close();
+        key.cancel();
+        LOG.severe("Server disconnected!");
+        return;
+      }
+    } catch (IOException e) {
       channel.close();
       key.cancel();
       LOG.severe("Server disconnected!");
       return;
     }
 
-    byte[] data = new byte[numRead];
-    System.arraycopy(valueBuf.array(), 0, data, 0, numRead);
-    OutboxMessage message = SerializationUtils.deserialize(data);
-    if (message != null) {
-      LOG.fine(String.format("Received message from server %s", message.getClass()));
-      this.clientViewInbox.offer(message);
+    if (pendingBuffer.hasRemaining()) {
+      // Still missing something to read
+      this.remainingRead = pendingBuffer;
+    } else {
+      // Full buffer, ready to unmarshall
+
+      pendingBuffer.rewind();
+      byte[] data = new byte[pendingBuffer.capacity()];
+      pendingBuffer.get(data);
+
+      OutboxMessage message = SerializationUtils.deserialize(data);
+
+      if (message != null) {
+        this.clientViewInbox.offer(message);
+      }
     }
   }
 
