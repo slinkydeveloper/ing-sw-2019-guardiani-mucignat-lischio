@@ -57,12 +57,13 @@ public class MainGamePaneController {
       message.onAvailableTagbackGrenadeMessage(this::handleAvailableTagbackGrenade);
       message.onAvailableRoomsMessage(this::handleAvailableRooms);
       message.onAvailableCellsToHitMessage(this::handleAvailableCellsToHit);
+      message.onChooseScopePlayerMessage(this::handleChooseScopePlayer);
       message.onRankingMessage(this::handleRanking);
     });
     view.getEventBus().start();
   }
 
-  public void handleModelUpdate(ModelEventMessage message) {
+  private void handleModelUpdate(ModelEventMessage message) {
     if (firstUpdate) {
       firstUpdate = false;
       initializeView(message.getModelEvent().getGameModel());
@@ -94,7 +95,7 @@ public class MainGamePaneController {
     otherPlayersController.initializePlayers(otherPlayerList, gameModel);
   }
 
-  public void handleAvailablePowerUpCardsForRespawn(AvailablePowerUpCardsForRespawnMessage message) {
+  private void handleAvailablePowerUpCardsForRespawn(AvailablePowerUpCardsForRespawnMessage message) {
     if (this.view.getEventBus().getMyPlayer() == message.getPlayer()) {
       this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli dove rinascere",
@@ -107,7 +108,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableActions(AvailableActionsMessage message) {
+  private void handleAvailableActions(AvailableActionsMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una azione",
@@ -120,7 +121,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableMovements(AvailableMovementsMessage message) {
+  private void handleAvailableMovements(AvailableMovementsMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una posizione",
@@ -133,7 +134,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableGunsToPickup(AvailableGunsToPickupMessage message) {
+  private void handleAvailableGunsToPickup(AvailableGunsToPickupMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma",
@@ -146,7 +147,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableEnemyMovements(AvailableEnemyMovementsMessage message) {
+  private void handleAvailableEnemyMovements(AvailableEnemyMovementsMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una posizione dove spostare il nemico",
@@ -159,7 +160,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleNextTurn(NextTurnMessage message) {
+  private void handleNextTurn(NextTurnMessage message) {
     this.dashboardController.updateTurnOfPlayer(this.view.getEventBus().getTurnOfPlayer());
     if (isMyTurn())
       sendViewEvent(new NewTurnEvent());
@@ -169,7 +170,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleReloadableGuns(ReloadableGunsMessage message) {
+  private void handleReloadableGuns(ReloadableGunsMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma da ricaricare",
@@ -182,7 +183,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableAlternativeEffectsGun(AvailableAlternativeEffectsGunMessage message) {
+  private void handleAvailableAlternativeEffectsGun(AvailableAlternativeEffectsGunMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli un effetto dell'arma scelta",
@@ -195,7 +196,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleChoosePlayerToHit(ChoosePlayerToHitMessage message) {
+  private void handleChoosePlayerToHit(ChoosePlayerToHitMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showPlayersRadioButtonDialog(
         "Scegli un giocatore da colpire",
@@ -207,7 +208,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableExtraEffects(AvailableExtraEffectsMessage message) {
+  private void handleAvailableExtraEffects(AvailableExtraEffectsMessage message) {
     if (isMyTurn()) {
       ArrayList<Effect> effects = new ArrayList<>();
       if (message.getFirstExtraEffect() != null) effects.add(message.getFirstExtraEffect());
@@ -228,7 +229,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableGuns(AvailableGunsMessage message) {
+  private void handleAvailableGuns(AvailableGunsMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli un'arma da utilizzare",
@@ -241,7 +242,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableTagbackGrenade(AvailableTagbackGrenadeMessage message) {
+  private void handleAvailableTagbackGrenade(AvailableTagbackGrenadeMessage message) {
     if (message.getPlayer().equals(this.view.getEventBus().getMyPlayer())) {
       this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
         "Scegli la granata venom da utilizzare",
@@ -254,7 +255,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableRooms(AvailableRoomsMessage message) {
+  private void handleAvailableRooms(AvailableRoomsMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli una stanza",
@@ -267,7 +268,7 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleAvailableCellsToHit(AvailableCellsToHitMessage message) {
+  private void handleAvailableCellsToHit(AvailableCellsToHitMessage message) {
     if (isMyTurn()) {
       this.openedDialog = GuiUtils.showLabelRadioButtonDialog(
         "Scegli cella dove applicare l'effetto",
@@ -280,7 +281,35 @@ public class MainGamePaneController {
     }
   }
 
-  public void handleRanking(RankingMessage message) {
+  private void handleChooseScopePlayer(ChooseScopePlayerMessage chooseScopePlayerMessage) {
+    if (isMyTurn()) {
+      this.openedDialog = GuiUtils.showPlayersRadioButtonDialog(
+        "Scegli un giocatore da colpire",
+        "Scegli un giocatore da colpire con lo scope",
+        chooseScopePlayerMessage.getPlayers(),
+        true,
+        color -> {
+          if (color == null) {
+            sendViewEvent(new PlayerChosenEvent(null));
+          } else {
+            sendViewEvent(new PlayerChosenEvent(color));
+
+            this.openedDialog = GuiUtils.showCardImagesRadioButtonDialog(
+              "Scegli quale scope utilizzare",
+              "Scegli quale scope utilizzare",
+              chooseScopePlayerMessage.getScopes(),
+              GuiUtils::computePowerUpFilename,
+              true,
+              chosen ->
+                sendViewEvent(new PowerUpCardChosenEvent(this.view.getEventBus().getMyPlayer(), chosen))
+              );
+          }
+        }
+      );
+    }
+  }
+
+  private void handleRanking(RankingMessage message) {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Classifica finale");
     alert.setHeaderText("La partita è finita, ecco la classifica finale");
