@@ -51,7 +51,7 @@ public class GunChooseEnemyMovementFlowNodeOneDirectionModeTest extends BaseNode
     );
 
     ArgumentCaptor<List<Position>> positionsCaptor = ArgumentCaptor.forClass(List.class);
-    verify(viewMock, times(1)).showAvailableMovements(positionsCaptor.capture());
+    verify(viewMock, times(1)).showAvailableEnemyMovements(positionsCaptor.capture());
     assertThat(positionsCaptor.getValue())
       .containsOnly(
         new Position(1, 0),

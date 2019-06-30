@@ -38,8 +38,7 @@ public class ChooseGunFlowNode implements StatelessControllerFlowNode {
               .getDecoratedGun(alternativeEffectGun.getId());
 
             context.addPhases(decorated.getPhases().toArray(new String[0]));
-            context.addPhases(USE_SCOPE.name());
-            context.addPhasesToEnd(USE_TAGBACK_GRENADE.name(), CHOOSE_ACTION.name());
+            context.addPhasesToEnd(USE_SCOPE.name(), USE_TAGBACK_GRENADE.name(), CHOOSE_ACTION.name());
 
             LOG.info("Loaded phases" + context.getPhasesQueue().toString());
 
