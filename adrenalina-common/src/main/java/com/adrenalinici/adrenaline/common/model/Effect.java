@@ -5,26 +5,20 @@ import java.util.Objects;
 
 public class Effect implements Serializable {
 
+  private String gunId;
   private String id;
-  private String name;
-  private String description;
 
-  public Effect(String id, String name, String description) {
+  public Effect(String gunId, String id) {
+    this.gunId = gunId;
     this.id = id;
-    this.name = name;
-    this.description = description;
+  }
+
+  public String getGunId() {
+    return gunId;
   }
 
   public String getId() {
     return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getDescription() {
-    return description;
   }
 
   @Override
@@ -32,13 +26,12 @@ public class Effect implements Serializable {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Effect effect = (Effect) o;
-    return Objects.equals(id, effect.id) &&
-      Objects.equals(name, effect.name) &&
-      Objects.equals(description, effect.description);
+    return Objects.equals(gunId, effect.gunId) &&
+      Objects.equals(id, effect.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description);
+    return Objects.hash(gunId, id);
   }
 }

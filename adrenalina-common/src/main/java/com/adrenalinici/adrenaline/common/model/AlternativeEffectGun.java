@@ -8,8 +8,8 @@ public class AlternativeEffectGun extends BaseGun {
   private Effect secondEffect;
   private List<AmmoColor> secondEffectCost;
 
-  public AlternativeEffectGun(String id, AmmoColor firstAmmo, List<AmmoColor> extraAmmo, String name, String note, Effect firstEffect, Effect secondEffect, List<AmmoColor> secondEffectCost) {
-    super(id, firstAmmo, extraAmmo, name, note);
+  public AlternativeEffectGun(String id, AmmoColor firstAmmo, List<AmmoColor> extraAmmo, Effect firstEffect, Effect secondEffect, List<AmmoColor> secondEffectCost) {
+    super(id, firstAmmo, extraAmmo);
     this.firstEffect = firstEffect;
     this.secondEffect = secondEffect;
     this.secondEffectCost = secondEffectCost;

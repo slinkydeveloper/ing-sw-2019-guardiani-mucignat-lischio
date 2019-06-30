@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
+import com.adrenalinici.adrenaline.client.model.ClientGunLoader;
 import com.adrenalinici.adrenaline.common.model.*;
 import com.adrenalinici.adrenaline.gui.GuiUtils;
 import javafx.fxml.FXML;
@@ -24,7 +25,10 @@ public class DashboardCellController {
 
   public void setGunsContent(Set<Gun> guns) {
     this.content.setText(
-      "Armi in questa cella:\n" + guns.stream().map(Gun::getName).collect(Collectors.joining(", "))
+      "Armi in questa cella:\n" + guns
+        .stream()
+        .map(gun -> ClientGunLoader.INSTANCE.getGunName(gun.getId()))
+        .collect(Collectors.joining(", "))
     );
   }
 

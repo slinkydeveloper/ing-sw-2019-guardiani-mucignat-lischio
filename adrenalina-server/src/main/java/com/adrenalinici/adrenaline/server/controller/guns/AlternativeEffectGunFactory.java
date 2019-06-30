@@ -17,10 +17,8 @@ public abstract class AlternativeEffectGunFactory implements GunFactory {
       key,
       parseAmmoColor(config.get("firstAmmo")),
       parseListAmmoColor(config.get("extraAmmo")),
-      config.get("name").asText(),
-      config.has("note") ? config.get("note").asText() : null,
-      parseEffect(config.get("firstEffect")),
-      parseEffect(config.get("secondEffect")),
+      parseEffect(config.get("firstEffect"), key),
+      parseEffect(config.get("secondEffect"), key),
       parseEffectCost(config.get("secondEffect"))
     );
   }

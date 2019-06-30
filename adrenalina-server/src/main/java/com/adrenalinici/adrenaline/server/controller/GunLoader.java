@@ -123,6 +123,7 @@ public class GunLoader {
       List<String> guns = StreamUtils.enumerationStream(loader.getResources("guns"))
           .flatMap(GunLoader::getResourceListingForResourceURL)
           .map(s -> s.replace(".json", ""))
+          .distinct()
           .collect(Collectors.toList());
       LOG.info("Discovered guns: " + guns.toString());
       return guns;

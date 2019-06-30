@@ -17,12 +17,10 @@ public abstract class BaseEffectGunFactory implements GunFactory {
       key,
       parseAmmoColor(config.get("firstAmmo")),
       parseListAmmoColor(config.get("extraAmmo")),
-      config.get("name").asText(),
-      config.has("note") ? config.get("note").asText() : null,
-      parseEffect(config.get("baseEffect")),
-      parseEffect(config.get("firstExtraEffect")),
+      parseEffect(config.get("baseEffect"), key),
+      parseEffect(config.get("firstExtraEffect"), key),
       parseEffectCost(config.get("firstExtraEffect")),
-      parseEffect(config.get("secondExtraEffect")),
+      parseEffect(config.get("secondExtraEffect"), key),
       parseEffectCost(config.get("secondExtraEffect"))
     );
   }

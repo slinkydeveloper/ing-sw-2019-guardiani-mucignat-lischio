@@ -1,0 +1,13 @@
+{
+  "name": "Lock Rifle",
+  "baseEffect": {
+    "id": "base",
+    "name": "Basic effect",
+    "description": "Deal 2 damage and 1 mark to 1 target you can see."
+  },
+  "firstExtraEffect": {
+    "id": "lock",
+    "name": "Second lock",
+    "description": "Deal 1 mark to a different target you can see."
+  }
+}

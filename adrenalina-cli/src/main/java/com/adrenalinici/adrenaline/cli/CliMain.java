@@ -1,6 +1,7 @@
 package com.adrenalinici.adrenaline.cli;
 
 import com.adrenalinici.adrenaline.client.ClientNetworkAdapter;
+import com.adrenalinici.adrenaline.client.model.ClientGunLoader;
 import com.adrenalinici.adrenaline.client.rmi.RmiClientNetworkAdapter;
 import com.adrenalinici.adrenaline.client.socket.SocketClientNetworkAdapter;
 import com.adrenalinici.adrenaline.common.model.*;
@@ -266,8 +267,16 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect) {
     if (isMyTurn()) {
-      System.out.println(String.format("0) %s\n\tDescription: %s", firstEffect.getName(), firstEffect.getDescription()));
-      System.out.println(String.format("1) %s\n\tDescription: %s", secondEffect.getName(), secondEffect.getDescription()));
+      System.out.println(String.format(
+        "0) %s\n\tDescription: %s",
+        ClientGunLoader.INSTANCE.getGunEffectName(firstEffect.getGunId(), firstEffect.getId()),
+        ClientGunLoader.INSTANCE.getGunEffectDescription(firstEffect.getGunId(), firstEffect.getId())
+      ));
+      System.out.println(String.format(
+        "1) %s\n\tDescription: %s",
+        ClientGunLoader.INSTANCE.getGunEffectName(secondEffect.getGunId(), secondEffect.getId()),
+        ClientGunLoader.INSTANCE.getGunEffectDescription(secondEffect.getGunId(), secondEffect.getId())
+      ));
 
       int chosenIndex = parseIndex(0, 1);
 

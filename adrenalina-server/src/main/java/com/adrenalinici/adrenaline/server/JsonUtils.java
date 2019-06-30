@@ -54,11 +54,10 @@ public class JsonUtils {
     return node == null ? Collections.emptyList() : StreamSupport.stream(node.spliterator(), false).map(JsonUtils::parseAmmoColor).collect(Collectors.toList());
   }
 
-  public static Effect parseEffect(JsonNode node) {
+  public static Effect parseEffect(JsonNode node, String gunId) {
     return node == null || node.isNull() ? null : new Effect(
-      node.get("id").asText(),
-      node.get("name").asText(),
-      node.get("description").asText()
+      gunId,
+      node.get("id").asText()
     );
   }
 

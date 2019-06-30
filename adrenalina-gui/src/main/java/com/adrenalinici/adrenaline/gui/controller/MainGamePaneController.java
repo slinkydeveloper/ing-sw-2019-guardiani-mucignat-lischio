@@ -1,5 +1,6 @@
 package com.adrenalinici.adrenaline.gui.controller;
 
+import com.adrenalinici.adrenaline.client.model.ClientGunLoader;
 import com.adrenalinici.adrenaline.common.model.Action;
 import com.adrenalinici.adrenaline.common.model.CellColor;
 import com.adrenalinici.adrenaline.common.model.Effect;
@@ -189,7 +190,11 @@ public class MainGamePaneController {
         "Scegli un effetto dell'arma scelta",
         "Scegli un effetto. Verranno scalate le munizioni necessarie.",
         Arrays.asList(message.getFirstEffect(), message.getSecondEffect()),
-        e -> String.format("%s: %s", e.getName(), e.getDescription()),
+        e -> String.format(
+          "%s: %s",
+          ClientGunLoader.INSTANCE.getGunEffectName(e.getGunId(), e.getId()),
+          ClientGunLoader.INSTANCE.getGunEffectDescription(e.getGunId(), e.getId())
+        ),
         true,
         chosen -> sendViewEvent(new AlternativeGunEffectChosenEvent(chosen.getId().equals(message.getSecondEffect().getId())))
       );
@@ -218,7 +223,11 @@ public class MainGamePaneController {
         "Scegli gli effetti da applicare",
         "Scegli gli effetti da applicare, verrano scalati i costi degli effetti",
         effects,
-        e -> String.format("%s: %s", e.getName(), e.getDescription()),
+        e -> String.format(
+          "%s: %s",
+          ClientGunLoader.INSTANCE.getGunEffectName(e.getGunId(), e.getId()),
+          ClientGunLoader.INSTANCE.getGunEffectDescription(e.getGunId(), e.getId())
+        ),
         true,
         chosenEffects -> sendViewEvent(new BaseGunEffectChosenEvent(
           chosenEffects.contains(message.getFirstExtraEffect()),

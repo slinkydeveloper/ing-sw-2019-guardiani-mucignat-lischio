@@ -1,0 +1,9 @@
+{
+  "name": "Heatseeker",
+  "note": "Yes, this can only hit targets you cannot see.",
+  "baseEffect": {
+    "id": "base",
+    "name": "Base effect",
+    "description": "Choose 1 target you cannot see and deal 3 damage to it."
+  }
+}
