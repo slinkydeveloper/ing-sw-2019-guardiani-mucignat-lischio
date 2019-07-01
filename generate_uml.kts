@@ -19,14 +19,11 @@ fun renderUML(vararg packages: String): String {
       ConfigurationBuilder()
         .setUrls(ClasspathHelper.forPackage(pkgName))
         .setScanners(SubTypesScanner(false))
+        .filterInputsBy(FilterBuilder().includePackage(pkgName))
     );
 
-    reflections.getSubTypesOf(Object::class.java).forEach {
-      println("Discovered ${it.name}")
-      builder.addClasse(it)
-    }
+    val classes = reflections.getSubTypesOf(Object::class.java);
 
-    Package.getPackages().forEach { println(it.name) }
     val pkg = Package.getPackage(pkgName)
     println("Adding package ${pkg.name}")
     builder
