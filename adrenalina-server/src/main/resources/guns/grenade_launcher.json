@@ -20,9 +20,9 @@
     "description": "Deal 1 damage to 1 target you can see. Then you may move the target 1 square."
   },
   "firstExtraEffect": {
-    "id": "focus",
-    "name": "Focus shot",
-    "description": "Deal 1 additional damage to the first target.",
+    "id": "extra_grenade",
+    "name": "Extra grenade",
+    "description": "Deal 1 damage to every player on a square you can see. You can use this before or after the basic effect's move.",
     "phases": [
       "CHOOSE_CELL",
       "APPLY_GRENADE_LAUNCHER"
