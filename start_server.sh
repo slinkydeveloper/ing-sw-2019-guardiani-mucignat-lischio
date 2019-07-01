@@ -1,18 +1,13 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]
-  then
-    echo "Usage: start_server [network_interface]"
-    exit
-fi
+source load_ip.sh
 
-ip_discovered=$(ifconfig wlp3s0 | awk '/inet /{print $2;}')
-
-echo "Discovered ip $ip_discovered"
+get_ip
+echo "Discovered ip $discovered_ip"
 
 if [ ! -f adrenalina-server/target/adrenalina-server-fat.jar ]; then
     echo "adrenalina-server/target/adrenalina-server-fat.jar . You should run mvn package"
     exit
 fi
 
-java -Djava.rmi.server.hostname=$ip_discovered -jar adrenalina-server/target/adrenalina-server-fat.jar
+java -Djava.rmi.server.hostname=$discovered_ip -jar adrenalina-server/target/adrenalina-server-fat.jar
