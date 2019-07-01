@@ -136,6 +136,8 @@ public class GuiUtils {
       }
     });
 
+    alert.setResizable(true);
+
     alert.show();
 
     return alert;
@@ -186,6 +188,8 @@ public class GuiUtils {
         }
       }
     });
+
+    alert.setResizable(true);
 
     alert.show();
 
