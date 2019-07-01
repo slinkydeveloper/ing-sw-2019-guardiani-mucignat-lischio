@@ -39,6 +39,9 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunF
       context.nextPhase(view, flowState);
 
     PlayerColor enemy = flowState.getChosenPlayersToHit().get(0);
+    if (context.getKilledPlayers().contains(enemy))
+      context.nextPhase(view, flowState);
+
     Position actualEnemyPosition = model.getPlayerPosition(enemy);
     if (resolveMovementModeConfiguration(flowState).equals(ONLY_ONE_DIRECTION)) {
       view.showAvailableEnemyMovements(
