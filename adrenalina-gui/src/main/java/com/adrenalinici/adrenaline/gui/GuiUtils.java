@@ -101,6 +101,7 @@ public class GuiUtils {
     GridPane innerGridPane = new GridPane();
     innerGridPane.setHgap(10);
     innerGridPane.setVgap(10);
+    innerGridPane.setMinWidth(800);
     innerGridPane.setPadding(new Insets(10, 10, 10, 10));
 
     for (int i = 0; i < elements.size(); i++) {
@@ -123,16 +124,15 @@ public class GuiUtils {
     alert.getDialogPane().setContent(innerGridPane);
     alert.setWidth(800);
 
-    Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-    okButton.setOnAction(action -> {
-      onEnd.accept((T) group.getSelectedToggle().getUserData());
-    });
-    Button cancelButton = (Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL);
-    cancelButton.setOnAction(actionEvent -> {
-      if (!optional) {
-        showHorizontalRadioButtonDialog(title, question, elements, nodeGenFn, optional, onEnd);
+    alert.setOnCloseRequest(req -> {
+      if (alert.getResult() == ButtonType.OK) {
+        onEnd.accept((T) group.getSelectedToggle().getUserData());
       } else {
-        onEnd.accept(null);
+        if (!optional) {
+          showRadioButtonDialog(vertical, title, question, elements, nodeGenFn, optional, onEnd);
+        } else {
+          onEnd.accept(null);
+        }
       }
     });
 
@@ -154,6 +154,9 @@ public class GuiUtils {
     Map<CheckBox, T> dataMapping = new HashMap<>();
 
     GridPane descriptionsGridPane = new GridPane();
+    descriptionsGridPane.setHgap(10);
+    descriptionsGridPane.setVgap(10);
+    descriptionsGridPane.setMinWidth(800);
     descriptionsGridPane.setPadding(new Insets(10, 10, 10, 10));
 
     for (int i = 0; i < elements.size(); i++) {
@@ -171,17 +174,16 @@ public class GuiUtils {
     alert.getDialogPane().setContent(descriptionsGridPane);
     alert.setWidth(800);
 
-    Button okButton = (Button) alert.getDialogPane().lookupButton(ButtonType.OK);
-    okButton.setOnAction(action -> {
-      List<T> chosen = dataMapping.entrySet().stream().filter(e -> e.getKey().isSelected()).map(Map.Entry::getValue).collect(Collectors.toList());
-      onEnd.accept(chosen);
-    });
-    Button cancelButton = (Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL);
-    cancelButton.setOnAction(actionEvent -> {
-      if (!optional) {
-        showVerticalCheckBoxDialog(title, question, elements, nodeGenFn, optional, onEnd);
+    alert.setOnCloseRequest(req -> {
+      if (alert.getResult() == ButtonType.OK) {
+        List<T> chosen = dataMapping.entrySet().stream().filter(e -> e.getKey().isSelected()).map(Map.Entry::getValue).collect(Collectors.toList());
+        onEnd.accept(chosen);
       } else {
-        onEnd.accept(null);
+        if (!optional) {
+          showVerticalCheckBoxDialog(title, question, elements, nodeGenFn, optional, onEnd);
+        } else {
+          onEnd.accept(null);
+        }
       }
     });
 
