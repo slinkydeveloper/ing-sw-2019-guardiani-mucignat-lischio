@@ -81,6 +81,7 @@ public class TagbackGrenadeFlowNode implements ControllerFlowNode<TagbackGrenade
         .getHitPlayers()
         .keySet()
         .stream()
+        .filter(player -> !context.getKilledPlayers().contains(player))
         .filter(f -> model.getPlayerDashboard(f).hasVenomGrenade())
         .filter(f -> 3 - model.calculateKillerMarksOnVictimPlayerDashboard(f, context.getTurnOfPlayer()) >= 1)
         .filter(f -> model.getDashboard().calculateIfVisible(
