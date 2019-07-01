@@ -54,7 +54,7 @@
                    <Font size="16.0" />
                  </font>
                </Label>
-               <HBox fx:id="playersKillTrackHBox"/>
+               <HBox fx:id="playersKillTrackHBox" spacing="10"/>
              </children>
            </VBox>
          </children>
