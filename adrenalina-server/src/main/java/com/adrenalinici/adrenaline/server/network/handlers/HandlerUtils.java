@@ -10,7 +10,10 @@ public class HandlerUtils {
 
   public static AvailableMatchesMessage generateAvailableMatchesMessage(ServerContext context) {
     return new AvailableMatchesMessage(
-      context.getMatches().entrySet().stream()
+      context
+        .getMatches()
+        .entrySet()
+        .stream()
         .filter(e -> !e.getValue().getAvailablePlayers().isEmpty())
         .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getAvailablePlayers()))
     );
