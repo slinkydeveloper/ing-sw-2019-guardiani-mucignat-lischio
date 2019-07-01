@@ -29,23 +29,21 @@ public class ServerMessageRouter implements Runnable {
   @SuppressWarnings("unchecked")
   @Override
   public void run() {
-    try {
-      while (!Thread.currentThread().isInterrupted()) {
-        try {
-          InboxEntry e = inbox.take();
-          LOG.fine(String.format("Received new message from network adapter. Connection %s, message: %s", e.getConnectionId(), e.getMessage().getClass().getSimpleName()));
-          MessageHandler handler = this.handlers.get(e.getMessage().getClass());
-          if (handler == null) {
-            LOG.severe("Missing handler for message " + e.getMessage().getClass().getName());
-            continue;
-          }
-          handler.handleMessage(e.getMessage(), e.getConnectionId(), context);
-        } catch (InterruptedException ex) {
-          Thread.currentThread().interrupt();
+    while (!Thread.currentThread().isInterrupted()) {
+      try {
+        InboxEntry e = inbox.take();
+        LOG.fine(String.format("Received new message from network adapter. Connection %s, message: %s", e.getConnectionId(), e.getMessage().getClass().getSimpleName()));
+        MessageHandler handler = this.handlers.get(e.getMessage().getClass());
+        if (handler == null) {
+          LOG.severe("Missing handler for message " + e.getMessage().getClass().getName());
+          continue;
         }
+        handler.handleMessage(e.getMessage(), e.getConnectionId(), context);
+      } catch (InterruptedException ex) {
+        Thread.currentThread().interrupt();
+      } catch (Exception e) {
+        LOG.log(Level.SEVERE, "Uncaught exception that fuck up everything", e);
       }
-    } catch (Exception e) {
-      LOG.log(Level.SEVERE, "Uncaught exception that fuck up everything", e);
     }
   }
 
