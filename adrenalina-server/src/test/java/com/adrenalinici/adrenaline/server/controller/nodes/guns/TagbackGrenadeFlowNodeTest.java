@@ -93,4 +93,27 @@ public class TagbackGrenadeFlowNodeTest extends BaseNodeTest {
     checkEndCalled();
 
   }
+
+  @Test
+  public void calculatePlayersThatCanUseVenomGrenadeTest() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
+
+    PowerUpCard powerUpCardGray = new PowerUpCard(AmmoColor.BLUE, PowerUpType.TAGBACK_GRENADE);
+    PowerUpCard powerUpCardYellow = new PowerUpCard(AmmoColor.RED, PowerUpType.TAGBACK_GRENADE);
+    model.getPlayerDashboard(PlayerColor.GRAY).addPowerUpCard(powerUpCardGray);
+    model.getPlayerDashboard(PlayerColor.YELLOW).addPowerUpCard(powerUpCardYellow);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
+
+    GunFlowState gunState = new BaseEffectGunFlowStateImpl((DecoratedBaseEffectGun) GunLoader.INSTANCE.getDecoratedGun("machine_gun"));
+    gunState.hitPlayer(PlayerColor.GRAY, 1);
+    gunState.hitPlayer(PlayerColor.YELLOW, 1);
+
+    context.getKilledPlayers().add(PlayerColor.GRAY);
+
+    assertThat(
+      ((TagbackGrenadeFlowNode) nodeToTest()).calculatePlayersThatCanUseVenomGrenade(gunState, model, context)
+    ).containsOnly(PlayerColor.YELLOW);
+  }
 }
