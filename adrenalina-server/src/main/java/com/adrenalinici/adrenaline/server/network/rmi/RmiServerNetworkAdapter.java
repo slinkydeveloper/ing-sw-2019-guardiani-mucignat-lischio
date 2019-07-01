@@ -86,8 +86,9 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
 
   @Override
   public void start() throws IOException {
-    Remote remoteObject = UnicastRemoteObject.exportObject(this, port);
-    registry = LocateRegistry.createRegistry(port);
+    Remote remoteObject = UnicastRemoteObject.exportObject(this, 0);
+
+    registry = LocateRegistry.getRegistry(port);
     registry.rebind(GameRmiServer.class.getSimpleName(), remoteObject);
 
     LOG.info(String.format("Started rmi registry on port %d", port));
