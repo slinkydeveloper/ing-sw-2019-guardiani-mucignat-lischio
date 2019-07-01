@@ -23,7 +23,7 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private final static Logger LOG = LogUtils.getLogger(SocketEventLoopRunnable.class);
 
-  private final static long KEEP_ALIVE_THRESHOLD = 10 * 1000;
+  private final static long KEEP_ALIVE_THRESHOLD = 20 * 1000;
 
   private BlockingQueue<OutboxEntry> viewOutbox;
   private BlockingQueue<InboxEntry> viewInbox;
@@ -244,6 +244,11 @@ public class SocketEventLoopRunnable implements Runnable {
   private void handleDisconnection(String connectionId) {
     this.connectedClients.entrySet().stream().filter(f -> f.getValue().equals(connectionId)).map(Map.Entry::getKey).findFirst().ifPresent(socket -> {
       this.connectedClients.remove(socket);
+      try {
+        socket.close();
+      } catch (IOException e) {
+        LOG.log(Level.WARNING, "IOException while disconnecting an inactive socket", e);
+      }
       LOG.info(String.format("Connection with id %s and address %s disconnected", connectionId, socket.getInetAddress()));
       this.viewInbox.offer(new InboxEntry(connectionId, new DisconnectedPlayerMessage()));
     });

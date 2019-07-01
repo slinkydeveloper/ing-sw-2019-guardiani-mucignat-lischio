@@ -4,6 +4,7 @@ import com.adrenalinici.adrenaline.common.model.DashboardChoice;
 import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.PlayersChoice;
 import com.adrenalinici.adrenaline.common.model.RulesChoice;
+import com.adrenalinici.adrenaline.common.network.inbox.ConnectedPlayerMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.AvailableMatchesMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.InfoMessage;
 import com.adrenalinici.adrenaline.common.network.outbox.InfoType;
@@ -20,10 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +29,8 @@ import java.util.logging.Logger;
 public class ConnectMatchController {
 
   private static final Logger LOG = LogUtils.getLogger(ConnectMatchController.class);
+
+  private static final long UPDATE_MATCHES_PERIOD = 300;
 
   @FXML private TextField portText;
   @FXML private TextField hostText;
@@ -45,6 +45,8 @@ public class ConnectMatchController {
 
   private Boolean startingNewMatch;
 
+  private Timer connectedPlayerMessageTimer;
+
   public void initialize() {
     newMatchButton.setDisable(true);
   }
@@ -54,6 +56,8 @@ public class ConnectMatchController {
       view = startNetwork(GuiView::createSocketGuiView);
     else
       view = startNetwork(GuiView::createRmiGuiView);
+    socketButton.setDisable(true);
+    rmiButton.setDisable(true);
     if (view != null) {
       newMatchButton.setDisable(false);
       registeredHandler = view.getEventBus().registerEventHandler((message, eventBus, s) -> {
@@ -63,6 +67,14 @@ public class ConnectMatchController {
       view.getEventBus().start();
       view.startNetworkAdapter();
     }
+
+    this.connectedPlayerMessageTimer = new Timer();
+    this.connectedPlayerMessageTimer.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        view.getEventBus().notifyEvent(new ConnectedPlayerMessage());
+      }
+    }, 0, UPDATE_MATCHES_PERIOD);
   }
 
   @SuppressWarnings("unchecked")
@@ -170,6 +182,7 @@ public class ConnectMatchController {
   }
 
   private void moveToGameScene() {
+    this.connectedPlayerMessageTimer.cancel();
     this.view.getEventBus().stop();
     this.view.getEventBus().unregisterEventHandler(registeredHandler);
     LOG.info("Moving to game scene");
