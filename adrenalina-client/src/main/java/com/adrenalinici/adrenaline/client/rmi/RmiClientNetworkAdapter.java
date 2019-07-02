@@ -21,7 +21,7 @@ public class RmiClientNetworkAdapter extends ClientNetworkAdapter {
 
   private static final Logger LOG = LogUtils.getLogger(RmiClientNetworkAdapter.class);
 
-  private static final long KEEP_ALIVE_PERIOD = 3 * 1000;
+  private static final long KEEP_ALIVE_PERIOD = 3L * 1000L;
 
   private Thread senderThread;
   private Registry registry;

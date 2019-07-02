@@ -18,16 +18,17 @@ import java.util.stream.IntStream;
 public class CliMain extends BaseCliGameView {
 
   public static final String ANSI_RESET = "\u001B[0m";
+  public static final Map<String, String> COLORS = new HashMap<>();
 
-  public static final Map<String, String> COLORS = new HashMap<String, String>() {{
-    put("RED", "\u001B[31m");
-    put("GREEN", "\u001B[32m");
-    put("CYAN", "\u001B[36m");
-    put("YELLOW", "\u001B[33m");
-    put("PURPLE", "\u001B[35m");
-    put("GRAY", "\u001B[30;1m");
-    put("RESET", "\u001B[0m");
-  }};
+  static {
+    COLORS.put("RED", "\u001B[31m");
+    COLORS.put("GREEN", "\u001B[32m");
+    COLORS.put("CYAN", "\u001B[36m");
+    COLORS.put("YELLOW", "\u001B[33m");
+    COLORS.put("PURPLE", "\u001B[35m");
+    COLORS.put("GRAY", "\u001B[30;1m");
+    COLORS.put("RESET", "\u001B[0m");
+  }
 
   Scanner scanner = new Scanner(System.in);
 
@@ -52,16 +53,16 @@ public class CliMain extends BaseCliGameView {
     } else if (transport.equals("rmi")) {
       networkAdapter = new RmiClientNetworkAdapter(proxy, host, port);
     } else {
-      System.out.println("Wrong transport!");
+      PrintUtils.printOut("Wrong transport!");
       System.exit(1);
     }
-    System.out.println(String.format("Transport %s to %s:%d initialized", transport, host, port));
+    PrintUtils.printOut(String.format("Transport %s to %s:%d initialized", transport, host, port));
     networkAdapter.run();
   }
 
   @Override
   public void showInfoMessage(String information, InfoType infoType) {
-    System.out.println(infoType.name() + ":" + information);
+    PrintUtils.printOut(infoType.name() + ":" + information);
   }
 
   @Override
@@ -69,23 +70,23 @@ public class CliMain extends BaseCliGameView {
     if (getMyPlayer() == null) {
       int chosenIndex;
       if (matches.isEmpty()) {
-        System.out.println("No existing matches available, so let's start a new match!");
+        PrintUtils.printOut("No existing matches available, so let's start a new match!");
         newMatchManager();
       } else {
-        System.out.println("Available matches");
+        PrintUtils.printOut("Available matches");
         matches.forEach((matchId, availablePlayers) ->
-          System.out.println(String.format("Match %s: %s", matchId, availablePlayers.stream().map(Objects::toString).collect(Collectors.joining(", "))))
+          PrintUtils.printOut(String.format("Match %s: %s", matchId, availablePlayers.stream().map(Objects::toString).collect(Collectors.joining(", "))))
         );
-        System.out.println("Type name of the match you wanna join, or 'new' to create a new one");
+        PrintUtils.printOut("Type name of the match you wanna join, or 'new' to create a new one");
         String choice = scanner.nextLine().trim().toLowerCase();
         while (!choice.equals("new") && !matches.keySet().contains(choice)) {
-          System.out.println("Please select an existing match, or type 'new' to create one:");
+          PrintUtils.printOut("Please select an existing match, or type 'new' to create one:");
           choice = scanner.nextLine().trim().toLowerCase();
         }
         if (choice.equals("new")) {
           newMatchManager();
         } else {
-          System.out.println("Now choose your player:");
+          PrintUtils.printOut("Now choose your player:");
           List<PlayerColor> availablePlayers = new ArrayList<>(matches.get(choice));
           printNumberedList(availablePlayers);
           chosenIndex = parseIndex(0, availablePlayers.size() - 1);
@@ -97,22 +98,22 @@ public class CliMain extends BaseCliGameView {
 
   private void newMatchManager() {
     int chosenIndex;
-    System.out.println("Choose a name for your match:");
+    PrintUtils.printOut("Choose a name for your match:");
     String matchId = scanner.nextLine();
 
-    System.out.println("Now choose one of the dashboards:");
+    PrintUtils.printOut("Now choose one of the dashboards:");
     List<DashboardChoice> dashboardChoices = Arrays.asList(DashboardChoice.values());
     printNumberedList(Arrays.asList(DashboardChoice.values()));
     chosenIndex = parseIndex(0, dashboardChoices.size() - 1);
     DashboardChoice dashboard = dashboardChoices.get(chosenIndex);
 
-    System.out.println("Now select how many player you want in the match:");
+    PrintUtils.printOut("Now select how many player you want in the match:");
     List<PlayersChoice> playersChoices = Arrays.asList(PlayersChoice.values());
     printNumberedList(playersChoices);
     chosenIndex = parseIndex(0, playersChoices.size() - 1);
     PlayersChoice players = playersChoices.get(chosenIndex);
 
-    System.out.println("Last thing, choose the ruleset:");
+    PrintUtils.printOut("Last thing, choose the ruleset:");
     List<RulesChoice> rulesChoices = Arrays.asList(RulesChoice.values());
     printNumberedList(rulesChoices);
     chosenIndex = parseIndex(0, rulesChoices.size() - 1);
@@ -124,7 +125,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableActions(List<Action> actions) {
     if (isMyTurn()) {
-      System.out.println("Available actions: " +
+      PrintUtils.printOut("Available actions: " +
         "\n\t(NOTE -> if you have a teleporter or a newton, just type the name to use it)");
       printNumberedList(actions);
 
@@ -134,7 +135,7 @@ public class CliMain extends BaseCliGameView {
         if (chosenIndex == -2) manageTeleporterUse();
         else if (chosenIndex == -3) manageNewtonUse();
 
-        System.out.println("Available actions:");
+        PrintUtils.printOut("Available actions:");
         printNumberedList(actions);
         chosenIndex = parseIndex(-3, actions.size() - 1);
       }
@@ -151,7 +152,7 @@ public class CliMain extends BaseCliGameView {
         .map(c -> Position.of(c.getLine(), c.getCell()))
         .collect(Collectors.toList());
 
-      System.out.println("Choose where you wanna move:");
+      PrintUtils.printOut("Choose where you wanna move:");
       printNumberedList(allDashboardCells);
 
       int chosenPositionIndex = parseIndex(0, allDashboardCells.size() - 1);
@@ -184,12 +185,12 @@ public class CliMain extends BaseCliGameView {
         .map(LightPlayerDashboard::getPlayer)
         .collect(Collectors.toList());
 
-      System.out.println("Choose who you wanna move:");
+      PrintUtils.printOut("Choose who you wanna move:");
       printNumberedList(allEnemies);
 
       int chosenEnemyIndex = parseIndex(0, allEnemies.size() - 1);
 
-      System.out.println("Choose where you wanna move it (only two moves away from its position):");
+      PrintUtils.printOut("Choose where you wanna move it (only two moves away from its position):");
       printNumberedList(allPositions);
 
       int chosenPositionIndex = parseIndex(0, allPositions.size() - 1);
@@ -212,7 +213,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableMovements(List<Position> positions) {
     if (isMyTurn()) {
-      System.out.println("Available movements: (-1 if you wanna skip)");
+      PrintUtils.printOut("Available movements: (-1 if you wanna skip)");
       printNumberedList(positions);
 
       int chosenIndex = parseIndex(-1, positions.size() - 1);
@@ -223,7 +224,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableEnemyMovements(List<Position> positions) {
     if (isMyTurn()) {
-      System.out.println("You can move the enemy in these positions: (-1 if you wanna skip)");
+      PrintUtils.printOut("You can move the enemy in these positions: (-1 if you wanna skip)");
       printNumberedList(positions);
 
       int chosenIndex = parseIndex(-1, positions.size() - 1);
@@ -234,7 +235,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showNextTurn(PlayerColor player) {
     this.setTurnOfPlayer(player);
-    System.out.println("Turn of " + player);
+    PrintUtils.printOut("Turn of " + player);
     this.sendViewEvent(new NewTurnEvent());
   }
 
@@ -243,7 +244,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<String> gunsList = new ArrayList<>(guns);
 
-      System.out.println("Reloadable guns: (-1 if you wanna skip)");
+      PrintUtils.printOut("Reloadable guns: (-1 if you wanna skip)");
       printNumberedList(gunsList);
 
       int chosenIndex = parseIndex(-1, gunsList.size() - 1);
@@ -254,12 +255,12 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailablePowerUpCardsForRespawn(PlayerColor player, List<PowerUpCard> powerUpCards) {
     if (player.equals(getMyPlayer())) {
-      System.out.println("Available power up cards:");
+      PrintUtils.printOut("Available power up cards:");
       printNumberedList(powerUpCards);
 
       int chosenIndex = parseIndex(0, powerUpCards.size() - 1);
 
-      System.out.println("Chosen Power up card: " + powerUpCards.get(chosenIndex));
+      PrintUtils.printOut("Chosen Power up card: " + powerUpCards.get(chosenIndex));
       sendViewEvent(new PowerUpCardChosenEvent(getMyPlayer(), powerUpCards.get(chosenIndex)));
     }
   }
@@ -267,12 +268,12 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableAlternativeEffectsGun(Effect firstEffect, Effect secondEffect) {
     if (isMyTurn()) {
-      System.out.println(String.format(
+      PrintUtils.printOut(String.format(
         "0) %s\n\tDescription: %s",
         ClientGunLoader.INSTANCE.getGunEffectName(firstEffect.getGunId(), firstEffect.getId()),
         ClientGunLoader.INSTANCE.getGunEffectDescription(firstEffect.getGunId(), firstEffect.getId())
       ));
-      System.out.println(String.format(
+      PrintUtils.printOut(String.format(
         "1) %s\n\tDescription: %s",
         ClientGunLoader.INSTANCE.getGunEffectName(secondEffect.getGunId(), secondEffect.getId()),
         ClientGunLoader.INSTANCE.getGunEffectDescription(secondEffect.getGunId(), secondEffect.getId())
@@ -287,7 +288,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showChoosePlayerToHit(List<PlayerColor> players) {
     if (isMyTurn()) {
-      System.out.println("Available players to hit: (-1 if you wanna skip)");
+      PrintUtils.printOut("Available players to hit: (-1 if you wanna skip)");
       printNumberedList(players);
 
       int chosenIndex = parseIndex(-1, players.size() - 1);
@@ -298,13 +299,13 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showScopePlayers(List<PlayerColor> players, List<PowerUpCard> scopes) {
     if (isMyTurn()) {
-      System.out.println("Choose a player for the scope: (-1 if you wanna skip)");
+      PrintUtils.printOut("Choose a player for the scope: (-1 if you wanna skip)");
       printNumberedList(players);
 
       int chosenPlayerIndex = parseIndex(-1, players.size() - 1);
       sendViewEvent(new PlayerChosenEvent(chosenPlayerIndex != -1 ? players.get(chosenPlayerIndex) : null));
 
-      System.out.println("Choose which scope you wanna use: (-1 if you wanna skip)");
+      PrintUtils.printOut("Choose which scope you wanna use: (-1 if you wanna skip)");
       printNumberedList(scopes);
 
       int chosenScopeIndex = parseIndex(-1, scopes.size() - 1);
@@ -319,24 +320,24 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       String firstChoice = "n";
       String secondChoice = "n";
-      System.out.println("Available extra effects:");
+      PrintUtils.printOut("Available extra effects:");
 
       if (firstExtraEffect != null) {
-        System.out.println("First extra effect: " + firstExtraEffect.getId());
-        System.out.println("Wanna use it? Type y or n");
+        PrintUtils.printOut("First extra effect: " + firstExtraEffect.getId());
+        PrintUtils.printOut("Wanna use it? Type y or n");
         firstChoice = scanner.nextLine();
         while (!firstChoice.equals("y") && !firstChoice.equals("n")) {
-          System.out.println("That's not a valid input, please retry with y or n");
+          PrintUtils.printOut("That's not a valid input, please retry with y or n");
           firstChoice = scanner.nextLine();
         }
       }
 
       if (secondExtraEffect != null) {
-        System.out.println("Second extra effect: " + secondExtraEffect.getId());
-        System.out.println("Wanna use it? Type y or n");
+        PrintUtils.printOut("Second extra effect: " + secondExtraEffect.getId());
+        PrintUtils.printOut("Wanna use it? Type y or n");
         secondChoice = scanner.nextLine();
         while (!secondChoice.equals("y") && !secondChoice.equals("n")) {
-          System.out.println("That's not a valid input, please retry with y or n");
+          PrintUtils.printOut("That's not a valid input, please retry with y or n");
           secondChoice = scanner.nextLine();
         }
       }
@@ -351,7 +352,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<String> gunsList = new ArrayList<>(guns);
 
-      System.out.println("Choose which gun you wanna use: (-1 if you wanna skip)");
+      PrintUtils.printOut("Choose which gun you wanna use: (-1 if you wanna skip)");
       printNumberedList(gunsList);
 
       int chosenIndex = parseIndex(-1, gunsList.size() - 1);
@@ -364,7 +365,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<String> gunsList = new ArrayList<>(guns);
 
-      System.out.println("Available guns to pickup: (-1 if you wanna skip)");
+      PrintUtils.printOut("Available guns to pickup: (-1 if you wanna skip)");
       printNumberedList(gunsList);
 
       int chosenIndex = parseIndex(-1, gunsList.size() - 1);
@@ -375,7 +376,7 @@ public class CliMain extends BaseCliGameView {
   @Override
   public void showAvailableTagbackGrenade(PlayerColor player, List<PowerUpCard> powerUpCards) {
     if (player.equals(getMyPlayer())) {
-      System.out.println("Available tagback granades: (-1 if you wanna skip)");
+      PrintUtils.printOut("Available tagback granades: (-1 if you wanna skip)");
       printNumberedList(powerUpCards);
 
       int chosenIndex = parseIndex(-1, powerUpCards.size() - 1);
@@ -390,7 +391,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<CellColor> roomsList = new ArrayList<>(rooms);
 
-      System.out.println("Available rooms to hit: (-1 if you wanna skip)");
+      PrintUtils.printOut("Available rooms to hit: (-1 if you wanna skip)");
       printNumberedList(roomsList);
 
       int chosenIndex = parseIndex(-1, roomsList.size() - 1);
@@ -404,7 +405,7 @@ public class CliMain extends BaseCliGameView {
     if (isMyTurn()) {
       List<Position> cellsList = new ArrayList<>(cells);
 
-      System.out.println("Available cells to hit: (-1 if you wanna skip)");
+      PrintUtils.printOut("Available cells to hit: (-1 if you wanna skip)");
       printNumberedList(cellsList);
 
       int chosenIndex = parseIndex(-1, cellsList.size() - 1);
@@ -415,9 +416,9 @@ public class CliMain extends BaseCliGameView {
 
   @Override
   public void showRanking(List<Map.Entry<PlayerColor, Integer>> ranking) {
-    System.out.println("Final ranking:");
+    PrintUtils.printOut("Final ranking:");
     IntStream.range(0, ranking.size())
-      .forEach(i -> System.out.println(
+      .forEach(i -> PrintUtils.printOut(
         String.format("%d) %s -> %d points", i + 1, ranking.get(i).getKey(), ranking.get(i).getValue())
       ));
   }
@@ -458,27 +459,27 @@ public class CliMain extends BaseCliGameView {
     model.getDashboard().stream().filter(Objects::nonNull).forEach(dc -> {
       dc.visit(
         rdc -> {
-          System.out.println(String.format("Cell {%d, %d}: %s", rdc.getLine(), rdc.getCell(), rdc.getAvailableGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString()));
+          PrintUtils.printOut(String.format("Cell {%d, %d}: %s", rdc.getLine(), rdc.getCell(), rdc.getAvailableGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString()));
         },
         pdc -> {
           if (pdc.getAmmoCard() != null)
-            System.out.println(String.format("Cell {%d, %d}: %s / PowerUp -> %d", pdc.getLine(), pdc.getCell(), pdc.getAmmoCard().getAmmoColor().toString(), pdc.getAmmoCard().isPickPowerUp() ? 1 : 0));
+            PrintUtils.printOut(String.format("Cell {%d, %d}: %s / PowerUp -> %d", pdc.getLine(), pdc.getCell(), pdc.getAmmoCard().getAmmoColor().toString(), pdc.getAmmoCard().isPickPowerUp() ? 1 : 0));
           else
-            System.out.println(String.format("Cell {%d, %d}: no ammoCard", pdc.getLine(), pdc.getCell()));
+            PrintUtils.printOut(String.format("Cell {%d, %d}: no ammoCard", pdc.getLine(), pdc.getCell()));
         }
       );
     });
 
-    System.out.println("\nRemaining skulls: " + model.getRemainingSkulls());
-    System.out.println("Kill track: " + model.getKillScore().toString() + "\n");
+    PrintUtils.printOut("\nRemaining skulls: " + model.getRemainingSkulls());
+    PrintUtils.printOut("Kill track: " + model.getKillScore().toString() + "\n");
 
     model.getPlayerDashboards()
       .stream()
       .filter(pd -> !pd.getPlayer().equals(getMyPlayer()))
       .forEach(pd -> {
-        System.out.println(COLORS.get(pd.getPlayer().name()) + pd.getPlayer() + " -> DAMAGES: " + pd.getDamages().toString());
-        System.out.println("\t  MARKS: " + pd.getMarks().toString());
-        System.out.println("\t  NUMBER OF DEATHS: " + pd.getSkullsNumber());
+        PrintUtils.printOut(COLORS.get(pd.getPlayer().name()) + pd.getPlayer() + " -> DAMAGES: " + pd.getDamages().toString());
+        PrintUtils.printOut("\t  MARKS: " + pd.getMarks().toString());
+        PrintUtils.printOut("\t  NUMBER OF DEATHS: " + pd.getSkullsNumber());
       });
 
     model.getPlayerDashboards()
@@ -486,17 +487,17 @@ public class CliMain extends BaseCliGameView {
       .filter(pd -> pd.getPlayer().equals(getMyPlayer()))
       .findFirst()
       .ifPresent(myPD -> {
-        System.out.println(COLORS.get(myPD.getPlayer().name()) + "MY STATUS -> DAMAGES: " + myPD.getDamages().toString());
-        System.out.println("\t  MARKS: " + myPD.getMarks().toString());
-        System.out.println("\t  AMMOS: " + myPD.getAmmos().toString());
-        System.out.println("\t  LOADED GUNS: " + myPD.getLoadedGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString());
-        System.out.println("\t  UNLOADED GUNS: " + myPD.getUnloadedGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString());
-        System.out.println("\t  POWERUPS: ");
+        PrintUtils.printOut(COLORS.get(myPD.getPlayer().name()) + "MY STATUS -> DAMAGES: " + myPD.getDamages().toString());
+        PrintUtils.printOut("\t  MARKS: " + myPD.getMarks().toString());
+        PrintUtils.printOut("\t  AMMOS: " + myPD.getAmmos().toString());
+        PrintUtils.printOut("\t  LOADED GUNS: " + myPD.getLoadedGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString());
+        PrintUtils.printOut("\t  UNLOADED GUNS: " + myPD.getUnloadedGuns().stream().map(Gun::getId).collect(Collectors.toList()).toString());
+        PrintUtils.printOut("\t  POWERUPS: ");
         myPD.getPowerUpCards()
-          .forEach(puc -> System.out.println(String.format("\t\t - %s (%s)", puc.getPowerUpType(), puc.getAmmoColor())));
-        System.out.println("\t  NUMBER OF DEATHS: " + myPD.getSkullsNumber());
-        System.out.println("\t  POINTS: " + myPD.getPoints());
-        System.out.println(ANSI_RESET);
+          .forEach(puc -> PrintUtils.printOut(String.format("\t\t - %s (%s)", puc.getPowerUpType(), puc.getAmmoColor())));
+        PrintUtils.printOut("\t  NUMBER OF DEATHS: " + myPD.getSkullsNumber());
+        PrintUtils.printOut("\t  POINTS: " + myPD.getPoints());
+        PrintUtils.printOut(ANSI_RESET);
       });
 
   }
@@ -514,10 +515,10 @@ public class CliMain extends BaseCliGameView {
         chosenIndex = Integer.parseInt(command);
 
         if (!(chosenIndex >= minimum && chosenIndex <= maximum))
-          System.out.println(String.format("Please try again, Insert an index between 0 and %d:", maximum));
+          PrintUtils.printOut(String.format("Please try again, Insert an index between 0 and %d:", maximum));
 
       } catch (NumberFormatException e) {
-        System.out.println("What you inserted is not an integer, please retry.\nInsert index:");
+        PrintUtils.printOut("What you inserted is not an integer, please retry.\nInsert index:");
       }
     }
 
@@ -526,7 +527,7 @@ public class CliMain extends BaseCliGameView {
 
   private <T> void printNumberedList(List<T> list) {
     IntStream.range(0, list.size())
-      .forEach(i -> System.out.println(String.format("%d) %s", i, list.get(i).toString().toUpperCase())));
-    System.out.println("Insert index of your selection:");
+      .forEach(i -> PrintUtils.printOut(String.format("%d) %s", i, list.get(i).toString().toUpperCase())));
+    PrintUtils.printOut("Insert index of your selection:");
   }
 }

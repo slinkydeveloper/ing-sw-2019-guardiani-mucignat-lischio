@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.RemoteServer;
 import java.rmi.server.ServerNotActiveException;
@@ -25,8 +24,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +35,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   }
 
   private static final Logger LOG = LogUtils.getLogger(RmiServerNetworkAdapter.class);
-  private final static long KEEP_ALIVE_THRESHOLD = 10 * 1000;
+  private final static long KEEP_ALIVE_THRESHOLD = 10L * 1000L;
 
   private RegistryFactory registryFactory;
   private int port;

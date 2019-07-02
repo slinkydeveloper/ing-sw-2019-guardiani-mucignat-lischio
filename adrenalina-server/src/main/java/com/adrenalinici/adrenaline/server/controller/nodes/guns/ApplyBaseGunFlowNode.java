@@ -9,9 +9,9 @@ import com.adrenalinici.adrenaline.server.model.GameModel;
 import com.adrenalinici.adrenaline.server.model.PlayerDashboard;
 
 public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlowState> {
-  public static String SKIP_IF_EXTRA_ON = "skip_if_extra_on";
-  public static String FIRST_EXTRA_IS_ON = "first_extra_is_on";
-  public static final String DEFAULT = "default";
+  private static final String SKIP_IF_EXTRA_ON = "skip_if_extra_on";
+  private static final String FIRST_EXTRA_IS_ON = "first_extra_is_on";
+  private static final String DEFAULT = "default";
 
   private String nodeId;
   private TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext> consumer;

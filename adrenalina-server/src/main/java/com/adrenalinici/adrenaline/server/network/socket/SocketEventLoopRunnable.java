@@ -23,7 +23,7 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private final static Logger LOG = LogUtils.getLogger(SocketEventLoopRunnable.class);
 
-  private final static long KEEP_ALIVE_THRESHOLD = 20 * 1000;
+  private final static long KEEP_ALIVE_THRESHOLD = 20L * 1000L;
 
   private BlockingQueue<OutboxEntry> viewOutbox;
   private BlockingQueue<InboxEntry> viewInbox;
