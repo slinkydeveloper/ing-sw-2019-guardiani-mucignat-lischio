@@ -18,6 +18,10 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.USE_SCOPE;
 
+/**
+ * This node represents the Scope powerup applier.
+ * It helps the player choosing the enemy to hit and the card to use.
+ */
 public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
   @Override
   public String id() {

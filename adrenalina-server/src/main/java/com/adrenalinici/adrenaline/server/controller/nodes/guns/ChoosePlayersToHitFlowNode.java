@@ -34,7 +34,7 @@ import static com.adrenalinici.adrenaline.common.util.CollectionUtils.notIn;
  * <p>
  * SAME_DIRECTION --> shows only enemies that are (as compared to the killer)
  * in the same direction in which the last chosen enemy is
- *
+ * <p>
  * ON_CHOSEN_CELL --> filters enemies according to a predicate loaded from
  * gun's config. This predicate depends on a previous chosen cell.
  */

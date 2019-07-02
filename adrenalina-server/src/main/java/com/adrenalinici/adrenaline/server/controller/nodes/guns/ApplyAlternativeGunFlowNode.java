@@ -8,6 +8,11 @@ import com.adrenalinici.adrenaline.server.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 import com.adrenalinici.adrenaline.server.model.PlayerDashboard;
 
+/**
+ * This class represent the flow node which effectively applies damages
+ * and marks of an AlternativeEffectGun. It also removes the required ammo
+ * according to the effect and unloads the gun.
+ */
 public class ApplyAlternativeGunFlowNode implements ControllerFlowNode<AlternativeEffectGunFlowState> {
 
   private String nodeId;

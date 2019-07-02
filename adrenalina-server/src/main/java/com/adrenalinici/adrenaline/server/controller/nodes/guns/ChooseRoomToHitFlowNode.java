@@ -13,6 +13,11 @@ import com.adrenalinici.adrenaline.server.model.GameModel;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This node helps the player choosing the room he want to hit, as an effect of a gun.
+ * It shows the player only the rooms that follows certain visibility and distance restrictions,
+ * in order not to let him make any illegal choice.
+ */
 public class ChooseRoomToHitFlowNode implements ControllerFlowNode<GunFlowState> {
   @Override
   public String id() {

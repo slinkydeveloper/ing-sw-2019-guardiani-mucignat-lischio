@@ -8,6 +8,19 @@ import com.adrenalinici.adrenaline.server.controller.ControllerFlowNode;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 import com.adrenalinici.adrenaline.server.model.PlayerDashboard;
 
+/**
+ * This class represents the flow node which effectively applies damages
+ * and marks of a BaseEffectGun. It removes the required ammo according to the effect and unloads the gun.
+ * It also manages the case in which the various effects
+ * of the gun are dependent on each other. These restriction are represented with two flags:
+ * <p>
+ * SKIP_IF_EXTRA_ON -> skip the applier if an extra effect is selected, so the node is executed again,
+ * when configuration is completed.
+ * <p>
+ * FIRST_EXTRA_IS_ON -> second extra effect needs also the first one to be applied.
+ * <p>
+ * It also removes the required ammo according to the effect and unloads the gun.
+ */
 public class ApplyBaseGunFlowNode implements ControllerFlowNode<BaseEffectGunFlowState> {
   private static final String SKIP_IF_EXTRA_ON = "skip_if_extra_on";
   private static final String FIRST_EXTRA_IS_ON = "first_extra_is_on";
