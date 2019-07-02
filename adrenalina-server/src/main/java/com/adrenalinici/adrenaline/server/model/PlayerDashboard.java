@@ -265,12 +265,12 @@ public class PlayerDashboard {
   public LightPlayerDashboard light() {
     return new LightPlayerDashboard(
       player,
-      ammos,
-      damages,
-      marks,
-      getLoadedGuns().stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet()),
-      getUnloadedGuns().stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet()),
-      powerUpCards,
+      new ArrayList<>(ammos),
+      new ArrayList<>(damages),
+      new ArrayList<>(marks),
+      new HashSet<>(getLoadedGuns().stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet())),
+      new HashSet<>(getUnloadedGuns().stream().map(GunLoader.INSTANCE::getModelGun).collect(Collectors.toSet())),
+      new ArrayList<>(powerUpCards),
       skullsNumber,
       points,
       this.flipped

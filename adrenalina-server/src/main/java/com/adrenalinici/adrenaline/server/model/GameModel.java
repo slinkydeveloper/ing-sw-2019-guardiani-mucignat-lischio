@@ -477,11 +477,11 @@ public class GameModel extends ObservableImpl<ModelEvent> {
 
   public LightGameModel light() {
     return new LightGameModel(
-      killScore,
+      new ArrayList<>(killScore),
       remainingSkulls,
-      doubleKillScore,
+      new ArrayList<>(doubleKillScore),
       dashboard.light(),
-      playerDashboards.stream().map(PlayerDashboard::light).collect(Collectors.toList())
+      new ArrayList<>(playerDashboards.stream().map(PlayerDashboard::light).collect(Collectors.toList()))
     );
   }
 
