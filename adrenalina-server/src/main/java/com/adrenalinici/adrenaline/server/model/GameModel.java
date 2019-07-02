@@ -305,8 +305,8 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     Map<PlayerColor, Integer> pointsToAssign = new HashMap<>();
 
     // First blood
-    if (!isFrenzyModeActivated() && victimPlayerDashboard.getFirstDamage().isPresent()) {
-      pointsToAssign.put(victimPlayerDashboard.getFirstDamage().get(), 1);
+    if (!isFrenzyModeActivated()) {
+      victimPlayerDashboard.getFirstDamage().ifPresent(p -> pointsToAssign.put(p, 1));
     }
 
     // Ordered players based on damages
