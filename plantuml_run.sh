@@ -2,7 +2,7 @@
 
 if [ -z "$1" ]
   then
-    echo "Usage: plantuml_run [labN]"
+    echo "Usage: plantuml_run [input_file]"
     exit
 fi
 
@@ -14,11 +14,9 @@ fi
 command -v java >/dev/null 2>&1 || { echo >&2 "I require java but it's not installed. Aborting."; exit 1; }
 command -v convert >/dev/null 2>&1 || { echo >&2 "I require convert (from ImageMagick) but it's not installed. Aborting."; exit 1; }
 
-java -jar plantuml.jar -tsvg uml/uml.puml
-mkdir -p deliveries/$1
-convert uml/uml.svg deliveries/$1/uml/uml.png
-mv uml/uml.svg deliveries/$1/uml/uml.svg
-git add deliveries/$1/uml/uml.png
-git add deliveries/$1/uml/uml.svg
+filename=$(echo "$1" | cut -f 1 -d '.')
+
+java -jar plantuml.jar -tsvg $1
+convert $filename.svg $filename.png
 
 echo "Completed!"

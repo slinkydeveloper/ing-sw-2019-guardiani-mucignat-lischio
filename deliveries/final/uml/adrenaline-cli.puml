@@ -1,0 +1,23 @@
+@startuml
+
+package com.adrenalinici.adrenaline.cli <<Folder>> {
+  class "BufferedConsoleOut"
+  class "CliGameViewProxy"
+  class "PrintUtils"
+}
+
+class "BufferedConsoleOut" {
+  writer : BufferedWriter
+  flush()
+  println(String)
+}
+
+class "CliGameViewProxy" {
+  view : BaseCliGameView
+  handleNewServerMessage(OutboxMessage)
+}
+
+class "PrintUtils"
+
+
+@enduml

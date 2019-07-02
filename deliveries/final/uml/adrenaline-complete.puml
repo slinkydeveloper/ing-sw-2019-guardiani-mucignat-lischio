@@ -1,0 +1,794 @@
+@startuml
+
+package com.adrenalinici.adrenaline.common.model.event <<Folder>> {
+  abstract class "BaseModelEvent"
+  class "DashboardCellUpdatedEvent"
+  class "GameModelUpdatedEvent"
+  interface "ModelEvent"
+  class "PlayerDashboardUpdatedEvent"
+}
+
+package com.adrenalinici.adrenaline.common.model.light <<Folder>> {
+  class "LightDashboard"
+  abstract class "LightDashboardCell"
+  class "LightGameModel"
+  class "LightPickupDashboardCell"
+  class "LightPlayerDashboard"
+  class "LightRespawnDashboardCell"
+}
+
+package com.adrenalinici.adrenaline.common.model <<Folder>> {
+  class "AlternativeEffectGun"
+  class "AmmoCard"
+  class "BaseEffectGun"
+  abstract class "BaseGun"
+  class "Effect"
+  interface "Gun"
+  class "Position"
+  class "PowerUpCard"
+}
+
+package com.adrenalinici.adrenaline.common.network.inbox <<Folder>> {
+  class "ChosenMatchMessage"
+  class "ConnectedPlayerMessage"
+  class "DisconnectedPlayerMessage"
+  class "InboxEntry"
+  interface "InboxMessage"
+  class "NewMatchMessage"
+  class "ViewEventMessage"
+}
+
+package com.adrenalinici.adrenaline.common.network.outbox <<Folder>> {
+  class "AvailableActionsMessage"
+  class "AvailableAlternativeEffectsGunMessage"
+  class "AvailableCellsToHitMessage"
+  class "AvailableEnemyMovementsMessage"
+  class "AvailableExtraEffectsMessage"
+  class "AvailableGunsMessage"
+  class "AvailableGunsToPickupMessage"
+  class "AvailableMatchesMessage"
+  class "AvailableMovementsMessage"
+  class "AvailablePowerUpCardsForRespawnMessage"
+  class "AvailableRoomsMessage"
+  class "AvailableTagbackGrenadeMessage"
+  class "ChoosePlayerToHitMessage"
+  class "ChooseScopePlayerMessage"
+  class "InfoMessage"
+  class "ModelEventMessage"
+  class "NextTurnMessage"
+  class "OutboxEntry"
+  interface "OutboxMessage"
+  class "RankingMessage"
+  class "ReloadableGunsMessage"
+}
+
+package com.adrenalinici.adrenaline.common.network.rmi <<Folder>> {
+  interface "GameRmiClient"
+  interface "GameRmiServer"
+}
+
+package com.adrenalinici.adrenaline.common.util <<Folder>> {
+  class "Bag"
+  class "CollectionUtils"
+  class "DecoratedEvent"
+  class "LogUtils"
+  interface "Observable"
+  class "ObservableImpl"
+  interface "Observer"
+  class "SerializationUtils"
+  class "StreamUtils"
+  interface "TriConsumer"
+  interface "TriFunction"
+  interface "TriPredicate"
+}
+
+package com.adrenalinici.adrenaline.common.view <<Folder>> {
+  class "ActionChosenEvent"
+  class "AlternativeGunEffectChosenEvent"
+  class "BaseGunEffectChosenEvent"
+  class "CellToHitChosenEvent"
+  class "EndMatchEvent"
+  class "EnemyMovementChosenEvent"
+  interface "GameView"
+  class "GunChosenEvent"
+  class "MovementChosenEvent"
+  class "NewTurnEvent"
+  class "PlayerChosenEvent"
+  class "PowerUpCardChosenEvent"
+  class "RoomChosenEvent"
+  class "StartMatchEvent"
+  class "UnavailablePlayerEvent"
+  class "UseNewtonEvent"
+  class "UseTagbackGrenadeEvent"
+  class "UseTeleporterEvent"
+  interface "ViewEvent"
+}
+
+package com.adrenalinici.adrenaline.client <<Folder>> {
+  abstract class "ClientNetworkAdapter"
+  interface "ClientViewProxy"
+}
+
+package com.adrenalinici.adrenaline.client.rmi <<Folder>> {
+  class "GameRmiClientImpl"
+  class "SenderRunnable"
+}
+
+package com.adrenalinici.adrenaline.client.socket <<Folder>> {
+  class "SocketEventLoopRunnable"
+}
+
+package com.adrenalinici.adrenaline.cli <<Folder>> {
+  class "BufferedConsoleOut"
+  class "CliGameViewProxy"
+  class "PrintUtils"
+}
+
+package com.adrenalinici.adrenaline.gui <<Folder>> {
+  class "GuiUtils"
+  class "GuiView"
+}
+
+package com.adrenalinici.adrenaline.gui.controller <<Folder>> {
+  class "ConnectMatchController"
+  class "DashboardCellController"
+  class "DashboardGamePaneController"
+  class "MainGamePaneController"
+  class "MyStatusGamePaneController"
+  class "OtherPlayersGamePaneController"
+  class "PlayerGamePaneController"
+  class "StartGuiController"
+}
+
+package com.adrenalinici.adrenaline.server <<Folder>> {
+  class "GameBootstrapper"
+  class "JsonUtils"
+  class "StartServerDialogController"
+}
+
+package com.adrenalinici.adrenaline.server.controller <<Folder>> {
+  interface "ControllerFlowNode"
+  class "DecoratedAlternativeEffectGun"
+  class "DecoratedBaseEffectGun"
+  class "DecoratedEffect"
+  abstract class "DecoratedGun"
+  class "GameController"
+  interface "GunFactory"
+  class "GunLoader"
+  interface "StatelessControllerFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.controller.guns <<Folder>> {
+  abstract class "AlternativeEffectGunFactory"
+  abstract class "BaseEffectGunFactory"
+  class "CyberbladeGunFactory"
+  class "ElectroscytheGunFactory"
+  class "FlamethrowerGunFactory"
+  class "FurnaceGunFactory"
+  class "GrenadeLauncherGunFactory"
+  class "HeatseekerGunFactory"
+  class "HellionGunFactory"
+  class "LockRifleGunFactory"
+  class "MachineGunGunFactory"
+  class "PlasmaGunGunFactory"
+  class "PowerGloveGunFactory"
+  class "RailgunGunFactory"
+  class "RocketLauncherGunFactory"
+  class "ShockwaveGunFactory"
+  class "ShotgunGunFactory"
+  class "SledgehammerGunFactory"
+  class "ThorGunFactory"
+  class "TractorBeamGunFactory"
+  class "VortexCannonGunFactory"
+  class "WhisperGunFactory"
+  class "ZX2GunFactory"
+}
+
+package com.adrenalinici.adrenaline.server.controller.nodes <<Folder>> {
+  class "ApplyNewtonFlowNode"
+  class "ApplyTeleporterFlowNode"
+  class "ChooseActionFlowNode"
+  class "ChooseGunFlowNode"
+  class "ChooseMovementFlowNode"
+  class "FirstTurnFlowNode"
+  class "NewTurnFlowNode"
+  class "PickupFlowNode"
+  class "ReloadFlowNode"
+  class "RespawnFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.controller.nodes.guns <<Folder>> {
+  interface "AlternativeEffectGunFlowState"
+  class "AlternativeEffectGunFlowStateImpl"
+  class "AlternativeGunChooseMovementFlowNode"
+  class "ApplyAlternativeGunFlowNode"
+  class "ApplyBaseGunFlowNode"
+  class "ApplyGrenadeLauncherEffectFlowNode"
+  class "ApplyScopeFlowNode"
+  interface "BaseEffectGunFlowState"
+  class "BaseEffectGunFlowStateImpl"
+  class "BaseGunChooseMovementFlowNode"
+  class "ChooseAlternativeEffectForGunFlowNode"
+  class "ChooseBaseEffectForGunFlowNode"
+  class "ChooseCellToHitFlowNode"
+  class "ChoosePlayersToHitFlowNode"
+  class "ChooseRoomToHitFlowNode"
+  class "GunChooseEnemyMovementFlowNode"
+  interface "GunFlowState"
+  abstract class "GunFlowStateImpl"
+  interface "SkippableGunFlowNode"
+  class "TagbackGrenadeFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.flow <<Folder>> {
+  interface "FlowContext"
+  interface "FlowNode"
+  interface "FlowOrchestrator"
+  interface "FlowState"
+  interface "StatelessFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.flow.impl <<Folder>> {
+  abstract class "BaseFlowContext"
+  class "FlowOrchestratorImpl"
+  class "VoidState"
+}
+
+package com.adrenalinici.adrenaline.server.model <<Folder>> {
+  abstract class "BaseDashboardCell"
+  class "CardDeck"
+  class "Dashboard"
+  interface "DashboardCell"
+  class "PickupDashboardCell"
+  class "PlayerDashboard"
+  class "RespawnDashboardCell"
+}
+
+package com.adrenalinici.adrenaline.server.network <<Folder>> {
+  interface "MessageHandler"
+  class "ServerContext"
+  class "ServerMessageRouter"
+  abstract class "ServerNetworkAdapter"
+}
+
+package com.adrenalinici.adrenaline.server.network.handlers <<Folder>> {
+  class "ChosenMatchMessageHandler"
+  class "ConnectedPlayerMessageHandler"
+  class "DisconnectedPlayerMessageHandler"
+  class "HandlerUtils"
+  class "NewMatchMessageHandler"
+  class "ViewEventMessageHandler"
+}
+
+package com.adrenalinici.adrenaline.server.network.rmi <<Folder>> {
+  class "SenderRunnable"
+}
+
+package com.adrenalinici.adrenaline.server.network.socket <<Folder>> {
+  abstract class "BaseSocketRunnable"
+  class "SocketEventLoopRunnable"
+}
+
+"AlternativeEffectGun" <-> "BaseEffectGun" : use
+"AlternativeEffectGun" --> "Effect" : firstEffect/secondEffect
+"AlternativeEffectGunFactory" --> "AlternativeEffectGun" : use
+"AlternativeEffectGunFactory" --> "DecoratedAlternativeEffectGun" : use
+"AlternativeEffectGunFactory" --> "DecoratedGun" : use
+"AlternativeEffectGunFactory" <|-- "ElectroscytheGunFactory"
+"AlternativeEffectGunFactory" <|-- "FlamethrowerGunFactory"
+"AlternativeEffectGunFactory" <|-- "FurnaceGunFactory"
+"AlternativeEffectGunFactory" --> "Gun" : use
+"AlternativeEffectGunFactory" <|-- "HellionGunFactory"
+"AlternativeEffectGunFactory" <|-- "PowerGloveGunFactory"
+"AlternativeEffectGunFactory" <|-- "RailgunGunFactory"
+"AlternativeEffectGunFactory" <|-- "ShockwaveGunFactory"
+"AlternativeEffectGunFactory" <|-- "ShotgunGunFactory"
+"AlternativeEffectGunFactory" <|-- "SledgehammerGunFactory"
+"AlternativeEffectGunFactory" <|-- "TractorBeamGunFactory"
+"AlternativeEffectGunFactory" <|-- "ZX2GunFactory"
+"AlternativeEffectGunFlowState" <-> "AlternativeEffectGunFlowStateImpl"
+"AlternativeEffectGunFlowState" --> "DecoratedEffect" : use
+"AlternativeEffectGunFlowState" --> "DecoratedGun" : use
+"AlternativeEffectGunFlowStateImpl" --> "DecoratedEffect" : chosenEffect
+"AlternativeEffectGunFlowStateImpl" --> "DecoratedGun" : use
+"AlternativeGunChooseMovementFlowNode" --> "AlternativeEffectGunFlowState" : use
+"AlternativeGunChooseMovementFlowNode" --> "FlowContext" : use
+"AlternativeGunChooseMovementFlowNode" --> "FlowState" : use
+"AlternativeGunChooseMovementFlowNode" --> "GameView" : use
+"AlternativeGunChooseMovementFlowNode" --> "ViewEvent" : use
+"ApplyAlternativeGunFlowNode" --> "AlternativeEffectGunFlowState" : consumer
+"ApplyAlternativeGunFlowNode" --> "FlowContext" : use
+"ApplyAlternativeGunFlowNode" --> "FlowState" : use
+"ApplyAlternativeGunFlowNode" --> "GameView" : use
+"ApplyAlternativeGunFlowNode" --> "TriConsumer" : consumer
+"ApplyAlternativeGunFlowNode" --> "ViewEvent" : use
+"ApplyBaseGunFlowNode" --> "BaseEffectGunFlowState" : consumer
+"ApplyBaseGunFlowNode" --> "FlowContext" : use
+"ApplyBaseGunFlowNode" --> "FlowState" : use
+"ApplyBaseGunFlowNode" --> "GameView" : use
+"ApplyBaseGunFlowNode" --> "TriConsumer" : consumer
+"ApplyBaseGunFlowNode" --> "ViewEvent" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "BaseEffectGunFlowState" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "FlowContext" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "FlowState" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "GameView" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "ViewEvent" : use
+"ApplyNewtonFlowNode" --> "FlowContext" : use
+"ApplyNewtonFlowNode" --> "FlowState" : use
+"ApplyNewtonFlowNode" --> "GameView" : use
+"ApplyNewtonFlowNode" --> "ViewEvent" : use
+"ApplyNewtonFlowNode" --> "VoidState" : use
+"ApplyScopeFlowNode" --> "FlowContext" : use
+"ApplyScopeFlowNode" --> "FlowState" : use
+"ApplyScopeFlowNode" --> "GameView" : use
+"ApplyScopeFlowNode" --> "GunFlowState" : use
+"ApplyScopeFlowNode" --> "ViewEvent" : use
+"ApplyTeleporterFlowNode" --> "FlowContext" : use
+"ApplyTeleporterFlowNode" --> "FlowState" : use
+"ApplyTeleporterFlowNode" --> "GameView" : use
+"ApplyTeleporterFlowNode" --> "ViewEvent" : use
+"ApplyTeleporterFlowNode" --> "VoidState" : use
+"AvailableAlternativeEffectsGunMessage" --> "Effect" : firstEffect/secondEffect
+"AvailableCellsToHitMessage" --> "*" "Position" : cells
+"AvailableEnemyMovementsMessage" --> "*" "Position" : positions
+"AvailableExtraEffectsMessage" --> "Effect" : firstExtraEffect/secondExtraEffect
+"AvailableMovementsMessage" --> "*" "Position" : positions
+"AvailablePowerUpCardsForRespawnMessage" --> "*" "PowerUpCard" : powerUpCards
+"AvailableTagbackGrenadeMessage" --> "*" "PowerUpCard" : powerUpCards
+"BaseDashboardCell" --> "Dashboard" : dashboard
+"BaseDashboardCell" <|-- "PickupDashboardCell"
+"BaseDashboardCell" <|-- "RespawnDashboardCell"
+"BaseEffectGun" --> "Effect" : baseEffect/firstExtraEffect/secondExtraEffect
+"BaseEffectGunFactory" --> "BaseEffectGun" : use
+"BaseEffectGunFactory" <|-- "CyberbladeGunFactory"
+"BaseEffectGunFactory" --> "DecoratedBaseEffectGun" : use
+"BaseEffectGunFactory" --> "DecoratedGun" : use
+"BaseEffectGunFactory" <|-- "GrenadeLauncherGunFactory"
+"BaseEffectGunFactory" --> "Gun" : use
+"BaseEffectGunFactory" <|-- "HeatseekerGunFactory"
+"BaseEffectGunFactory" <|-- "LockRifleGunFactory"
+"BaseEffectGunFactory" <|-- "MachineGunGunFactory"
+"BaseEffectGunFactory" <|-- "PlasmaGunGunFactory"
+"BaseEffectGunFactory" <|-- "RocketLauncherGunFactory"
+"BaseEffectGunFactory" <|-- "ThorGunFactory"
+"BaseEffectGunFactory" <|-- "VortexCannonGunFactory"
+"BaseEffectGunFactory" <|-- "WhisperGunFactory"
+"BaseEffectGunFlowState" <-> "BaseEffectGunFlowStateImpl"
+"BaseEffectGunFlowState" --> "DecoratedGun" : use
+"BaseEffectGunFlowStateImpl" --> "DecoratedGun" : use
+"BaseFlowContext" --> "FlowNode" : actualNode
+"BaseFlowContext" --> "FlowOrchestrator" : orchestrator
+"BaseFlowContext" --> "FlowState" : actualState
+"BaseFlowContext" --> "GameView" : use
+"BaseFlowContext" --> "ViewEvent" : use
+"BaseGun" <|-- "AlternativeEffectGun"
+"BaseGun" <|-- "BaseEffectGun"
+"BaseGunChooseMovementFlowNode" --> "FlowContext" : use
+"BaseGunChooseMovementFlowNode" --> "FlowState" : use
+"BaseGunChooseMovementFlowNode" --> "GameView" : use
+"BaseGunChooseMovementFlowNode" --> "ViewEvent" : use
+"BaseModelEvent" <|-- "DashboardCellUpdatedEvent"
+"BaseModelEvent" <|-- "GameModelUpdatedEvent"
+"BaseModelEvent" --> "LightGameModel" : gameModel
+"BaseModelEvent" <|-- "PlayerDashboardUpdatedEvent"
+"CellToHitChosenEvent" --> "Position" : cellPosition
+"ChooseActionFlowNode" --> "FlowContext" : use
+"ChooseActionFlowNode" --> "FlowState" : use
+"ChooseActionFlowNode" --> "GameView" : use
+"ChooseActionFlowNode" --> "ViewEvent" : use
+"ChooseActionFlowNode" --> "VoidState" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "AlternativeEffectGunFlowState" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "FlowContext" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "FlowState" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "GameView" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "ViewEvent" : use
+"ChooseBaseEffectForGunFlowNode" --> "BaseEffectGunFlowState" : use
+"ChooseBaseEffectForGunFlowNode" --> "FlowContext" : use
+"ChooseBaseEffectForGunFlowNode" --> "FlowState" : use
+"ChooseBaseEffectForGunFlowNode" --> "GameView" : use
+"ChooseBaseEffectForGunFlowNode" --> "ViewEvent" : use
+"ChooseCellToHitFlowNode" --> "FlowContext" : use
+"ChooseCellToHitFlowNode" --> "FlowState" : use
+"ChooseCellToHitFlowNode" --> "GameView" : use
+"ChooseCellToHitFlowNode" --> "GunFlowState" : use
+"ChooseCellToHitFlowNode" --> "ViewEvent" : use
+"ChooseGunFlowNode" --> "FlowContext" : use
+"ChooseGunFlowNode" --> "FlowState" : use
+"ChooseGunFlowNode" --> "GameView" : use
+"ChooseGunFlowNode" --> "ViewEvent" : use
+"ChooseGunFlowNode" --> "VoidState" : use
+"ChooseMovementFlowNode" --> "FlowContext" : use
+"ChooseMovementFlowNode" --> "FlowState" : use
+"ChooseMovementFlowNode" --> "GameView" : use
+"ChooseMovementFlowNode" --> "ViewEvent" : use
+"ChooseMovementFlowNode" --> "VoidState" : use
+"ChoosePlayersToHitFlowNode" --> "FlowContext" : use
+"ChoosePlayersToHitFlowNode" --> "FlowState" : use
+"ChoosePlayersToHitFlowNode" --> "GameView" : use
+"ChoosePlayersToHitFlowNode" --> "GunFlowState" : use
+"ChoosePlayersToHitFlowNode" --> "ViewEvent" : use
+"ChooseRoomToHitFlowNode" --> "FlowContext" : use
+"ChooseRoomToHitFlowNode" --> "FlowState" : use
+"ChooseRoomToHitFlowNode" --> "GameView" : use
+"ChooseRoomToHitFlowNode" --> "GunFlowState" : use
+"ChooseRoomToHitFlowNode" --> "ViewEvent" : use
+"ChooseScopePlayerMessage" --> "*" "PowerUpCard" : scopes
+"ChosenMatchMessageHandler" --> "ChosenMatchMessage" : use
+"ChosenMatchMessageHandler" --> "InboxMessage" : use
+"ChosenMatchMessageHandler" --> "ServerContext" : use
+"CliGameViewProxy" --> "OutboxMessage" : use
+"ClientNetworkAdapter" --> "ClientViewProxy" : proxy
+"ClientNetworkAdapter" --> "*" "InboxMessage" : clientViewOutbox
+"ClientNetworkAdapter" --> "*" "OutboxMessage" : clientViewInbox
+"ClientViewProxy" <|-- "CliGameViewProxy"
+"ClientViewProxy" --> "OutboxMessage" : use
+"ConnectMatchController" --> "GuiView" : view
+"ConnectedPlayerMessageHandler" --> "ConnectedPlayerMessage" : use
+"ConnectedPlayerMessageHandler" --> "InboxMessage" : use
+"ConnectedPlayerMessageHandler" --> "ServerContext" : use
+"ControllerFlowNode" <|-- "AlternativeGunChooseMovementFlowNode"
+"ControllerFlowNode" <|-- "ApplyAlternativeGunFlowNode"
+"ControllerFlowNode" <|-- "ApplyBaseGunFlowNode"
+"ControllerFlowNode" <|-- "ApplyGrenadeLauncherEffectFlowNode"
+"ControllerFlowNode" <|-- "ApplyScopeFlowNode"
+"ControllerFlowNode" <|-- "BaseGunChooseMovementFlowNode"
+"ControllerFlowNode" <|-- "ChooseAlternativeEffectForGunFlowNode"
+"ControllerFlowNode" <|-- "ChooseBaseEffectForGunFlowNode"
+"ControllerFlowNode" <|-- "ChooseCellToHitFlowNode"
+"ControllerFlowNode" <|-- "ChoosePlayersToHitFlowNode"
+"ControllerFlowNode" <|-- "ChooseRoomToHitFlowNode"
+"ControllerFlowNode" <|-- "GunChooseEnemyMovementFlowNode"
+"ControllerFlowNode" <|-- "RespawnFlowNode"
+"ControllerFlowNode" <|-- "SkippableGunFlowNode"
+"ControllerFlowNode" <|-- "TagbackGrenadeFlowNode"
+"CyberbladeGunFactory" --> "*" "ControllerFlowNode" : use
+"DashboardCell" <|-- "BaseDashboardCell"
+"DashboardCell" --> "LightDashboardCell" : use
+"DashboardCell" <|-- "PickupDashboardCell"
+"DashboardCell" --> "PickupDashboardCell" : use
+"DashboardCell" <|-- "RespawnDashboardCell"
+"DashboardCell" --> "RespawnDashboardCell" : use
+"DashboardCellUpdatedEvent" --> "Position" : cellPosition
+"Dashboard" --> "DashboardCell" : use
+"DashboardGamePaneController" --> "DashboardCellUpdatedEvent" : use
+"DashboardGamePaneController" --> "GameModelUpdatedEvent" : use
+"DashboardGamePaneController" --> "LightGameModel" : use
+"Dashboard" --> "LightDashboard" : use
+"Dashboard" --> "Position" : use
+"DecoratedAlternativeEffectGun" --> "AlternativeEffectGun" : use
+"DecoratedAlternativeEffectGun" --> "DecoratedEffect" : firstEffect/secondEffect
+"DecoratedBaseEffectGun" --> "BaseEffectGun" : use
+"DecoratedBaseEffectGun" --> "DecoratedEffect" : baseEffect/firstExtraEffect/secondExtraEffect
+"DecoratedEffect" --> "Effect" : effect
+"DecoratedGun" --> "AlternativeEffectGun" : use
+"DecoratedGun" --> "BaseEffectGun" : use
+"DecoratedGun" <|-- "DecoratedAlternativeEffectGun"
+"DecoratedGun" <|-- "DecoratedBaseEffectGun"
+"DisconnectedPlayerMessageHandler" --> "DisconnectedPlayerMessage" : use
+"DisconnectedPlayerMessageHandler" --> "InboxMessage" : use
+"DisconnectedPlayerMessageHandler" --> "ServerContext" : use
+"ElectroscytheGunFactory" --> "*" "ControllerFlowNode" : use
+"EnemyMovementChosenEvent" --> "Position" : coordinates
+"FirstTurnFlowNode" --> "FlowContext" : use
+"FirstTurnFlowNode" --> "FlowState" : use
+"FirstTurnFlowNode" --> "GameView" : use
+"FirstTurnFlowNode" --> "ViewEvent" : use
+"FirstTurnFlowNode" --> "VoidState" : use
+"FlamethrowerGunFactory" --> "*" "ControllerFlowNode" : use
+"FlowContext" <|-- "BaseFlowContext"
+"FlowContext" <-> "FlowNode" : use
+"FlowContext" --> "FlowState" : use
+"FlowContext" --> "GameView" : use
+"FlowContext" --> "ViewEvent" : use
+"FlowNode" <|-- "AlternativeGunChooseMovementFlowNode"
+"FlowNode" <|-- "ApplyAlternativeGunFlowNode"
+"FlowNode" <|-- "ApplyBaseGunFlowNode"
+"FlowNode" <|-- "ApplyGrenadeLauncherEffectFlowNode"
+"FlowNode" <|-- "ApplyNewtonFlowNode"
+"FlowNode" <|-- "ApplyScopeFlowNode"
+"FlowNode" <|-- "ApplyTeleporterFlowNode"
+"FlowNode" <|-- "BaseGunChooseMovementFlowNode"
+"FlowNode" <|-- "ChooseActionFlowNode"
+"FlowNode" <|-- "ChooseAlternativeEffectForGunFlowNode"
+"FlowNode" <|-- "ChooseBaseEffectForGunFlowNode"
+"FlowNode" <|-- "ChooseCellToHitFlowNode"
+"FlowNode" <|-- "ChooseGunFlowNode"
+"FlowNode" <|-- "ChooseMovementFlowNode"
+"FlowNode" <|-- "ChoosePlayersToHitFlowNode"
+"FlowNode" <|-- "ChooseRoomToHitFlowNode"
+"FlowNode" <|-- "ControllerFlowNode"
+"FlowNode" <|-- "FirstTurnFlowNode"
+"FlowNode" --> "FlowState" : use
+"FlowNode" --> "GameView" : use
+"FlowNode" <|-- "GunChooseEnemyMovementFlowNode"
+"FlowNode" <|-- "NewTurnFlowNode"
+"FlowNode" <|-- "PickupFlowNode"
+"FlowNode" <|-- "ReloadFlowNode"
+"FlowNode" <|-- "RespawnFlowNode"
+"FlowNode" <|-- "SkippableGunFlowNode"
+"FlowNode" <|-- "StatelessControllerFlowNode"
+"FlowNode" <|-- "StatelessFlowNode"
+"FlowNode" <|-- "TagbackGrenadeFlowNode"
+"FlowNode" --> "ViewEvent" : use
+"FlowOrchestrator" --> "FlowContext" : use
+"FlowOrchestrator" --> "FlowNode" : use
+"FlowOrchestrator" <|-- "FlowOrchestratorImpl"
+"FlowOrchestrator" --> "GameView" : use
+"FlowOrchestratorImpl" --> "FlowContext" : actualContext
+"FlowOrchestratorImpl" --> "FlowNode" : use
+"FlowOrchestratorImpl" --> "GameView" : onEndCallback
+"FlowOrchestratorImpl" --> "ViewEvent" : use
+"FlowOrchestrator" --> "ViewEvent" : use
+"FlowState" <|-- "AlternativeEffectGunFlowState"
+"FlowState" <|-- "AlternativeEffectGunFlowStateImpl"
+"FlowState" <|-- "BaseEffectGunFlowState"
+"FlowState" <|-- "BaseEffectGunFlowStateImpl"
+"FlowState" <|-- "GunFlowState"
+"FlowState" <|-- "GunFlowStateImpl"
+"FlowState" <|-- "VoidState"
+"FurnaceGunFactory" --> "*" "ControllerFlowNode" : use
+"GameBootstrapper" --> "*" "InboxEntry" : inbox
+"GameBootstrapper" "*" --> "*" "OutboxEntry" : outboxRmi/outboxSocket
+"GameBootstrapper" --> "ServerMessageRouter" : serverMessageRouter
+"GameBootstrapper" --> "ServerNetworkAdapter" : rmiNetworkAdapter/socketNetworkAdapter
+"GameController" --> "DecoratedEvent" : use
+"GameController" --> "FlowOrchestrator" : flowOrchestrator
+"GameController" --> "GameView" : use
+"GameController" --> "ViewEvent" : use
+"GameRmiClient" <|-- "GameRmiClientImpl"
+"GameRmiClientImpl" --> "*" "OutboxMessage" : clientViewInbox
+"GameRmiClient" --> "OutboxMessage" : use
+"GameRmiServer" --> "GameRmiClient" : use
+"GameRmiServer" --> "InboxMessage" : use
+"GameView" --> "Effect" : use
+"GameView" --> "*" "Position" : use
+"GameView" --> "*" "PowerUpCard" : use
+"GrenadeLauncherGunFactory" --> "*" "ControllerFlowNode" : use
+"GuiView" --> "ClientNetworkAdapter" : adapter
+"Gun" <|-- "AlternativeEffectGun"
+"Gun" <|-- "BaseEffectGun"
+"Gun" <|-- "BaseGun"
+"GunChooseEnemyMovementFlowNode" --> "FlowContext" : use
+"GunChooseEnemyMovementFlowNode" --> "FlowState" : use
+"GunChooseEnemyMovementFlowNode" --> "GameView" : use
+"GunChooseEnemyMovementFlowNode" --> "GunFlowState" : use
+"GunChooseEnemyMovementFlowNode" --> "ViewEvent" : use
+"Gun" <-> "DecoratedAlternativeEffectGun"
+"Gun" <-> "DecoratedBaseEffectGun"
+"Gun" <-> "DecoratedGun" : /gun
+"GunFactory" <|-- "AlternativeEffectGunFactory"
+"GunFactory" <|-- "BaseEffectGunFactory"
+"GunFactory" --> "*" "ControllerFlowNode" : use
+"GunFactory" <|-- "CyberbladeGunFactory"
+"GunFactory" --> "DecoratedGun" : use
+"GunFactory" <|-- "ElectroscytheGunFactory"
+"GunFactory" <|-- "FlamethrowerGunFactory"
+"GunFactory" <|-- "FurnaceGunFactory"
+"GunFactory" <|-- "GrenadeLauncherGunFactory"
+"GunFactory" --> "Gun" : use
+"GunFactory" <|-- "HeatseekerGunFactory"
+"GunFactory" <|-- "HellionGunFactory"
+"GunFactory" <|-- "LockRifleGunFactory"
+"GunFactory" <|-- "MachineGunGunFactory"
+"GunFactory" <|-- "PlasmaGunGunFactory"
+"GunFactory" <|-- "PowerGloveGunFactory"
+"GunFactory" <|-- "RailgunGunFactory"
+"GunFactory" <|-- "RocketLauncherGunFactory"
+"GunFactory" <|-- "ShockwaveGunFactory"
+"GunFactory" <|-- "ShotgunGunFactory"
+"GunFactory" <|-- "SledgehammerGunFactory"
+"GunFactory" <|-- "ThorGunFactory"
+"GunFactory" <|-- "TractorBeamGunFactory"
+"GunFactory" <|-- "VortexCannonGunFactory"
+"GunFactory" <|-- "WhisperGunFactory"
+"GunFactory" <|-- "ZX2GunFactory"
+"GunFlowState" <|-- "AlternativeEffectGunFlowState"
+"GunFlowState" <|-- "AlternativeEffectGunFlowStateImpl"
+"GunFlowState" <|-- "BaseEffectGunFlowState"
+"GunFlowState" <|-- "BaseEffectGunFlowStateImpl"
+"GunFlowState" <|-- "GunFlowStateImpl"
+"GunFlowStateImpl" <|-- "AlternativeEffectGunFlowStateImpl"
+"GunFlowStateImpl" <|-- "BaseEffectGunFlowStateImpl"
+"GunFlowStateImpl" --> "DecoratedGun" : chosenGun
+"GunFlowStateImpl" --> "*" "Position" : chosenCellsToHit
+"GunLoader" --> "*" "ControllerFlowNode" : use
+"GunLoader" --> "DecoratedGun" : decoratedGuns
+"GunLoader" --> "Gun" : guns
+"GunLoader" --> "*" "GunFactory" : factories
+"HeatseekerGunFactory" --> "*" "ControllerFlowNode" : use
+"HellionGunFactory" --> "*" "ControllerFlowNode" : use
+"InboxEntry" --> "InboxMessage" : message
+"InboxMessage" <|-- "ChosenMatchMessage"
+"InboxMessage" <|-- "ConnectedPlayerMessage"
+"InboxMessage" <|-- "DisconnectedPlayerMessage"
+"InboxMessage" <|-- "NewMatchMessage"
+"InboxMessage" --> "NewMatchMessage" : use
+"InboxMessage" --> "ViewEventMessage" : use
+"InboxMessage" <|-- "ViewEventMessage"
+"LightDashboardCell" <|-- "LightPickupDashboardCell"
+"LightDashboardCell" --> "LightPickupDashboardCell" : use
+"LightDashboardCell" --> "LightRespawnDashboardCell" : use
+"LightDashboardCell" <|-- "LightRespawnDashboardCell"
+"LightDashboard" --> "LightDashboardCell" : use
+"LightDashboard" --> "Position" : use
+"LightGameModel" --> "LightDashboard" : dashboard
+"LightGameModel" --> "*" "LightPlayerDashboard" : playerDashboards
+"LightPickupDashboardCell" --> "AmmoCard" : ammoCard
+"LightPickupDashboardCell" <-> "LightRespawnDashboardCell" : use
+"LightPlayerDashboard" "*" --> "*" "Gun" : loadedGuns/unloadedGuns
+"LightPlayerDashboard" --> "*" "PowerUpCard" : powerUpCards
+"LightRespawnDashboardCell" --> "*" "Gun" : availableGuns
+"LockRifleGunFactory" --> "*" "ControllerFlowNode" : use
+"MachineGunGunFactory" --> "*" "ControllerFlowNode" : use
+"MainGamePaneController" --> "DashboardGamePaneController" : dashboardController
+"MainGamePaneController" --> "GuiView" : view
+"MainGamePaneController" --> "MyStatusGamePaneController" : thisPlayerController
+"MainGamePaneController" --> "OtherPlayersGamePaneController" : otherPlayersController
+"MessageHandler" <|-- "ChosenMatchMessageHandler"
+"MessageHandler" <|-- "ConnectedPlayerMessageHandler"
+"MessageHandler" <|-- "DisconnectedPlayerMessageHandler"
+"MessageHandler" --> "InboxMessage" : use
+"MessageHandler" <|-- "NewMatchMessageHandler"
+"MessageHandler" --> "ServerContext" : use
+"MessageHandler" <|-- "ViewEventMessageHandler"
+"ModelEvent" <|-- "BaseModelEvent"
+"ModelEvent" <|-- "DashboardCellUpdatedEvent"
+"ModelEvent" <|-- "GameModelUpdatedEvent"
+"ModelEventMessage" --> "ModelEvent" : modelEvent
+"ModelEvent" --> "PlayerDashboardUpdatedEvent" : use
+"ModelEvent" <|-- "PlayerDashboardUpdatedEvent"
+"MovementChosenEvent" --> "Position" : coordinates
+"MyStatusGamePaneController" --> "GuiView" : view
+"MyStatusGamePaneController" --> "LightGameModel" : use
+"MyStatusGamePaneController" --> "PlayerDashboardUpdatedEvent" : use
+"MyStatusGamePaneController" --> "*" "Position" : dashboardCellPositions
+"NewMatchMessageHandler" --> "InboxMessage" : use
+"NewMatchMessageHandler" --> "NewMatchMessage" : use
+"NewMatchMessageHandler" --> "ServerContext" : use
+"NewTurnFlowNode" --> "FlowContext" : use
+"NewTurnFlowNode" --> "FlowState" : use
+"NewTurnFlowNode" --> "GameView" : use
+"NewTurnFlowNode" --> "ViewEvent" : use
+"NewTurnFlowNode" --> "VoidState" : use
+"Observable" <|-- "CliGameViewProxy"
+"Observable" <|-- "ClientViewProxy"
+"ObservableImpl" <|-- "CliGameViewProxy"
+"ObservableImpl" --> "Observer" : use
+"Observable" <|-- "ObservableImpl"
+"Observable" --> "Observer" : use
+"Observer" <|-- "ClientNetworkAdapter"
+"Observer" <|-- "GameController"
+"Observer" <|-- "GameView"
+"OtherPlayersGamePaneController" --> "LightGameModel" : use
+"OtherPlayersGamePaneController" --> "PlayerDashboardUpdatedEvent" : use
+"OtherPlayersGamePaneController" --> "PlayerGamePaneController" : playerGamePaneControllers
+"OutboxEntry" --> "OutboxMessage" : message
+"OutboxMessage" <|-- "AvailableActionsMessage"
+"OutboxMessage" <|-- "AvailableAlternativeEffectsGunMessage"
+"OutboxMessage" <|-- "AvailableCellsToHitMessage"
+"OutboxMessage" <|-- "AvailableEnemyMovementsMessage"
+"OutboxMessage" <|-- "AvailableExtraEffectsMessage"
+"OutboxMessage" <|-- "AvailableGunsMessage"
+"OutboxMessage" <|-- "AvailableGunsToPickupMessage"
+"OutboxMessage" <|-- "AvailableMatchesMessage"
+"OutboxMessage" <|-- "AvailableMovementsMessage"
+"OutboxMessage" <|-- "AvailablePowerUpCardsForRespawnMessage"
+"OutboxMessage" <|-- "AvailableRoomsMessage"
+"OutboxMessage" <|-- "AvailableTagbackGrenadeMessage"
+"OutboxMessage" <|-- "ChoosePlayerToHitMessage"
+"OutboxMessage" <|-- "ChooseScopePlayerMessage"
+"OutboxMessage" <|-- "InfoMessage"
+"OutboxMessage" <|-- "ModelEventMessage"
+"OutboxMessage" <|-- "NextTurnMessage"
+"OutboxMessage" <|-- "RankingMessage"
+"OutboxMessage" --> "RankingMessage" : use
+"OutboxMessage" <|-- "ReloadableGunsMessage"
+"OutboxMessage" --> "ReloadableGunsMessage" : use
+"PickupDashboardCell" --> "AmmoCard" : ammoCard
+"PickupDashboardCell" --> "LightDashboardCell" : use
+"PickupDashboardCell" <-> "RespawnDashboardCell" : use
+"PickupFlowNode" --> "FlowContext" : use
+"PickupFlowNode" --> "FlowState" : use
+"PickupFlowNode" --> "GameView" : use
+"PickupFlowNode" --> "ViewEvent" : use
+"PickupFlowNode" --> "VoidState" : use
+"PlasmaGunGunFactory" --> "*" "ControllerFlowNode" : use
+"PlayerDashboard" --> "LightPlayerDashboard" : use
+"PlayerDashboard" --> "*" "PowerUpCard" : powerUpCards
+"PlayerGamePaneController" --> "LightGameModel" : use
+"PowerGloveGunFactory" --> "*" "ControllerFlowNode" : use
+"PowerUpCardChosenEvent" --> "PowerUpCard" : card
+"RailgunGunFactory" --> "*" "ControllerFlowNode" : use
+"ReloadFlowNode" --> "FlowContext" : use
+"ReloadFlowNode" --> "FlowState" : use
+"ReloadFlowNode" --> "GameView" : use
+"ReloadFlowNode" --> "ViewEvent" : use
+"ReloadFlowNode" --> "VoidState" : use
+"RespawnDashboardCell" --> "LightDashboardCell" : use
+"RespawnFlowNode" --> "FlowContext" : use
+"RespawnFlowNode" --> "FlowState" : use
+"RespawnFlowNode" --> "GameView" : use
+"RespawnFlowNode" --> "ViewEvent" : use
+"RocketLauncherGunFactory" --> "*" "ControllerFlowNode" : use
+"SenderRunnable" --> "GameRmiClient" : rmiClient
+"SenderRunnable" --> "GameRmiServer" : rmiServer
+"SenderRunnable" --> "*" "InboxMessage" : clientViewOutbox
+"ServerContext" --> "GameController" : matchesControllersMap
+"ServerContext" --> "*" "InboxEntry" : inbox
+"ServerContext" --> "InboxMessage" : use
+"ServerContext" "*" --> "*" "OutboxEntry" : outboxRmi/outboxSocket
+"ServerContext" --> "OutboxMessage" : use
+"ServerMessageRouter" --> "*" "InboxEntry" : inbox
+"ServerMessageRouter" --> "MessageHandler" : handlers
+"ServerMessageRouter" --> "ServerContext" : context
+"ServerNetworkAdapter" --> "*" "InboxEntry" : viewInbox
+"ServerNetworkAdapter" --> "*" "OutboxEntry" : viewOutbox
+"ShockwaveGunFactory" --> "*" "ControllerFlowNode" : use
+"ShotgunGunFactory" --> "*" "ControllerFlowNode" : use
+"SkippableGunFlowNode" <|-- "AlternativeGunChooseMovementFlowNode"
+"SkippableGunFlowNode" <|-- "BaseGunChooseMovementFlowNode"
+"SkippableGunFlowNode" --> "FlowContext" : use
+"SkippableGunFlowNode" --> "FlowState" : use
+"SkippableGunFlowNode" <|-- "GunChooseEnemyMovementFlowNode"
+"SkippableGunFlowNode" --> "GunFlowState" : use
+"SledgehammerGunFactory" --> "*" "ControllerFlowNode" : use
+"SocketEventLoopRunnable" --> "*" "InboxMessage" : clientViewOutbox
+"SocketEventLoopRunnable" --> "*" "OutboxMessage" : clientViewInbox
+"StatelessControllerFlowNode" <|-- "ApplyNewtonFlowNode"
+"StatelessControllerFlowNode" <|-- "ApplyTeleporterFlowNode"
+"StatelessControllerFlowNode" <|-- "ChooseActionFlowNode"
+"StatelessControllerFlowNode" <|-- "ChooseGunFlowNode"
+"StatelessControllerFlowNode" <|-- "ChooseMovementFlowNode"
+"StatelessControllerFlowNode" <|-- "FirstTurnFlowNode"
+"StatelessControllerFlowNode" <|-- "NewTurnFlowNode"
+"StatelessControllerFlowNode" <|-- "PickupFlowNode"
+"StatelessControllerFlowNode" <|-- "ReloadFlowNode"
+"StatelessFlowNode" <|-- "ApplyNewtonFlowNode"
+"StatelessFlowNode" <|-- "ApplyTeleporterFlowNode"
+"StatelessFlowNode" <|-- "ChooseActionFlowNode"
+"StatelessFlowNode" <|-- "ChooseGunFlowNode"
+"StatelessFlowNode" <|-- "ChooseMovementFlowNode"
+"StatelessFlowNode" <|-- "FirstTurnFlowNode"
+"StatelessFlowNode" --> "FlowState" : use
+"StatelessFlowNode" <|-- "NewTurnFlowNode"
+"StatelessFlowNode" <|-- "PickupFlowNode"
+"StatelessFlowNode" <|-- "ReloadFlowNode"
+"StatelessFlowNode" <|-- "StatelessControllerFlowNode"
+"StatelessFlowNode" --> "VoidState" : use
+"TagbackGrenadeFlowNode" --> "FlowContext" : use
+"TagbackGrenadeFlowNode" --> "FlowState" : use
+"TagbackGrenadeFlowNode" --> "GameView" : use
+"TagbackGrenadeFlowNode" --> "ViewEvent" : use
+"ThorGunFactory" --> "*" "ControllerFlowNode" : use
+"TractorBeamGunFactory" --> "*" "ControllerFlowNode" : use
+"UseNewtonEvent" --> "Position" : chosenPosition
+"UseNewtonEvent" --> "PowerUpCard" : chosenCard
+"UseTagbackGrenadeEvent" --> "PowerUpCard" : chosenCard
+"UseTeleporterEvent" --> "Position" : chosenPosition
+"UseTeleporterEvent" --> "PowerUpCard" : chosenCard
+"ViewEvent" <|-- "ActionChosenEvent"
+"ViewEvent" <|-- "AlternativeGunEffectChosenEvent"
+"ViewEvent" <|-- "BaseGunEffectChosenEvent"
+"ViewEvent" <|-- "CellToHitChosenEvent"
+"ViewEvent" <|-- "EndMatchEvent"
+"ViewEvent" <|-- "EnemyMovementChosenEvent"
+"ViewEvent" <|-- "GunChosenEvent"
+"ViewEventMessageHandler" --> "InboxMessage" : use
+"ViewEventMessageHandler" --> "ServerContext" : use
+"ViewEventMessageHandler" --> "ViewEventMessage" : use
+"ViewEventMessage" --> "ViewEvent" : viewEvent
+"ViewEvent" <|-- "MovementChosenEvent"
+"ViewEvent" <|-- "NewTurnEvent"
+"ViewEvent" <|-- "PlayerChosenEvent"
+"ViewEvent" <|-- "PowerUpCardChosenEvent"
+"ViewEvent" <|-- "RoomChosenEvent"
+"ViewEvent" <|-- "StartMatchEvent"
+"ViewEvent" <|-- "UnavailablePlayerEvent"
+"ViewEvent" <|-- "UseNewtonEvent"
+"ViewEvent" <|-- "UseTagbackGrenadeEvent"
+"ViewEvent" <|-- "UseTeleporterEvent"
+"VortexCannonGunFactory" --> "*" "ControllerFlowNode" : use
+"WhisperGunFactory" --> "*" "ControllerFlowNode" : use
+"ZX2GunFactory" --> "*" "ControllerFlowNode" : use
+
+@enduml

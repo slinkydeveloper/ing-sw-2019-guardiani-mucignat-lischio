@@ -1,0 +1,131 @@
+@startuml
+
+package com.adrenalinici.adrenaline.gui <<Folder>> {
+  class "GuiUtils"
+  class "GuiView"
+}
+
+package com.adrenalinici.adrenaline.gui.controller <<Folder>> {
+  class "ConnectMatchController"
+  class "DashboardCellController"
+  class "DashboardGamePaneController"
+  class "MainGamePaneController"
+  class "MyStatusGamePaneController"
+  class "OtherPlayersGamePaneController"
+  class "PlayerGamePaneController"
+  class "StartGuiController"
+}
+
+class "ConnectMatchController" {
+  portText : TextField
+  hostText : TextField
+  socketButton : Button
+  rmiButton : Button
+  matchesListView : ListView<String>
+  newMatchButton : Button
+  view : GuiView
+  matches : Map<String, Set<PlayerColor>>
+  registeredHandler : String
+  startingNewMatch : Boolean
+  initialize()
+  onConnectClicked(MouseEvent)
+  onStartNewMatchClicked(MouseEvent)
+}
+
+class "DashboardCellController" {
+  position : Label
+  players : HBox
+  content : Label
+  initialize()
+}
+
+class "DashboardGamePaneController" {
+  dashboardGridPane : GridPane
+  remainingSkullsLabel : Label
+  playerTurnLabel : Label
+  frenzyModeLabel : Label
+  playersKillTrackHBox : HBox
+  cellControllers : DashboardCellController[][]
+  initialize()
+  initializeView(DashboardChoice)
+  initializeView(LightGameModel, PlayerColor)
+  showGameInfo(LightGameModel)
+  updateCell(DashboardCellUpdatedEvent)
+  updateGameModel(GameModelUpdatedEvent)
+  updateTurnOfPlayer(PlayerColor)
+}
+
+class "GuiUtils"
+
+class "GuiView" {
+  eventBus : ViewEventBus
+  networkAdapterThread : Thread
+  adapter : ClientNetworkAdapter
+  startNetworkAdapter()
+  stopNetworkAdapter()
+}
+
+class "MainGamePaneController" {
+  dashboardController : DashboardGamePaneController
+  thisPlayerController : MyStatusGamePaneController
+  otherPlayersController : OtherPlayersGamePaneController
+  view : GuiView
+  registeredHandler : String
+  firstUpdate : boolean
+  openedDialog : Dialog
+  initialize()
+  start()
+}
+
+class "MyStatusGamePaneController" {
+  playerColorLabel : Label
+  damagesGrid : GridPane
+  marksGrid : GridPane
+  pointsLabel : Label
+  timesKilledLabel : Label
+  yellowAmmoLabel : Label
+  redAmmoLabel : Label
+  blueAmmoLabel : Label
+  powerupHBox : HBox
+  gunsHBox : HBox
+  thisPlayer : PlayerColor
+  otherPlayers : List<PlayerColor>
+  dashboardCellPositions : List<Position>
+  view : GuiView
+  initialize()
+  initializeView(PlayerColor, LightGameModel)
+  update(PlayerDashboardUpdatedEvent)
+}
+
+class "OtherPlayersGamePaneController" {
+  otherPlayersVBox : VBox
+  playerGamePaneControllers : Map<PlayerColor, PlayerGamePaneController>
+  initialize()
+  initializePlayers(List<PlayerColor>, LightGameModel)
+  update(PlayerDashboardUpdatedEvent)
+}
+
+class "PlayerGamePaneController" {
+  playerColorLabel : Label
+  damagesGrid : GridPane
+  marksGrid : GridPane
+  pointsLabel : Label
+  timesKilledLabel : Label
+  initializePlayer(PlayerColor, LightGameModel)
+  updatePlayerInfo(List<PlayerColor>, List<PlayerColor>, int, int)
+}
+
+class "StartGuiController" {
+  startButton : Button
+  changeSceneRmiSocket(ActionEvent)
+}
+
+"ConnectMatchController" --> "GuiView" : view
+"MainGamePaneController" --> "DashboardGamePaneController" : dashboardController
+"MainGamePaneController" --> "GuiView" : view
+"MainGamePaneController" --> "MyStatusGamePaneController" : thisPlayerController
+"MainGamePaneController" --> "OtherPlayersGamePaneController" : otherPlayersController
+"MyStatusGamePaneController" --> "GuiView" : view
+"OtherPlayersGamePaneController" --> "PlayerGamePaneController" : playerGamePaneControllers
+
+@enduml
