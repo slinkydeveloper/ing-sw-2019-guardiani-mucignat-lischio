@@ -33,6 +33,8 @@
 
     <sonar.host.url>http://localhost:9000/</sonar.host.url>
 
+    <sonar.exclusions>**/com/adrenalinici/adrenaline/cli/**,**/com/adrenalinici/adrenaline/gui/**,**/com/adrenalinici/adrenaline/client/**,**/com/adrenalinici/adrenaline/common/network/**,**/com/adrenalinici/adrenaline/server/network/**,**/com/adrenalinici/adrenaline/server/ServerMain.java,**/com/adrenalinici/adrenaline/server/*Controller.java</sonar.exclusions>
+
   </properties>
 
   <dependencies>
