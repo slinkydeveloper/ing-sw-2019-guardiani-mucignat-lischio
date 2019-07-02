@@ -11,7 +11,10 @@ function get_ip() {
     esac
     if [[ $machine == "Linux" ]]; then
         discovered_ip=$(hostname -I | awk '{print $1}')
-    else
+    elif [[ $machine == "Mac" ]]; then
         discovered_ip=$(ipconfig getifaddr $(networksetup -listallhardwareports | awk '/Hardware Port: Wi-Fi/{getline; print $2}'))
+    else
+        echo "You are using an OS that I don't know, BTW I use Fedora"
+        exit
     fi
 }

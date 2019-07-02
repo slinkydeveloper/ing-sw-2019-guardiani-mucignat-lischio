@@ -18,6 +18,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.CHOOSE_ACTION;
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.START_TURN;
@@ -36,7 +37,7 @@ public class CompleteIntegrationTest {
 
   @Test
   public void oneTurnForEachPlayer() throws IOException, InterruptedException {
-    GameBootstrapper bootstrapper = new GameBootstrapper(3000, 3001, 3000);
+    GameBootstrapper bootstrapper = new GameBootstrapper(LocateRegistry::createRegistry, 3000, 3001, 3000);
 
     bootstrapper.start(); // Ready to rock
 
@@ -99,7 +100,7 @@ public class CompleteIntegrationTest {
 
   @Test
   public void firstTurnAndTurnTimeout() throws IOException, InterruptedException {
-    GameBootstrapper bootstrapper = new GameBootstrapper(3000, 3001, 1);
+    GameBootstrapper bootstrapper = new GameBootstrapper(LocateRegistry::createRegistry, 3000, 3001, 1);
 
     bootstrapper.start(); // Ready to rock
 

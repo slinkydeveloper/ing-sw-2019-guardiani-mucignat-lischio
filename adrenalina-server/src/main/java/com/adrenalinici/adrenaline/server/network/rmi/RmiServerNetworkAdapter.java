@@ -25,14 +25,22 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements GameRmiServer {
 
+  @FunctionalInterface
+  public interface RegistryFactory {
+    Registry create(int port) throws RemoteException;
+  }
+
   private static final Logger LOG = LogUtils.getLogger(RmiServerNetworkAdapter.class);
   private final static long KEEP_ALIVE_THRESHOLD = 10 * 1000;
 
+  private RegistryFactory registryFactory;
   private int port;
   private Map<String, String> addressToConnectionId;
   private Map<String, GameRmiClient> connectionIdToClient;
@@ -42,8 +50,9 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   private Thread senderThread;
   private Registry registry;
 
-  public RmiServerNetworkAdapter(BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxEntry> viewOutbox, int port) {
+  public RmiServerNetworkAdapter(RegistryFactory registryFactory, BlockingQueue<InboxEntry> viewInbox, BlockingQueue<OutboxEntry> viewOutbox, int port) {
     super(viewInbox, viewOutbox);
+    this.registryFactory = registryFactory;
     this.addressToConnectionId = new ConcurrentHashMap<>();
     this.connectionIdToClient = new ConcurrentHashMap<>();
     this.lastKeepAlive = new ConcurrentHashMap<>();
@@ -88,7 +97,7 @@ public class RmiServerNetworkAdapter extends ServerNetworkAdapter implements Gam
   public void start() throws IOException {
     Remote remoteObject = UnicastRemoteObject.exportObject(this, 0);
 
-    registry = LocateRegistry.getRegistry(port);
+    registry = registryFactory.create(port);
     registry.rebind(GameRmiServer.class.getSimpleName(), remoteObject);
 
     LOG.info(String.format("Started rmi registry on port %d", port));

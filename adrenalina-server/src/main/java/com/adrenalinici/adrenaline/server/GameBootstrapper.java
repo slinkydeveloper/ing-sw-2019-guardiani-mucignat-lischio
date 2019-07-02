@@ -8,6 +8,7 @@ import com.adrenalinici.adrenaline.server.network.rmi.RmiServerNetworkAdapter;
 import com.adrenalinici.adrenaline.server.network.socket.SocketServerNetworkAdapter;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -25,14 +26,20 @@ public class GameBootstrapper {
   private ServerMessageRouter serverMessageRouter;
   private Thread serverMessageRouterThread;
 
+  private final RmiServerNetworkAdapter.RegistryFactory registryFactory;
   private final int rmiPort;
   private final int socketPort;
   private final long turnTimerSeconds;
 
-  public GameBootstrapper(int rmiPort, int socketPort, long turnTimerSeconds) {
+  public GameBootstrapper(RmiServerNetworkAdapter.RegistryFactory registryFactory, int rmiPort, int socketPort, long turnTimerSeconds) {
+    this.registryFactory = registryFactory;
     this.rmiPort = rmiPort;
     this.socketPort = socketPort;
     this.turnTimerSeconds = turnTimerSeconds;
+  }
+
+  public GameBootstrapper(int rmiPort, int socketPort, long turnTimerSeconds) {
+    this(LocateRegistry::getRegistry, rmiPort, socketPort, turnTimerSeconds);
   }
 
   public void start() throws IOException {
@@ -44,7 +51,7 @@ public class GameBootstrapper {
 
     this.serverMessageRouterThread = new Thread(serverMessageRouter, "message-router");
 
-    this.rmiNetworkAdapter = new RmiServerNetworkAdapter(inbox, outboxRmi, rmiPort);
+    this.rmiNetworkAdapter = new RmiServerNetworkAdapter(registryFactory, inbox, outboxRmi, rmiPort);
     this.socketNetworkAdapter = new SocketServerNetworkAdapter(inbox, outboxSocket, socketPort);
 
     rmiNetworkAdapter.start();

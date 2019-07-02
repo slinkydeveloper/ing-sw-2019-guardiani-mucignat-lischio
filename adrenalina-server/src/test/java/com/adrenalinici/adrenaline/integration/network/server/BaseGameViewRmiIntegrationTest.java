@@ -20,6 +20,9 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -46,6 +49,7 @@ public class BaseGameViewRmiIntegrationTest {
   };
 
   RemoteView remoteView;
+  Registry registry;
 
   @Before
   public void setUp() throws IOException, InterruptedException {
@@ -56,7 +60,7 @@ public class BaseGameViewRmiIntegrationTest {
     serverMessageRouter = ServerMessageRouter.createWithHandlers(inbox, outboxRmi, outboxSocket, 3000);
     serverMessageRouterThread = new Thread(serverMessageRouter, "server-message-router-test");
 
-    serverNetworkAdapter = new RmiServerNetworkAdapter(inbox, outboxRmi, 3001);
+    serverNetworkAdapter = new RmiServerNetworkAdapter(LocateRegistry::createRegistry, inbox, outboxRmi, 3001);
 
     serverMessageRouterThread.start();
     serverNetworkAdapter.start();
