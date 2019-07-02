@@ -163,7 +163,7 @@ public class GameController implements Observer<DecoratedEvent<ViewEvent, GameVi
     return nodes;
   }
 
-  public static final List<String> ALWAYS_LOADED_NODES = Arrays.asList(ControllerNodes.APPLY_TELEPORT.name(), ControllerNodes.APPLY_NEWTON.name());
+  protected static final List<String> ALWAYS_LOADED_NODES = Arrays.asList(ControllerNodes.APPLY_TELEPORT.name(), ControllerNodes.APPLY_NEWTON.name());
 
   public GameModel getGameModel() {
     return gameModel;

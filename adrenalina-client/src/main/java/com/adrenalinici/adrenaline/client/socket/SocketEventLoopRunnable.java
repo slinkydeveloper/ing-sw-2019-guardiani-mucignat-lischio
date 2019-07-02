@@ -22,7 +22,7 @@ public class SocketEventLoopRunnable implements Runnable {
 
   private static final Logger LOG = LogUtils.getLogger(SocketEventLoopRunnable.class);
 
-  private static final long KEEP_ALIVE_PERIOD = 3 * 1000;
+  private static final long KEEP_ALIVE_PERIOD = 3L * 1000L;
 
   private Selector selector;
   private BlockingQueue<OutboxMessage> clientViewInbox;
