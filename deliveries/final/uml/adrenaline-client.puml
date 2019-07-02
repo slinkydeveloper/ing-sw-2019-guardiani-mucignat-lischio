@@ -1,0 +1,56 @@
+@startuml
+
+package com.adrenalinici.adrenaline.client <<Folder>> {
+  abstract class "ClientNetworkAdapter"
+  interface "ClientViewProxy"
+}
+
+package com.adrenalinici.adrenaline.client.rmi <<Folder>> {
+  class "GameRmiClientImpl"
+  class "SenderRunnable"
+}
+
+package com.adrenalinici.adrenaline.client.socket <<Folder>> {
+  class "SocketEventLoopRunnable"
+}
+
+abstract class "ClientNetworkAdapter" {
+  clientViewOutbox : BlockingQueue<InboxMessage>
+  clientViewInbox : BlockingQueue<OutboxMessage>
+  proxy : ClientViewProxy
+  initialize()
+  onEvent(InboxMessage)
+  onEvent(Object)
+  run()
+  stop()
+}
+
+interface "ClientViewProxy" {
+  handleNewServerMessage(OutboxMessage)
+}
+
+class "GameRmiClientImpl" {
+  clientViewInbox : BlockingQueue<OutboxMessage>
+  acceptMessage(OutboxMessage)
+}
+
+class "SenderRunnable" {
+  clientViewOutbox : BlockingQueue<InboxMessage>
+  rmiServer : GameRmiServer
+  rmiClient : GameRmiClient
+  run()
+}
+
+class "SocketEventLoopRunnable" {
+  selector : Selector
+  clientViewInbox : BlockingQueue<OutboxMessage>
+  clientViewOutbox : BlockingQueue<InboxMessage>
+  remainingWrites : Queue<ByteBuffer>
+  remainingRead : ByteBuffer
+  keepAliveTimer : Timer
+  run()
+}
+
+"ClientNetworkAdapter" --> "ClientViewProxy" : proxy
+
+@enduml

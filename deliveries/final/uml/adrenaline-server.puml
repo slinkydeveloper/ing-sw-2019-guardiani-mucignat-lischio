@@ -1,0 +1,1119 @@
+@startuml
+
+package com.adrenalinici.adrenaline.server <<Folder>> {
+  class "GameBootstrapper"
+  class "JsonUtils"
+  class "StartServerDialogController"
+}
+
+package com.adrenalinici.adrenaline.server.controller <<Folder>> {
+  interface "ControllerFlowNode"
+  class "DecoratedAlternativeEffectGun"
+  class "DecoratedBaseEffectGun"
+  class "DecoratedEffect"
+  abstract class "DecoratedGun"
+  class "GameController"
+  interface "GunFactory"
+  class "GunLoader"
+  interface "StatelessControllerFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.controller.guns <<Folder>> {
+  abstract class "AlternativeEffectGunFactory"
+  abstract class "BaseEffectGunFactory"
+  class "CyberbladeGunFactory"
+  class "ElectroscytheGunFactory"
+  class "FlamethrowerGunFactory"
+  class "FurnaceGunFactory"
+  class "GrenadeLauncherGunFactory"
+  class "HeatseekerGunFactory"
+  class "HellionGunFactory"
+  class "LockRifleGunFactory"
+  class "MachineGunGunFactory"
+  class "PlasmaGunGunFactory"
+  class "PowerGloveGunFactory"
+  class "RailgunGunFactory"
+  class "RocketLauncherGunFactory"
+  class "ShockwaveGunFactory"
+  class "ShotgunGunFactory"
+  class "SledgehammerGunFactory"
+  class "ThorGunFactory"
+  class "TractorBeamGunFactory"
+  class "VortexCannonGunFactory"
+  class "WhisperGunFactory"
+  class "ZX2GunFactory"
+}
+
+package com.adrenalinici.adrenaline.server.controller.nodes <<Folder>> {
+  class "ApplyNewtonFlowNode"
+  class "ApplyTeleporterFlowNode"
+  class "ChooseActionFlowNode"
+  class "ChooseGunFlowNode"
+  class "ChooseMovementFlowNode"
+  class "FirstTurnFlowNode"
+  class "NewTurnFlowNode"
+  class "PickupFlowNode"
+  class "ReloadFlowNode"
+  class "RespawnFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.controller.nodes.guns <<Folder>> {
+  interface "AlternativeEffectGunFlowState"
+  class "AlternativeEffectGunFlowStateImpl"
+  class "AlternativeGunChooseMovementFlowNode"
+  class "ApplyAlternativeGunFlowNode"
+  class "ApplyBaseGunFlowNode"
+  class "ApplyGrenadeLauncherEffectFlowNode"
+  class "ApplyScopeFlowNode"
+  interface "BaseEffectGunFlowState"
+  class "BaseEffectGunFlowStateImpl"
+  class "BaseGunChooseMovementFlowNode"
+  class "ChooseAlternativeEffectForGunFlowNode"
+  class "ChooseBaseEffectForGunFlowNode"
+  class "ChooseCellToHitFlowNode"
+  class "ChoosePlayersToHitFlowNode"
+  class "ChooseRoomToHitFlowNode"
+  class "GunChooseEnemyMovementFlowNode"
+  interface "GunFlowState"
+  abstract class "GunFlowStateImpl"
+  interface "SkippableGunFlowNode"
+  class "TagbackGrenadeFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.flow <<Folder>> {
+  interface "FlowContext"
+  interface "FlowNode"
+  interface "FlowOrchestrator"
+  interface "FlowState"
+  interface "StatelessFlowNode"
+}
+
+package com.adrenalinici.adrenaline.server.flow.impl <<Folder>> {
+  abstract class "BaseFlowContext"
+  class "FlowOrchestratorImpl"
+  class "VoidState"
+}
+
+package com.adrenalinici.adrenaline.server.model <<Folder>> {
+  abstract class "BaseDashboardCell"
+  class "CardDeck"
+  class "Dashboard"
+  interface "DashboardCell"
+  class "PickupDashboardCell"
+  class "PlayerDashboard"
+  class "RespawnDashboardCell"
+}
+
+package com.adrenalinici.adrenaline.server.network <<Folder>> {
+  interface "MessageHandler"
+  class "ServerContext"
+  class "ServerMessageRouter"
+  abstract class "ServerNetworkAdapter"
+}
+
+package com.adrenalinici.adrenaline.server.network.handlers <<Folder>> {
+  class "ChosenMatchMessageHandler"
+  class "ConnectedPlayerMessageHandler"
+  class "DisconnectedPlayerMessageHandler"
+  class "HandlerUtils"
+  class "NewMatchMessageHandler"
+  class "ViewEventMessageHandler"
+}
+
+package com.adrenalinici.adrenaline.server.network.rmi <<Folder>> {
+  class "SenderRunnable"
+}
+
+package com.adrenalinici.adrenaline.server.network.socket <<Folder>> {
+  abstract class "BaseSocketRunnable"
+  class "SocketEventLoopRunnable"
+}
+
+abstract class "AlternativeEffectGunFactory" {
+  getDecoratedGun(String, ObjectNode) : DecoratedAlternativeEffectGun
+  getDecoratedGun(String, ObjectNode) : DecoratedGun
+  getModelGun(String, ObjectNode) : Gun
+  getModelGun(String, ObjectNode) : AlternativeEffectGun
+}
+
+interface "AlternativeEffectGunFlowState" {
+  getChosenGun() : DecoratedGun
+  resolvePhaseConfiguration(String) : ObjectNode
+  setChosenEffect(DecoratedEffect, boolean) : AlternativeEffectGunFlowState
+}
+
+class "AlternativeEffectGunFlowStateImpl" {
+  firstEffect : Boolean
+  chosenEffect : DecoratedEffect
+  getChosenGun() : DecoratedGun
+  resolvePhaseConfiguration(String) : ObjectNode
+  setChosenEffect(DecoratedEffect, boolean) : AlternativeEffectGunFlowState
+}
+
+class "AlternativeGunChooseMovementFlowNode" {
+  handleEvent(ViewEvent, AlternativeEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(AlternativeEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ApplyAlternativeGunFlowNode" {
+  nodeId : String
+  consumer : TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext>
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, AlternativeEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(AlternativeEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ApplyBaseGunFlowNode" {
+  nodeId : String
+  consumer : TriConsumer<BaseEffectGunFlowState, GameModel, ControllerFlowContext>
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, BaseEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(BaseEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ApplyGrenadeLauncherEffectFlowNode" {
+  beenHere : boolean
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, BaseEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(BaseEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ApplyNewtonFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ApplyScopeFlowNode" {
+  handleEvent(ViewEvent, GunFlowState, GameView, GameModel, ControllerFlowContext)
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(GunFlowState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ApplyTeleporterFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+}
+
+abstract class "BaseDashboardCell" {
+  playersInCell : List<PlayerColor>
+  northDashboardCellBoundType : DashboardCellBoundType
+  southDashboardCellBoundType : DashboardCellBoundType
+  eastDashboardCellBoundType : DashboardCellBoundType
+  westDashboardCellBoundType : DashboardCellBoundType
+  cellColor : CellColor
+  line : int
+  cell : int
+  dashboard : Dashboard
+  addPlayer(PlayerColor)
+  removePlayer(PlayerColor)
+}
+
+abstract class "BaseEffectGunFactory" {
+  getDecoratedGun(String, ObjectNode) : DecoratedBaseEffectGun
+  getDecoratedGun(String, ObjectNode) : DecoratedGun
+  getModelGun(String, ObjectNode) : Gun
+  getModelGun(String, ObjectNode) : BaseEffectGun
+}
+
+interface "BaseEffectGunFlowState" {
+  getChosenGun() : DecoratedGun
+  resolvePhaseConfiguration(String) : ObjectNode
+  setActivatedFirstExtraEffect(boolean) : BaseEffectGunFlowState
+  setActivatedSecondExtraEffect(boolean) : BaseEffectGunFlowState
+}
+
+class "BaseEffectGunFlowStateImpl" {
+  activatedFirstExtraEffect : boolean
+  activatedSecondExtraEffect : boolean
+  getChosenGun() : DecoratedGun
+  resolvePhaseConfiguration(String) : ObjectNode
+  setActivatedFirstExtraEffect(boolean) : BaseEffectGunFlowState
+  setActivatedSecondExtraEffect(boolean) : BaseEffectGunFlowState
+}
+
+abstract class "BaseFlowContext" {
+  actualNode : FlowNode
+  actualState : FlowState
+  actualPhaseId : String
+  phasesQueue : List<String>
+  orchestrator : FlowOrchestrator
+  additionalNodesToExecuteAlways : List<String>
+  actualIndex : int
+  actualFlowNode() : FlowNode
+  actualNode() : FlowNode
+  actualPhase() : String
+  addPhases(String[])
+  addPhasesToEnd(String[])
+  end(GameView)
+  handleEvent(ViewEvent, GameView)
+  jump(String, GameView, FlowState)
+  nextPhase(GameView, FlowState)
+  replayNode(GameView)
+  replayPhase(GameView)
+}
+
+class "BaseGunChooseMovementFlowNode" {
+  distance : int
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, GunChooseMovementFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  mapState(FlowState) : GunChooseMovementFlowState
+  mapState(FlowState) : FlowState
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(GunChooseMovementFlowState, GameView, GameModel, ControllerFlowContext)
+}
+
+abstract class "BaseSocketRunnable" {
+  connectedClients : Map<Socket, String>
+}
+
+class "CardDeck" {
+  deck : List<T>
+  addCard(T)
+  size() : int
+}
+
+class "ChooseActionFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ChooseAlternativeEffectForGunFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, AlternativeEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(AlternativeEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ChooseBaseEffectForGunFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, BaseEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(BaseEffectGunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ChooseCellToHitFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, GunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(GunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ChooseGunFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ChooseMovementFlowNode" {
+  distance : int
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ChoosePlayersToHitFlowNode" {
+  handleEvent(ViewEvent, GunFlowState, GameView, GameModel, ControllerFlowContext)
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  id() : String
+  onJump(GunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ChooseRoomToHitFlowNode" {
+  handleEvent(ViewEvent, GunFlowState, GameView, GameModel, ControllerFlowContext)
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  id() : String
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(GunFlowState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "ChosenMatchMessageHandler" {
+  handleMessage(ChosenMatchMessage, String, ServerContext)
+  handleMessage(InboxMessage, String, ServerContext)
+}
+
+class "ConnectedPlayerMessageHandler" {
+  handleMessage(ConnectedPlayerMessage, String, ServerContext)
+  handleMessage(InboxMessage, String, ServerContext)
+}
+
+interface "ControllerFlowNode"
+
+class "CyberbladeGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "Dashboard" {
+  dashboardCells : DashboardCell[][]
+  dashboardChoice : DashboardChoice
+  calculateCardinalDirection(Position, Position) : CardinalDirection
+  calculateDistance(Position, Position) : int
+  calculateIfVisible(Position, Position) : boolean
+  calculateMovements(Position, int) : List<Position>
+  calculateMovementsInOneDirection(Position, int) : List<Position>
+  cells() : int
+  getDashboardCell(Position) : DashboardCell
+  light() : LightDashboard
+  lines() : int
+  stream() : Stream<DashboardCell>
+}
+
+interface "DashboardCell" {
+  addPlayer(PlayerColor)
+  hasEastDashboardCell() : boolean
+  hasEastWall() : boolean
+  hasNorthDashboardCell() : boolean
+  hasNorthWall() : boolean
+  hasSouthDashboardCell() : boolean
+  hasSouthWall() : boolean
+  hasWestDashboardCell() : boolean
+  hasWestWall() : boolean
+  light() : LightDashboardCell
+  removePlayer(PlayerColor)
+  visit(Consumer<RespawnDashboardCell>, Consumer<PickupDashboardCell>)
+}
+
+class "DecoratedAlternativeEffectGun" {
+  firstEffect : DecoratedEffect
+  secondEffect : DecoratedEffect
+  get() : AlternativeEffectGun
+  get() : Gun
+}
+
+class "DecoratedBaseEffectGun" {
+  baseEffect : DecoratedEffect
+  firstExtraEffect : DecoratedEffect
+  secondExtraEffect : DecoratedEffect
+  get() : BaseEffectGun
+  get() : Gun
+  hasFirstExtraEffect() : boolean
+  hasSecondExtraEffect() : boolean
+}
+
+class "DecoratedEffect" {
+  effect : Effect
+  additionalPhases : List<String>
+  requiredAmmos : List<AmmoColor>
+  get() : Effect
+}
+
+abstract class "DecoratedGun" {
+  gun : Gun
+  phases : List<String>
+  get() : Gun
+  visit(Consumer<AlternativeEffectGun>, Consumer<BaseEffectGun>)
+}
+
+class "DisconnectedPlayerMessageHandler" {
+  handleMessage(DisconnectedPlayerMessage, String, ServerContext)
+  handleMessage(InboxMessage, String, ServerContext)
+}
+
+class "ElectroscytheGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "FirstTurnFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "FlamethrowerGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+interface "FlowContext" {
+  actualFlowNode() : FlowNode
+  actualNode() : FlowNode
+  actualPhase() : String
+  addPhases(String[])
+  addPhasesToEnd(String[])
+  end(GameView)
+  handleEvent(ViewEvent, GameView)
+  jump(String, GameView, FlowState)
+  nextPhase(GameView, FlowState)
+  nextPhase(GameView)
+  replayNode(GameView)
+  replayPhase(GameView)
+}
+
+interface "FlowNode" {
+  handleEvent(ViewEvent, S, GameView, GameModel, C)
+  id() : String
+  mapState(FlowState) : S
+  onJump(S, GameView, GameModel, C)
+  skip(S, C) : boolean
+}
+
+interface "FlowOrchestrator" {
+  handleEvent(ViewEvent, GameView)
+  onEnd(GameView)
+  resolveNode(String) : FlowNode
+  startNewFlow(GameView, T)
+}
+
+class "FlowOrchestratorImpl" {
+  nodes : Map<String, ? extends com.adrenalinici.adrenaline.server.flow.FlowNode>
+  actualContext : T
+  model : GameModel
+  onEndCallback : Consumer<GameView>
+  handleEvent(ViewEvent, GameView)
+  onEnd(GameView)
+  resolveNode(String) : FlowNode
+  startNewFlow(GameView, T)
+}
+
+interface "FlowState"
+
+class "FurnaceGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "GameBootstrapper" {
+  inbox : BlockingQueue<InboxEntry>
+  outboxRmi : BlockingQueue<OutboxEntry>
+  outboxSocket : BlockingQueue<OutboxEntry>
+  rmiNetworkAdapter : ServerNetworkAdapter
+  socketNetworkAdapter : ServerNetworkAdapter
+  serverMessageRouter : ServerMessageRouter
+  serverMessageRouterThread : Thread
+  rmiPort : int
+  socketPort : int
+  turnTimerSeconds : long
+  start()
+  stop()
+}
+
+class "GameController" {
+  gameModel : GameModel
+  flowOrchestrator : FlowOrchestrator<ControllerFlowContext>
+  firstTurn : boolean
+  onEvent(Object)
+  onEvent(DecoratedEvent<ViewEvent, GameView>)
+  startMatch(GameView)
+}
+
+class "GrenadeLauncherGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "GunChooseEnemyMovementFlowNode" {
+  distance : int
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, GunFlowState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(GunFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+interface "GunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+  getDecoratedGun(String, ObjectNode) : DecoratedGun
+  getModelGun(String, ObjectNode) : Gun
+}
+
+interface "GunFlowState" {
+  applyHitAndMarkPlayers(GameModel, ControllerFlowContext)
+  hitPlayer(PlayerColor, int)
+  markPlayer(PlayerColor, int)
+  resolvePhaseConfiguration(String) : ObjectNode
+}
+
+abstract class "GunFlowStateImpl" {
+  chosenGun : DecoratedGun
+  chosenCellsToHit : List<Position>
+  chosenPlayersToHit : List<PlayerColor>
+  hitPlayers : Map<PlayerColor, Integer>
+  markPlayers : Map<PlayerColor, Integer>
+  applyHitAndMarkPlayers(GameModel, ControllerFlowContext)
+  hitPlayer(PlayerColor, int)
+  markPlayer(PlayerColor, int)
+}
+
+class "GunLoader" {
+  factories : List<GunFactory>
+  guns : Map<String, Gun>
+  decoratedGuns : Map<String, DecoratedGun>
+  nodes : Map<String, List<ControllerFlowNode>>
+  getAdditionalNodes(String) : List<ControllerFlowNode>
+  getDecoratedGun(String) : DecoratedGun
+  getModelGun(String) : Gun
+}
+
+class "HandlerUtils"
+
+class "HeatseekerGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "HellionGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "JsonUtils"
+
+class "LockRifleGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "MachineGunGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+interface "MessageHandler" {
+  handleMessage(T, String, ServerContext)
+}
+
+class "NewMatchMessageHandler" {
+  turnTimerSeconds : long
+  handleMessage(NewMatchMessage, String, ServerContext)
+  handleMessage(InboxMessage, String, ServerContext)
+}
+
+class "NewTurnFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "PickupDashboardCell" {
+  ammoCard : AmmoCard
+  light() : LightDashboardCell
+  removeAmmoCard()
+  setAmmoCard(AmmoCard)
+  visit(Consumer<RespawnDashboardCell>, Consumer<PickupDashboardCell>)
+}
+
+class "PickupFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "PlasmaGunGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "PlayerDashboard" {
+  player : PlayerColor
+  ammos : List<AmmoColor>
+  damages : List<PlayerColor>
+  marks : List<PlayerColor>
+  guns : HashMap<String, Boolean>
+  powerUpCards : List<PowerUpCard>
+  skullsNumber : int
+  points : int
+  flipped : boolean
+  addAmmo(AmmoColor)
+  addDamages(List<PlayerColor>)
+  addGun(String)
+  addMarks(List<PlayerColor>)
+  addPoints(int)
+  addPowerUpCard(PowerUpCard) : boolean
+  hasVenomGrenade() : boolean
+  incrementSkullsNumber()
+  light() : LightPlayerDashboard
+  reloadGun(String)
+  removeAllDamages()
+  removeAmmos(List<AmmoColor>)
+  removeAmmosIncludingPowerups(List<AmmoColor>) : List<PowerUpCard>
+  removeGun(String)
+  removeMarks(List<PlayerColor>)
+  removePowerUpCard(PowerUpCard) : boolean
+  setFlipped(boolean) : PlayerDashboard
+  unloadGun(String)
+}
+
+class "PowerGloveGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "RailgunGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "ReloadFlowNode" {
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  handleEvent(ViewEvent, VoidState, GameView, GameModel, ControllerFlowContext)
+  id() : String
+  onJump(VoidState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "RespawnDashboardCell" {
+  availableGuns : Set<String>
+  addAvailableGun(String)
+  light() : LightDashboardCell
+  removeAvailableGun(String)
+  visit(Consumer<RespawnDashboardCell>, Consumer<PickupDashboardCell>)
+}
+
+class "RespawnFlowNode" {
+  handleEvent(ViewEvent, RespawnFlowState, GameView, GameModel, ControllerFlowContext)
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  id() : String
+  mapState(FlowState) : RespawnFlowState
+  mapState(FlowState) : FlowState
+  onJump(FlowState, GameView, GameModel, FlowContext)
+  onJump(RespawnFlowState, GameView, GameModel, ControllerFlowContext)
+}
+
+class "RocketLauncherGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "SenderRunnable" {
+  connectedClients : Map<String, GameRmiClient>
+  viewOutbox : BlockingQueue<OutboxEntry>
+  run()
+}
+
+class "ServerContext" {
+  inbox : BlockingQueue<InboxEntry>
+  outboxRmi : BlockingQueue<OutboxEntry>
+  outboxSocket : BlockingQueue<OutboxEntry>
+  playerMatchMap : Map<String, String>
+  matchesMap : Map<String, RemoteView>
+  matchesControllersMap : Map<String, GameController>
+  addConnectionToMatch(String, String)
+  addMatch(RemoteView, GameController)
+  broadcastToMatch(String, OutboxMessage)
+  enqueueInboxMessage(String, InboxMessage)
+  getConnectionMatch(String) : RemoteView
+  onDisconnection(String)
+  removeMatch(String)
+  send(String, OutboxMessage)
+}
+
+class "ServerMessageRouter" {
+  inbox : BlockingQueue<InboxEntry>
+  context : ServerContext
+  handlers : Map<Class<? extends com.adrenalinici.adrenaline.common.network.inbox.InboxMessage>, MessageHandler>
+  run()
+  withHandler(Class<? extends com.adrenalinici.adrenaline.common.network.inbox.InboxMessage>, Function<ServerContext, MessageHandler>) : ServerMessageRouter
+  withHandler(Class<? extends com.adrenalinici.adrenaline.common.network.inbox.InboxMessage>, MessageHandler) : ServerMessageRouter
+}
+
+abstract class "ServerNetworkAdapter" {
+  viewInbox : BlockingQueue<InboxEntry>
+  viewOutbox : BlockingQueue<OutboxEntry>
+  start()
+  stop()
+}
+
+class "ShockwaveGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "ShotgunGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+interface "SkippableGunFlowNode" {
+  skip(T, ControllerFlowContext) : boolean
+  skip(FlowState, FlowContext) : boolean
+}
+
+class "SledgehammerGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "SocketEventLoopRunnable" {
+  viewOutbox : BlockingQueue<OutboxEntry>
+  viewInbox : BlockingQueue<InboxEntry>
+  remainingWrites : Map<String, Queue<ByteBuffer>>
+  remainingReads : Map<String, ByteBuffer>
+  selector : Selector
+  connectedClients : Map<Socket, String>
+  lastKeepAlive : Map<String, Long>
+  run()
+}
+
+class "StartServerDialogController" {
+  rmiPortTextField : TextField
+  socketPortTextField : TextField
+  turnTimeoutTextField : TextField
+  startMatchButton : Button
+  initialize()
+  onStartMatchClicked(MouseEvent)
+  showErrorAlert()
+}
+
+interface "StatelessControllerFlowNode"
+
+interface "StatelessFlowNode" {
+  mapState(FlowState) : VoidState
+  mapState(FlowState) : FlowState
+}
+
+class "TagbackGrenadeFlowNode" {
+  handleEvent(ViewEvent, TagbackGrenadeFlowState, GameView, GameModel, ControllerFlowContext)
+  handleEvent(ViewEvent, FlowState, GameView, GameModel, FlowContext)
+  id() : String
+  mapState(FlowState) : FlowState
+  mapState(FlowState) : TagbackGrenadeFlowState
+  onJump(TagbackGrenadeFlowState, GameView, GameModel, ControllerFlowContext)
+  onJump(FlowState, GameView, GameModel, FlowContext)
+}
+
+class "ThorGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "TractorBeamGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "ViewEventMessageHandler" {
+  handleMessage(InboxMessage, String, ServerContext)
+  handleMessage(ViewEventMessage, String, ServerContext)
+}
+
+class "VoidState"
+
+class "VortexCannonGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "WhisperGunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+class "ZX2GunFactory" {
+  canConsume(String, ObjectNode) : boolean
+  getAdditionalNodes(String, ObjectNode) : List<ControllerFlowNode>
+}
+
+"AlternativeEffectGunFactory" --> "DecoratedAlternativeEffectGun" : use
+"AlternativeEffectGunFactory" --> "DecoratedGun" : use
+"AlternativeEffectGunFactory" <|-- "ElectroscytheGunFactory"
+"AlternativeEffectGunFactory" <|-- "FlamethrowerGunFactory"
+"AlternativeEffectGunFactory" <|-- "FurnaceGunFactory"
+"AlternativeEffectGunFactory" <|-- "HellionGunFactory"
+"AlternativeEffectGunFactory" <|-- "PowerGloveGunFactory"
+"AlternativeEffectGunFactory" <|-- "RailgunGunFactory"
+"AlternativeEffectGunFactory" <|-- "ShockwaveGunFactory"
+"AlternativeEffectGunFactory" <|-- "ShotgunGunFactory"
+"AlternativeEffectGunFactory" <|-- "SledgehammerGunFactory"
+"AlternativeEffectGunFactory" <|-- "TractorBeamGunFactory"
+"AlternativeEffectGunFactory" <|-- "ZX2GunFactory"
+"AlternativeEffectGunFlowState" <-> "AlternativeEffectGunFlowStateImpl"
+"AlternativeEffectGunFlowState" --> "DecoratedEffect" : use
+"AlternativeEffectGunFlowState" --> "DecoratedGun" : use
+"AlternativeEffectGunFlowStateImpl" --> "DecoratedEffect" : chosenEffect
+"AlternativeEffectGunFlowStateImpl" --> "DecoratedGun" : use
+"AlternativeGunChooseMovementFlowNode" --> "AlternativeEffectGunFlowState" : use
+"AlternativeGunChooseMovementFlowNode" --> "FlowContext" : use
+"AlternativeGunChooseMovementFlowNode" --> "FlowState" : use
+"ApplyAlternativeGunFlowNode" --> "AlternativeEffectGunFlowState" : consumer
+"ApplyAlternativeGunFlowNode" --> "FlowContext" : use
+"ApplyAlternativeGunFlowNode" --> "FlowState" : use
+"ApplyBaseGunFlowNode" --> "BaseEffectGunFlowState" : consumer
+"ApplyBaseGunFlowNode" --> "FlowContext" : use
+"ApplyBaseGunFlowNode" --> "FlowState" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "BaseEffectGunFlowState" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "FlowContext" : use
+"ApplyGrenadeLauncherEffectFlowNode" --> "FlowState" : use
+"ApplyNewtonFlowNode" --> "FlowContext" : use
+"ApplyNewtonFlowNode" --> "FlowState" : use
+"ApplyNewtonFlowNode" --> "VoidState" : use
+"ApplyScopeFlowNode" --> "FlowContext" : use
+"ApplyScopeFlowNode" --> "FlowState" : use
+"ApplyScopeFlowNode" --> "GunFlowState" : use
+"ApplyTeleporterFlowNode" --> "FlowContext" : use
+"ApplyTeleporterFlowNode" --> "FlowState" : use
+"ApplyTeleporterFlowNode" --> "VoidState" : use
+"BaseDashboardCell" --> "Dashboard" : dashboard
+"BaseDashboardCell" <|-- "PickupDashboardCell"
+"BaseDashboardCell" <|-- "RespawnDashboardCell"
+"BaseEffectGunFactory" <|-- "CyberbladeGunFactory"
+"BaseEffectGunFactory" --> "DecoratedBaseEffectGun" : use
+"BaseEffectGunFactory" --> "DecoratedGun" : use
+"BaseEffectGunFactory" <|-- "GrenadeLauncherGunFactory"
+"BaseEffectGunFactory" <|-- "HeatseekerGunFactory"
+"BaseEffectGunFactory" <|-- "LockRifleGunFactory"
+"BaseEffectGunFactory" <|-- "MachineGunGunFactory"
+"BaseEffectGunFactory" <|-- "PlasmaGunGunFactory"
+"BaseEffectGunFactory" <|-- "RocketLauncherGunFactory"
+"BaseEffectGunFactory" <|-- "ThorGunFactory"
+"BaseEffectGunFactory" <|-- "VortexCannonGunFactory"
+"BaseEffectGunFactory" <|-- "WhisperGunFactory"
+"BaseEffectGunFlowState" <-> "BaseEffectGunFlowStateImpl"
+"BaseEffectGunFlowState" --> "DecoratedGun" : use
+"BaseEffectGunFlowStateImpl" --> "DecoratedGun" : use
+"BaseFlowContext" --> "FlowNode" : actualNode
+"BaseFlowContext" --> "FlowOrchestrator" : orchestrator
+"BaseFlowContext" --> "FlowState" : actualState
+"BaseGunChooseMovementFlowNode" --> "FlowContext" : use
+"BaseGunChooseMovementFlowNode" --> "FlowState" : use
+"ChooseActionFlowNode" --> "FlowContext" : use
+"ChooseActionFlowNode" --> "FlowState" : use
+"ChooseActionFlowNode" --> "VoidState" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "AlternativeEffectGunFlowState" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "FlowContext" : use
+"ChooseAlternativeEffectForGunFlowNode" --> "FlowState" : use
+"ChooseBaseEffectForGunFlowNode" --> "BaseEffectGunFlowState" : use
+"ChooseBaseEffectForGunFlowNode" --> "FlowContext" : use
+"ChooseBaseEffectForGunFlowNode" --> "FlowState" : use
+"ChooseCellToHitFlowNode" --> "FlowContext" : use
+"ChooseCellToHitFlowNode" --> "FlowState" : use
+"ChooseCellToHitFlowNode" --> "GunFlowState" : use
+"ChooseGunFlowNode" --> "FlowContext" : use
+"ChooseGunFlowNode" --> "FlowState" : use
+"ChooseGunFlowNode" --> "VoidState" : use
+"ChooseMovementFlowNode" --> "FlowContext" : use
+"ChooseMovementFlowNode" --> "FlowState" : use
+"ChooseMovementFlowNode" --> "VoidState" : use
+"ChoosePlayersToHitFlowNode" --> "FlowContext" : use
+"ChoosePlayersToHitFlowNode" --> "FlowState" : use
+"ChoosePlayersToHitFlowNode" --> "GunFlowState" : use
+"ChooseRoomToHitFlowNode" --> "FlowContext" : use
+"ChooseRoomToHitFlowNode" --> "FlowState" : use
+"ChooseRoomToHitFlowNode" --> "GunFlowState" : use
+"ChosenMatchMessageHandler" --> "ServerContext" : use
+"ConnectedPlayerMessageHandler" --> "ServerContext" : use
+"ControllerFlowNode" <|-- "AlternativeGunChooseMovementFlowNode"
+"ControllerFlowNode" <|-- "ApplyAlternativeGunFlowNode"
+"ControllerFlowNode" <|-- "ApplyBaseGunFlowNode"
+"ControllerFlowNode" <|-- "ApplyGrenadeLauncherEffectFlowNode"
+"ControllerFlowNode" <|-- "ApplyScopeFlowNode"
+"ControllerFlowNode" <|-- "BaseGunChooseMovementFlowNode"
+"ControllerFlowNode" <|-- "ChooseAlternativeEffectForGunFlowNode"
+"ControllerFlowNode" <|-- "ChooseBaseEffectForGunFlowNode"
+"ControllerFlowNode" <|-- "ChooseCellToHitFlowNode"
+"ControllerFlowNode" <|-- "ChoosePlayersToHitFlowNode"
+"ControllerFlowNode" <|-- "ChooseRoomToHitFlowNode"
+"ControllerFlowNode" <|-- "GunChooseEnemyMovementFlowNode"
+"ControllerFlowNode" <|-- "RespawnFlowNode"
+"ControllerFlowNode" <|-- "SkippableGunFlowNode"
+"ControllerFlowNode" <|-- "TagbackGrenadeFlowNode"
+"CyberbladeGunFactory" --> "*" "ControllerFlowNode" : use
+"DashboardCell" <|-- "BaseDashboardCell"
+"DashboardCell" <|-- "PickupDashboardCell"
+"DashboardCell" --> "PickupDashboardCell" : use
+"DashboardCell" --> "RespawnDashboardCell" : use
+"DashboardCell" <|-- "RespawnDashboardCell"
+"Dashboard" --> "DashboardCell" : use
+"DecoratedAlternativeEffectGun" --> "DecoratedEffect" : firstEffect/secondEffect
+"DecoratedBaseEffectGun" --> "DecoratedEffect" : baseEffect/firstExtraEffect/secondExtraEffect
+"DecoratedGun" <|-- "DecoratedAlternativeEffectGun"
+"DecoratedGun" <|-- "DecoratedBaseEffectGun"
+"DisconnectedPlayerMessageHandler" --> "ServerContext" : use
+"ElectroscytheGunFactory" --> "*" "ControllerFlowNode" : use
+"FirstTurnFlowNode" --> "FlowContext" : use
+"FirstTurnFlowNode" --> "FlowState" : use
+"FirstTurnFlowNode" --> "VoidState" : use
+"FlamethrowerGunFactory" --> "*" "ControllerFlowNode" : use
+"FlowContext" <|-- "BaseFlowContext"
+"FlowContext" <-> "FlowNode" : use
+"FlowContext" --> "FlowState" : use
+"FlowNode" <|-- "AlternativeGunChooseMovementFlowNode"
+"FlowNode" <|-- "ApplyAlternativeGunFlowNode"
+"FlowNode" <|-- "ApplyBaseGunFlowNode"
+"FlowNode" <|-- "ApplyGrenadeLauncherEffectFlowNode"
+"FlowNode" <|-- "ApplyNewtonFlowNode"
+"FlowNode" <|-- "ApplyScopeFlowNode"
+"FlowNode" <|-- "ApplyTeleporterFlowNode"
+"FlowNode" <|-- "BaseGunChooseMovementFlowNode"
+"FlowNode" <|-- "ChooseActionFlowNode"
+"FlowNode" <|-- "ChooseAlternativeEffectForGunFlowNode"
+"FlowNode" <|-- "ChooseBaseEffectForGunFlowNode"
+"FlowNode" <|-- "ChooseCellToHitFlowNode"
+"FlowNode" <|-- "ChooseGunFlowNode"
+"FlowNode" <|-- "ChooseMovementFlowNode"
+"FlowNode" <|-- "ChoosePlayersToHitFlowNode"
+"FlowNode" <|-- "ChooseRoomToHitFlowNode"
+"FlowNode" <|-- "ControllerFlowNode"
+"FlowNode" <|-- "FirstTurnFlowNode"
+"FlowNode" --> "FlowState" : use
+"FlowNode" <|-- "GunChooseEnemyMovementFlowNode"
+"FlowNode" <|-- "NewTurnFlowNode"
+"FlowNode" <|-- "PickupFlowNode"
+"FlowNode" <|-- "ReloadFlowNode"
+"FlowNode" <|-- "RespawnFlowNode"
+"FlowNode" <|-- "SkippableGunFlowNode"
+"FlowNode" <|-- "StatelessControllerFlowNode"
+"FlowNode" <|-- "StatelessFlowNode"
+"FlowNode" <|-- "TagbackGrenadeFlowNode"
+"FlowOrchestrator" --> "FlowContext" : use
+"FlowOrchestrator" --> "FlowNode" : use
+"FlowOrchestrator" <|-- "FlowOrchestratorImpl"
+"FlowOrchestratorImpl" --> "FlowContext" : actualContext
+"FlowOrchestratorImpl" --> "FlowNode" : use
+"FlowState" <|-- "AlternativeEffectGunFlowState"
+"FlowState" <|-- "AlternativeEffectGunFlowStateImpl"
+"FlowState" <|-- "BaseEffectGunFlowState"
+"FlowState" <|-- "BaseEffectGunFlowStateImpl"
+"FlowState" <|-- "GunFlowState"
+"FlowState" <|-- "GunFlowStateImpl"
+"FlowState" <|-- "VoidState"
+"FurnaceGunFactory" --> "*" "ControllerFlowNode" : use
+"GameBootstrapper" --> "ServerMessageRouter" : serverMessageRouter
+"GameBootstrapper" --> "ServerNetworkAdapter" : rmiNetworkAdapter/socketNetworkAdapter
+"GameController" --> "FlowOrchestrator" : flowOrchestrator
+"GrenadeLauncherGunFactory" --> "*" "ControllerFlowNode" : use
+"GunChooseEnemyMovementFlowNode" --> "FlowContext" : use
+"GunChooseEnemyMovementFlowNode" --> "FlowState" : use
+"GunChooseEnemyMovementFlowNode" --> "GunFlowState" : use
+"GunFactory" <|-- "AlternativeEffectGunFactory"
+"GunFactory" <|-- "BaseEffectGunFactory"
+"GunFactory" --> "*" "ControllerFlowNode" : use
+"GunFactory" <|-- "CyberbladeGunFactory"
+"GunFactory" --> "DecoratedGun" : use
+"GunFactory" <|-- "ElectroscytheGunFactory"
+"GunFactory" <|-- "FlamethrowerGunFactory"
+"GunFactory" <|-- "FurnaceGunFactory"
+"GunFactory" <|-- "GrenadeLauncherGunFactory"
+"GunFactory" <|-- "HeatseekerGunFactory"
+"GunFactory" <|-- "HellionGunFactory"
+"GunFactory" <|-- "LockRifleGunFactory"
+"GunFactory" <|-- "MachineGunGunFactory"
+"GunFactory" <|-- "PlasmaGunGunFactory"
+"GunFactory" <|-- "PowerGloveGunFactory"
+"GunFactory" <|-- "RailgunGunFactory"
+"GunFactory" <|-- "RocketLauncherGunFactory"
+"GunFactory" <|-- "ShockwaveGunFactory"
+"GunFactory" <|-- "ShotgunGunFactory"
+"GunFactory" <|-- "SledgehammerGunFactory"
+"GunFactory" <|-- "ThorGunFactory"
+"GunFactory" <|-- "TractorBeamGunFactory"
+"GunFactory" <|-- "VortexCannonGunFactory"
+"GunFactory" <|-- "WhisperGunFactory"
+"GunFactory" <|-- "ZX2GunFactory"
+"GunFlowState" <|-- "AlternativeEffectGunFlowState"
+"GunFlowState" <|-- "AlternativeEffectGunFlowStateImpl"
+"GunFlowState" <|-- "BaseEffectGunFlowState"
+"GunFlowState" <|-- "BaseEffectGunFlowStateImpl"
+"GunFlowState" <|-- "GunFlowStateImpl"
+"GunFlowStateImpl" <|-- "AlternativeEffectGunFlowStateImpl"
+"GunFlowStateImpl" <|-- "BaseEffectGunFlowStateImpl"
+"GunFlowStateImpl" --> "DecoratedGun" : chosenGun
+"GunLoader" --> "*" "ControllerFlowNode" : use
+"GunLoader" --> "DecoratedGun" : decoratedGuns
+"GunLoader" --> "*" "GunFactory" : factories
+"HeatseekerGunFactory" --> "*" "ControllerFlowNode" : use
+"HellionGunFactory" --> "*" "ControllerFlowNode" : use
+"LockRifleGunFactory" --> "*" "ControllerFlowNode" : use
+"MachineGunGunFactory" --> "*" "ControllerFlowNode" : use
+"MessageHandler" <|-- "ChosenMatchMessageHandler"
+"MessageHandler" <|-- "ConnectedPlayerMessageHandler"
+"MessageHandler" <|-- "DisconnectedPlayerMessageHandler"
+"MessageHandler" <|-- "NewMatchMessageHandler"
+"MessageHandler" --> "ServerContext" : use
+"MessageHandler" <|-- "ViewEventMessageHandler"
+"NewMatchMessageHandler" --> "ServerContext" : use
+"NewTurnFlowNode" --> "FlowContext" : use
+"NewTurnFlowNode" --> "FlowState" : use
+"NewTurnFlowNode" --> "VoidState" : use
+"PickupDashboardCell" <-> "RespawnDashboardCell" : use
+"PickupFlowNode" --> "FlowContext" : use
+"PickupFlowNode" --> "FlowState" : use
+"PickupFlowNode" --> "VoidState" : use
+"PlasmaGunGunFactory" --> "*" "ControllerFlowNode" : use
+"PowerGloveGunFactory" --> "*" "ControllerFlowNode" : use
+"RailgunGunFactory" --> "*" "ControllerFlowNode" : use
+"ReloadFlowNode" --> "FlowContext" : use
+"ReloadFlowNode" --> "FlowState" : use
+"ReloadFlowNode" --> "VoidState" : use
+"RespawnFlowNode" --> "FlowContext" : use
+"RespawnFlowNode" --> "FlowState" : use
+"RocketLauncherGunFactory" --> "*" "ControllerFlowNode" : use
+"ServerContext" --> "GameController" : matchesControllersMap
+"ServerMessageRouter" --> "MessageHandler" : handlers
+"ServerMessageRouter" --> "ServerContext" : context
+"ShockwaveGunFactory" --> "*" "ControllerFlowNode" : use
+"ShotgunGunFactory" --> "*" "ControllerFlowNode" : use
+"SkippableGunFlowNode" <|-- "AlternativeGunChooseMovementFlowNode"
+"SkippableGunFlowNode" <|-- "BaseGunChooseMovementFlowNode"
+"SkippableGunFlowNode" --> "FlowContext" : use
+"SkippableGunFlowNode" --> "FlowState" : use
+"SkippableGunFlowNode" <|-- "GunChooseEnemyMovementFlowNode"
+"SkippableGunFlowNode" --> "GunFlowState" : use
+"SledgehammerGunFactory" --> "*" "ControllerFlowNode" : use
+"StatelessControllerFlowNode" <|-- "ApplyNewtonFlowNode"
+"StatelessControllerFlowNode" <|-- "ApplyTeleporterFlowNode"
+"StatelessControllerFlowNode" <|-- "ChooseActionFlowNode"
+"StatelessControllerFlowNode" <|-- "ChooseGunFlowNode"
+"StatelessControllerFlowNode" <|-- "ChooseMovementFlowNode"
+"StatelessControllerFlowNode" <|-- "FirstTurnFlowNode"
+"StatelessControllerFlowNode" <|-- "NewTurnFlowNode"
+"StatelessControllerFlowNode" <|-- "PickupFlowNode"
+"StatelessControllerFlowNode" <|-- "ReloadFlowNode"
+"StatelessFlowNode" <|-- "ApplyNewtonFlowNode"
+"StatelessFlowNode" <|-- "ApplyTeleporterFlowNode"
+"StatelessFlowNode" <|-- "ChooseActionFlowNode"
+"StatelessFlowNode" <|-- "ChooseGunFlowNode"
+"StatelessFlowNode" <|-- "ChooseMovementFlowNode"
+"StatelessFlowNode" <|-- "FirstTurnFlowNode"
+"StatelessFlowNode" --> "FlowState" : use
+"StatelessFlowNode" <|-- "NewTurnFlowNode"
+"StatelessFlowNode" <|-- "PickupFlowNode"
+"StatelessFlowNode" <|-- "ReloadFlowNode"
+"StatelessFlowNode" <|-- "StatelessControllerFlowNode"
+"StatelessFlowNode" --> "VoidState" : use
+"TagbackGrenadeFlowNode" --> "FlowContext" : use
+"TagbackGrenadeFlowNode" --> "FlowState" : use
+"ThorGunFactory" --> "*" "ControllerFlowNode" : use
+"TractorBeamGunFactory" --> "*" "ControllerFlowNode" : use
+"ViewEventMessageHandler" --> "ServerContext" : use
+"VortexCannonGunFactory" --> "*" "ControllerFlowNode" : use
+"WhisperGunFactory" --> "*" "ControllerFlowNode" : use
+"ZX2GunFactory" --> "*" "ControllerFlowNode" : use
+
+@enduml

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="257px" preserveAspectRatio="none" style="width:507px;height:257px;" version="1.1" viewBox="0 0 507 257" width="507px" zoomAndPan="magnify"><defs><filter height="300%" id="f31vl8vbz0o33" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--cluster com.adrenalinici.adrenaline.cli--><polygon fill="#FFFFFF" filter="url(#f31vl8vbz0o33)" points="14,16,258,16,265,38.2969,485,38.2969,485,245,14,245,14,16" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="14" x2="265" y1="38.2969" y2="38.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="238" x="18" y="30.9951">com.adrenalinici.adrenaline.cli</text><!--class BufferedConsoleOut--><rect fill="#FEFECE" filter="url(#f31vl8vbz0o33)" height="86.4141" id="BufferedConsoleOut" style="stroke: #A80036; stroke-width: 1.5;" width="157" x="22.5" y="43"/><ellipse cx="37.5" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M40.4688,64.6406 Q39.8906,64.9375 39.25,65.0859 Q38.6094,65.2344 37.9063,65.2344 Q35.4063,65.2344 34.0859,63.5859 Q32.7656,61.9375 32.7656,58.8125 Q32.7656,55.6875 34.0859,54.0313 Q35.4063,52.375 37.9063,52.375 Q38.6094,52.375 39.2578,52.5313 Q39.9063,52.6875 40.4688,52.9844 L40.4688,55.7031 Q39.8438,55.125 39.25,54.8516 Q38.6563,54.5781 38.0313,54.5781 Q36.6875,54.5781 36,55.6484 Q35.3125,56.7188 35.3125,58.8125 Q35.3125,60.9063 36,61.9766 Q36.6875,63.0469 38.0313,63.0469 Q38.6563,63.0469 39.25,62.7734 Q39.8438,62.5 40.4688,61.9219 L40.4688,64.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="125" x="51.5" y="63.1543">BufferedConsoleOut</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="23.5" x2="178.5" y1="75" y2="75"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="127" x="28.5" y="89.2104">writer : BufferedWriter</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="23.5" x2="178.5" y1="95.8047" y2="95.8047"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="36" x="28.5" y="110.0151">flush()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="78" x="28.5" y="122.8198">println(String)</text><!--class CliGameViewProxy--><rect fill="#FEFECE" filter="url(#f31vl8vbz0o33)" height="73.6094" id="CliGameViewProxy" style="stroke: #A80036; stroke-width: 1.5;" width="262" x="215" y="49"/><ellipse cx="286.25" cy="65" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M289.2188,70.6406 Q288.6406,70.9375 288,71.0859 Q287.3594,71.2344 286.6563,71.2344 Q284.1563,71.2344 282.8359,69.5859 Q281.5156,67.9375 281.5156,64.8125 Q281.5156,61.6875 282.8359,60.0313 Q284.1563,58.375 286.6563,58.375 Q287.3594,58.375 288.0078,58.5313 Q288.6563,58.6875 289.2188,58.9844 L289.2188,61.7031 Q288.5938,61.125 288,60.8516 Q287.4063,60.5781 286.7813,60.5781 Q285.4375,60.5781 284.75,61.6484 Q284.0625,62.7188 284.0625,64.8125 Q284.0625,66.9063 284.75,67.9766 Q285.4375,69.0469 286.7813,69.0469 Q287.4063,69.0469 288,68.7734 Q288.5938,68.5 289.2188,67.9219 L289.2188,70.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="111" x="306.75" y="69.1543">CliGameViewProxy</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="216" x2="476" y1="81" y2="81"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="140" x="221" y="95.2104">view : BaseCliGameView</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="216" x2="476" y1="101.8047" y2="101.8047"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="250" x="221" y="116.0151">handleNewServerMessage(OutboxMessage)</text><!--class PrintUtils--><rect fill="#FEFECE" filter="url(#f31vl8vbz0o33)" height="48" id="PrintUtils" style="stroke: #A80036; stroke-width: 1.5;" width="88" x="57" y="189"/><ellipse cx="72" cy="205" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M74.9688,210.6406 Q74.3906,210.9375 73.75,211.0859 Q73.1094,211.2344 72.4063,211.2344 Q69.9063,211.2344 68.5859,209.5859 Q67.2656,207.9375 67.2656,204.8125 Q67.2656,201.6875 68.5859,200.0313 Q69.9063,198.375 72.4063,198.375 Q73.1094,198.375 73.7578,198.5313 Q74.4063,198.6875 74.9688,198.9844 L74.9688,201.7031 Q74.3438,201.125 73.75,200.8516 Q73.1563,200.5781 72.5313,200.5781 Q71.1875,200.5781 70.5,201.6484 Q69.8125,202.7188 69.8125,204.8125 Q69.8125,206.9063 70.5,207.9766 Q71.1875,209.0469 72.5313,209.0469 Q73.1563,209.0469 73.75,208.7734 Q74.3438,208.5 74.9688,207.9219 L74.9688,210.6406 Z "/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="56" x="86" y="209.1543">PrintUtils</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="58" x2="144" y1="221" y2="221"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="58" x2="144" y1="229" y2="229"/><!--link BufferedConsoleOut to CliGameViewProxy--><!--link BufferedConsoleOut to PrintUtils--><!--
+@startuml
+
+package com.adrenalinici.adrenaline.cli <<Folder>> {
+  class "BufferedConsoleOut"
+  class "CliGameViewProxy"
+  class "PrintUtils"
+}
+
+class "BufferedConsoleOut" {
+  writer : BufferedWriter
+  flush()
+  println(String)
+}
+
+class "CliGameViewProxy" {
+  view : BaseCliGameView
+  handleNewServerMessage(OutboxMessage)
+}
+
+class "PrintUtils"
+
+
+@enduml
+
+PlantUML version 1.2019.06(Fri May 24 19:10:25 CEST 2019)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_212-b04
+Operating System: Linux
+OS Version: 5.1.9-300.fc30.x86_64
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

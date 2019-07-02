@@ -1,0 +1,706 @@
+@startuml
+
+package com.adrenalinici.adrenaline.common.model.event <<Folder>> {
+  abstract class "BaseModelEvent"
+  class "DashboardCellUpdatedEvent"
+  class "GameModelUpdatedEvent"
+  interface "ModelEvent"
+  class "PlayerDashboardUpdatedEvent"
+}
+
+package com.adrenalinici.adrenaline.common.model.light <<Folder>> {
+  class "LightDashboard"
+  abstract class "LightDashboardCell"
+  class "LightGameModel"
+  class "LightPickupDashboardCell"
+  class "LightPlayerDashboard"
+  class "LightRespawnDashboardCell"
+}
+
+package com.adrenalinici.adrenaline.common.model <<Folder>> {
+  class "AlternativeEffectGun"
+  class "AmmoCard"
+  class "BaseEffectGun"
+  abstract class "BaseGun"
+  class "Effect"
+  interface "Gun"
+  class "Position"
+  class "PowerUpCard"
+}
+
+package com.adrenalinici.adrenaline.common.network.inbox <<Folder>> {
+  class "ChosenMatchMessage"
+  class "ConnectedPlayerMessage"
+  class "DisconnectedPlayerMessage"
+  class "InboxEntry"
+  interface "InboxMessage"
+  class "NewMatchMessage"
+  class "ViewEventMessage"
+}
+
+package com.adrenalinici.adrenaline.common.network.outbox <<Folder>> {
+  class "AvailableActionsMessage"
+  class "AvailableAlternativeEffectsGunMessage"
+  class "AvailableCellsToHitMessage"
+  class "AvailableEnemyMovementsMessage"
+  class "AvailableExtraEffectsMessage"
+  class "AvailableGunsMessage"
+  class "AvailableGunsToPickupMessage"
+  class "AvailableMatchesMessage"
+  class "AvailableMovementsMessage"
+  class "AvailablePowerUpCardsForRespawnMessage"
+  class "AvailableRoomsMessage"
+  class "AvailableTagbackGrenadeMessage"
+  class "ChoosePlayerToHitMessage"
+  class "ChooseScopePlayerMessage"
+  class "InfoMessage"
+  class "ModelEventMessage"
+  class "NextTurnMessage"
+  class "OutboxEntry"
+  interface "OutboxMessage"
+  class "RankingMessage"
+  class "ReloadableGunsMessage"
+}
+
+package com.adrenalinici.adrenaline.common.network.rmi <<Folder>> {
+  interface "GameRmiClient"
+  interface "GameRmiServer"
+}
+
+package com.adrenalinici.adrenaline.common.util <<Folder>> {
+  class "Bag"
+  class "CollectionUtils"
+  class "DecoratedEvent"
+  class "LogUtils"
+  interface "Observable"
+  class "ObservableImpl"
+  interface "Observer"
+  class "SerializationUtils"
+  class "StreamUtils"
+  interface "TriConsumer"
+  interface "TriFunction"
+  interface "TriPredicate"
+}
+
+package com.adrenalinici.adrenaline.common.view <<Folder>> {
+  class "ActionChosenEvent"
+  class "AlternativeGunEffectChosenEvent"
+  class "BaseGunEffectChosenEvent"
+  class "CellToHitChosenEvent"
+  class "EndMatchEvent"
+  class "EnemyMovementChosenEvent"
+  interface "GameView"
+  class "GunChosenEvent"
+  class "MovementChosenEvent"
+  class "NewTurnEvent"
+  class "PlayerChosenEvent"
+  class "PowerUpCardChosenEvent"
+  class "RoomChosenEvent"
+  class "StartMatchEvent"
+  class "UnavailablePlayerEvent"
+  class "UseNewtonEvent"
+  class "UseTagbackGrenadeEvent"
+  class "UseTeleporterEvent"
+  interface "ViewEvent"
+}
+
+class "ActionChosenEvent" {
+  action : Action
+  onActionChosenEvent(Consumer<ActionChosenEvent>)
+}
+
+class "AlternativeEffectGun" {
+  firstEffect : Effect
+  secondEffect : Effect
+  secondEffectCost : List<AmmoColor>
+  visit(Consumer<AlternativeEffectGun>, Consumer<BaseEffectGun>)
+}
+
+class "AlternativeGunEffectChosenEvent" {
+  chosenSecondEffect : boolean
+  chosenFirstEffect() : boolean
+  chosenSecondEffect() : boolean
+  onAlternativeGunEffectChosenEvent(Consumer<AlternativeGunEffectChosenEvent>)
+}
+
+class "AmmoCard" {
+  ammoColor : List<AmmoColor>
+  pickPowerUp : boolean
+}
+
+class "AvailableActionsMessage" {
+  actions : List<Action>
+  onAvailableActionsMessage(Consumer<AvailableActionsMessage>)
+}
+
+class "AvailableAlternativeEffectsGunMessage" {
+  firstEffect : Effect
+  secondEffect : Effect
+  onAvailableAlternativeEffectsGunMessage(Consumer<AvailableAlternativeEffectsGunMessage>)
+}
+
+class "AvailableCellsToHitMessage" {
+  cells : Set<Position>
+  onAvailableCellsToHitMessage(Consumer<AvailableCellsToHitMessage>)
+}
+
+class "AvailableEnemyMovementsMessage" {
+  positions : List<Position>
+  onAvailableEnemyMovementsMessage(Consumer<AvailableEnemyMovementsMessage>)
+}
+
+class "AvailableExtraEffectsMessage" {
+  firstExtraEffect : Effect
+  secondExtraEffect : Effect
+  onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage>)
+}
+
+class "AvailableGunsMessage" {
+  guns : Set<String>
+  onAvailableGunsMessage(Consumer<AvailableGunsMessage>)
+}
+
+class "AvailableGunsToPickupMessage" {
+  guns : Set<String>
+  onAvailableGunsToPickupMessage(Consumer<AvailableGunsToPickupMessage>)
+}
+
+class "AvailableMatchesMessage" {
+  matchesRemainingPlayers : Map<String, Set<PlayerColor>>
+  onAvailableMatchesMessage(Consumer<AvailableMatchesMessage>)
+}
+
+class "AvailableMovementsMessage" {
+  positions : List<Position>
+  onAvailableMovementsMessage(Consumer<AvailableMovementsMessage>)
+}
+
+class "AvailablePowerUpCardsForRespawnMessage" {
+  player : PlayerColor
+  powerUpCards : List<PowerUpCard>
+  onAvailablePowerUpCardsForRespawnMessage(Consumer<AvailablePowerUpCardsForRespawnMessage>)
+}
+
+class "AvailableRoomsMessage" {
+  rooms : Set<CellColor>
+  onAvailableRoomsMessage(Consumer<AvailableRoomsMessage>)
+}
+
+class "AvailableTagbackGrenadeMessage" {
+  player : PlayerColor
+  powerUpCards : List<PowerUpCard>
+  onAvailableTagbackGrenadeMessage(Consumer<AvailableTagbackGrenadeMessage>)
+}
+
+class "Bag" {
+  bag : Map<T, Integer>
+  add(T) : Bag<T>
+  addAll(Collection<T>) : Bag<T>
+  contains(Bag<T>) : boolean
+  contains(Collection<T>) : boolean
+  differentItems() : int
+  get(T) : int
+  remove(T) : Bag<T>
+  removeAll(Collection<T>) : Bag<T>
+  stream() : Stream<Entry<T, Integer>>
+  streamItems() : Stream<T>
+  toList() : List<T>
+  totalItems() : int
+}
+
+class "BaseEffectGun" {
+  baseEffect : Effect
+  firstExtraEffect : Effect
+  firstExtraEffectCost : List<AmmoColor>
+  secondExtraEffect : Effect
+  secondExtraEffectCost : List<AmmoColor>
+  hasFirstExtraEffect() : boolean
+  hasSecondExtraEffect() : boolean
+  visit(Consumer<AlternativeEffectGun>, Consumer<BaseEffectGun>)
+}
+
+abstract class "BaseGun" {
+  id : String
+  firstAmmo : AmmoColor
+  extraAmmo : List<AmmoColor>
+}
+
+class "BaseGunEffectChosenEvent" {
+  chosenFirstExtraEffect : boolean
+  chosenSecondExtraEffect : boolean
+  onBaseGunEffectChosenEvent(Consumer<BaseGunEffectChosenEvent>)
+}
+
+abstract class "BaseModelEvent" {
+  gameModel : LightGameModel
+}
+
+class "CellToHitChosenEvent" {
+  cellPosition : Position
+  onCellToHitChosenEvent(Consumer<CellToHitChosenEvent>)
+}
+
+class "ChoosePlayerToHitMessage" {
+  players : List<PlayerColor>
+  onChoosePlayerToHitMessage(Consumer<ChoosePlayerToHitMessage>)
+}
+
+class "ChooseScopePlayerMessage" {
+  players : List<PlayerColor>
+  scopes : List<PowerUpCard>
+  onChooseScopePlayerMessage(Consumer<ChooseScopePlayerMessage>)
+}
+
+class "ChosenMatchMessage" {
+  matchId : String
+  color : PlayerColor
+  onChosenMatchMessage(Consumer<ChosenMatchMessage>)
+}
+
+class "CollectionUtils"
+
+class "ConnectedPlayerMessage" {
+  onConnectedPlayerMessage(Consumer<ConnectedPlayerMessage>)
+}
+
+class "DashboardCellUpdatedEvent" {
+  cellPosition : Position
+  onDashboardCellUpdatedEvent(Consumer<DashboardCellUpdatedEvent>)
+}
+
+class "DecoratedEvent" {
+  innerEvent : EVENT_TYPE
+  eventSource : EVENT_SOURCE
+}
+
+class "DisconnectedPlayerMessage" {
+  onDisconnectedPlayerMessage(Consumer<DisconnectedPlayerMessage>)
+}
+
+class "Effect" {
+  gunId : String
+  id : String
+}
+
+class "EndMatchEvent"
+
+class "EnemyMovementChosenEvent" {
+  coordinates : Position
+  onEnemyMovementChosenEvent(Consumer<EnemyMovementChosenEvent>)
+}
+
+class "GameModelUpdatedEvent" {
+  onGameModelUpdatedEvent(Consumer<GameModelUpdatedEvent>)
+}
+
+interface "GameRmiClient" {
+  acceptMessage(OutboxMessage)
+}
+
+interface "GameRmiServer" {
+  acceptMessage(InboxMessage, GameRmiClient)
+  keepAlive()
+  startConnection(GameRmiClient)
+}
+
+interface "GameView" {
+  showAvailableActions(List<Action>)
+  showAvailableAlternativeEffectsGun(Effect, Effect)
+  showAvailableCellsToHit(Set<Position>)
+  showAvailableEnemyMovements(List<Position>)
+  showAvailableExtraEffects(Effect, Effect)
+  showAvailableGuns(Set<String>)
+  showAvailableGunsToPickup(Set<String>)
+  showAvailableMovements(List<Position>)
+  showAvailablePowerUpCardsForRespawn(PlayerColor, List<PowerUpCard>)
+  showAvailableRooms(Set<CellColor>)
+  showAvailableTagbackGrenade(PlayerColor, List<PowerUpCard>)
+  showChoosePlayerToHit(List<PlayerColor>)
+  showNextTurn(PlayerColor)
+  showRanking(List<Entry<PlayerColor, Integer>>)
+  showReloadableGuns(Set<String>)
+  showScopePlayers(List<PlayerColor>, List<PowerUpCard>)
+}
+
+interface "Gun" {
+  visit(Consumer<AlternativeEffectGun>, Consumer<BaseEffectGun>)
+}
+
+class "GunChosenEvent" {
+  gunid : String
+  onGunChosenEvent(Consumer<GunChosenEvent>)
+}
+
+class "InboxEntry" {
+  connectionId : String
+  message : InboxMessage
+}
+
+interface "InboxMessage" {
+  onChosenMatchMessage(Consumer<ChosenMatchMessage>)
+  onConnectedPlayerMessage(Consumer<ConnectedPlayerMessage>)
+  onDisconnectedPlayerMessage(Consumer<DisconnectedPlayerMessage>)
+  onNewMatchMessage(Consumer<NewMatchMessage>)
+  onViewEventMessage(Consumer<ViewEventMessage>)
+}
+
+class "InfoMessage" {
+  information : String
+  infoType : InfoType
+  onInfoMessage(Consumer<InfoMessage>)
+}
+
+class "LightDashboard" {
+  dashboardCells : LightDashboardCell[][]
+  dashboardChoice : DashboardChoice
+  cells() : int
+  getDashboardCell(int, int) : LightDashboardCell
+  getDashboardCell(Position) : LightDashboardCell
+  lines() : int
+  stream() : Stream<LightDashboardCell>
+}
+
+abstract class "LightDashboardCell" {
+  playersInCell : List<PlayerColor>
+  cellColor : CellColor
+  northDashboardCellBoundType : DashboardCellBoundType
+  southDashboardCellBoundType : DashboardCellBoundType
+  eastDashboardCellBoundType : DashboardCellBoundType
+  westDashboardCellBoundType : DashboardCellBoundType
+  line : int
+  cell : int
+  visit(Consumer<LightRespawnDashboardCell>, Consumer<LightPickupDashboardCell>)
+}
+
+class "LightGameModel" {
+  killScore : List<Entry<PlayerColor, Boolean>>
+  remainingSkulls : int
+  doubleKillScore : List<PlayerColor>
+  dashboard : LightDashboard
+  playerDashboards : List<LightPlayerDashboard>
+  getPlayerDashboard(PlayerColor) : LightPlayerDashboard
+}
+
+class "LightPickupDashboardCell" {
+  ammoCard : AmmoCard
+  visit(Consumer<LightRespawnDashboardCell>, Consumer<LightPickupDashboardCell>)
+}
+
+class "LightPlayerDashboard" {
+  player : PlayerColor
+  ammos : List<AmmoColor>
+  damages : List<PlayerColor>
+  marks : List<PlayerColor>
+  loadedGuns : Set<Gun>
+  unloadedGuns : Set<Gun>
+  powerUpCards : List<PowerUpCard>
+  skullsNumber : int
+  points : int
+  flipped : boolean
+}
+
+class "LightRespawnDashboardCell" {
+  availableGuns : Set<Gun>
+  visit(Consumer<LightRespawnDashboardCell>, Consumer<LightPickupDashboardCell>)
+}
+
+class "LogUtils"
+
+interface "ModelEvent" {
+  onDashboardCellUpdatedEvent(Consumer<DashboardCellUpdatedEvent>)
+  onGameModelUpdatedEvent(Consumer<GameModelUpdatedEvent>)
+  onPlayerDashboardUpdatedEvent(Consumer<PlayerDashboardUpdatedEvent>)
+}
+
+class "ModelEventMessage" {
+  modelEvent : ModelEvent
+  onModelEventMessage(Consumer<ModelEventMessage>)
+}
+
+class "MovementChosenEvent" {
+  coordinates : Position
+  onMovementChosenEvent(Consumer<MovementChosenEvent>)
+}
+
+class "NewMatchMessage" {
+  dashboard : DashboardChoice
+  players : PlayersChoice
+  rules : RulesChoice
+  matchId : String
+  onNewMatchMessage(Consumer<NewMatchMessage>)
+}
+
+class "NewTurnEvent" {
+  onNewTurnEvent(Consumer<NewTurnEvent>)
+}
+
+class "NextTurnMessage" {
+  player : PlayerColor
+  onNextTurnMessage(Consumer<NextTurnMessage>)
+}
+
+interface "Observable" {
+  cleanObservers()
+  notifyEvent(T)
+  registerObserver(Observer<T>)
+  unregisterObserver(Observer<T>)
+}
+
+class "ObservableImpl" {
+  listeners : List<Observer<T>>
+  cleanObservers()
+  notifyEvent(T)
+  registerObserver(Observer<T>)
+  unregisterObserver(Observer<T>)
+}
+
+interface "Observer" {
+  onEvent(T)
+}
+
+class "OutboxEntry" {
+  connectionId : String
+  message : OutboxMessage
+}
+
+interface "OutboxMessage" {
+  onAvailableActionsMessage(Consumer<AvailableActionsMessage>)
+  onAvailableAlternativeEffectsGunMessage(Consumer<AvailableAlternativeEffectsGunMessage>)
+  onAvailableCellsToHitMessage(Consumer<AvailableCellsToHitMessage>)
+  onAvailableEnemyMovementsMessage(Consumer<AvailableEnemyMovementsMessage>)
+  onAvailableExtraEffectsMessage(Consumer<AvailableExtraEffectsMessage>)
+  onAvailableGunsMessage(Consumer<AvailableGunsMessage>)
+  onAvailableGunsToPickupMessage(Consumer<AvailableGunsToPickupMessage>)
+  onAvailableMatchesMessage(Consumer<AvailableMatchesMessage>)
+  onAvailableMovementsMessage(Consumer<AvailableMovementsMessage>)
+  onAvailablePowerUpCardsForRespawnMessage(Consumer<AvailablePowerUpCardsForRespawnMessage>)
+  onAvailableRoomsMessage(Consumer<AvailableRoomsMessage>)
+  onAvailableTagbackGrenadeMessage(Consumer<AvailableTagbackGrenadeMessage>)
+  onChoosePlayerToHitMessage(Consumer<ChoosePlayerToHitMessage>)
+  onChooseScopePlayerMessage(Consumer<ChooseScopePlayerMessage>)
+  onInfoMessage(Consumer<InfoMessage>)
+  onModelEventMessage(Consumer<ModelEventMessage>)
+  onNextTurnMessage(Consumer<NextTurnMessage>)
+  onRankingMessage(Consumer<RankingMessage>)
+  onReloadableGunsMessage(Consumer<ReloadableGunsMessage>)
+}
+
+class "PlayerChosenEvent" {
+  playerColor : PlayerColor
+  onPlayerChosenEvent(Consumer<PlayerChosenEvent>)
+}
+
+class "PlayerDashboardUpdatedEvent" {
+  playerColor : PlayerColor
+  onPlayerDashboardUpdatedEvent(Consumer<PlayerDashboardUpdatedEvent>)
+}
+
+class "Position" {
+  line : int
+  cell : int
+  cell() : int
+  east() : Position
+  line() : int
+  north() : Position
+  south() : Position
+  west() : Position
+}
+
+class "PowerUpCard" {
+  ammoColor : AmmoColor
+  powerUpType : PowerUpType
+}
+
+class "PowerUpCardChosenEvent" {
+  player : PlayerColor
+  card : PowerUpCard
+  onPowerUpChosenEvent(Consumer<PowerUpCardChosenEvent>)
+}
+
+class "RankingMessage" {
+  ranking : List<Entry<PlayerColor, Integer>>
+  onRankingMessage(Consumer<RankingMessage>)
+}
+
+class "ReloadableGunsMessage" {
+  guns : Set<String>
+  onReloadableGunsMessage(Consumer<ReloadableGunsMessage>)
+}
+
+class "RoomChosenEvent" {
+  roomColor : CellColor
+  onRoomChosenEvent(Consumer<RoomChosenEvent>)
+}
+
+class "SerializationUtils"
+
+class "StartMatchEvent"
+
+class "StreamUtils"
+
+interface "TriConsumer" {
+  accept(X, Y, Z)
+}
+
+interface "TriFunction" {
+  apply(X, Y, Z) : R
+}
+
+interface "TriPredicate" {
+  test(X, Y, Z) : boolean
+}
+
+class "UnavailablePlayerEvent" {
+  playerColor : PlayerColor
+}
+
+class "UseNewtonEvent" {
+  chosenCard : PowerUpCard
+  chosenPosition : Position
+  player : PlayerColor
+  onUseNewtonEvent(Consumer<UseNewtonEvent>)
+}
+
+class "UseTagbackGrenadeEvent" {
+  playerColor : PlayerColor
+  chosenCard : PowerUpCard
+  onUseVenomGrenadeEvent(Consumer<UseTagbackGrenadeEvent>)
+}
+
+class "UseTeleporterEvent" {
+  chosenPosition : Position
+  chosenCard : PowerUpCard
+  onUseTeleporterEvent(Consumer<UseTeleporterEvent>)
+}
+
+interface "ViewEvent" {
+  onActionChosenEvent(Consumer<ActionChosenEvent>)
+  onAlternativeGunEffectChosenEvent(Consumer<AlternativeGunEffectChosenEvent>)
+  onBaseGunEffectChosenEvent(Consumer<BaseGunEffectChosenEvent>)
+  onCellToHitChosenEvent(Consumer<CellToHitChosenEvent>)
+  onEnemyMovementChosenEvent(Consumer<EnemyMovementChosenEvent>)
+  onGunChosenEvent(Consumer<GunChosenEvent>)
+  onMovementChosenEvent(Consumer<MovementChosenEvent>)
+  onNewTurnEvent(Consumer<NewTurnEvent>)
+  onPlayerChosenEvent(Consumer<PlayerChosenEvent>)
+  onPowerUpChosenEvent(Consumer<PowerUpCardChosenEvent>)
+  onRoomChosenEvent(Consumer<RoomChosenEvent>)
+  onUseNewtonEvent(Consumer<UseNewtonEvent>)
+  onUseTeleporterEvent(Consumer<UseTeleporterEvent>)
+  onUseVenomGrenadeEvent(Consumer<UseTagbackGrenadeEvent>)
+}
+
+class "ViewEventMessage" {
+  viewEvent : ViewEvent
+  onViewEventMessage(Consumer<ViewEventMessage>)
+}
+
+"AlternativeEffectGun" <-> "BaseEffectGun" : use
+"AlternativeEffectGun" --> "Effect" : firstEffect/secondEffect
+"AvailableAlternativeEffectsGunMessage" --> "Effect" : firstEffect/secondEffect
+"AvailableCellsToHitMessage" --> "*" "Position" : cells
+"AvailableEnemyMovementsMessage" --> "*" "Position" : positions
+"AvailableExtraEffectsMessage" --> "Effect" : firstExtraEffect/secondExtraEffect
+"AvailableMovementsMessage" --> "*" "Position" : positions
+"AvailablePowerUpCardsForRespawnMessage" --> "*" "PowerUpCard" : powerUpCards
+"AvailableTagbackGrenadeMessage" --> "*" "PowerUpCard" : powerUpCards
+"BaseEffectGun" --> "Effect" : baseEffect/firstExtraEffect/secondExtraEffect
+"BaseGun" <|-- "AlternativeEffectGun"
+"BaseGun" <|-- "BaseEffectGun"
+"BaseModelEvent" <|-- "DashboardCellUpdatedEvent"
+"BaseModelEvent" <|-- "GameModelUpdatedEvent"
+"BaseModelEvent" --> "LightGameModel" : gameModel
+"BaseModelEvent" <|-- "PlayerDashboardUpdatedEvent"
+"CellToHitChosenEvent" --> "Position" : cellPosition
+"ChooseScopePlayerMessage" --> "*" "PowerUpCard" : scopes
+"DashboardCellUpdatedEvent" --> "Position" : cellPosition
+"EnemyMovementChosenEvent" --> "Position" : coordinates
+"GameRmiClient" --> "OutboxMessage" : use
+"GameRmiServer" --> "GameRmiClient" : use
+"GameRmiServer" --> "InboxMessage" : use
+"GameView" --> "Effect" : use
+"GameView" --> "*" "Position" : use
+"GameView" --> "*" "PowerUpCard" : use
+"Gun" <|-- "AlternativeEffectGun"
+"Gun" <|-- "BaseEffectGun"
+"Gun" <|-- "BaseGun"
+"InboxEntry" --> "InboxMessage" : message
+"InboxMessage" <|-- "ChosenMatchMessage"
+"InboxMessage" <|-- "ConnectedPlayerMessage"
+"InboxMessage" <|-- "DisconnectedPlayerMessage"
+"InboxMessage" --> "NewMatchMessage" : use
+"InboxMessage" <|-- "NewMatchMessage"
+"InboxMessage" --> "ViewEventMessage" : use
+"InboxMessage" <|-- "ViewEventMessage"
+"LightDashboardCell" <|-- "LightPickupDashboardCell"
+"LightDashboardCell" --> "LightPickupDashboardCell" : use
+"LightDashboardCell" <|-- "LightRespawnDashboardCell"
+"LightDashboardCell" --> "LightRespawnDashboardCell" : use
+"LightDashboard" --> "LightDashboardCell" : use
+"LightDashboard" --> "Position" : use
+"LightGameModel" --> "LightDashboard" : dashboard
+"LightGameModel" --> "*" "LightPlayerDashboard" : playerDashboards
+"LightPickupDashboardCell" --> "AmmoCard" : ammoCard
+"LightPickupDashboardCell" <-> "LightRespawnDashboardCell" : use
+"LightPlayerDashboard" "*" --> "*" "Gun" : loadedGuns/unloadedGuns
+"LightPlayerDashboard" --> "*" "PowerUpCard" : powerUpCards
+"LightRespawnDashboardCell" --> "*" "Gun" : availableGuns
+"ModelEvent" <|-- "BaseModelEvent"
+"ModelEvent" <|-- "DashboardCellUpdatedEvent"
+"ModelEvent" <|-- "GameModelUpdatedEvent"
+"ModelEventMessage" --> "ModelEvent" : modelEvent
+"ModelEvent" <|-- "PlayerDashboardUpdatedEvent"
+"ModelEvent" --> "PlayerDashboardUpdatedEvent" : use
+"MovementChosenEvent" --> "Position" : coordinates
+"ObservableImpl" --> "Observer" : use
+"Observable" <|-- "ObservableImpl"
+"Observable" --> "Observer" : use
+"Observer" <|-- "GameView"
+"OutboxEntry" --> "OutboxMessage" : message
+"OutboxMessage" <|-- "AvailableActionsMessage"
+"OutboxMessage" <|-- "AvailableAlternativeEffectsGunMessage"
+"OutboxMessage" <|-- "AvailableCellsToHitMessage"
+"OutboxMessage" <|-- "AvailableEnemyMovementsMessage"
+"OutboxMessage" <|-- "AvailableExtraEffectsMessage"
+"OutboxMessage" <|-- "AvailableGunsMessage"
+"OutboxMessage" <|-- "AvailableGunsToPickupMessage"
+"OutboxMessage" <|-- "AvailableMatchesMessage"
+"OutboxMessage" <|-- "AvailableMovementsMessage"
+"OutboxMessage" <|-- "AvailablePowerUpCardsForRespawnMessage"
+"OutboxMessage" <|-- "AvailableRoomsMessage"
+"OutboxMessage" <|-- "AvailableTagbackGrenadeMessage"
+"OutboxMessage" <|-- "ChoosePlayerToHitMessage"
+"OutboxMessage" <|-- "ChooseScopePlayerMessage"
+"OutboxMessage" <|-- "InfoMessage"
+"OutboxMessage" <|-- "ModelEventMessage"
+"OutboxMessage" <|-- "NextTurnMessage"
+"OutboxMessage" --> "RankingMessage" : use
+"OutboxMessage" <|-- "RankingMessage"
+"OutboxMessage" <|-- "ReloadableGunsMessage"
+"OutboxMessage" --> "ReloadableGunsMessage" : use
+"PowerUpCardChosenEvent" --> "PowerUpCard" : card
+"UseNewtonEvent" --> "Position" : chosenPosition
+"UseNewtonEvent" --> "PowerUpCard" : chosenCard
+"UseTagbackGrenadeEvent" --> "PowerUpCard" : chosenCard
+"UseTeleporterEvent" --> "Position" : chosenPosition
+"UseTeleporterEvent" --> "PowerUpCard" : chosenCard
+"ViewEvent" <|-- "ActionChosenEvent"
+"ViewEvent" <|-- "AlternativeGunEffectChosenEvent"
+"ViewEvent" <|-- "BaseGunEffectChosenEvent"
+"ViewEvent" <|-- "CellToHitChosenEvent"
+"ViewEvent" <|-- "EndMatchEvent"
+"ViewEvent" <|-- "EnemyMovementChosenEvent"
+"ViewEvent" <|-- "GunChosenEvent"
+"ViewEventMessage" --> "ViewEvent" : viewEvent
+"ViewEvent" <|-- "MovementChosenEvent"
+"ViewEvent" <|-- "NewTurnEvent"
+"ViewEvent" <|-- "PlayerChosenEvent"
+"ViewEvent" <|-- "PowerUpCardChosenEvent"
+"ViewEvent" <|-- "RoomChosenEvent"
+"ViewEvent" <|-- "StartMatchEvent"
+"ViewEvent" <|-- "UnavailablePlayerEvent"
+"ViewEvent" <|-- "UseNewtonEvent"
+"ViewEvent" <|-- "UseTagbackGrenadeEvent"
+"ViewEvent" <|-- "UseTeleporterEvent"
+
+@enduml
