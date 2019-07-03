@@ -14,8 +14,14 @@ import java.util.List;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.RESPAWN_KILLED_PEOPLE;
 
+/**
+ * This node helps killed players to respawn.
+ */
 public class RespawnFlowNode implements ControllerFlowNode<RespawnFlowNode.RespawnFlowState> {
 
+  /**
+   * State needed for storing killer players thar are waiting for respawn
+   */
   public static class RespawnFlowState implements FlowState {
     List<PlayerColor> waitingPlayers;
 

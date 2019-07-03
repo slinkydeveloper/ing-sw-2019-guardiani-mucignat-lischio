@@ -10,6 +10,9 @@ import com.adrenalinici.adrenaline.server.model.GameModel;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.movement;
 
+/**
+ * This node helps the player choosing where he wanna move as an effect of an action
+ */
 public class ChooseMovementFlowNode implements StatelessControllerFlowNode {
 
   int distance;

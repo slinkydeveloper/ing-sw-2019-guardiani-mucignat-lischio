@@ -252,7 +252,6 @@ public class PlayerDashboard {
 
         removePowerUpCard(toRemove);
         powerUpsToRemove.add(toRemove);
-        //TODO must put card back to deck;
       });
     }
     return powerUpsToRemove;
@@ -262,6 +261,9 @@ public class PlayerDashboard {
     return powerUpCards.stream().anyMatch(p -> p.getPowerUpType().equals(PowerUpType.TAGBACK_GRENADE));
   }
 
+  /**
+   * @return LightPlayerDashboard based on the fat one
+   */
   public LightPlayerDashboard light() {
     return new LightPlayerDashboard(
       player,

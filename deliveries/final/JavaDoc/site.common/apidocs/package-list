@@ -1,0 +1,9 @@
+com.adrenalinici.adrenaline.common.model
+com.adrenalinici.adrenaline.common.model.event
+com.adrenalinici.adrenaline.common.model.light
+com.adrenalinici.adrenaline.common.network
+com.adrenalinici.adrenaline.common.network.inbox
+com.adrenalinici.adrenaline.common.network.outbox
+com.adrenalinici.adrenaline.common.network.rmi
+com.adrenalinici.adrenaline.common.util
+com.adrenalinici.adrenaline.common.view

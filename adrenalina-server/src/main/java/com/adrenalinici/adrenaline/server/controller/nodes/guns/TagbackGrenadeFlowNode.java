@@ -16,6 +16,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This node helps the player using the Tagback Grenade powerup.
+ * It has an inner state that stores the players which could use the powerup,
+ * in order to wait for them and rep
+ */
 public class TagbackGrenadeFlowNode implements ControllerFlowNode<TagbackGrenadeFlowNode.TagbackGrenadeFlowState> {
 
   public static class TagbackGrenadeFlowState implements FlowState {

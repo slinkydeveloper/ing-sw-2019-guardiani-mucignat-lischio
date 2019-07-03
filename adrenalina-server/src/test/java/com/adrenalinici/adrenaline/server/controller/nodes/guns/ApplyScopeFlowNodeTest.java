@@ -78,5 +78,38 @@ public class ApplyScopeFlowNodeTest extends BaseNodeTest {
     checkEndCalled();
   }
 
+  @Test
+  public void killingEnemyWithScopeTest() {
+    context.setTurnOfPlayer(PlayerColor.GREEN);
 
+    model.getDashboard().getDashboardCell(Position.of(0, 0)).addPlayer(PlayerColor.GREEN);
+    model.getDashboard().getDashboardCell(Position.of(0, 1)).addPlayer(PlayerColor.GRAY);
+    model.getDashboard().getDashboardCell(Position.of(1, 1)).addPlayer(PlayerColor.YELLOW);
+    model.getDashboard().getDashboardCell(Position.of(1, 2)).addPlayer(PlayerColor.CYAN);
+
+    PlayerDashboard killerPlayerDashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
+    killerPlayerDashboard.removeAmmos(Arrays.asList(AmmoColor.RED, AmmoColor.BLUE, AmmoColor.YELLOW));
+    killerPlayerDashboard.addAmmo(AmmoColor.YELLOW);
+
+    PowerUpCard blueScope = new PowerUpCard(AmmoColor.RED, PowerUpType.SCOPE);
+    killerPlayerDashboard.addPowerUpCard(blueScope);
+
+    DecoratedAlternativeEffectGun gun = (DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("zx2");
+    AlternativeEffectGunFlowState gunFlowState =
+      new AlternativeEffectGunFlowStateImpl(gun).setChosenEffect(gun.getFirstEffect(), true);
+
+    gunFlowState.hitPlayer(PlayerColor.GRAY, 1);
+    gunFlowState.hitPlayer(PlayerColor.YELLOW, 1);
+
+    context.nextPhase(viewMock, gunFlowState);
+
+    model.hitPlayer(PlayerColor.GREEN, PlayerColor.GRAY, 10);
+
+    context.handleEvent(new PlayerChosenEvent(PlayerColor.GRAY), viewMock);
+    context.handleEvent(new PowerUpCardChosenEvent(PlayerColor.GREEN, blueScope), viewMock);
+
+    assertThat(model.getPlayerDashboard(PlayerColor.GRAY).getDamages().isEmpty()).isTrue();
+
+    assertThat(context.getKilledPlayers()).containsOnly(PlayerColor.GRAY);
+  }
 }

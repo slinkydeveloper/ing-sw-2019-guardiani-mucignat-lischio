@@ -54,7 +54,9 @@ public class ApplyScopeFlowNode implements ControllerFlowNode<GunFlowState> {
       e -> {
         if (e.getPlayerColor() == null) context.nextPhase(view, flowState);
         else {
-          model.hitPlayer(context.getTurnOfPlayer(), e.getPlayerColor(), 1);
+          boolean killed = model.hitPlayer(context.getTurnOfPlayer(), e.getPlayerColor(), 1);
+
+          if (killed) context.getKilledPlayers().add(e.getPlayerColor());
 
           PlayerDashboard killerDashboard = model.getPlayerDashboard(context.getTurnOfPlayer());
           killerDashboard.removeAmmos(Collections.singletonList(killerDashboard.getAmmos().get(0)));

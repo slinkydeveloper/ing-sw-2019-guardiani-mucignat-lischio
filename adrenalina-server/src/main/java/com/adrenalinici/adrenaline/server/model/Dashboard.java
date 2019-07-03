@@ -203,6 +203,13 @@ public class Dashboard {
     return CardinalDirection.NONE;
   }
 
+  /**
+   * Calculates reachable position in a given range
+   *
+   * @param position starting position
+   * @param range distance
+   * @return
+   */
   public List<Position> calculateMovements(Position position, int range) {
     DashboardCell startingCellOptional = getDashboardCell(position);
     if (startingCellOptional == null) return Collections.emptyList();
@@ -247,6 +254,9 @@ public class Dashboard {
 
   }
 
+  /**
+   * @return a map with the position of all the players in the game
+   */
   public Map<PlayerColor, Position> getPlayersPositions() {
     return stream()
       .filter(c -> c.getPlayersInCell().size() != 0)
@@ -288,6 +298,12 @@ public class Dashboard {
     return false;
   }
 
+  /**
+   * Calculate the minimum distance to be covered for moving from a Position to another
+   * @param from starting position
+   * @param to ending position
+   * @return number of movements required to reach the destination
+   */
   public int calculateDistance(Position from, Position to) {
     if (from.equals(to)) return 0;
 
@@ -337,6 +353,9 @@ public class Dashboard {
     throw new IllegalStateException("player position not found");
   }
 
+  /**
+   * @return LightDashboard based on the fat one
+   */
   public LightDashboard light() {
     LightDashboardCell[][] d = new LightDashboardCell[lines()][cells()];
 

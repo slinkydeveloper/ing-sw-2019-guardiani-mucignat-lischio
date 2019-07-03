@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.PICKUP;
 
+
 public class PickupFlowNode implements StatelessControllerFlowNode {
 
   @Override

@@ -15,6 +15,16 @@ import com.adrenalinici.adrenaline.server.model.GameModel;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This node helps the player choosing a cell to hit.
+ * It uses couple of flag -loaded from gun config- to determine the cells
+ * that could really be hit and how the effect should be applied.
+ * <p>
+ * HIT_EVERYONE --> every player on chosen cell will be hit
+ * <p>
+ * SAME_DIRECTION --> available cells will be filtered according to the cardinal direction
+ * of another cell previously chosen
+ */
 public class ChooseCellToHitFlowNode implements ControllerFlowNode<GunFlowState> {
 
   public static final String DEFAULT = "default";
