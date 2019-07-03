@@ -22,8 +22,8 @@ public class PowerGloveGunFactory extends AlternativeEffectGunFactory {
     if (firstPlayer != null) {
       state.hitPlayer(firstPlayer, 1);
       state.markPlayer(firstPlayer, 2);
+      model.movePlayerInDashboard(model.getPlayerPosition(firstPlayer), context.getTurnOfPlayer());
     }
-    model.movePlayerInDashboard(model.getPlayerPosition(firstPlayer), context.getTurnOfPlayer());
   };
 
   private static final TriConsumer<AlternativeEffectGunFlowState, GameModel, ControllerFlowContext> ROCKET_EFFECT_APPLY = (state, model, context) -> {
