@@ -17,6 +17,10 @@ import java.util.stream.Collectors;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.RELOAD;
 
+/**
+ * This node helps the player reloading the guns.
+ * It shows the player only the guns he could effectively reload.
+ */
 public class ReloadFlowNode implements StatelessControllerFlowNode {
 
   @Override

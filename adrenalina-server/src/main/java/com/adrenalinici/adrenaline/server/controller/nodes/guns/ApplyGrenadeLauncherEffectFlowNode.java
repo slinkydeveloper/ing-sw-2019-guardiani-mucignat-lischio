@@ -8,6 +8,10 @@ import com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 import com.adrenalinici.adrenaline.server.model.PlayerDashboard;
 
+/**
+ * This class represents a flow node which is a custom effect applier for
+ * the gun GrenadeLauncher.
+ */
 public class ApplyGrenadeLauncherEffectFlowNode implements ControllerFlowNode<BaseEffectGunFlowState> {
   private boolean beenHere;
 

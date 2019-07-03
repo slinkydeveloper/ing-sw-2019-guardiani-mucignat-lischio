@@ -4,6 +4,13 @@ import com.adrenalinici.adrenaline.common.view.GameView;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 import com.adrenalinici.adrenaline.server.model.GameModel;
 
+/**
+ * This interface represents a generic node of the state machine which
+ * actually operate as the whole game controller.
+ *
+ * @param <S>
+ * @param <C>
+ */
 public interface FlowNode<S extends FlowState, C extends FlowContext> {
 
   String id();
@@ -13,6 +20,14 @@ public interface FlowNode<S extends FlowState, C extends FlowContext> {
     return (S) oldState;
   }
 
+  /**
+   * skip() called when the context jump to the next flow node.
+   * It determines whether the next node can be skipped or not.
+   *
+   * @param newState
+   * @param context
+   * @return
+   */
   default boolean skip(S newState, C context) {
     return false;
   }

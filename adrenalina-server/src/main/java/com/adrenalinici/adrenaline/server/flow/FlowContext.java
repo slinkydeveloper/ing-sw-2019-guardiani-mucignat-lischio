@@ -3,6 +3,10 @@ package com.adrenalinici.adrenaline.server.flow;
 import com.adrenalinici.adrenaline.common.view.GameView;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
 
+/**
+ * The context actually manages the whole flow, controlling step-by-step
+ * the evolution 
+ */
 public interface FlowContext {
 
   /**

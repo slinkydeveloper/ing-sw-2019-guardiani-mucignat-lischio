@@ -66,6 +66,12 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     doubleKillScore.add(playerColor);
   }
 
+  /**
+   * Add a kill score on the kill track.
+   *
+   * @param playerColor of the killer
+   * @param cruelKill true if killed with 12 damages
+   */
   public void addKillScore(PlayerColor playerColor, boolean cruelKill) {
     Entry<PlayerColor, Boolean> e = new SimpleImmutableEntry<>(playerColor, cruelKill);
     killScore.add(e);
@@ -95,6 +101,13 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     return dashboard.getPlayersPositions().get(player);
   }
 
+  /**
+   * Moves a player in dashboard, then launches two DashboardCellUpdatedEvent,
+   * one for the old and one for the new position
+   *
+   * @param newPosition
+   * @param player to be moved
+   */
   public void movePlayerInDashboard(Position newPosition, PlayerColor player) {
     if (!newPosition.equals(getPlayerPosition(player))) {
       Position oldPosition = getPlayerPosition(player);
@@ -108,6 +121,13 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     }
   }
 
+  /**
+   * Puts an ammo card in a certain PlayerDashboard, removing it from a certain PickupDashboardCell
+   * It then launches a DashboardCellUpdatedEvent and a PlayerDashboardUpdatedEvent
+   *
+   * @param cell from which the card is taken
+   * @param player who acquire the card
+   */
   public void acquireAmmoCard(PickupDashboardCell cell, PlayerColor player) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     cell.getAmmoCard()
@@ -134,6 +154,14 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     }
   }
 
+  /**
+   * Adds a gun in a PlayerDashboard, removing the gun from the cell it was in,
+   * and then removing the required ammo from the PlayerDashboard.
+   * It launches a DashboardCellUpdatedEvent and a PlayerDashboardUpdatedEvent
+   *
+   * @param player
+   * @param chosenGun
+   */
   public void acquireGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.addGun(chosenGun.getId());
@@ -192,6 +220,13 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     return mustActivateFrenzyMode;
   }
 
+  /**
+   * Determines if a player will play his turn before or after the player who started the game,
+   * when in frenzy mode.
+   *
+   * @param thisTurnPlayer
+   * @return
+   */
   public boolean isFirstPlayerOrAfterFirstPlayerInFrenzyMode(PlayerColor thisTurnPlayer) {
     int indexOfFrenzyModeFirstPlayer = getPlayers().indexOf(this.frenzyModeActivatedWithPlayerTurn);
     int indexThisTurnPlayer = getPlayers().indexOf(thisTurnPlayer);
@@ -218,7 +253,7 @@ public class GameModel extends ObservableImpl<ModelEvent> {
   }
 
   /**
-   * Respawn a player
+   * Respawn a player in the RespawnDashboardCell which matches the color of the PowerUpCard
    *
    * @param playerColor
    * @param card
@@ -240,12 +275,11 @@ public class GameModel extends ObservableImpl<ModelEvent> {
   }
 
   /**
-   * Respawn player in dashboard position
-   *
+   * Reloads a gun and then removes the required ammo.
+   * It launches a PlayerDashboardUpdatedEvent.
    * @param player
    * @param chosenGun
    */
-
   public void reloadGun(PlayerColor player, Gun chosenGun) {
     PlayerDashboard playerDashboard = getPlayerDashboard(player);
     playerDashboard.reloadGun(chosenGun.getId());
@@ -255,6 +289,17 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     notifyEvent(new PlayerDashboardUpdatedEvent(light(), player));
   }
 
+  /**
+   * Hits a player, adding damages to his PlayerDashboard.
+   * If the victim is killed it decrements the remaining kill to be made to finish the game,
+   * removes the victim from the cell he was in, adds normal scores and a
+   * kill score for the killer in the dashboard, and resets the victim PlayerDashboard.
+   *
+   * @param killer
+   * @param victim
+   * @param damages
+   * @return true if the victim is killed
+   */
   private boolean hitter(PlayerColor killer, PlayerColor victim, int damages) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
 
@@ -301,6 +346,14 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     return killed;
   }
 
+  /**
+   * Assign points -related to a specific PlayerDashboard- to the players who
+   * did at least one damage to the victim. Points are assigned in different ways,
+   * according to frenzy mode rules if activated.
+   * It launches a PlayerDashboardUpdatedEvent for every player who scored points.
+   *
+   * @param victimPlayerDashboard
+   */
   private void assignPoints(PlayerDashboard victimPlayerDashboard) {
     Map<PlayerColor, Integer> pointsToAssign = new HashMap<>();
 
@@ -339,6 +392,13 @@ public class GameModel extends ObservableImpl<ModelEvent> {
 
   }
 
+  /**
+   * Marks a player only if adding it wouldn't exceed the limit of three marks per enemy.
+   *
+   * @param killer
+   * @param victim
+   * @param marks
+   */
   private void marker(PlayerColor killer, PlayerColor victim, int marks) {
     PlayerDashboard victimPlayerDashboard = getPlayerDashboard(victim);
     int killerMarksOnVictimPlayerDashboard = calculateKillerMarksOnVictimPlayerDashboard(killer, victim);
@@ -475,6 +535,9 @@ public class GameModel extends ObservableImpl<ModelEvent> {
     });
   }
 
+  /**
+   * @return LightGameModel based on fat one.
+   */
   public LightGameModel light() {
     return new LightGameModel(
       new ArrayList<>(killScore),

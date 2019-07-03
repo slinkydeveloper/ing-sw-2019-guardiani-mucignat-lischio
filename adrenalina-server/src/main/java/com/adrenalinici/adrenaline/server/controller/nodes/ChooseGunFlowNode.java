@@ -13,6 +13,11 @@ import java.util.logging.Logger;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.*;
 
+/**
+ * This node helps the player choosing a gun to be used during the turn.
+ * After the player has chosen, it enqueue the additional phases required to apply the gun effect,
+ * and phases that are always executed at the end of the gun flow.
+ */
 public class ChooseGunFlowNode implements StatelessControllerFlowNode {
 
   private static final Logger LOG = LogUtils.getLogger(GunLoader.class);

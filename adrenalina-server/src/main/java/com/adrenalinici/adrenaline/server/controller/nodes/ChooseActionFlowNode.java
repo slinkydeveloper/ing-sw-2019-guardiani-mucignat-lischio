@@ -15,6 +15,11 @@ import java.util.List;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.*;
 
+/**
+ * This node helps the player choosing an action. It calculates all the actions that
+ * the player could do, and then, after the player has chosen, it enqueue the nodes
+ * required to perform the specific action.
+ */
 public class ChooseActionFlowNode implements StatelessControllerFlowNode {
 
   private static final List<Action> FRENZY_MODE_BEFORE_FIRST_PLAYER_ACTIONS = Arrays.asList(Action.MOVE_MOVE_MOVE_MOVE, Action.MOVE_MOVE_PICKUP);

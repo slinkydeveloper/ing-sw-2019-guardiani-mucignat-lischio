@@ -4,6 +4,10 @@ import com.adrenalinici.adrenaline.server.controller.DecoratedAlternativeEffectG
 import com.adrenalinici.adrenaline.server.controller.DecoratedEffect;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * Represents the state of an AlternativeEffectGun.
+ * It stores information about the chosen effect and provides the consequent phase configuration.
+ */
 public interface AlternativeEffectGunFlowState extends GunFlowState {
   DecoratedAlternativeEffectGun getChosenGun();
 

@@ -14,6 +14,12 @@ import java.util.logging.Logger;
 
 import static com.adrenalinici.adrenaline.server.controller.nodes.ControllerNodes.ALTERNATIVE_GUN_START;
 
+/**
+ * This node helps the player choosing the AlternativeGun effect he want to apply.
+ * It displays to the player only the effects he could effectively apply, according to the ammo he has.
+ * After the player has chosen the effect, it sets the current state and
+ * load the additional flow nodes required from the effect itself.
+ */
 public class ChooseAlternativeEffectForGunFlowNode implements ControllerFlowNode<AlternativeEffectGunFlowState> {
   private static final Logger LOG = LogUtils.getLogger(GunLoader.class);
 
