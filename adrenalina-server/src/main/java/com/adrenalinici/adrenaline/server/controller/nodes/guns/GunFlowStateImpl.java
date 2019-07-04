@@ -18,6 +18,9 @@ public abstract class GunFlowStateImpl implements GunFlowState {
   private List<PlayerColor> chosenPlayersToHit;
   private Map<PlayerColor, Integer> hitPlayers;
   private Map<PlayerColor, Integer> markPlayers;
+  private Position killerStartingPosition;
+  private Position firstVictimPosition;
+  private Position secondVictimPosition;
 
   public GunFlowStateImpl(DecoratedGun chosenGun) {
     this.chosenGun = chosenGun;
@@ -25,6 +28,36 @@ public abstract class GunFlowStateImpl implements GunFlowState {
     this.chosenPlayersToHit = new ArrayList<>();
     this.hitPlayers = new HashMap<>();
     this.markPlayers = new HashMap<>();
+  }
+
+  @Override
+  public Position getKillerStartingPosition() {
+    return killerStartingPosition;
+  }
+
+  @Override
+  public Position getFirstVictimPosition() {
+    return firstVictimPosition;
+  }
+
+  @Override
+  public Position getSecondVictimPosition() {
+    return secondVictimPosition;
+  }
+
+  @Override
+  public void setKillerStartingPosition(Position position) {
+    killerStartingPosition = position;
+  }
+
+  @Override
+  public void setFirstVictimPosition(Position position) {
+    firstVictimPosition = position;
+  }
+
+  @Override
+  public void setSecondVictimPosition(Position position) {
+    secondVictimPosition = position;
   }
 
   @Override

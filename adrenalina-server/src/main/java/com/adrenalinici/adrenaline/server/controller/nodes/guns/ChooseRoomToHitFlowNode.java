@@ -39,7 +39,8 @@ public class ChooseRoomToHitFlowNode implements ControllerFlowNode<GunFlowState>
         .map(DashboardCell::getCellColor)
         .collect(Collectors.toSet());
 
-    view.showAvailableRooms(hittableRooms);
+    if (hittableRooms.isEmpty()) context.nextPhase(view, flowState);
+    else view.showAvailableRooms(hittableRooms);
   }
 
   @Override
