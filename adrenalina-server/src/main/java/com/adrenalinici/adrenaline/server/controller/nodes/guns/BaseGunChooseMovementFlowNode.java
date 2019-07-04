@@ -33,6 +33,36 @@ public class BaseGunChooseMovementFlowNode implements SkippableGunFlowNode<BaseG
     }
 
     @Override
+    public Position getKillerStartingPosition() {
+      return originalFlowState.getKillerStartingPosition();
+    }
+
+    @Override
+    public Position getFirstVictimPosition() {
+      return originalFlowState.getFirstVictimPosition();
+    }
+
+    @Override
+    public Position getSecondVictimPosition() {
+      return originalFlowState.getSecondVictimPosition();
+    }
+
+    @Override
+    public void setKillerStartingPosition(Position position) {
+      originalFlowState.setKillerStartingPosition(position);
+    }
+
+    @Override
+    public void setFirstVictimPosition(Position position) {
+      originalFlowState.setFirstVictimPosition(position);
+    }
+
+    @Override
+    public void setSecondVictimPosition(Position position) {
+      originalFlowState.setSecondVictimPosition(position);
+    }
+
+    @Override
     public List<Position> getChosenCellsToHit() {
       return originalFlowState.getChosenCellsToHit();
     }

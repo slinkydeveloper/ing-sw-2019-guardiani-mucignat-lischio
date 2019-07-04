@@ -40,7 +40,10 @@ public class AlternativeGunChooseMovementFlowNodeTest extends BaseNodeTest {
     AlternativeEffectGunFlowState alternativeEffectGunFlowState =
       new AlternativeEffectGunFlowStateImpl((DecoratedAlternativeEffectGun) GunLoader.INSTANCE.getDecoratedGun("power_glove"));
     alternativeEffectGunFlowState.setChosenEffect(alternativeEffectGunFlowState.getChosenGun().getSecondEffect(), false);
+
     alternativeEffectGunFlowState.getChosenPlayersToHit().add(PlayerColor.YELLOW);
+    alternativeEffectGunFlowState.setKillerStartingPosition(Position.of(0, 0));
+    alternativeEffectGunFlowState.setFirstVictimPosition(Position.of(0, 1));
 
     context.nextPhase(
       viewMock,

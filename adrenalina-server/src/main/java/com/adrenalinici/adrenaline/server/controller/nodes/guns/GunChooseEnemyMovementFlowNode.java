@@ -37,29 +37,35 @@ public class GunChooseEnemyMovementFlowNode implements SkippableGunFlowNode<GunF
   public void onJump(GunFlowState flowState, GameView view, GameModel model, ControllerFlowContext context) {
     if (flowState.getChosenPlayersToHit().isEmpty())
       context.nextPhase(view, flowState);
+    else {
+      PlayerColor enemy = flowState.getChosenPlayersToHit().get(0);
 
-    PlayerColor enemy = flowState.getChosenPlayersToHit().get(0);
-    if (context.getKilledPlayers().contains(enemy))
-      context.nextPhase(view, flowState);
+      if (context.getKilledPlayers().contains(enemy))
+        context.nextPhase(view, flowState);
+      else {
+        Position actualEnemyPosition = model.getPlayerPosition(enemy);
 
-    Position actualEnemyPosition = model.getPlayerPosition(enemy);
-    if (resolveMovementModeConfiguration(flowState).equals(ONLY_ONE_DIRECTION)) {
-      view.showAvailableEnemyMovements(
-        model.getDashboard().calculateMovementsInOneDirection(actualEnemyPosition, distance)
-      );
-    } else if (resolveMovementModeConfiguration(flowState).equals(ONLY_VISIBLE_SQUARES)) {
-      view.showAvailableEnemyMovements(
-        model.getDashboard().calculateMovements(actualEnemyPosition, distance)
-          .stream()
-          .filter(possibleEnemyPosition ->
-            model.getDashboard().calculateIfVisible(possibleEnemyPosition, model.getPlayerPosition(context.getTurnOfPlayer()))
-          )
-          .collect(Collectors.toList())
-      );
-    } else {
-      view.showAvailableEnemyMovements(
-        model.getDashboard().calculateMovements(actualEnemyPosition, distance)
-      );
+        if (resolveMovementModeConfiguration(flowState).equals(ONLY_ONE_DIRECTION)) {
+          view.showAvailableEnemyMovements(
+            model.getDashboard().calculateMovementsInOneDirection(actualEnemyPosition, distance)
+          );
+        }
+        else if (resolveMovementModeConfiguration(flowState).equals(ONLY_VISIBLE_SQUARES)) {
+          view.showAvailableEnemyMovements(
+            model.getDashboard().calculateMovements(actualEnemyPosition, distance)
+              .stream()
+              .filter(possibleEnemyPosition ->
+                model.getDashboard().calculateIfVisible(possibleEnemyPosition, model.getPlayerPosition(context.getTurnOfPlayer()))
+              )
+              .collect(Collectors.toList())
+          );
+        }
+        else {
+          view.showAvailableEnemyMovements(
+            model.getDashboard().calculateMovements(actualEnemyPosition, distance)
+          );
+        }
+      }
     }
   }
 

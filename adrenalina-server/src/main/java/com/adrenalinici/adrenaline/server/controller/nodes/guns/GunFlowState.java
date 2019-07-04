@@ -24,6 +24,18 @@ public interface GunFlowState extends FlowState {
 
   Map<PlayerColor, Integer> getMarkPlayers();
 
+  Position getKillerStartingPosition();
+
+  Position getFirstVictimPosition();
+
+  Position getSecondVictimPosition();
+
+  void setKillerStartingPosition(Position position);
+
+  void setFirstVictimPosition(Position position);
+
+  void setSecondVictimPosition(Position position);
+
   /**
    * Stores values of the damages to be added to a certain player
    *

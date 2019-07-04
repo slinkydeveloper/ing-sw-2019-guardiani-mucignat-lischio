@@ -1,7 +1,6 @@
 package com.adrenalinici.adrenaline.server.controller.nodes.guns;
 
 import com.adrenalinici.adrenaline.common.model.CardinalDirection;
-import com.adrenalinici.adrenaline.common.model.PlayerColor;
 import com.adrenalinici.adrenaline.common.model.Position;
 import com.adrenalinici.adrenaline.common.view.GameView;
 import com.adrenalinici.adrenaline.common.view.ViewEvent;
@@ -29,21 +28,25 @@ public class AlternativeGunChooseMovementFlowNode implements SkippableGunFlowNod
     List<Position> availableMovements;
     Position actualPlayerPosition = model.getDashboard().getPlayersPositions().get(context.getTurnOfPlayer());
 
-    PlayerColor previousEnemy = flowState.getChosenPlayersToHit().get(flowState.getChosenPlayersToHit().size() - 1);
-    Position previousEnemyPosition = model.getPlayerPosition(previousEnemy);
-    CardinalDirection previousEnemyCardinalDirection =
-      model
-        .getDashboard()
-        .calculateCardinalDirection(model.getPlayerPosition(context.getTurnOfPlayer()), model.getPlayerPosition(previousEnemy));
+    if (flowState.getChosenPlayersToHit().isEmpty()) context.nextPhase(view, flowState);
+    else {
+      Position previousEnemyPosition = flowState.getFirstVictimPosition();
 
-    availableMovements =
-      model.getDashboard().calculateMovements(previousEnemyPosition, 1)
-        .stream()
-        .filter(position ->
-          model.getDashboard().calculateCardinalDirection(actualPlayerPosition, position) == previousEnemyCardinalDirection
-        ).collect(Collectors.toList());
+      CardinalDirection previousEnemyCardinalDirection =
+        model
+          .getDashboard()
+          .calculateCardinalDirection(flowState.getKillerStartingPosition(), flowState.getFirstVictimPosition());
 
-    view.showAvailableMovements(availableMovements);
+      availableMovements =
+        model.getDashboard().calculateMovements(previousEnemyPosition, 1)
+          .stream()
+          .filter(position ->
+            model.getDashboard().calculateCardinalDirection(actualPlayerPosition, position) == previousEnemyCardinalDirection
+          ).collect(Collectors.toList());
+
+      if (availableMovements.isEmpty()) context.nextPhase(view, flowState);
+      else view.showAvailableMovements(availableMovements);
+    }
   }
 
   @Override

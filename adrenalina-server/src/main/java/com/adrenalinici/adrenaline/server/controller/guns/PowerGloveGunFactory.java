@@ -33,14 +33,18 @@ public class PowerGloveGunFactory extends AlternativeEffectGunFactory {
       state.getChosenPlayersToHit().get(1) : null;
 
     if (firstPlayer != null) {
+      state.setKillerStartingPosition(model.getPlayerPosition(context.getTurnOfPlayer()));
+      state.setFirstVictimPosition(model.getPlayerPosition(firstPlayer));
+
       state.hitPlayer(firstPlayer, 2);
       if (secondPlayer == null)
-        model.movePlayerInDashboard(model.getPlayerPosition(firstPlayer), context.getTurnOfPlayer());
+        model.movePlayerInDashboard(state.getFirstVictimPosition(), context.getTurnOfPlayer());
     }
 
     if (secondPlayer != null) {
+      state.setSecondVictimPosition(model.getPlayerPosition(secondPlayer));
       state.hitPlayer(secondPlayer, 2);
-      model.movePlayerInDashboard(model.getPlayerPosition(secondPlayer), context.getTurnOfPlayer());
+      model.movePlayerInDashboard(state.getSecondVictimPosition(), context.getTurnOfPlayer());
     }
   };
 
