@@ -34,5 +34,6 @@ public class CliGameViewProxy extends ObservableImpl<InboxMessage> implements Cl
     message.onModelEventMessage(e -> view.onEvent(e.getModelEvent()));
     message.onAvailableMatchesMessage(e -> view.showAvailableMatchesAndPlayers(e.getMatchesRemainingPlayers()));
     message.onInfoMessage(e -> view.showInfoMessage(e.getInformation(), e.getInfoType()));
+    message.onRankingMessage(e -> view.showRanking(e.getRanking()));
   }
 }
